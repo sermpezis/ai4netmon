@@ -1,0 +1,1 @@
+The file contains a list of personal-use ASNs (crowdsourced by [bgp.tools](https://bgp.tools/)) retrieved from [https://bgp.tools/tags/perso.txt](https://bgp.tools/tags/perso.txt)

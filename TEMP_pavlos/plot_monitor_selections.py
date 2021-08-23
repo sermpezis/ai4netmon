@@ -1,7 +1,7 @@
 import json
 from matplotlib import pyplot as plt
 
-INPUT_FILENAME = 'select_monitors_1000.json'
+INPUT_FILENAME = 'select_monitors_10000.json'
 
 
 '''
@@ -47,6 +47,7 @@ def plot_nb_monitors_vs_dist(DATA, MAX_X):
 plot_nb_monitors_vs_dist(DATA, 10)
 plot_nb_monitors_vs_dist(DATA, 100)
 plot_nb_monitors_vs_dist(DATA, 1000)
+plot_nb_monitors_vs_dist(DATA, 10000)
 
 
 
@@ -54,7 +55,7 @@ def plot_monitors_vs_dist(DATA, MAX_X):
     x_vector = list(range(1,MAX_X+1))
     y_vector_naive = [DATA['dist naive'][i-1]-DATA['dist naive'][i] for i in range(1,MAX_X+1)]
     y_vector_greedy = [DATA['dist greedy'][i-1]-DATA['dist greedy'][i] for i in range(1,MAX_X+1)]
-    plt.plot(x_vector, y_vector_naive, '--k', x_vector, y_vector_greedy, '-k', **common_plot_kwargs)
+    plt.semilogy(x_vector, y_vector_naive, '--k', x_vector, y_vector_greedy, '-k', **common_plot_kwargs)
     plt.legend(['Sorted', 'Greedy'], fontsize=fontsize)
     plt.xlabel('i^{th} monitor',fontsize=fontsize)
     plt.ylabel('improvement by i^{th} monitor',fontsize=fontsize)
@@ -70,3 +71,4 @@ def plot_monitors_vs_dist(DATA, MAX_X):
 plot_monitors_vs_dist(DATA, 10)
 plot_monitors_vs_dist(DATA, 100)
 plot_monitors_vs_dist(DATA, 1000)
+plot_monitors_vs_dist(DATA, 10000)
