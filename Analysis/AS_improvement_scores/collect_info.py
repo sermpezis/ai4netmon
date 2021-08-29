@@ -118,7 +118,6 @@ for element in scatter_plot_list:
     # plt.yscale('log')
     # plt.show()
 
-
 # Correlation Matrix
 data[['numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'improvement_sc']].corr()
 heatmap = sns.heatmap(data[['numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'improvement_sc']].corr(), annot=True, cmap='Blues', cbar=False)
@@ -153,16 +152,16 @@ print(X.columns)
 # Implement PCA
 # X = implement_pca(X)
 
-# x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
 
-# scaler = MinMaxScaler()
-# scaler = StandardScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
+scaler = MinMaxScaler()
+# # scaler = StandardScaler()
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
 
 # Call models
-# models.train_models(x_train, x_test, y_train, y_test)
+models.train_models(X, x_train, x_test, y_train, y_test)
 
 
 # SOS --> if we do not have --> header-None, dataframe deletes first row when we give name to the column
@@ -211,14 +210,15 @@ data = data.fillna(0)
 y = data['improvement_sc']
 X = data.drop(['improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'], axis=1)
 
-X = implement_pca(X)
+# Train models with embeddings
 
-x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+# X = implement_pca(X)
 
-scaler = MinMaxScaler()
-# scaler = StandardScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
-
-models.train_models(x_train, x_test, y_train, y_test)
+# x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+# scaler = MinMaxScaler()
+# # scaler = StandardScaler()
+# scaler.fit(x_train)
+# x_train = scaler.transform(x_train)
+# x_test = scaler.transform(x_test)
+#
+# models.train_models(x_train, x_test, y_train, y_test)

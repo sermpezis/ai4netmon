@@ -5,6 +5,8 @@ from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from xgboost.sklearn import XGBRegressor
 from sklearn.dummy import DummyClassifier
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,6 +29,29 @@ def get_metrics(y_test, y_predicted):
     print("--------------------------------------------")
     print()
 
+def get_feature_importance(X, linearRegressionModel):
+
+    # Calculate the importance of each feature
+    feats = {}
+    for feature, importance in zip(X.columns, linearRegressionModel.coef_):
+        feats[feature] = importance
+    print(feats)
+    # plot feature importance
+    importances = pd.DataFrame.from_dict(feats, orient='index').rename(columns={0: 'Gini-importance'})
+    importances.sort_values(by='Gini-importance').plot(kind='bar')
+    plt.tight_layout()
+    plt.show()
+
+def show_importance(X, model):
+    # get importance
+    importance = model.feature_importances_
+    # plot feature importance
+    plt.xticks(rotation=45, ha='right')
+    plt.title(str(model))
+    plt.bar(X.columns, importance)
+    plt.tight_layout()
+    plt.show()
+
 def get_scatter_plot(y_test, y_predicted):
 
     plt.figure(figsize=(10, 10))
@@ -42,7 +67,7 @@ def get_scatter_plot(y_test, y_predicted):
     plt.axis('equal')
     plt.show()
 
-def train_models(x_train, x_test, y_train, y_test):
+def train_models(X, x_train, x_test, y_train, y_test):
 
     # Linear Regression
     linearRegressionModel = LinearRegression()
@@ -51,6 +76,7 @@ def train_models(x_train, x_test, y_train, y_test):
     print("-------------- Linear Regression: ---------------")
     get_metrics(y_test, y_predicted)
     get_scatter_plot(y_test, y_predicted)
+    get_feature_importance(X, linearRegressionModel)
 
     # Lasso Regression
     lassoRegressionModel = Lasso(alpha=1)
@@ -91,6 +117,25 @@ def train_models(x_train, x_test, y_train, y_test):
     print("------------ Decision Tree Regression: ------------")
     get_metrics(y_test, y_predicted)
     get_scatter_plot(y_test, y_predicted)
+    show_importance(X, treeRegressionModel)
+
+    # Random Forest Regression
+    randomForestModel = RandomForestRegressor(random_state=0)
+    randomForestModel.fit(x_train, y_train)
+    y_predicted = randomForestModel.predict(x_test)
+    print("------------ Random Forest Regression: ------------")
+    get_metrics(y_test, y_predicted)
+    get_scatter_plot(y_test, y_predicted)
+    show_importance(X, randomForestModel)
+
+    # XGBoost Regression
+    xgbreg = XGBRegressor()
+    xgbreg.fit(x_train, y_train)
+    y_predicted = xgbreg.predict(x_test)
+    print("------------XGBoost Regression: ------------")
+    get_metrics(y_test, y_predicted)
+    get_scatter_plot(y_test, y_predicted)
+    show_importance(X, xgbreg)
 
     # Stacking Ensemble Machine Learning
     level0 = list()
