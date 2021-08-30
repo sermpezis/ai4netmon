@@ -61,6 +61,20 @@ def preprocess():
         print("------------------------------")
     return data
 
+def split_data(X, y):
+
+    # Implement PCA
+    # X = implement_pca(X)
+
+    x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+    scaler = MinMaxScaler()
+    # scaler = StandardScaler()
+    scaler.fit(x_train)
+    x_train = scaler.transform(x_train)
+    x_test = scaler.transform(x_test)
+
+    return x_train, x_test, y_train, y_test
+
 
 data = preprocess()
 data2 = pd.read_csv("../../Datasets/improvements20210601.txt", sep=" ", header=None)
@@ -149,17 +163,9 @@ y = data['improvement_sc']
 X = data.drop(['improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'], axis=1)
 print(X.columns)
 
-# Implement PCA
-# X = implement_pca(X)
 
-x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
-
-scaler = MinMaxScaler()
-# # scaler = StandardScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
-
+# Train models with embeddings
+x_train, x_test, y_train, y_test = split_data(X, y)
 # Call models
 models.train_models(X, x_train, x_test, y_train, y_test)
 
@@ -210,15 +216,7 @@ data = data.fillna(0)
 y = data['improvement_sc']
 X = data.drop(['improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'], axis=1)
 
-# Train models with embeddings
-
-# X = implement_pca(X)
-
-# x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
-# scaler = MinMaxScaler()
-# # scaler = StandardScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
-#
-# models.train_models(x_train, x_test, y_train, y_test)
+# # Train models with embeddings
+# x_train, x_test, y_train, y_test = split_data(X, y)
+# # Call models
+# models.train_models(X, x_train, x_test, y_train, y_test)

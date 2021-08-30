@@ -32,27 +32,33 @@ def get_metrics(y_test, y_predicted):
 def get_feature_importance(X, linearRegressionModel):
 
     # Calculate the importance of each feature
-    feats = {}
-    for feature, importance in zip(X.columns, linearRegressionModel.coef_):
-        feats[feature] = importance
-    print(feats)
-    # plot feature importance
-    importances = pd.DataFrame.from_dict(feats, orient='index').rename(columns={0: 'Gini-importance'})
-    importances.sort_values(by='Gini-importance').plot(kind='bar')
+    features = X.columns
+    importances = linearRegressionModel.coef_
+    indices = np.argsort(importances)[::-1]
+    top_k = 12
+    new_indices = indices[:top_k]
+    plt.title(str(linearRegressionModel))
+    plt.bar(range(len(new_indices)), importances[new_indices], color='b', align='center')
+    plt.xticks(range(len(new_indices)), [features[i] for i in new_indices], rotation=45, ha='right')
+    plt.ylabel('Relative Importance')
     plt.tight_layout()
     plt.show()
 
 def show_importance(X, model):
-    # get importance
-    importance = model.feature_importances_
-    # plot feature importance
-    plt.xticks(rotation=45, ha='right')
+
+    features = X.columns
+    importances = model.feature_importances_
+    indices = np.argsort(importances)[::-1]
+    top_k = 12
+    new_indices = indices[:top_k]
     plt.title(str(model))
-    plt.bar(X.columns, importance)
+    plt.bar(range(len(new_indices)), importances[new_indices], color='b', align='center')
+    plt.xticks(range(len(new_indices)), [features[i] for i in new_indices], rotation=45, ha='right')
+    plt.ylabel('Relative Importance')
     plt.tight_layout()
     plt.show()
 
-def get_scatter_plot(y_test, y_predicted):
+def get_scatter_plot(model, y_test, y_predicted):
 
     plt.figure(figsize=(10, 10))
     plt.scatter(y_test, y_predicted, c='crimson')
@@ -64,7 +70,9 @@ def get_scatter_plot(y_test, y_predicted):
     plt.plot([p1, p2], [p1, p2], 'b-')
     plt.xlabel('Actual Values', fontsize=15)
     plt.ylabel('Predictions', fontsize=15)
+    plt.title(str(model))
     plt.axis('equal')
+    plt.tight_layout()
     plt.show()
 
 def train_models(X, x_train, x_test, y_train, y_test):
@@ -75,7 +83,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = linearRegressionModel.predict(x_test)
     print("-------------- Linear Regression: ---------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(linearRegressionModel, y_test, y_predicted)
     get_feature_importance(X, linearRegressionModel)
 
     # Lasso Regression
@@ -84,7 +92,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = lassoRegressionModel.predict(x_test)
     print("-------------- Lasso Regression: ---------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(lassoRegressionModel, y_test, y_predicted)
 
     # Ridge Regression
     ridgeRegressionModel = Ridge()
@@ -92,7 +100,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = ridgeRegressionModel.predict(x_test)
     print("-------------- Ridge Regression: --------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(ridgeRegressionModel, y_test, y_predicted)
 
     # Support Vector Regression
     svRegressionModel = SVR(kernel="poly", max_iter=30000)
@@ -100,7 +108,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = svRegressionModel.predict(x_test)
     print("----------- Support Vector Regression: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(svRegressionModel, y_test, y_predicted)
 
     # k-NN Regression
     kNNRegressionModel = KNeighborsRegressor()
@@ -108,7 +116,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = kNNRegressionModel.predict(x_test)
     print("--------- k-Nearest Neighbors Regression: ---------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(kNNRegressionModel, y_test, y_predicted)
 
     # Decision Tree Regression
     treeRegressionModel = DecisionTreeRegressor(random_state=0)
@@ -116,7 +124,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = treeRegressionModel.predict(x_test)
     print("------------ Decision Tree Regression: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(treeRegressionModel, y_test, y_predicted)
     show_importance(X, treeRegressionModel)
 
     # Random Forest Regression
@@ -125,7 +133,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = randomForestModel.predict(x_test)
     print("------------ Random Forest Regression: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(randomForestModel, y_test, y_predicted)
     show_importance(X, randomForestModel)
 
     # XGBoost Regression
@@ -134,7 +142,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = xgbreg.predict(x_test)
     print("------------XGBoost Regression: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(xgbreg, y_test, y_predicted)
     show_importance(X, xgbreg)
 
     # Stacking Ensemble Machine Learning
@@ -153,7 +161,7 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted = model.predict(x_test)
     print("------------ Stacking Ensemble: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(model, y_test, y_predicted)
 
     # DummyClassifier
     dummy_clf = DummyClassifier(strategy="most_frequent")
@@ -162,4 +170,4 @@ def train_models(X, x_train, x_test, y_train, y_test):
     y_predicted_train = dummy_clf.predict(x_train)
     print("------------ Dummy Classifier: ------------")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(y_test, y_predicted)
+    get_scatter_plot(dummy_clf, y_test, y_predicted)
