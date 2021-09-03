@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost.sklearn import XGBClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.dummy import DummyClassifier
 from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import metrics
@@ -13,7 +14,10 @@ from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import TomekLinks
 from imblearn.combine import SMOTETomek
 from imblearn.under_sampling import NearMiss
+from iso3166 import countries
 import matplotlib.pyplot as plt
+import pycountry_convert as pc
+import pycountry
 
 
 def my_confusion_matrix(y_actual, y_predicted):
@@ -28,6 +32,7 @@ def my_confusion_matrix(y_actual, y_predicted):
 def get_metrics(y_test, y_predicted):
 
     tp, fp, tn, fn = my_confusion_matrix(y_test, y_predicted)
+    print(tp, fp, tn, fn)
     G_mean = np.sqrt((tp/(tp+fp)) * (tn/(tn+fp)))
     print('G-mean: %.4f' % G_mean)
     print('Balanced_Accuracy: %.4f' % metrics.balanced_accuracy_score(y_test, y_predicted))
@@ -51,7 +56,7 @@ def split_train_test(data, sampling=None):
     scaler.fit(x_train)
     x_train = scaler.transform(x_train)
     x_test = scaler.transform(x_test)
-    return x_train, x_test, y_train, y_test
+    return X, x_train, x_test, y_train, y_test
 
 def Smote(X_train, y_train):
 
@@ -96,6 +101,52 @@ def get_roc_auc(model, y_test, y_predicted):
     plt.legend(fontsize=12)
     plt.show()
 
+def get_feature_importance(X, model):
+
+    # Calculate the importance of each feature
+    features = X.columns
+    importances = model.coef_[0]
+    indices = np.argsort(importances)[::-1]
+    top_k = 10
+    new_indices = indices[:top_k]
+    plt.title(str(model))
+    plt.bar(range(len(new_indices)), importances[new_indices], color='b', align='center')
+    plt.xticks(range(len(new_indices)), [features[i] for i in new_indices], rotation=45, ha='right')
+    plt.ylabel('Relative Importance')
+    plt.tight_layout()
+    plt.show()
+
+def show_importance(X, model):
+
+    features = X.columns
+    importances = model.feature_importances_
+    indices = np.argsort(importances)[::-1]
+    top_k = 12
+    new_indices = indices[:top_k]
+    plt.title(str(model))
+    plt.bar(range(len(new_indices)), importances[new_indices], color='b', align='center')
+    plt.xticks(range(len(new_indices)), [features[i] for i in new_indices], rotation=45, ha='right')
+    plt.ylabel('Relative Importance')
+    plt.tight_layout()
+    plt.show()
+
+def country_to_continent(country_name):
+
+    try:
+        country_alpha2 = pc.country_name_to_country_alpha2(country_name)
+        country_continent_code = pc.country_alpha2_to_continent_code(country_alpha2)
+        country_continent_name = pc.convert_continent_code_to_continent_name(country_continent_code)
+        return country_continent_name
+    except:
+        return 'No info'
+
+def country_flag(data):
+
+    # Matches the acronyms with the Fullname of the countries
+    if (data['iso'] in list_alpha_2):
+        return pycountry.countries.get(alpha_2=data['iso']).name
+    else:
+        return 'Unknown Code'
 
 data = pd.read_csv('classification_task.csv', sep=",", dtype='unicode')
 # Do not know how this column produced, so I drop it
@@ -109,14 +160,18 @@ print(top_data['improvement_sc'])
 
 # print(top_data.improvement_sc.dtypes)
 data['top_k'] = data['improvement_sc'].apply(lambda x: 1 if x in top_data['improvement_sc'].values else 0)
-data.to_csv('papa.csv')
 print(data.head())
-
 data = data.fillna(0)
 
-x_train, x_test, y_train, y_test = split_train_test(data)
+# Convert iso = alpha_2 (example: US) to the whole name of the country (import iso3166)
+list_alpha_2 = [i.alpha2 for i in list(countries)]
+data['iso'] = data.apply(country_flag, axis=1)
+for i in range(0, 71375):
+    print(country_to_continent(data['iso'][i]))
 
-method = 'Near_Miss'
+X, x_train, x_test, y_train, y_test = split_train_test(data)
+
+method = 'Smote'
 if method == 'Smote':
     # Smote
     x_train, y_train = Smote(x_train, y_train)
@@ -127,15 +182,16 @@ elif method == 'SmoteTomek':
     # Smote - Tomek
     x_train, y_train = Smotetomek(x_train, y_train)
 else:
-    x_train, x_test, y_train, y_test = split_train_test(data, 'undersample')
+    X, x_train, x_test, y_train, y_test = split_train_test(data, 'undersample')
 
-# # Decision Tree Classification
+# Decision Tree Classification
 treeClassificationModel = DecisionTreeClassifier(random_state=0)
 treeClassificationModel.fit(x_train, y_train)
 y_predicted = treeClassificationModel.predict(x_test)
 print("================= Decision Tree Regression =================")
 get_metrics(y_test, y_predicted)
 get_roc_auc(treeClassificationModel, y_test, y_predicted)
+show_importance(X, treeClassificationModel)
 
 # Random Forest Classification
 randomForestModel = RandomForestClassifier(random_state=0)
@@ -144,6 +200,7 @@ y_predicted = randomForestModel.predict(x_test)
 print("============ Random Forest Regression: =============")
 get_metrics(y_test, y_predicted)
 get_roc_auc(randomForestModel, y_test, y_predicted)
+show_importance(X, randomForestModel)
 
 # XGBoost Classification
 xgbClassification = XGBClassifier()
@@ -152,6 +209,7 @@ y_predicted = xgbClassification.predict(x_test)
 print("================ XGBoost Regression ================")
 get_metrics(y_test, y_predicted)
 get_roc_auc(xgbClassification, y_test, y_predicted)
+show_importance(X, xgbClassification)
 
 # Multinomial Naive Bayes
 clf = MultinomialNB()
@@ -168,3 +226,14 @@ y_predicted = logreg.predict(x_test)
 print("================ Logistic Regression: ================")
 get_metrics(y_test, y_predicted)
 get_roc_auc(logreg, y_test, y_predicted)
+get_feature_importance(X, logreg)
+
+# DummyClassifier
+dummy_clf = DummyClassifier(strategy='most_frequent')
+dummy_clf.fit(x_train, y_train)
+y_predicted = dummy_clf.predict(x_test)
+y_predicted_train = dummy_clf.predict(x_train)
+print("------------ Dummy Classifier: ------------")
+get_metrics(y_test, y_predicted)
+get_roc_auc(dummy_clf, y_test, y_predicted)
+
