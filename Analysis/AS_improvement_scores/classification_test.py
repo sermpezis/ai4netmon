@@ -22,8 +22,8 @@ import pycountry
 
 def my_confusion_matrix(y_actual, y_predicted):
 
-    """ This method finds the number of True Positives, False Positives,
-    True Negatives and False Negative between the hidden movies
+    """ This method finds the number of True Negatives, False Positives,
+    True Positives and False Negative between the hidden movies
     and those predicted by the recommendation algorithm
     """
     cm = metrics.confusion_matrix(y_actual, y_predicted)
@@ -31,8 +31,8 @@ def my_confusion_matrix(y_actual, y_predicted):
 
 def get_metrics(y_test, y_predicted):
 
-    tp, fp, tn, fn = my_confusion_matrix(y_test, y_predicted)
-    print(tp, fp, tn, fn)
+    tn, fp, tp, fn = my_confusion_matrix(y_test, y_predicted)
+    print(tn, fp, tp, fn)
     G_mean = np.sqrt((tp/(tp+fp)) * (tn/(tn+fp)))
     print('G-mean: %.4f' % G_mean)
     print('Balanced_Accuracy: %.4f' % metrics.balanced_accuracy_score(y_test, y_predicted))
@@ -50,7 +50,7 @@ def split_train_test(data, sampling=None):
         data = pd.concat(dfs)
 
     y = data['top_k']
-    X = data.drop(['improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'], axis=1)
+    X = data.drop(['top_k', 'improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'], axis=1)
     x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)
     scaler = MinMaxScaler()
     scaler.fit(x_train)
@@ -167,7 +167,10 @@ data = data.fillna(0)
 list_alpha_2 = [i.alpha2 for i in list(countries)]
 data['iso'] = data.apply(country_flag, axis=1)
 for i in range(0, 71375):
-    print(country_to_continent(data['iso'][i]))
+    # print(country_to_continent(data['iso'][i]))
+    data['iso'][i] = country_to_continent(data['iso'][i])
+
+data.to_csv('metric_data.csv')
 
 X, x_train, x_test, y_train, y_test = split_train_test(data)
 
@@ -194,7 +197,7 @@ get_roc_auc(treeClassificationModel, y_test, y_predicted)
 show_importance(X, treeClassificationModel)
 
 # Random Forest Classification
-randomForestModel = RandomForestClassifier(random_state=0)
+randomForestModel = RandomForestClassifier(random_state=0, class_weight='balanced')
 randomForestModel.fit(x_train, y_train)
 y_predicted = randomForestModel.predict(x_test)
 print("============ Random Forest Regression: =============")
