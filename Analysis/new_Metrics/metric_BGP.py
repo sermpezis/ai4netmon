@@ -1,6 +1,16 @@
 import pandas as pd
 import numpy as np
 import random
+from sklearn.neural_network import MLPRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
+from xgboost.sklearn import XGBRegressor
+from sklearn.svm import SVR
+from sklearn import model_selection
+from sklearn.preprocessing import MinMaxScaler
+
 def one_hot(df):
     """
     @param df pandas DataFrame
@@ -38,22 +48,23 @@ data = data.drop(data.columns[cols], axis=1)
 data = data.drop(['source', 'improvement_sc', 'longitude', 'latitude'], axis=1)
 # keep AS number as index
 data = data.set_index('asn')
-print(data.head())
 
+# Iso has 7 unique values, so the one hot encoding will give us 7 columns
+print(data.iso.nunique())
 # with embeddings
 data_with_emb = one_hot(data)
-
+data_with_emb = data_with_emb.drop(['iso'], axis=1)
 
 # without embeddings
 rng = range(1, 65)
 new_cols = ['dim_' + str(i) for i in rng]
 data_without_emb = data_with_emb.drop(new_cols, axis=1)
-data_without_emb = one_hot(data)
-print(data_without_emb.head())
 
 new_data_CAIDA = new_data_CAIDA.fillna(0)
+print(data_without_emb.columns)
 
 # random selection of 50 monitors (columns)
+final_data = []
 for index, row in new_data_CAIDA.iterrows():
 
     # keep the impact of each row
@@ -62,7 +73,6 @@ for index, row in new_data_CAIDA.iterrows():
     # rand_monitors is a list which contains 50 randomly selected monitors
     # and I should keep the name of the column with the sample
     randomlist = random.sample(range(7, 287), 50)
-    # rand_monitors = row.iloc[7:287].sample(n=50, axis=0)
     # values from 50 random columns
     rand_monitors = row.iloc[randomlist]
     # keep from the above 50 values column's name
@@ -70,12 +80,100 @@ for index, row in new_data_CAIDA.iterrows():
 
     rand_monitors = np.array(rand_monitors, dtype=np.str)
     new_row = [new_row] + [x for x in rand_monitors]
-    # print(new_row)
 
     # for each monitor I want to keep the features from the dataframe --> data_without_emb
+
     for name in columns_names:
         if name in data_without_emb.index:
             test = np.array(data_without_emb.loc[name], dtype=np.str)
             new_row = np.concatenate((new_row, test), axis=0)
-            print(new_row)
-#pd.DataFrame(new_row).to_csv("foo1.csv")
+            # we need to separate each element with comma character
+            # joined_string = ",".join(new_row)
+        else:
+            # We need to fill in the 16 columns of data_without_emb with zero + 1 column observation_i
+            listofzeros = [0 for i in range(16)]
+            new_row = np.concatenate((new_row, listofzeros), axis=0)
+    final_data.append(new_row)
+
+print(final_data)
+# [0.6212265162891906 1 0 0 1 1 0 1]
+first_col = ['impact', 'observation_1', 'rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'topk',
+        'Continent_Africa', 'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
+# I need 49 more columns like the col1 but without impact and observation + 1 each time
+obs_rng = range(2, 51)
+middle_cols = ['observation_' + str(i) for i in obs_rng]
+other_cols = ['rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'topk',
+        'Continent_Africa', 'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
+
+# union all column names to one list
+counter = 1
+for i in middle_cols:
+    first_col.append(i)
+    counter += 1
+    for j in other_cols:
+        first_col.append(j + str(counter))
+print(first_col)
+
+final_df = pd.DataFrame(final_data, columns=first_col)
+print(final_df)
+# final_df = pd.DataFrame(final_data, columns=first_col)
+
+
+# y = new_row['improvement_sc']
+# X = new_row.drop(['improvement_sc', 'asn'], axis=1)
+# #
+# x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+# scaler = MinMaxScaler()
+# scaler.fit(x_train)
+# x_train = scaler.transform(x_train)
+# x_test = scaler.transform(x_test)
+#
+# # Linear Regressor
+# linearRegressionModel = LinearRegression()
+# linearRegressionModel.fit(x_train, y_train)
+# y_predicted = linearRegressionModel.predict(x_test)
+# print("-------------- Linear Regression: ---------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+#
+# # Support Vector Regressor
+# svRegressionModel = SVR(kernel="poly", max_iter=30000)
+# svRegressionModel.fit(x_train, y_train)
+# y_predicted = svRegressionModel.predict(x_test)
+# print("----------- Support Vector Regression: ------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+#
+# # Decision Tree Regressor
+# treeRegressionModel = DecisionTreeRegressor(random_state=0)
+# treeRegressionModel.fit(x_train, y_train)
+# y_predicted = treeRegressionModel.predict(x_test)
+# print("------------ Decision Tree Regression: ------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+#
+# # Random Forest Regressor
+# randomForestModel = RandomForestRegressor(random_state=0)
+# randomForestModel.fit(x_train, y_train)
+# y_predicted = randomForestModel.predict(x_test)
+# print("------------ Random Forest Regression: ------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+#
+# # XGBoost Regressor
+# xgbreg = XGBRegressor()
+# xgbreg.fit(x_train, y_train)
+# y_predicted = xgbreg.predict(x_test)
+# print("------------XGBoost Regression: ------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+
+# #Multi-layer Perceptron Regressor
+# mlpreg = MLPRegressor(random_state=1, max_iter=500)
+# mlpreg.fit(x_train, y_train)
+# y_predicted = mlpreg.predict(x_test)
+# print("------------XGBoost Regression: ------------")
+# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+
+
+
+
+
+
+
+
