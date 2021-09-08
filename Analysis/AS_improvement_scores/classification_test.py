@@ -170,9 +170,17 @@ for i in range(0, 71375):
     # print(country_to_continent(data['iso'][i]))
     data['iso'][i] = country_to_continent(data['iso'][i])
 
-data.to_csv('metric_data.csv')
+# data.to_csv('metric_data.csv')
 
-X, x_train, x_test, y_train, y_test = split_train_test(data)
+train = 'With_No'
+if train == 'With_Embeddings':
+    X, x_train, x_test, y_train, y_test = split_train_test(data)
+else:
+    # without embeddings
+    rng = range(1, 65)
+    new_cols = ['dim_' + str(i) for i in rng]
+    data_without_emb = data.drop(new_cols, axis=1)
+    X, x_train, x_test, y_train, y_test = split_train_test(data_without_emb)
 
 method = 'Smote'
 if method == 'Smote':
@@ -236,7 +244,7 @@ dummy_clf = DummyClassifier(strategy='most_frequent')
 dummy_clf.fit(x_train, y_train)
 y_predicted = dummy_clf.predict(x_test)
 y_predicted_train = dummy_clf.predict(x_train)
-print("------------ Dummy Classifier: ------------")
+print("================ Dummy Classifier: ================")
 get_metrics(y_test, y_predicted)
 get_roc_auc(dummy_clf, y_test, y_predicted)
 
