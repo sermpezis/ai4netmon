@@ -82,21 +82,17 @@ for index, row in new_data_CAIDA.iterrows():
     new_row = [new_row] + [x for x in rand_monitors]
 
     # for each monitor I want to keep the features from the dataframe --> data_without_emb
-
     for name in columns_names:
         if name in data_without_emb.index:
             test = np.array(data_without_emb.loc[name], dtype=np.str)
             new_row = np.concatenate((new_row, test), axis=0)
-            # we need to separate each element with comma character
-            # joined_string = ",".join(new_row)
         else:
             # We need to fill in the 16 columns of data_without_emb with zero + 1 column observation_i
             listofzeros = [0 for i in range(16)]
             new_row = np.concatenate((new_row, listofzeros), axis=0)
-    final_data.append(new_row)
-
+    final_data.append(new_row.tolist())
 print(final_data)
-# [0.6212265162891906 1 0 0 1 1 0 1]
+
 first_col = ['impact', 'observation_1', 'rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'topk',
         'Continent_Africa', 'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
 # I need 49 more columns like the col1 but without impact and observation + 1 each time
@@ -112,68 +108,62 @@ for i in middle_cols:
     counter += 1
     for j in other_cols:
         first_col.append(j + str(counter))
-print(first_col)
+
 
 final_df = pd.DataFrame(final_data, columns=first_col)
-print(final_df)
-# final_df = pd.DataFrame(final_data, columns=first_col)
 
+cols = [i for i in final_df.columns if i not in ["Impact"]]
+for col in cols:
+    final_df[col] = pd.to_numeric(final_df[col])
+print(final_df.dtypes)
 
-# y = new_row['improvement_sc']
-# X = new_row.drop(['improvement_sc', 'asn'], axis=1)
-# #
-# x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
-# scaler = MinMaxScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
-#
-# # Linear Regressor
-# linearRegressionModel = LinearRegression()
-# linearRegressionModel.fit(x_train, y_train)
-# y_predicted = linearRegressionModel.predict(x_test)
-# print("-------------- Linear Regression: ---------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-#
-# # Support Vector Regressor
-# svRegressionModel = SVR(kernel="poly", max_iter=30000)
-# svRegressionModel.fit(x_train, y_train)
-# y_predicted = svRegressionModel.predict(x_test)
-# print("----------- Support Vector Regression: ------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-#
-# # Decision Tree Regressor
-# treeRegressionModel = DecisionTreeRegressor(random_state=0)
-# treeRegressionModel.fit(x_train, y_train)
-# y_predicted = treeRegressionModel.predict(x_test)
-# print("------------ Decision Tree Regression: ------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-#
-# # Random Forest Regressor
-# randomForestModel = RandomForestRegressor(random_state=0)
-# randomForestModel.fit(x_train, y_train)
-# y_predicted = randomForestModel.predict(x_test)
-# print("------------ Random Forest Regression: ------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-#
-# # XGBoost Regressor
-# xgbreg = XGBRegressor()
-# xgbreg.fit(x_train, y_train)
-# y_predicted = xgbreg.predict(x_test)
-# print("------------XGBoost Regression: ------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+y = final_df['impact']
+X = final_df.drop(['impact'], axis=1)
 
-# #Multi-layer Perceptron Regressor
-# mlpreg = MLPRegressor(random_state=1, max_iter=500)
-# mlpreg.fit(x_train, y_train)
-# y_predicted = mlpreg.predict(x_test)
-# print("------------XGBoost Regression: ------------")
-# print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
+scaler = MinMaxScaler()
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
 
+# Linear Regressor
+linearRegressionModel = LinearRegression()
+linearRegressionModel.fit(x_train, y_train)
+y_predicted = linearRegressionModel.predict(x_test)
+print("-------------- Linear Regressor: ---------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
 
+# Support Vector Regressor
+svRegressionModel = SVR(kernel="poly", max_iter=30000)
+svRegressionModel.fit(x_train, y_train)
+y_predicted = svRegressionModel.predict(x_test)
+print("----------- Support Vector Regressor: ------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
 
+# Decision Tree Regressor
+treeRegressionModel = DecisionTreeRegressor(random_state=0)
+treeRegressionModel.fit(x_train, y_train)
+y_predicted = treeRegressionModel.predict(x_test)
+print("------------ Decision Tree Regressor: ------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
 
+# Random Forest Regressor
+randomForestModel = RandomForestRegressor(random_state=0)
+randomForestModel.fit(x_train, y_train)
+y_predicted = randomForestModel.predict(x_test)
+print("------------ Random Forest Regressor: ------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
 
+# XGBoost Regressor
+xgbreg = XGBRegressor()
+xgbreg.fit(x_train, y_train)
+y_predicted = xgbreg.predict(x_test)
+print("------------XGBoost Regressor: ------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
 
-
-
+#Multi-layer Perceptron Regressor
+mlpreg = MLPRegressor(random_state=1, max_iter=500)
+mlpreg.fit(x_train, y_train)
+y_predicted = mlpreg.predict(x_test)
+print("------------Multi-layer Perceptron Regressor: ------------")
+print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
