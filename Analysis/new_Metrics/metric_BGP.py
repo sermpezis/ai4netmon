@@ -1,15 +1,11 @@
 import pandas as pd
 import numpy as np
 import random
-from sklearn.neural_network import MLPRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
-from xgboost.sklearn import XGBRegressor
-from sklearn.svm import SVR
-from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+from sklearn import model_selection
+from sklearn.decomposition import PCA
+import call_models as cm
 
 def one_hot(df):
     """
@@ -45,7 +41,7 @@ cols = [0, 1]
 data = data.drop(data.columns[cols], axis=1)
 
 # drop: source, improvement_sc, longitude, latitude
-data = data.drop(['source', 'improvement_sc', 'longitude', 'latitude'], axis=1)
+data = data.drop(['source', 'improvement_sc', 'longitude', 'latitude', 'top_k'], axis=1)
 # keep AS number as index
 data = data.set_index('asn')
 
@@ -88,18 +84,18 @@ for index, row in new_data_CAIDA.iterrows():
             new_row = np.concatenate((new_row, test), axis=0)
         else:
             # We need to fill in the 16 columns of data_without_emb with zero + 1 column observation_i
-            listofzeros = [0 for i in range(16)]
+            listofzeros = [0 for i in range(15)]
             new_row = np.concatenate((new_row, listofzeros), axis=0)
     final_data.append(new_row.tolist())
-print(final_data)
+# print(final_data)
 
-first_col = ['impact', 'observation_1', 'rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'topk',
-        'Continent_Africa', 'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
+first_col = ['impact', 'observation_1', 'rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'Continent_Africa',
+             'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
 # I need 49 more columns like the col1 but without impact and observation + 1 each time
 obs_rng = range(2, 51)
 middle_cols = ['observation_' + str(i) for i in obs_rng]
-other_cols = ['rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'topk',
-        'Continent_Africa', 'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
+other_cols = ['rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'Continent_Africa',
+              'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
 
 # union all column names to one list
 counter = 1
@@ -109,61 +105,36 @@ for i in middle_cols:
     for j in other_cols:
         first_col.append(j + str(counter))
 
-
 final_df = pd.DataFrame(final_data, columns=first_col)
 
 cols = [i for i in final_df.columns if i not in ["Impact"]]
 for col in cols:
     final_df[col] = pd.to_numeric(final_df[col])
-print(final_df.dtypes)
+# print(final_df.dtypes)
+
 
 y = final_df['impact']
 X = final_df.drop(['impact'], axis=1)
+x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.20)
 
-x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.25, random_state=0)
 scaler = MinMaxScaler()
+# scaler = StandardScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
-# Linear Regressor
-linearRegressionModel = LinearRegression()
-linearRegressionModel.fit(x_train, y_train)
-y_predicted = linearRegressionModel.predict(x_test)
-print("-------------- Linear Regressor: ---------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+method = 'PCA'
 
-# Support Vector Regressor
-svRegressionModel = SVR(kernel="poly", max_iter=30000)
-svRegressionModel.fit(x_train, y_train)
-y_predicted = svRegressionModel.predict(x_test)
-print("----------- Support Vector Regressor: ------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+if method == 'PCA':
+    # apply PCA keeping a certain number of features
+    pca = PCA(n_components=390)
+    pca_x_train = pca.fit_transform(x_train)
+    pca_x_test = pca.fit_transform(x_test)
+    print(pca_x_train.shape)
+    print(pca_x_test.shape)
+    cm.ml_models(pca_x_train, pca_x_test, y_train, y_test)
+elif method == 'Cross_Validation':
+    cm.cross_val_with_Random_Forest(final_df, X, y)
+else:
+    cm.ml_models(x_train, x_test, y_train, y_test)
 
-# Decision Tree Regressor
-treeRegressionModel = DecisionTreeRegressor(random_state=0)
-treeRegressionModel.fit(x_train, y_train)
-y_predicted = treeRegressionModel.predict(x_test)
-print("------------ Decision Tree Regressor: ------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-
-# Random Forest Regressor
-randomForestModel = RandomForestRegressor(random_state=0)
-randomForestModel.fit(x_train, y_train)
-y_predicted = randomForestModel.predict(x_test)
-print("------------ Random Forest Regressor: ------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-
-# XGBoost Regressor
-xgbreg = XGBRegressor()
-xgbreg.fit(x_train, y_train)
-y_predicted = xgbreg.predict(x_test)
-print("------------XGBoost Regressor: ------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-
-#Multi-layer Perceptron Regressor
-mlpreg = MLPRegressor(random_state=1, max_iter=500)
-mlpreg.fit(x_train, y_train)
-y_predicted = mlpreg.predict(x_test)
-print("------------Multi-layer Perceptron Regressor: ------------")
-print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
