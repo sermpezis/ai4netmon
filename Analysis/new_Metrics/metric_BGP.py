@@ -89,8 +89,7 @@ for index, row in new_data_CAIDA.iterrows():
     final_data.append(new_row.tolist())
 # print(final_data)
 
-first_col = ['impact', 'observation_1', 'rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total', 'customer', 'peer', 'provider', 'Continent_Africa',
-             'Continent_Asia', 'Continent_Europe', 'Continent_No info', 'Continent_North America', 'Continent_Oceania', 'Continent_South America']
+first_col = ['impact', 'observation_1']
 # I need 49 more columns like the col1 but without impact and observation + 1 each time
 obs_rng = range(2, 51)
 middle_cols = ['observation_' + str(i) for i in obs_rng]
@@ -101,6 +100,8 @@ other_cols = ['rank', 'numberAsns', 'numberPrefixes', 'numberAddresses', 'total'
 counter = 1
 for i in middle_cols:
     first_col.append(i)
+
+for i in range(1, 51):
     counter += 1
     for j in other_cols:
         first_col.append(j + str(counter))
@@ -112,7 +113,7 @@ for col in cols:
     final_df[col] = pd.to_numeric(final_df[col])
 # print(final_df.dtypes)
 
-
+final_df.to_csv("Impact_&_features.csv")
 y = final_df['impact']
 X = final_df.drop(['impact'], axis=1)
 x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.20)
@@ -127,7 +128,8 @@ method = 'PCA'
 
 if method == 'PCA':
     # apply PCA keeping a certain number of features
-    pca = PCA(n_components=390)
+    # n_components --> 1<= max value <= 397
+    pca = PCA(n_components=397)
     pca_x_train = pca.fit_transform(x_train)
     pca_x_test = pca.fit_transform(x_test)
     print(pca_x_train.shape)
