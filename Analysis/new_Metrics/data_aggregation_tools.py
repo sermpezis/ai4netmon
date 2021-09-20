@@ -70,9 +70,5 @@ def create_your_dataframe():
         list_of_dataframes.append(create_df_from(i))
     data_con = dfs_concatanate(list_of_dataframes[0], list_of_dataframes[1])
 
-    # write dataframe to csv
-    # with index False drop the first column where it enumarates the rows of the dataframe
-    data_con.to_csv('final_dataframe.csv', index=False)
-
     return data_con
 
