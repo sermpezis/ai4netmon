@@ -164,7 +164,7 @@ X = data.drop(['improvement_sc', 'iso', 'asn', 'source', 'longitude', 'latitude'
 print(X.columns)
 
 
-# Train models with embeddings
+# Train models without embeddings
 x_train, x_test, y_train, y_test = split_data(X, y)
 # Call models
 models.train_models(X, x_train, x_test, y_train, y_test)
