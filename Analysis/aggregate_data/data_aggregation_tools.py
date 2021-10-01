@@ -1,5 +1,8 @@
 import pandas as pd
+import networkx as nx
 import re
+import json
+
 
 def keep_number(text):
 
@@ -93,3 +96,40 @@ def create_your_dataframe():
 
     return data_con
 
+def create_bigraph_from_AS_relationships():
+    data = pd.read_csv('../../Datasets/AS-relationships/20210701.as-rel2.txt', sep="|", skiprows=180)
+    data.columns = ['node1', 'node2', 'link', 'protocol']
+    data.drop(['protocol'], axis=1, inplace=True)
+
+
+    graph = nx.Graph()
+    graph.add_nodes_from(data.node1, bipartite=0)
+    graph.add_nodes_from(data.node2, bipartite=1)
+
+    for node1, node2, link in data.values:
+        # Check if node1 and node2 are peers
+        if link == 0:
+            graph.add_edge(node1, node2)
+    # print("=====================================")
+    # print("Stats about the data")
+    # print(nx.info(graph))
+    # print("=====================================")
+    return graph
+
+def create_bigraph_from_netixlan():
+    data = json.load(open('../../Datasets/PeeringDB/netixlan.json'))
+    df = pd.DataFrame(data["data"])
+    df.drop(['id', 'net_id', 'ix_id', 'name', 'notes', 'speed', 'ipaddr4', 'ipaddr6', 'is_rs_peer', 'operational', 'created', 'updated', 'status'], axis=1, inplace=True)
+
+    graph = nx.Graph()
+    graph.add_nodes_from(df.ixlan_id, bipartite=0)
+    graph.add_nodes_from(df.asn, bipartite=1)
+
+    for node1, node2 in df.values:
+        graph.add_edge(node1, node2)
+    # print("=====================================")
+    # print("Stats about the data")
+    # print(nx.info(graph))
+    # print("=====================================")
+
+    return graph
