@@ -1,7 +1,14 @@
 import pandas as pd
 import networkx as nx
+import numpy as np
 import re
 import json
+
+PATH_AS_RANK = '../../Datasets/As-rank/asns.csv'
+PATH_PERSONAL = '../../Datasets/bgp.tools/perso.txt'
+PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
+PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
+PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
 
 
 def keep_number(text):
@@ -20,8 +27,7 @@ def create_df_from_AS_rank():
    Change the column names in order to know the features origin
    :return: return the new dataframe
    """
-    path = '../../Datasets/As-rank/asns.csv'
-    data = pd.read_csv(path, sep=",")
+    data = pd.read_csv(PATH_AS_RANK, sep=",")
     new_columns = ['AS_rank_' + str(i) for i in data.columns]
     data = data.set_axis(new_columns, axis='columns', inplace=False)
     data = data.set_index('AS_rank_asn')
@@ -33,8 +39,8 @@ def create_df_from_personal():
     """
     :return: the a dataframe which contains only one column. This column has the ASn of personal dataset as integers
     """
-    path = '../../Datasets/bgp.tools/perso.txt'
-    data = pd.read_csv(path, header=None)
+
+    data = pd.read_csv(PATH_PERSONAL, header=None)
     # name the column
     data.columns = ['asn']
     # keep only the digits of the ASns
@@ -51,10 +57,9 @@ def create_df_from_PeeringDB():
     """
     :return PeeringDB dataframe which contains only the features in the keep_keys list.
     """
-    path = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
-    df = pd.read_json(path)
+    df = pd.read_json(PATH_PEERINGDB)
     data = []
-    keep_keys = ['info_ratio', 'info_traffic', 'info_scope', 'info_type', 'info_prefixes4',
+    keep_keys = ['asn', 'info_ratio', 'info_traffic', 'info_scope', 'info_type', 'info_prefixes4',
                  'info_prefixes6', 'policy_general', 'ix_count', 'fac_count', 'created']
     for row in df.net['data']:
         net_row = []
@@ -65,75 +70,77 @@ def create_df_from_PeeringDB():
                 net_row.append(None)
         data.append(net_row)
     df = pd.DataFrame(data, columns=keep_keys)
+    # rename column names add the prefix peeringDB_
+    new_columns = ['peeringDB_' + str(i) for i in df.columns]
+    df = df.set_axis(new_columns, axis='columns', inplace=False)
+    df = df.set_index('peeringDB_asn')
     data = df
 
     return data
 
+def check_if_concatenate_works_fine(list_of_dataframes):
+
+    """
+    :param list_of_dataframes: It contains all the datasets in a dataframe form
+    :return: the number of rows that our csv should have, after the correct concatenation of the datasets
+    """
+    union_indices = []
+    for df in list_of_dataframes:
+        idx = df.index
+        union_indices = np.union1d(union_indices, idx)
+    idx = len(union_indices)
+    print(idx)
+
 def create_df_from(dataset):
 
+    """
+    In case user give error names for our dataset we print him an Exception and the program is finished
+    :param dataset: (type = string) Accepted parameters: The name should exist in the datasets
+    :return: A dataframe that has as index the ASn feature
+    """
     if dataset =='AS_rank':
-
        data = create_df_from_AS_rank()
-       return data
-
     elif dataset == 'personal':
-
         data = create_df_from_personal()
-        return data
-
     elif dataset == 'PeeringDB':
-
         data = create_df_from_PeeringDB()
-        return data
-
-def dfs_concatanate(data_AS, data_per):
-
-    """
-    :param data_AS: dataframe AS_rank
-    :param data_per: dataframe AS_personal
-    :return: the concatenation of the 2 dataframes
-    """
-
-    data = pd.concat([data_AS, data_per], axis=1)
+    else:
+        raise Exception('Not defined type of dataset')
     return data
 
-def create_your_dataframe():
+def create_dataframe_from_multiple_datasets(list_of_datasets):
 
     """
-    This function creates the user's requested dataframe
+    This function concatenates all the given datasets
     :return: The requested dataframe
     """
     # Create an empty DataFrame object
     data = pd.DataFrame()
-
-    list_od_datasets = ['AS_rank', 'personal', 'PeeringDB']
     list_of_dataframes = []
-    for i in list_od_datasets:
+    for i in list_of_datasets:
         list_of_dataframes.append(create_df_from(i))
-    data_con = dfs_concatanate(list_of_dataframes[0], list_of_dataframes[1])
 
-    return data_con
+    check_if_concatenate_works_fine(list_of_dataframes)
+
+    return pd.concat(list_of_dataframes, axis=1, ignore_index=False)
 
 def create_bigraph_from_AS_relationships():
 
     """
     This function takes as input 20210701.as-rel2.txt  and creates a graph based on NetworkX library.
-    :return: A bipartite graph containing only peers nodes
+    :return: A graph
     """
-    path = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
-    data = pd.read_csv(path, sep="|", skiprows=180)
+
+    data = pd.read_csv(PATH_AS_RELATIONSHIPS, sep="|", skiprows=180)
     data.columns = ['node1', 'node2', 'link', 'protocol']
     data.drop(['protocol'], axis=1, inplace=True)
 
-
     graph = nx.Graph()
-    graph.add_nodes_from(data.node1, bipartite=0)
-    graph.add_nodes_from(data.node2, bipartite=1)
+    graph.add_nodes_from(data.node1, node_type="node")
+    graph.add_nodes_from(data.node2, node_type="node")
 
-    for node1, node2, link in data.values:
-        # Check if node1 and node2 are peers
-        if link == 0:
-            graph.add_edge(node1, node2)
+    for line in data.values:
+        graph.add_edge(line[0], line[1])
 
     return graph
 
@@ -141,12 +148,12 @@ def create_bigraph_from_netixlan():
 
     """
     This function takes as input netixlan.json  and creates a graph based on NetworkX library.
-    :return: A bipartite graph ( with node1=ixlan_id and node2=asn)
+    :return: A bipartite graph (with node1=ixlan_id and node2=asn)
     """
-    path = '../../Datasets/PeeringDB/netixlan.json'
-    data = json.load(open(path))
+
+    data = json.load(open(PATH_PEERINGDB_NETIXLAN))
     df = pd.DataFrame(data["data"])
-    df.drop(['id', 'net_id', 'ix_id', 'name', 'notes', 'speed', 'ipaddr4', 'ipaddr6', 'is_rs_peer', 'operational', 'created', 'updated', 'status'], axis=1, inplace=True)
+    df = df[['ixlan_id', 'asn']]
 
     graph = nx.Graph()
     graph.add_nodes_from(df.ixlan_id, bipartite=0)
