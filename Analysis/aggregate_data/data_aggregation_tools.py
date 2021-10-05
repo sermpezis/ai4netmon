@@ -78,7 +78,7 @@ def create_df_from_PeeringDB():
 
     return data
 
-def check_if_concatenate_works_fine(list_of_dataframes):
+def check_if_concatenate_works_properly(list_of_dataframes):
 
     """
     :param list_of_dataframes: It contains all the datasets in a dataframe form
