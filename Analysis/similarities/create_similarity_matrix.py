@@ -18,8 +18,30 @@ def load_dict_from(filename):
         data = json.load(json_file)
     return data
 
-def similarity_function(data, data2):
+def creating_list_containing_all_pairs(data_dict):
+    """
+    :param data_dict: The json file containing as key an ASn and as values the ASns that the key ASn exchange information
+    :return: A list of lists, where each list contains all possible pairs for each specific ASn(key)
+    """
+    for asn in data_dict:
+        new_pairs = []
+        flag = True
+        for asn2 in data_dict[asn]:
+            if flag:
+                new_pairs.append(asn)
+                new_pairs.append(asn2)
+                flag = False
+            else:
+                new_pairs.append(asn2)
+        list_containing_all_possible_pairs.append(new_pairs)
+    return list_containing_all_possible_pairs
 
+def similarity_function(data, data2):
+    """
+    :param data: The ASn1
+    :param data2: The ASn2
+    :return: The user's chosen similarity metric (Gini, Gini_strict, Cosine_similarity) for a pair of ASNs (keys)
+    """
     metric = 'Gini'
     inter = np.intersect1d(data, data2)
     union = np.union1d(data, data2)
@@ -28,7 +50,7 @@ def similarity_function(data, data2):
     elif metric == 'Gini_strict':
         inter_common_values = [x for x in inter if (data.index(x) & data2.index(x)) > 0]
         similarity = len(inter_common_values)/len(union)
-    elif metric == 'cosine_similarity':
+    elif metric == 'Cosine_similarity':
         values1 = [x if x in union else 0 for x in data]
         values2 = [x if x in union else 0 for x in data2]
         if len(values1) > len(values2):
@@ -43,24 +65,10 @@ def similarity_function(data, data2):
         raise Exception('Not defined similarity method')
     return similarity
 
-# with open('package.json') as json_file:
-#     data_dict = json.load(json_file)
-
 # calculation of the similarity matrix
 data_dict = load_dict_from(ASN2ASN_FILENAME)
 list_containing_all_possible_pairs = []
-
-for asn in data_dict:
-    new_pairs = []
-    flag = True
-    for asn2 in data_dict[asn]:
-        if flag:
-            new_pairs.append(asn)
-            new_pairs.append(asn2)
-            flag = False
-        else:
-            new_pairs.append(asn2)
-    list_containing_all_possible_pairs.append(new_pairs)
+list_containing_all_possible_pairs = creating_list_containing_all_pairs(data_dict)
 
 similarity_dict = {}
 for i in range(0, len(list_containing_all_possible_pairs)-1):
