@@ -33,8 +33,8 @@ def node2vec(graph, dimensions, walk_length, num_walks, workers, window, min_cou
     if not os.path.isfile('./embeddings.emb'):
         EMBEDDING_FILENAME = './embeddings.emb'
 
-        node2vec_model = Node2Vec(graph, dimensions, walk_length, num_walks, workers)
-        model = node2vec_model.fit(window, min_count, batch_words)
+        node2vec_model = Node2Vec(graph, dimensions=dimensions, walk_length=walk_length, num_walks=num_walks, workers=workers)
+        model = node2vec_model.fit(window=window, min_count=min_count, batch_words=batch_words)
 
         # Look for most similar nodes. Output node names are always strings
         model.wv.most_similar('2')
