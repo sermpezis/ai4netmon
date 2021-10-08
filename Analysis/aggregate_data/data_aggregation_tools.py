@@ -124,7 +124,7 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
 
     return pd.concat(list_of_dataframes, axis=1, ignore_index=False)
 
-def create_bigraph_from_AS_relationships():
+def create_graph_from_AS_relationships():
 
     """
     This function takes as input 20210701.as-rel2.txt  and creates a graph based on NetworkX library.
