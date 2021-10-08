@@ -42,7 +42,7 @@ def node2vec(graph, dimensions, walk_length, num_walks, workers, window, min_cou
         data = pd.read_table("embeddings.emb", header=None, sep=" ")
     else:
         # Load model after Node2Vec.save
-        data = pd.read_table("embeddings.emb", header=None, sep=" ")
+        data = pd.read_table("embeddings.emb", header=None, sep=" ", skiprows=1)
     return data
 
 
