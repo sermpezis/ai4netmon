@@ -9,7 +9,7 @@ PATH_PERSONAL = '../../Datasets/bgp.tools/perso.txt'
 PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
 PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
 PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
-
+PATH_BGP = '../bgp_paths/random_data.txt'
 
 def keep_number(text):
 
@@ -163,3 +163,24 @@ def create_bigraph_from_netixlan():
         graph.add_edge(node1, node2)
 
     return graph
+
+def create_graph_from_bgp_paths(paths):
+    """
+    :param paths: A list of lists containing paths (random_generated)
+    :return: A graph based on the random generated paths
+    """
+    columns = ['node'+str(i) for i in range(1, 16)]
+    df =pd.DataFrame(columns=columns, data=paths)
+    print(df)
+    graph = nx.Graph()
+
+    for node in df:
+        for i in range(0, len(df)):
+            graph.add_nodes_from([df[node].values[i]], node_type="node")
+
+    for i in range(0, len(df)):
+        for j in range(1, len(df.columns)):
+            graph.add_edges_from([(df['node{}'.format(j)].values[i], df['node{}'.format(j+1)].values[i])])
+
+    return graph
+
