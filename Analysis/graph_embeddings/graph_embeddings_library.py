@@ -39,7 +39,7 @@ def node2vec(graph, dimensions, walk_length, num_walks, workers, window, min_cou
         # Look for most similar nodes. Output node names are always strings
         model.wv.most_similar('2')
         model.wv.save_word2vec_format(EMBEDDING_FILENAME)
-        data = pd.read_table("embeddings.emb", header=None, sep=" ")
+        data = pd.read_table("embeddings.emb", header=None, sep=" ", skiprows=1)
     else:
         # Load model after Node2Vec.save
         data = pd.read_table("embeddings.emb", header=None, sep=" ", skiprows=1)
