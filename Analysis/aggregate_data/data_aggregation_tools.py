@@ -122,7 +122,7 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
 
     check_if_concatenate_works_properly(list_of_dataframes)
 
-    return pd.concat(list_of_dataframes, axis=1, ignore_index=False)
+    return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
 
 def create_graph_from_AS_relationships():
 
