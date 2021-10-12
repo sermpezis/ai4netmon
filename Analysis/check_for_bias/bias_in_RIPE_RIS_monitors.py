@@ -39,7 +39,7 @@ def cdf_plot(ripe, final, feature):
     ax2.plot(x_ripe_sorted, merged_data[feature])
     ax2.set_xlabel('Ripe data')
     ax2.set_ylabel('CDF Analysis')
-    # plt.savefig(str(feature) + f'.png')
+    plt.savefig(str(feature) + f'.png')
     plt.tight_layout()
     plt.show()
     plt.clf()
@@ -79,6 +79,6 @@ for column_name in final_dataframe.columns:
     elif dataTypeObj == np.object:
         ripe_sorted = ripe_df.sort_values(by=['ASn'], ascending=True)
         final_sorted = final_dataframe.sort_values(by=[column_name], ascending=True)
-        # histogram_plot(ripe_sorted, final_sorted, column_name)
+        histogram_plot(ripe_sorted, final_sorted, column_name)
 
 
