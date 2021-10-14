@@ -132,18 +132,17 @@ def categorize_features(data, ripe, type, feature):
             cdf_plot(ripe, data, feature)
             # cdf_subplot(ripe, data, feature)
     elif type == np.object:
-        ripe_sorted = ripe.sort_values(by=['ASn'], ascending=True)
-        final_sorted = data.sort_values(by=[feature], ascending=True)
         if feature == 'AS_rank_iso':
-            histogram_plot(ripe, data, feature)
-            data['AS_rank_iso'] = convert_country_to_continent(data)
-            histogram_plot(ripe_sorted, final_sorted, feature)
+            # histogram_plot(ripe, data, feature)
+            # data['AS_rank_iso'] = convert_country_to_continent(data)
+            # histogram_plot(ripe, data, feature)
+            pass
         elif feature == 'peeringDB_created':
             final_dataframe['peeringDB_created'] = final_dataframe.peeringDB_created.fillna(0)
             final_dataframe['peeringDB_created'] = convert_to_numerical(data)
             cdf_plot(ripe, data, feature)
         else:
-            histogram_plot(ripe_sorted, final_sorted, column_name)
+            histogram_plot(ripe, data, column_name)
 
 
 def cdf_plot(ripe, final, feature):
@@ -152,13 +151,14 @@ def cdf_plot(ripe, final, feature):
     :param final: Contains a dataframe combining 3 datasets
     :param feature: Is the column name of final
     """
-    final_cdf = ECDF(final[feature])
+    x = final[feature].dropna()
+    final_cdf = ECDF(x)
     plt.plot(final_cdf.x, final_cdf.y, label='All_ASes')
     merged_data = pd.merge(ripe, final, on='ASn', how='inner')
     merged_data.sort_values('ASn', inplace=True)
     merged_data.drop_duplicates(subset='ASn', keep=False, inplace=True)
     merged_data.sort_values(feature, inplace=True)
-    ripe_cdf = ECDF(merged_data[feature])
+    ripe_cdf = ECDF(merged_data[feature].dropna())
     plt.plot(ripe_cdf.x, ripe_cdf.y, label='RIPE_RIS_peers')
     plt.ylabel('CDF')
     if feature == 'AS_rank_numberAddresses' or feature == 'AS_rank_numberAsns' or feature == 'AS_rank_numberPrefixes' \
@@ -188,7 +188,7 @@ def cdf_subplot(ripe, final, feature):
     ax1.set_ylabel('CDF')
     final_cdf = ECDF(final[feature])
     ax1.plot(final_cdf.x, final_cdf.y)
-    merged_data = pd.merge(ripe, final, on='ASn', how='inner')
+    merged_data = pd.merge(final, ripe, on='ASn', how='inner')
     merged_data.sort_values('ASn', inplace=True)
     merged_data.drop_duplicates(subset='ASn', keep=False, inplace=True)
     merged_data.sort_values(feature, inplace=True)
@@ -206,8 +206,12 @@ def histogram_plot(ripe, final, feature):
     :param final: Contains a dataframe combining 3 datasets
     :param feature: Is the column name of final
     """
-    x = final[feature].astype(str)
+    # Without dropna we pass all arguments except one (NaN) and the plots are all wrong
+    x = final[feature].dropna()
+    x = x.astype(str)
     merged_data = pd.merge(ripe, final, on=['ASn'], how='inner')
+    merged = merged_data[feature].dropna()
+    y = merged.astype(str)
     y = merged_data[feature].astype(str)
     plt.hist([x, y], density=True, bins=final[feature].nunique(), histtype='bar', align='left',
              label=['All_ASes', 'RIPE_RIS_peers'],
@@ -216,7 +220,7 @@ def histogram_plot(ripe, final, feature):
     plt.ylim(0, 1)
     plt.suptitle('Feature: ' + str(feature), fontsize=14)
     plt.xlabel('RIPE RIS peers')
-    plt.xticks(rotation='vertical')
+    plt.xticks(rotation='vertical', ha='right')
     plt.ylabel('CDF')
     plt.tight_layout()
     plt.savefig(str(feature) + f'.png')
