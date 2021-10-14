@@ -11,12 +11,13 @@ from statsmodels.distributions.empirical_distribution import ECDF
 pd.options.mode.chained_assignment = None
 PATH_RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers_monitors/list_of_RIPE_RIS_peers.json'
 
+
 def convert_to_numerical(data):
     """
+    The function subtracts the created year of peeringDB from the current year.
     :param data: It contains all features from 3 different datasets
-    :return:
+    :return: A numerical feature containing the above described subtraction
     """
-
     data['peeringDB_created'] = data['peeringDB_created'].astype('str')
     data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: keep_number(x))
     today_year = datetime.today()
@@ -24,13 +25,13 @@ def convert_to_numerical(data):
 
     return data['peeringDB_created']
 
+
 def read_ripe_peers():
     """
     :return: A dataframe with one column that contains all RIPE peer-monitors ASn
     """
     data_ripe = pd.read_json(PATH_RIPE_RIS_PEERS, typ='dictionary')
     list_of_ripe_peers = [i for i in data_ripe.values]
-
     # convert list to dataframe
     df = pd.DataFrame(list_of_ripe_peers, columns=['ASn'])
 
@@ -59,8 +60,8 @@ def keep_number(text):
 
 def country_flag(data):
     """
-    :param data:
-    :param list_alpha_2:
+    :param data: Contains a dataframe combining 3 datasets
+    :param list_alpha_2: Contains the 2-letter abbreviation from each country
     :return: Matches the acronyms with the Fullname of the countries
     """
     list_alpha_2 = [i.alpha2 for i in list(countries)]
@@ -71,6 +72,11 @@ def country_flag(data):
 
 
 def country_to_continent(country_name):
+    """
+    This function takes as input a country name and returns the continent that the given country belongs.
+    :param country_name: Contains the name of a country
+    :return: The continent
+    """
     try:
         country_alpha2 = pc.country_name_to_country_alpha2(country_name)
         country_continent_code = pc.country_alpha2_to_continent_code(country_alpha2)
@@ -82,15 +88,62 @@ def country_to_continent(country_name):
 
 def convert_country_to_continent(data):
     """
+    The function converts iso = alpha_2 (example: US) to the whole name of the country. Needs (import iso3166)
     :param data: Contains a dataframe combining 3 datasets
     :return: The continent for each country
     """
-    # Convert iso = alpha_2 (example: US) to the whole name of the country (import iso3166)
     data['AS_rank_iso'] = data.apply(country_flag, axis=1)
     for i in range(0, len(data)):
         data['AS_rank_iso'][i] = country_to_continent(data['AS_rank_iso'][i])
 
     return data['AS_rank_iso']
+
+
+def categorize_features(data, ripe, type, feature):
+    """
+    :param data: Contains a dataframe combining 3 datasets
+    :param ripe: A dataframe with one column that contains all RIPE peer-monitors ASn
+    :param type: The dtypes of every column
+    :param feature: Column name
+    :return: Shows for every feature each plot
+    """
+    if type == np.int64 or type == np.float64:
+        if feature == 'peeringDB_info_prefixes4':
+            data['peeringDB_info_prefixes4'] = data.peeringDB_info_prefixes4.fillna(0)
+            data['peeringDB_info_prefixes4'] = data.peeringDB_info_prefixes4.astype('Int64')
+            cdf_plot(ripe, data, feature)
+        elif feature == 'peeringDB_info_prefixes6':
+            data['peeringDB_info_prefixes6'] = data.peeringDB_info_prefixes6.fillna(0)
+            data['peeringDB_info_prefixes6'] = data.peeringDB_info_prefixes6.astype('Int64')
+            cdf_plot(ripe, data, feature)
+        elif feature == 'peeringDB_ix_count':
+            data['peeringDB_ix_count'] = data.peeringDB_ix_count.fillna(0)
+            data['peeringDB_ix_count'] = data.peeringDB_ix_count.astype('Int64')
+            cdf_plot(ripe, data, feature)
+        elif feature == 'peeringDB_fac_count':
+            data['peeringDB_fac_count'] = data.peeringDB_fac_count.fillna(0)
+            data['peeringDB_fac_count'] = data.peeringDB_fac_count.astype('Int64')
+            cdf_plot(ripe, data, feature)
+        elif feature == 'personal_is_matched':
+            data['personal_is_matched'] = data.personal_is_matched.fillna(0)
+            data['personal_is_matched'] = data.personal_is_matched.astype('Int64')
+            histogram_plot(ripe, data, feature)
+        else:
+            cdf_plot(ripe, data, feature)
+            # cdf_subplot(ripe, data, feature)
+    elif type == np.object:
+        ripe_sorted = ripe.sort_values(by=['ASn'], ascending=True)
+        final_sorted = data.sort_values(by=[feature], ascending=True)
+        if feature == 'AS_rank_iso':
+            histogram_plot(ripe, data, feature)
+            data['AS_rank_iso'] = convert_country_to_continent(data)
+            histogram_plot(ripe_sorted, final_sorted, feature)
+        elif feature == 'peeringDB_created':
+            final_dataframe['peeringDB_created'] = final_dataframe.peeringDB_created.fillna(0)
+            final_dataframe['peeringDB_created'] = convert_to_numerical(data)
+            cdf_plot(ripe, data, feature)
+        else:
+            histogram_plot(ripe_sorted, final_sorted, column_name)
 
 
 def cdf_plot(ripe, final, feature):
@@ -108,7 +161,14 @@ def cdf_plot(ripe, final, feature):
     ripe_cdf = ECDF(merged_data[feature])
     plt.plot(ripe_cdf.x, ripe_cdf.y, label='RIPE_RIS_peers')
     plt.ylabel('CDF')
-    plt.xscale('log')
+    if feature == 'AS_rank_numberAddresses' or feature == 'AS_rank_numberAsns' or feature == 'AS_rank_numberPrefixes' \
+            or feature == 'AS_rank_peer' or feature == 'AS_rank_provider' or feature == 'AS_rank_total' \
+            or feature == 'ASn' or feature == 'AS_rank_customer' or feature == 'peeringDB_info_prefixes4' or \
+            feature == 'peeringDB_info_prefixes6' or feature == 'peeringDB_ix_count' or feature == 'peeringDB_fac_count' \
+            or feature == 'peeringDB_created':
+        plt.xscale('log')
+    else:
+        plt.xscale('linear')
     plt.title('Feature: ' + str(feature), fontsize=14)
     plt.legend()
     plt.tight_layout()
@@ -149,7 +209,8 @@ def histogram_plot(ripe, final, feature):
     x = final[feature].astype(str)
     merged_data = pd.merge(ripe, final, on=['ASn'], how='inner')
     y = merged_data[feature].astype(str)
-    plt.hist([x, y], density=True, bins=final[feature].nunique(), histtype='bar', label=['All_ASes', 'RIPE_RIS_peers'],
+    plt.hist([x, y], density=True, bins=final[feature].nunique(), histtype='bar', align='left',
+             label=['All_ASes', 'RIPE_RIS_peers'],
              color=['blue', 'orange'])
     plt.legend(prop={'size': 10})
     plt.ylim(0, 1)
@@ -170,25 +231,4 @@ if __name__ == "__main__":
     print(final_dataframe.dtypes)
     for column_name in final_dataframe.columns:
         dataTypeObj = final_dataframe.dtypes[column_name]
-        if dataTypeObj == np.int64 or dataTypeObj == np.float64:
-            if (column_name == 'personal_is_matched' or column_name == 'peeringDB_info_prefixes4' or column_name == 'peeringDB_info_prefixes6'\
-                    or column_name == 'peeringDB_ix_count' or column_name == 'peeringDB_fac_count'):
-                final_dataframe['personal_is_matched'] = final_dataframe.personal_is_matched.fillna(0)
-                final_dataframe['personal_is_matched'] = final_dataframe.personal_is_matched.astype('Int64')
-                cdf_plot(ripe_df, final_dataframe, column_name)
-            else:
-                cdf_plot(ripe_df, final_dataframe, column_name)
-        elif dataTypeObj == np.object:
-            ripe_sorted = ripe_df.sort_values(by=['ASn'], ascending=True)
-            final_sorted = final_dataframe.sort_values(by=[column_name], ascending=True)
-            if column_name == 'AS_rank_iso':
-                histogram_plot(ripe_df, final_dataframe, column_name)
-                final_dataframe['AS_rank_iso'] = convert_country_to_continent(final_dataframe)
-                histogram_plot(ripe_sorted, final_dataframe, column_name)
-            elif column_name == 'peeringDB_created':
-                final_dataframe['peeringDB_created'] = final_dataframe.peeringDB_created.fillna(0)
-                final_dataframe['peeringDB_created'] = convert_to_numerical(final_dataframe)
-                cdf_plot(ripe_df, final_dataframe, column_name)
-            else:
-                histogram_plot(ripe_sorted, final_sorted, column_name)
-
+        categorize_features(final_dataframe, ripe_df, dataTypeObj, column_name)
