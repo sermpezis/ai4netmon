@@ -12,16 +12,17 @@ pd.options.mode.chained_assignment = None
 PATH_RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers_monitors/list_of_RIPE_RIS_peers.json'
 
 def convert_to_numerical(data):
+    """
+    :param data: It contains all features from 3 different datasets
+    :return:
+    """
 
     data['peeringDB_created'] = data['peeringDB_created'].astype('str')
-
     data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: keep_number(x))
-    print(data['peeringDB_created'].tail())
-
     today_year = datetime.today()
     data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: int(today_year.year) - int(x))
 
-    return data[['peeringDB_created']]
+    return data['peeringDB_created']
 
 def read_ripe_peers():
     """
@@ -110,8 +111,8 @@ def cdf_plot(ripe, final, feature):
     plt.xscale('log')
     plt.title('Feature: ' + str(feature), fontsize=14)
     plt.legend()
-    plt.savefig(str(feature) + f'.png')
     plt.tight_layout()
+    plt.savefig(str(feature) + f'.png')
     plt.show()
 
 
@@ -134,8 +135,8 @@ def cdf_subplot(ripe, final, feature):
     ax2.set_xlabel('RIPE RIS peers')
     ripe_cdf = ECDF(merged_data[feature])
     ax2.plot(ripe_cdf.x, ripe_cdf.y)
-    plt.savefig(str(feature) + f'.png')
     plt.tight_layout()
+    plt.savefig(str(feature) + f'.png')
     plt.show()
 
 
@@ -156,30 +157,8 @@ def histogram_plot(ripe, final, feature):
     plt.xlabel('RIPE RIS peers')
     plt.xticks(rotation='vertical')
     plt.ylabel('CDF')
+    plt.tight_layout()
     plt.savefig(str(feature) + f'.png')
-    plt.tight_layout()
-    plt.show()
-
-
-def test_CDF_plots(ripe, final, feature):
-    """
-    :param ripe: Contains the AS numbers of RIPE RIS
-    :param final: Contains a dataframe combining 3 datasets
-    :param feature: Is the column name of final
-    """
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('Feature: ' + str(feature), fontsize=14)
-    print(final[feature])
-    my_cdf = ECDF(final[feature])
-    ax1.plot(my_cdf.x, my_cdf.y)
-
-    merged_data = pd.merge(ripe, final, on='ASn', how='inner')
-    merged_data.sort_values('ASn', inplace=True)
-    merged_data.drop_duplicates(subset='ASn', keep=False, inplace=True)
-    merged_data.sort_values(feature, inplace=True)
-    ripe_cdf = ECDF(merged_data[feature])
-    ax2.plot(ripe_cdf.x, ripe_cdf.y)
-    plt.tight_layout()
     plt.show()
 
 
@@ -192,30 +171,13 @@ if __name__ == "__main__":
     for column_name in final_dataframe.columns:
         dataTypeObj = final_dataframe.dtypes[column_name]
         if dataTypeObj == np.int64 or dataTypeObj == np.float64:
-            if column_name == 'personal_is_matched':
+            if (column_name == 'personal_is_matched' or column_name == 'peeringDB_info_prefixes4' or column_name == 'peeringDB_info_prefixes6'\
+                    or column_name == 'peeringDB_ix_count' or column_name == 'peeringDB_fac_count'):
                 final_dataframe['personal_is_matched'] = final_dataframe.personal_is_matched.fillna(0)
-                histogram_plot(ripe_df, final_dataframe, column_name)
-                pass
-            elif column_name == 'peeringDB_info_prefixes4':
-                final_dataframe['peeringDB_info_prefixes4'] = final_dataframe.peeringDB_info_prefixes4.fillna(0)
-                final_dataframe['peeringDB_info_prefixes4'] = final_dataframe.peeringDB_info_prefixes4.astype('Int64')
-                cdf_plot(ripe_df, final_dataframe, column_name)
-            elif column_name == 'peeringDB_info_prefixes6':
-                final_dataframe['peeringDB_info_prefixes6'] = final_dataframe.peeringDB_info_prefixes4.fillna(0)
-                final_dataframe['peeringDB_info_prefixes6'] = final_dataframe.peeringDB_info_prefixes4.astype('Int64')
-                cdf_plot(ripe_df, final_dataframe, column_name)
-            elif column_name == 'peeringDB_ix_count':
-                final_dataframe['peeringDB_ix_count'] = final_dataframe.peeringDB_info_prefixes4.fillna(0)
-                final_dataframe['peeringDB_ix_count'] = final_dataframe.peeringDB_info_prefixes4.astype('Int64')
-                cdf_plot(ripe_df, final_dataframe, column_name)
-            elif column_name == 'peeringDB_fac_count':
-                final_dataframe['peeringDB_fac_count'] = final_dataframe.peeringDB_info_prefixes4.fillna(0)
-                final_dataframe['peeringDB_fac_count'] = final_dataframe.peeringDB_info_prefixes4.astype('Int64')
+                final_dataframe['personal_is_matched'] = final_dataframe.personal_is_matched.astype('Int64')
                 cdf_plot(ripe_df, final_dataframe, column_name)
             else:
                 cdf_plot(ripe_df, final_dataframe, column_name)
-                # cdf_subplot(ripe_df, final_dataframe, column_name)
-            pass
         elif dataTypeObj == np.object:
             ripe_sorted = ripe_df.sort_values(by=['ASn'], ascending=True)
             final_sorted = final_dataframe.sort_values(by=[column_name], ascending=True)
