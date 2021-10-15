@@ -134,15 +134,17 @@ def categorize_features(data, ripe, type, feature):
     elif type == np.object:
         if feature == 'AS_rank_iso':
             # histogram_plot(ripe, data, feature)
-            # data['AS_rank_iso'] = convert_country_to_continent(data)
-            # histogram_plot(ripe, data, feature)
+            data['AS_rank_iso'] = convert_country_to_continent(data)
+            histogram_plot(ripe, data, feature)
             pass
         elif feature == 'peeringDB_created':
             final_dataframe['peeringDB_created'] = final_dataframe.peeringDB_created.fillna(0)
             final_dataframe['peeringDB_created'] = convert_to_numerical(data)
             cdf_plot(ripe, data, feature)
+        elif feature == 'peeringDB_info_type':
+            histogram_plot(ripe, data, feature)
         else:
-            histogram_plot(ripe, data, column_name)
+            histogram_plot(ripe, data, feature)
 
 
 def cdf_plot(ripe, final, feature):
@@ -207,21 +209,21 @@ def histogram_plot(ripe, final, feature):
     :param feature: Is the column name of final
     """
     # Without dropna we pass all arguments except one (NaN) and the plots are all wrong
-    x = final[feature].dropna()
+    if feature == 'AS_rank_source':
+        x = final[feature].fillna(value=feature)
+    else:
+        x = final[feature].dropna()
     x = x.astype(str)
     merged_data = pd.merge(ripe, final, on=['ASn'], how='inner')
-    merged = merged_data[feature].dropna()
-    y = merged.astype(str)
     y = merged_data[feature].astype(str)
-    plt.hist([x, y], density=True, bins=final[feature].nunique(), histtype='bar', align='left',
+    plt.hist((x, y), density=True, bins=final[feature].nunique(), histtype='bar', align='left',
              label=['All_ASes', 'RIPE_RIS_peers'],
              color=['blue', 'orange'])
     plt.legend(prop={'size': 10})
+    plt.ylabel('CDF')
     plt.ylim(0, 1)
     plt.suptitle('Feature: ' + str(feature), fontsize=14)
-    plt.xlabel('RIPE RIS peers')
-    plt.xticks(rotation='vertical', ha='right')
-    plt.ylabel('CDF')
+    plt.xticks(rotation='vertical')
     plt.tight_layout()
     plt.savefig(str(feature) + f'.png')
     plt.show()
