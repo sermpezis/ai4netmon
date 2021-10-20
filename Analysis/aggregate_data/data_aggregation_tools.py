@@ -10,9 +10,10 @@ PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
 PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
 PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
 PATH_BGP = '../bgp_paths/random_data.txt'
+AS_HEGEMONY_PATH = '../../Datasets/AS_hegemony/AS_hegemony.csv'
+
 
 def keep_number(text):
-
     """
     :param text: example AS206924
     :return: 206924
@@ -21,8 +22,8 @@ def keep_number(text):
 
     return " ".join(num)
 
-def create_df_from_AS_rank():
 
+def create_df_from_AS_rank():
     """
    Change the column names in order to know the features origin
    :return: return the new dataframe
@@ -34,8 +35,18 @@ def create_df_from_AS_rank():
 
     return data
 
-def create_df_from_personal():
 
+def create_df_from_AS_hegemony():
+    """
+   :return: return the new dataframe with Asn column as index
+   """
+    data = pd.read_csv(AS_HEGEMONY_PATH, sep=",")
+    data = data.set_index('asn')
+
+    return data
+
+
+def create_df_from_personal():
     """
     :return: the a dataframe which contains only one column. This column has the ASn of personal dataset as integers
     """
@@ -52,8 +63,8 @@ def create_df_from_personal():
 
     return data
 
-def create_df_from_PeeringDB():
 
+def create_df_from_PeeringDB():
     """
     :return PeeringDB dataframe which contains only the features in the keep_keys list.
     """
@@ -78,8 +89,8 @@ def create_df_from_PeeringDB():
 
     return data
 
-def check_if_concatenate_works_properly(list_of_dataframes):
 
+def check_if_concatenate_works_properly(list_of_dataframes):
     """
     :param list_of_dataframes: It contains all the datasets in a dataframe form
     :return: the number of rows that our csv should have, after the correct concatenation of the datasets
@@ -91,25 +102,27 @@ def check_if_concatenate_works_properly(list_of_dataframes):
     idx = len(union_indices)
     print(idx)
 
-def create_df_from(dataset):
 
+def create_df_from(dataset):
     """
     In case user give error names for our dataset we print him an Exception and the program is finished
     :param dataset: (type = string) Accepted parameters: The name should exist in the datasets
     :return: A dataframe that has as index the ASn feature
     """
-    if dataset =='AS_rank':
-       data = create_df_from_AS_rank()
+    if dataset == 'AS_rank':
+        data = create_df_from_AS_rank()
     elif dataset == 'personal':
         data = create_df_from_personal()
     elif dataset == 'PeeringDB':
         data = create_df_from_PeeringDB()
+    elif dataset == 'AS_hegemony':
+        data = create_df_from_AS_hegemony()
     else:
         raise Exception('Not defined type of dataset')
     return data
 
-def create_dataframe_from_multiple_datasets(list_of_datasets):
 
+def create_dataframe_from_multiple_datasets(list_of_datasets):
     """
     This function concatenates all the given datasets
     :return: The requested dataframe
@@ -124,8 +137,8 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
 
     return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
 
-def create_graph_from_AS_relationships():
 
+def create_graph_from_AS_relationships():
     """
     This function takes as input 20210701.as-rel2.txt  and creates a graph based on NetworkX library.
     :return: A graph
@@ -144,8 +157,8 @@ def create_graph_from_AS_relationships():
 
     return graph
 
-def create_bigraph_from_netixlan():
 
+def create_bigraph_from_netixlan():
     """
     This function takes as input netixlan.json  and creates a graph based on NetworkX library.
     :return: A bipartite graph (with node1=ixlan_id and node2=asn)
@@ -164,13 +177,14 @@ def create_bigraph_from_netixlan():
 
     return graph
 
+
 def create_graph_from_bgp_paths(paths):
     """
     :param paths: A list of lists containing paths (random_generated)
     :return: A graph based on the random generated paths
     """
-    columns = ['node'+str(i) for i in range(1, 16)]
-    df =pd.DataFrame(columns=columns, data=paths)
+    columns = ['node' + str(i) for i in range(1, 16)]
+    df = pd.DataFrame(columns=columns, data=paths)
     print(df)
     graph = nx.Graph()
 
@@ -180,7 +194,6 @@ def create_graph_from_bgp_paths(paths):
 
     for i in range(0, len(df)):
         for j in range(1, len(df.columns)):
-            graph.add_edges_from([(df['node{}'.format(j)].values[i], df['node{}'.format(j+1)].values[i])])
+            graph.add_edges_from([(df['node{}'.format(j)].values[i], df['node{}'.format(j + 1)].values[i])])
 
     return graph
-
