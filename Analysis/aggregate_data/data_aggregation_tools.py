@@ -11,7 +11,7 @@ PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
 PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
 PATH_BGP = '../bgp_paths/random_data.txt'
 AS_HEGEMONY_PATH = '../../Datasets/AS_hegemony/AS_hegemony.csv'
-
+ALL_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
 
 def keep_number(text):
     """
@@ -21,6 +21,25 @@ def keep_number(text):
     num = re.findall(r'[0-9]+', text)
 
     return " ".join(num)
+
+def create_df_from_Atlas_probes():
+    """
+    :return: The new dataframe where when 2 or more probes have the same AS number (only for asn_v4) returned in the same row
+    """
+
+    data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
+    data.drop_duplicates(subset="prb_id", keep='first', inplace=True)
+    data = data[(data['status'] == 'Connected') & (data['asn_v4'].isnull().values.any())]
+
+    data['status'] = (data['status'] == 'Connected').astype(int)
+
+    data.rename(columns={'asn_v4': 'asn', 'status': 'has_atlas_probe'}, inplace=True)
+    # drop by Name
+    data = data.drop(['asn_v6'], axis=1)
+    data = data.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
+    data = data.set_index('asn')
+
+    return data
 
 
 def create_df_from_AS_rank():
@@ -117,6 +136,8 @@ def create_df_from(dataset):
         data = create_df_from_PeeringDB()
     elif dataset == 'AS_hegemony':
         data = create_df_from_AS_hegemony()
+    elif dataset == 'Atlas_probes':
+        data = create_df_from_Atlas_probes()
     else:
         raise Exception('Not defined type of dataset')
     return data

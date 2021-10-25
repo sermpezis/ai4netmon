@@ -3,7 +3,7 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 
-ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony']
+ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes']
 
 if __name__ == "__main__":
 
