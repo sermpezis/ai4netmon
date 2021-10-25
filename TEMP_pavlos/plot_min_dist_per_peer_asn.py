@@ -24,12 +24,18 @@ FIG_SCATTER_NB_FEEDS_VS_PERC_MIN_DIST_PEER_FNAME = './figures/fig_scatter_nb_fee
 FIG_SCATTER_NB_FEEDS_VS_NB_UNIQUE_MIN_DIST_PEER_FNAME = './figures/fig_scatter_nb_feeds_vs_nb_unique_min_dist_peer.png'
 FIG_SCATTER_NB_FEEDS_VS_PERC_UNIQUE_MIN_DIST_PEER_FNAME = './figures/fig_scatter_nb_feeds_vs_perc_unique_min_dist_peer.png'
 FIG_BAR_CORR_VARS_AVG_DIST_FNAME = './figures/fig_bar_corr_characteristics_vs_avg_dist.png'
+FIG_BAR_CORR_VARS_AVG_DIST_ONLY_FULL_FEED_FNAME = './figures/fig_bar_corr_characteristics_vs_avg_dist_only_full_feed.png'
 FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_ixps.png'
 FIG_SCATTER_AVG_DIST_VS_NB_NEIGH_TOTAL_FNAME = './figures/fig_scatter_avg_dist_vs_nb_neigh_total.png'
 FIG_SCATTER_AVG_DIST_VS_NB_NEIGH_PEERS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_neigh_peers.png'
+FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_ixps.png'
 FIG_BAR_CORR_VARS_IMPROVEMENT_FNAME = './figures/fig_bar_corr_characteristics_vs_improvement.png'
+FIG_BAR_CORR_VARS_IMPROVEMENT_ONLY_FULL_FEED_FNAME = './figures/fig_bar_corr_characteristics_vs_improvement_only_full_feed.png'
 FIG_SCATTER_IMPROVEMENT_VS_NB_NEIGH_CUSTOMERS_FNAME = './figures/fig_scatter_improvement_vs_nb_neigh_customers.png'
-
+FIG_SCATTER_IMPROVEMENT_VS_NB_NEIGH_PEERS_FNAME = './figures/fig_scatter_improvement_vs_nb_neigh_peers.png'
+FIG_SCATTER_IMPROVEMENT_VS_CUST_CONE_FNAME = './figures/fig_scatter_improvement_vs_cust_cone.png'
+FIG_SCATTER_IMPROVEMENT_VS_NB_IXPS_FNAME = './figures/fig_scatter_improvement_vs_nb_ixps.png' 
+FIG_SCATTER_IMPROVEMENT_VS_NB_FAC_FNAME = './figures/fig_scatter_improvement_vs_nb_facilities.png' 
 
 print('Loading asn2asn distance data ...')
 with open(ASN2ASN_DIST_FNAME, 'r') as f:
@@ -84,10 +90,17 @@ for p,l in peer_distances.items():
    else:
       distances_non_tier1.extend(l)
 
+
 peer_asn_distances = defaultdict(list)
 for p,l in peer_distances.items():
    peer_asn_distances[dict_ripe[p]].extend(l)
 avg_dist_per_peer_asn = {p:np.mean(l) for p,l in peer_asn_distances.items()}
+
+feeds_per_peer_asn = defaultdict(list)
+for o_asn, dict_o_asn in asn2asn.items():
+   for p in dict_o_asn.keys():
+      feeds_per_peer_asn[dict_ripe[p]].extend([o_asn])
+nb_of_feeds_per_peer_asn = {p:len(set(l)) for p,l in feeds_per_peer_asn.items()}
 
 improvements = defaultdict(lambda :0)
 for o_asn, dict_o_asn in asn2asn.items():
@@ -102,23 +115,17 @@ df = df.join(pd.DataFrame.from_dict(avg_dist_per_peer_asn, orient='index',column
 df = df.join(pd.DataFrame.from_dict(improvements, orient='index',columns=['improvements']))
 df = df.fillna(value=np.nan)
 corr = df.corr() 
+print('Correlation matrix')
 print(corr)
 
 
-# # df.plot.scatter(x = 'improvements', y = 'peeringDB_fac_count', s=10)
-# for c in df.columns:
-#    print(c)
-#    if (c == 'personal_is_matched'):
-#       continue
-#    try: 
-#       df.plot.scatter(x = 'improvements', y = c, s=10)
-#    except TypeError:
-#       continue
-#    plt.xscale('log')
-#    plt.yscale('log')
-#    plt.axis([1,4000, 1, max(df[c])])
-#    plt.show()
-# exit('1')
+df_full_feeds = df.join(pd.DataFrame.from_dict(nb_of_feeds_per_peer_asn, orient='index',columns=['nb_feeds']))
+df_full_feeds = df_full_feeds[df_full_feeds['nb_feeds'] > 60000]
+corr_full_feed = df_full_feeds.corr()
+print('Correlation matrix (only full feeders)')
+print(corr_full_feed)
+
+
 
 
 
@@ -256,6 +263,18 @@ plt.grid()
 plt.savefig(FIG_BAR_CORR_VARS_AVG_DIST_FNAME)
 plt.close()
 
+# Bar plot: correlations between variables and avg distance (only full feed)
+corr_variables = ['AS_rank_numberAsns', 'AS_rank_total', 'AS_rank_customer', 'AS_rank_peer', 'AS_rank_provider', 'peeringDB_ix_count', 'peeringDB_fac_count']
+corr_var_names = ['Customer cone (#ASNs)', '#neighbors (total)', '#neighbors (customers)', '#neighbors (peers)', '#neighbors (providers)', '#IXPs (PDB)', '#facilities (PDB)']
+corr_full_feed.loc[corr_variables,['avg_dist']].plot.barh(legend=False)
+plt.yticks(range(len(corr_variables)),labels=corr_var_names)
+plt.subplots_adjust(left=0.3)
+plt.xlabel('pearson correlation coef.', fontsize=fontsize)
+plt.title('network characteristics vs avg distance per peer', fontsize=fontsize_large)
+plt.grid()
+plt.savefig(FIG_BAR_CORR_VARS_AVG_DIST_ONLY_FULL_FEED_FNAME)
+plt.close()
+
 
 
 # scatter plot: avg distance vs #IXPs
@@ -292,6 +311,17 @@ plt.grid()
 plt.savefig(FIG_SCATTER_AVG_DIST_VS_NB_NEIGH_PEERS_FNAME)
 plt.close()
 
+# scatter plot: avg distance vs #IXPs
+df.plot.scatter(x = 'avg_dist', y = 'peeringDB_ix_count', s=markersize)
+plt.xlabel('average distance', fontsize=fontsize_large)
+plt.ylabel('#IXPs (PDB)', fontsize=fontsize_large)
+plt.title('avg distance vs #IXPs (PDB)', fontsize=fontsize_large)
+plt.yscale('log')
+plt.axis([0,6,1,1000])
+plt.grid()
+plt.savefig(FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME)
+plt.close()
+
 
 
 
@@ -308,7 +338,19 @@ plt.savefig(FIG_BAR_CORR_VARS_IMPROVEMENT_FNAME)
 plt.close()
 
 
-# scatter plot: avg distance vs #neighbors (peers)
+# Bar plot: correlations between variables and improvement(only full feeders)
+corr_variables = ['AS_rank_numberAsns', 'AS_rank_total', 'AS_rank_customer', 'AS_rank_peer', 'AS_rank_provider', 'peeringDB_ix_count', 'peeringDB_fac_count']
+corr_var_names = ['Customer cone (#ASNs)', '#neighbors (total)', '#neighbors (customers)', '#neighbors (peers)', '#neighbors (providers)', '#IXPs (PDB)', '#facilities (PDB)']
+corr_full_feed.loc[corr_variables,['improvements']].plot.barh(legend=False)
+plt.yticks(range(len(corr_variables)),labels=corr_var_names)
+plt.subplots_adjust(left=0.3)
+plt.xlabel('pearson correlation coef.', fontsize=fontsize)
+plt.title('network characteristics vs improvement per peer', fontsize=fontsize_large)
+plt.grid()
+plt.savefig(FIG_BAR_CORR_VARS_IMPROVEMENT_ONLY_FULL_FEED_FNAME)
+plt.close()
+
+# scatter plot: improvements vs #neighbors (customer)
 df.plot.scatter(x = 'improvements', y = 'AS_rank_customer', s=markersize)
 plt.xlabel('improvements', fontsize=fontsize_large)
 plt.ylabel('#neighbors (customers)', fontsize=fontsize_large)
@@ -318,4 +360,64 @@ plt.yscale('log')
 plt.axis([1,5000,1,10000])
 plt.grid()
 plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_NB_NEIGH_CUSTOMERS_FNAME)
+plt.close()
+
+# scatter plot: improvements vs #neighbors (peers)
+df.plot.scatter(x = 'improvements', y = 'AS_rank_peer', s=markersize)
+plt.xlabel('improvements', fontsize=fontsize_large)
+plt.ylabel('#neighbors (peers)', fontsize=fontsize_large)
+plt.title('improvement vs #neighbors (peers)', fontsize=fontsize_large)
+plt.xscale('log')
+plt.yscale('log')
+plt.axis([1,5000,1,10000])
+plt.grid()
+plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_NB_NEIGH_PEERS_FNAME)
+plt.close()
+
+# scatter plot: improvements vs customer core
+df.plot.scatter(x = 'improvements', y = 'AS_rank_numberAsns', s=markersize)
+plt.xlabel('improvements', fontsize=fontsize_large)
+plt.ylabel('customer cone', fontsize=fontsize_large)
+plt.title('improvement vs customer cone', fontsize=fontsize_large)
+plt.xscale('log')
+plt.yscale('log')
+plt.axis([1,5000,1,10000])
+plt.grid()
+plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_CUST_CONE_FNAME)
+plt.close()
+
+# scatter plot: improvements vs customer cone
+df.plot.scatter(x = 'improvements', y = 'AS_rank_numberAsns', s=markersize)
+plt.xlabel('improvements', fontsize=fontsize_large)
+plt.ylabel('customer cone', fontsize=fontsize_large)
+plt.title('improvement vs customer cone', fontsize=fontsize_large)
+plt.xscale('log')
+plt.yscale('log')
+plt.axis([1,5000,1,50000])
+plt.grid()
+plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_CUST_CONE_FNAME)
+plt.close()
+
+# scatter plot: improvements vs #IXPs
+df.plot.scatter(x = 'improvements', y = 'peeringDB_ix_count', s=markersize)
+plt.xlabel('improvements', fontsize=fontsize_large)
+plt.ylabel('#IXPs (PDB)', fontsize=fontsize_large)
+plt.title('improvements vs #IXPs (PDB)', fontsize=fontsize_large)
+plt.yscale('log')
+plt.xscale('log')
+plt.axis([1,5000,1,1000])
+plt.grid()
+plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_NB_IXPS_FNAME)
+plt.close()
+
+# scatter plot: improvements vs #facilities
+df.plot.scatter(x = 'improvements', y = 'peeringDB_fac_count', s=markersize)
+plt.xlabel('improvements', fontsize=fontsize_large)
+plt.ylabel('#facilities (PDB)', fontsize=fontsize_large)
+plt.title('improvements vs #facilities (PDB)', fontsize=fontsize_large)
+plt.yscale('log')
+plt.xscale('log')
+plt.axis([1,5000,1,1000])
+plt.grid()
+plt.savefig(FIG_SCATTER_IMPROVEMENT_VS_NB_FAC_FNAME)
 plt.close()
