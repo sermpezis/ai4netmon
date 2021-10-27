@@ -32,8 +32,9 @@ def read_ripe_peers():
     """
     data_ripe = pd.read_json(PATH_RIPE_RIS_PEERS, typ='dictionary')
     list_of_ripe_peers = [i for i in data_ripe.values]
+    list_of_uniques_ripe_peers = set(list_of_ripe_peers)
     # convert list to dataframe
-    df = pd.DataFrame(list_of_ripe_peers, columns=['ASn'])
+    df = pd.DataFrame(list_of_uniques_ripe_peers, columns=['ASn'])
 
     return df
 
