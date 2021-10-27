@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import networkx as nx
 import numpy as np
 import re
@@ -29,17 +30,31 @@ def create_df_from_Atlas_probes():
 
     data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
     data.drop_duplicates(subset="prb_id", keep='first', inplace=True)
-    data = data[(data['status'] == 'Connected') & (data['asn_v4'].isnull().values.any())]
+    data = data[(data['status'] == 'Connected')]
 
-    data['status'] = (data['status'] == 'Connected').astype(int)
 
-    data.rename(columns={'asn_v4': 'asn', 'status': 'has_atlas_probe'}, inplace=True)
-    # drop by Name
-    data = data.drop(['asn_v6'], axis=1)
-    data = data.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
-    data = data.set_index('asn')
+    data = data.assign(asn=pd.Series(np.random.randn(len(data['status']))).values)
+    asn_list = []
+    for i in range(0, len(data)):
+        if data['asn_v4'].iloc[i] == np.nan:
+            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
+        elif data['asn_v6'].iloc[i] == np.nan:
+            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+        elif data['asn_v4'].iloc[i] == data['asn_v6'].iloc[i]:
+            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+        elif data['asn_v4'].iloc[i] != data['asn_v6'].iloc[i]:
+            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
 
-    return data
+    df = pd.DataFrame(asn_list, columns=['prb_id', 'asn_v4', 'asn_v6', 'status', 'asn'])
+    df.dropna()
+    df.drop_duplicates()
+    df['status'] = (df['status'] == 'Connected').astype(int)
+    df.rename(columns={'status': 'has_atlas_probe'}, inplace=True)
+    df = df.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
+    df = df.set_index('asn')
+
+    return df
 
 
 def create_df_from_AS_rank():
@@ -119,7 +134,7 @@ def check_if_concatenate_works_properly(list_of_dataframes):
         idx = df.index
         union_indices = np.union1d(union_indices, idx)
     idx = len(union_indices)
-    print(idx)
+    # print(idx)
 
 
 def create_df_from(dataset):
