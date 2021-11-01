@@ -1,0 +1,32 @@
+ISSUES
+
+### 1: concatenation does not work correctly
+DONE
+--> was droping the indexes that were not in AS_rank dataset. Fixed in concat in method create_dataframe_from_multiple_datasets()
+
+
+### 2: t the AS_rank dataset, it does not fill with nan values the columns [longtitude, latitude], but it fills them with zeros
+--> the source of problem is probably at the creation of the asns.csv
+
+
+### 3: in Datasets AS_rank the README is missing
+--> among the other needed info in the README, add also the information about how the .csv is created
+
+### 4: in Datasets PeeringDB the README is missing
+
+### 5: in Datasets AS hegemony the README is missing. Also the code that creates the csv is missing
+
+### 6: the method for creating the graphs should be in a different file/folder (e.g., in graph embeddings), and not in the aggregate data
+
+
+
+
+LOG OF CHANGES
+- [Pavlos] fixed issue #1
+- [Pavlos] changed column_name "personal_is_matched" to "is_personal_AS"
+- [Pavlos] minor changes in create_df_from_personal() to make it simpler (without changing the functionality). Deleted the function keep_number(), it's no longer used
+- [Pavlos] minor changes in create_df_from_PeeringDB() to make it simpler (without changing the functionality). 
+- [Pavlos] changed column_name "hege" to "AS_hegemony"
+- [Pavlos] re-written the create_df_from_Atlas_probes() method. Changed the columns it returns as well.
+
+

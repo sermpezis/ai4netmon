@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import networkx as nx
-import numpy as np
 import re
 import json
 
@@ -14,54 +13,64 @@ PATH_BGP = '../bgp_paths/random_data.txt'
 AS_HEGEMONY_PATH = '../../Datasets/AS_hegemony/AS_hegemony.csv'
 ALL_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
 
-def keep_number(text):
-    """
-    :param text: example AS206924
-    :return: 206924
-    """
-    num = re.findall(r'[0-9]+', text)
 
-    return " ".join(num)
+## @Christos: this method was way too convoluted, and returned some values we didn't really need; I replaced it.
+# def create_df_from_Atlas_probes():
+#     """
+#     :return: The new dataframe where when 2 or more probes have the same AS number (only for asn_v4) returned in the same row
+#     """
+
+#     data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
+#     data.drop_duplicates(subset="prb_id", keep='first', inplace=True)
+#     data = data[(data['status'] == 'Connected')]
+
+
+#     data = data.assign(asn=pd.Series(np.random.randn(len(data['status']))).values)
+#     asn_list = []
+#     for i in range(0, len(data)):
+#         if data['asn_v4'].iloc[i] == np.nan:
+#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
+#         elif data['asn_v6'].iloc[i] == np.nan:
+#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+#         elif data['asn_v4'].iloc[i] == data['asn_v6'].iloc[i]:
+#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+#         elif data['asn_v4'].iloc[i] != data['asn_v6'].iloc[i]:
+#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
+#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
+
+#     df = pd.DataFrame(asn_list, columns=['prb_id', 'asn_v4', 'asn_v6', 'status', 'asn'])
+#     df.dropna()
+#     df.drop_duplicates()
+#     df['status'] = (df['status'] == 'Connected').astype(int)
+#     df.rename(columns={'status': 'has_atlas_probe'}, inplace=True)
+#     df = df.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
+#     df = df.set_index('asn')
+
+#     return df
+
 
 def create_df_from_Atlas_probes():
     """
-    :return: The new dataframe where when 2 or more probes have the same AS number (only for asn_v4) returned in the same row
+    Loads the list of RIPE Atlas probes, and returns a dataframe with the number of v4 and v6 probes per ASN (only for ASNs that have at least one probe).
+    :return: A dataframe with index the ASN
     """
 
     data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
-    data.drop_duplicates(subset="prb_id", keep='first', inplace=True)
     data = data[(data['status'] == 'Connected')]
-
-
-    data = data.assign(asn=pd.Series(np.random.randn(len(data['status']))).values)
-    asn_list = []
-    for i in range(0, len(data)):
-        if data['asn_v4'].iloc[i] == np.nan:
-            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
-        elif data['asn_v6'].iloc[i] == np.nan:
-            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-        elif data['asn_v4'].iloc[i] == data['asn_v6'].iloc[i]:
-            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-        elif data['asn_v4'].iloc[i] != data['asn_v6'].iloc[i]:
-            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-            asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
-
-    df = pd.DataFrame(asn_list, columns=['prb_id', 'asn_v4', 'asn_v6', 'status', 'asn'])
-    df.dropna()
-    df.drop_duplicates()
-    df['status'] = (df['status'] == 'Connected').astype(int)
-    df.rename(columns={'status': 'has_atlas_probe'}, inplace=True)
-    df = df.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
-    df = df.set_index('asn')
+    s4 = data['asn_v4'].value_counts()
+    s6 = data['asn_v6'].value_counts()
+    df = pd.concat([s4,s6], axis=1)
+    df.index.name='asn'
+    df = df.rename(columns={'asn_v4':'nb_atlas_probes_v4','asn_v6':'nb_atlas_probes_v6'})
 
     return df
 
 
 def create_df_from_AS_rank():
     """
-   Change the column names in order to know the features origin
-   :return: return the new dataframe
-   """
+    Loads the CAIDA AS-rank dataset from the source file. Returns a dataframe with index the ASN; appends in the column names the prefix "AS_rank_".
+    :return: A dataframe with index the ASN
+    """
     data = pd.read_csv(PATH_AS_RANK, sep=",")
     new_columns = ['AS_rank_' + str(i) for i in data.columns]
     data = data.set_axis(new_columns, axis='columns', inplace=False)
@@ -72,9 +81,11 @@ def create_df_from_AS_rank():
 
 def create_df_from_AS_hegemony():
     """
-   :return: return the new dataframe with Asn column as index
-   """
+    Loads the AS hegemony dataset from the source file. Returns a dataframe with index the ASN, and a single column with the AS hegemony value of the AS
+    :return: A dataframe with index the ASN
+    """
     data = pd.read_csv(AS_HEGEMONY_PATH, sep=",")
+    data = data.rename(columns={'hege':'AS_hegemony'})
     data = data.set_index('asn')
 
     return data
@@ -82,17 +93,15 @@ def create_df_from_AS_hegemony():
 
 def create_df_from_personal():
     """
-    :return: the a dataframe which contains only one column. This column has the ASn of personal dataset as integers
+    Loads the bgp.tools personal AS dataset from the source file. Creates a dataframe with index the ASN of the ASes that are personal use ASes; the dataframe has only one column with 1 for all rows
+    :return: A dataframe with index the ASN
+    :return: the a dataframe which contains only one column.
     """
-
     data = pd.read_csv(PATH_PERSONAL, header=None)
-    # name the column
     data.columns = ['asn']
-    # keep only the digits of the ASns
-    data['asn'] = data['asn'].apply(lambda x: keep_number(x))
-    data['personal_is_matched'] = 1
-    # needed to convert to a string first, then to an int.
-    data['asn'] = data['asn'].astype(str).astype(int)
+    # keep only the digits of the ASNs
+    data['asn'] = data['asn'].apply(lambda x: int(x[2:]))
+    data['is_personal_AS'] = 1
     data = data.set_index('asn')
 
     return data
@@ -100,48 +109,38 @@ def create_df_from_personal():
 
 def create_df_from_PeeringDB():
     """
-    :return PeeringDB dataframe which contains only the features in the keep_keys list.
+    Loads the PeeringDB dataset from the source file. Returns a dataframe with index the ASN; appends in the column names the prefix "peeringDB_". The dataframe which contains only the features in the keep_keys list
+    :return: A dataframe with index the ASN
     """
     df = pd.read_json(PATH_PEERINGDB)
     data = []
     keep_keys = ['asn', 'info_ratio', 'info_traffic', 'info_scope', 'info_type', 'info_prefixes4',
                  'info_prefixes6', 'policy_general', 'ix_count', 'fac_count', 'created']
     for row in df.net['data']:
-        net_row = []
-        for key in keep_keys:
-            if key in row:
-                net_row.append(row[key])
-            else:
-                net_row.append(None)
+        net_row = [row.get(key) for key in keep_keys]
+        # @Christos: the following code is not needed, it can be replaced by the above line
+        # net_row = []
+        # for key in keep_keys:
+            # if key in row:
+            #     net_row.append(row[key])
+            # else:
+            #     net_row.append(None)
         data.append(net_row)
     df = pd.DataFrame(data, columns=keep_keys)
     # rename column names add the prefix peeringDB_
     new_columns = ['peeringDB_' + str(i) for i in df.columns]
     df = df.set_axis(new_columns, axis='columns', inplace=False)
     df = df.set_index('peeringDB_asn')
-    data = df
 
-    return data
-
-
-def check_if_concatenate_works_properly(list_of_dataframes):
-    """
-    :param list_of_dataframes: It contains all the datasets in a dataframe form
-    :return: the number of rows that our csv should have, after the correct concatenation of the datasets
-    """
-    union_indices = []
-    for df in list_of_dataframes:
-        idx = df.index
-        union_indices = np.union1d(union_indices, idx)
-    idx = len(union_indices)
-    # print(idx)
+    return df
 
 
 def create_df_from(dataset):
     """
-    In case user give error names for our dataset we print him an Exception and the program is finished
-    :param dataset: (type = string) Accepted parameters: The name should exist in the datasets
-    :return: A dataframe that has as index the ASn feature
+    Selects a method, based on the given dataset name, and creates the corresponding dataframe.
+    When adding a new method, take care to have as index the ASN and the column names to be of the format "dataset_name_"+"column_name" (e.g., the column "X" from the dataset "setA", should be "setA_X") 
+    :param dataset: (type = string) name of the dataset to be loaded
+    :return: A dataframe with indexes the ASNs and columns the features loaded from the given dataset
     """
     if dataset == 'AS_rank':
         data = create_df_from_AS_rank()
@@ -154,24 +153,25 @@ def create_df_from(dataset):
     elif dataset == 'Atlas_probes':
         data = create_df_from_Atlas_probes()
     else:
-        raise Exception('Not defined type of dataset')
+        raise Exception('Not defined dataset')
     return data
 
 
 def create_dataframe_from_multiple_datasets(list_of_datasets):
     """
-    This function concatenates all the given datasets
-    :return: The requested dataframe
+    Creates a dataframe for each given dataset, and concatenates all the dataframes in a common dataframe. The final/returned dataframe has the ASN as the index, and as columns all the columns from all datasets. It fills with NaN non existing values. 
+    :param list_of_datasets:    a list of str, where each string corresponds to a dataset to be loaded 
+    :return: A dataframe with indexes the ASNs and columns the features loaded from each given dataset
     """
-    # Create an empty DataFrame object
     data = pd.DataFrame()
     list_of_dataframes = []
     for i in list_of_datasets:
         list_of_dataframes.append(create_df_from(i))
-
-    check_if_concatenate_works_properly(list_of_dataframes)
-
-    return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
+    # @Christos: this was wrong, it was dropping all the indexes that did not exist in the first dataframe
+    # return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
+    final_df = pd.concat(list_of_dataframes, axis=1)
+    final_df.index.name = 'ASN'
+    return final_df
 
 
 def create_graph_from_AS_relationships():
