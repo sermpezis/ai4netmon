@@ -8,10 +8,10 @@ import re
 from datetime import datetime
 from statsmodels.distributions.empirical_distribution import ECDF
 
-
 FINAL_DATAFRAME = '../aggregate_data/final_dataframe.csv'
 PATH_RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers_monitors/list_of_RIPE_RIS_peers.json'
 RIPE_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
+ROUTEVIEWS_PEERS = '../../Datasets/RouteViews_Peering/RouteViews-Peering-1_11_21.csv'
 
 
 def read_ripe_peers():
@@ -43,6 +43,20 @@ def take_unique_ATLAS_ASNs():
     atlas_dataframe.columns = ['Atlas_ASN']
 
     return atlas_dataframe
+
+
+def take_unique_RouteViews_ASNs():
+    """
+    :return: The returned set contains only the unique ASns
+    """
+
+    data = pd.read_csv(ROUTEVIEWS_PEERS, sep=',')
+    set1 = set(data['ASNUMBER'])
+
+    route_views_dataframe = pd.DataFrame(set1)
+    route_views_dataframe.columns = ['RouteViews_ASn']
+
+    return route_views_dataframe
 
 
 def read_final_dataframe():
@@ -77,6 +91,7 @@ def convert_to_numerical(data):
     data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: int(today_year.year) - int(x))
 
     return data['peeringDB_created']
+
 
 def keep_number(text):
     """
@@ -129,7 +144,7 @@ def convert_country_to_continent(data):
     for i in range(0, len(data)):
         temp_list.append(country_to_continent(data['AS_rank_iso'][i]))
     df = pd.DataFrame(temp_list, columns=['AS_rank_iso'])
-    data['AS_rank_iso'] = df
+    data['AS_rank_iso'] = df['AS_rank_iso']
 
     return data['AS_rank_iso']
 
@@ -157,15 +172,14 @@ def categorize_features(data, current, type, feature, type_of_monitors):
             data['personal_is_matched'] = data.personal_is_matched.astype('Int64')
             histogram_plot(current, data, feature, type_of_monitors)
         elif feature == 'has_atlas_probe':
-            data['has_atlas_probe'] = data.personal_is_matched.fillna(0)
-            data['has_atlas_probe'] = data.personal_is_matched.astype('Int64')
+            data['has_atlas_probe'] = data.has_atlas_probe.fillna(0)
+            data['has_atlas_probe'] = data.has_atlas_probe.astype('Int64')
             histogram_plot(current, data, feature, type_of_monitors)
         else:
             cdf_plot(current, data, feature, type_of_monitors)
             # cdf_subplot(ripe, data, feature)
     elif type == np.object:
         if feature == 'AS_rank_iso':
-            # histogram_plot(ripe, data, feature)
             data['AS_rank_iso'] = convert_country_to_continent(data)
             histogram_plot(current, data, feature, type_of_monitors)
         elif feature == 'peeringDB_created':
@@ -173,6 +187,9 @@ def categorize_features(data, current, type, feature, type_of_monitors):
             data['peeringDB_created'] = convert_to_numerical(data)
             cdf_plot(current, data, feature, type_of_monitors)
         elif feature == 'peeringDB_info_type':
+            histogram_plot(current, data, feature, type_of_monitors)
+        elif feature == 'AS_rank_source':
+            data['AS_rank_source'].fillna(np.nan, inplace=True)
             histogram_plot(current, data, feature, type_of_monitors)
         else:
             histogram_plot(current, data, feature, type_of_monitors)
@@ -210,17 +227,17 @@ def cdf_plot(unique_monitors, final, feature, monitors_origin):
     plt.show()
 
 
-def histogram_plot(atlas, final, feature,  monitors_origin):
+def histogram_plot(unique_monitors, final, feature, monitors_origin):
     """
+    :param monitors_origin:
     :param ripe: Contains the AS numbers of RIPE RIS
     :param final: Contains a dataframe combining 3 datasets
     :param feature: Is the column name of final
     """
-
     # Without dropna we pass all arguments except one (NaN) and the plots are all wrong
     x = final[feature].dropna()
     x = x.astype(str)
-    merged_data = pd.merge(atlas, final, on=['ASn'], how='inner')
+    merged_data = pd.merge(unique_monitors, final, on=['ASn'], how='inner')
     y = merged_data[feature].astype(str)
     plt.hist((x, y), density=True, bins=final[feature].nunique(), histtype='bar', align='left',
              label=['All_ASes', monitors_origin],
@@ -242,14 +259,20 @@ def plot_analysis(dataset):
     final_dataframe = read_final_dataframe()
     final_dataframe.rename(columns={'AS_rank_asn': 'ASn'}, inplace=True)
     for dt in dataset:
+        dd = final_dataframe.copy(deep=True)
         if dt == 'Ripe_Ris_monitors':
             ripe_df = read_ripe_peers()
             type = 'RIPE_RIS_peers'
-            call_categorize(final_dataframe, ripe_df, type)
+            call_categorize(dd, ripe_df, type)
         elif dt == 'Ripe_Atlas_probes':
             atlas_df = take_unique_ATLAS_ASNs()
             atlas_df.rename(columns={'Atlas_ASN': 'ASn'}, inplace=True)
             type = 'RIPE_ATLAS_probes'
-            call_categorize(final_dataframe, atlas_df, type)
+            call_categorize(dd, atlas_df, type)
+        elif dt == 'RouteViews_peers':
+            route_df = take_unique_RouteViews_ASNs()
+            route_df.rename(columns={'RouteViews_ASn': 'ASn'}, inplace=True)
+            type = 'RouteViews_peers'
+            call_categorize(dd, route_df, type)
         else:
             raise Exception('Not defined type of dataset')
