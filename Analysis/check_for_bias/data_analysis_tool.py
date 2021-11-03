@@ -86,77 +86,76 @@ def call_categorize_all(final_df, ripe, atlas, route):
         dcopy = final_df.copy(deep=True)
         dcopy1 = final_df.copy(deep=True)
         dcopy2 = final_df.copy(deep=True)
-        if column_name == 'AS_rank_iso':
-            if column_name == 'peeringDB_created':
-                pass
-            elif column_name == 'is_personal_AS':
-                y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
-                y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
-                y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
-                x = final_df[column_name].fillna(0)
-                x = x.astype(str)
-                plt.hist([x, y1, y2, y3], density=True, bins=2, histtype='bar',
-                         align='left',
-                         label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
-                plt.legend(prop={'size': 10})
-                plt.ylabel('CDF')
-                plt.ylim(0, 1)
-                plt.suptitle('Feature: ' + str(column_name), fontsize=14)
-                plt.xticks(rotation='vertical')
-                plt.tight_layout()
-                plt.savefig(str(column_name) + 'All' + f'.png')
-                plt.show()
-            elif column_name == 'AS_rank_iso':
-                y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
-                y2 = categorize_features_all(dcopy1, atlas, dataTypeObj, column_name)
-                y3 = categorize_features_all(dcopy2, route, dataTypeObj, column_name)
-                final_df[column_name] = convert_country_to_continent(final_df)
-                x = final_df[column_name].dropna()
-                x = x.astype(str)
-                plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar',
-                         align='left',
-                         label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
-                plt.legend(prop={'size': 10})
-                plt.ylabel('CDF')
-                plt.ylim(0, 1)
-                plt.suptitle('Feature: ' + str(column_name), fontsize=14)
-                plt.xticks(rotation='vertical')
-                plt.tight_layout()
-                plt.savefig(str(column_name) + 'All' + f'.png')
-                plt.show()
-            elif dataTypeObj == np.int64 or dataTypeObj == np.float64:
-                x1, y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
-                x2, y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
-                x3, y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
-                x = final_df[column_name].dropna()
-                final_cdf = ECDF(x)
-                plt.plot(final_cdf.x, final_cdf.y, label='All_ASes')
-                plt.plot(x1, y1, label='Ripe Ris')
-                plt.plot(x2, y2, label='Atlas')
-                plt.plot(x3, y3, label='RouteViews')
-                plt.title('Feature: ' + str(column_name), fontsize=14)
-                plt.legend()
-                plt.tight_layout()
-                plt.savefig(str(column_name) + 'All' + f'.png')
-                plt.show()
-            elif dataTypeObj == np.object:
-                y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
-                y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
-                y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
-                x = final_df[column_name].dropna()
-                x = x.astype(str)
-                plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar', align='left',
-                         label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
-                plt.legend(prop={'size': 10})
-                plt.ylabel('CDF')
-                plt.ylim(0, 1)
-                plt.suptitle('Feature: ' + str(column_name), fontsize=14)
-                plt.xticks(rotation='vertical')
-                plt.tight_layout()
-                plt.savefig(str(column_name) + 'All' + f'.png')
-                plt.show()
-        else:
+        if column_name == 'peeringDB_created':
             pass
+        elif column_name == 'is_personal_AS':
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].fillna(0)
+            x = x.astype(str)
+            plt.hist([x, y1, y2, y3], density=True, bins=2, histtype='bar',
+                     align='left',
+                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            plt.legend(prop={'size': 10})
+            plt.ylabel('CDF')
+            plt.ylim(0, 1)
+            plt.suptitle('Feature: ' + str(column_name), fontsize=14)
+            plt.xticks(rotation='vertical')
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+        elif column_name == 'AS_rank_iso':
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y2 = categorize_features_all(dcopy1, atlas, dataTypeObj, column_name)
+            y3 = categorize_features_all(dcopy2, route, dataTypeObj, column_name)
+            final_df[column_name] = convert_country_to_continent(final_df)
+            x = final_df[column_name].dropna()
+            x = x.astype(str)
+            plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar',
+                     align='left',
+                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            plt.legend(prop={'size': 10})
+            plt.ylabel('CDF')
+            plt.ylim(0, 1)
+            plt.suptitle('Feature: ' + str(column_name), fontsize=14)
+            plt.xticks(rotation='vertical')
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+        elif dataTypeObj == np.int64 or dataTypeObj == np.float64:
+            x1, y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            x2, y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            x3, y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].dropna()
+            final_cdf = ECDF(x)
+            plt.plot(final_cdf.x, final_cdf.y, label='All_ASes')
+            plt.plot(x1, y1, label='Ripe Ris')
+            plt.plot(x2, y2, label='Atlas')
+            plt.plot(x3, y3, label='RouteViews')
+            plt.title('Feature: ' + str(column_name), fontsize=14)
+            plt.legend()
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+        elif dataTypeObj == np.object:
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].dropna()
+            x = x.astype(str)
+            plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar', align='left',
+                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            plt.legend(prop={'size': 10})
+            plt.ylabel('CDF')
+            plt.ylim(0, 1)
+            plt.suptitle('Feature: ' + str(column_name), fontsize=14)
+            plt.xticks(rotation='vertical')
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+
+
 
 def convert_to_numerical(data):
     """
