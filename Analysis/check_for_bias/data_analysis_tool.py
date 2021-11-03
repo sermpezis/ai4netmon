@@ -79,6 +79,63 @@ def call_categorize(final_df, current_df, type):
         categorize_features(final_df, current_df, dataTypeObj, column_name, type)
 
 
+def call_categorize_all(final_df, ripe, atlas, route):
+
+    for column_name in final_df.columns:
+        dataTypeObj = final_df.dtypes[column_name]
+        dcopy = final_df.copy(deep=True)
+        if column_name == 'peeringDB_created':
+            pass
+        elif column_name == 'is_personal_AS':
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].fillna(0)
+            x = x.astype(str)
+            plt.hist([x, y1, y2, y3], density=True, bins=2, histtype='bar',
+                     align='left',
+                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            plt.legend(prop={'size': 10})
+            plt.ylabel('CDF')
+            plt.ylim(0, 1)
+            plt.suptitle('Feature: ' + str(column_name), fontsize=14)
+            plt.xticks(rotation='vertical')
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+        elif dataTypeObj == np.int64 or dataTypeObj == np.float64:
+            x1, y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            x2, y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            x3, y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].dropna()
+            final_cdf = ECDF(x)
+            plt.plot(final_cdf.x, final_cdf.y, label='All_ASes')
+            plt.plot(x1, y1, label='Ripe Ris')
+            plt.plot(x2, y2, label='Atlas')
+            plt.plot(x3, y3, label='RouteViews')
+            plt.title('Feature: ' + str(column_name), fontsize=14)
+            plt.legend()
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+        elif dataTypeObj == np.object:
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            x = final_df[column_name].dropna()
+            x = x.astype(str)
+            plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar', align='left',
+                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            plt.legend(prop={'size': 10})
+            plt.ylabel('CDF')
+            plt.ylim(0, 1)
+            plt.suptitle('Feature: ' + str(column_name), fontsize=14)
+            plt.xticks(rotation='vertical')
+            plt.tight_layout()
+            plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.show()
+
+
 def convert_to_numerical(data):
     """
     The function subtracts the created year of peeringDB from the current year.
@@ -88,7 +145,7 @@ def convert_to_numerical(data):
     data['peeringDB_created'] = data['peeringDB_created'].astype('str')
     data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: keep_number(x))
     today_year = datetime.today()
-    data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: int(today_year.year) - int(x))
+    data['peeringDB_created'] = data['peeringDB_created'].apply(lambda x: (int(today_year.year)) - int(x))
 
     return data['peeringDB_created']
 
@@ -167,9 +224,9 @@ def categorize_features(data, current, type, feature, type_of_monitors):
             data['peeringDB_fac_count'] = data.peeringDB_fac_count.fillna(0)
             data['peeringDB_fac_count'] = data.peeringDB_fac_count.astype('Int64')
             cdf_plot(current, data, feature, type_of_monitors)
-        elif feature == 'personal_is_matched':
-            data['personal_is_matched'] = data.personal_is_matched.fillna(0)
-            data['personal_is_matched'] = data.personal_is_matched.astype('Int64')
+        elif feature == 'is_personal_AS':
+            data['is_personal_AS'] = data.is_personal_AS.fillna(0)
+            data['is_personal_AS'] = data.is_personal_AS.astype('Int64')
             histogram_plot(current, data, feature, type_of_monitors)
         elif feature == 'has_atlas_probe':
             data['has_atlas_probe'] = data.has_atlas_probe.fillna(0)
@@ -194,6 +251,102 @@ def categorize_features(data, current, type, feature, type_of_monitors):
         else:
             histogram_plot(current, data, feature, type_of_monitors)
 
+
+def categorize_features_all(data, current, type, feature):
+
+    if type == np.int64 or type == np.float64:
+        if feature == 'peeringDB_info_prefixes4':
+            data['peeringDB_info_prefixes4'] = data.peeringDB_info_prefixes4.fillna(0)
+            data['peeringDB_info_prefixes4'] = data.peeringDB_info_prefixes4.astype('Int64')
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'peeringDB_info_prefixes6':
+            data['peeringDB_info_prefixes6'] = data.peeringDB_info_prefixes6.fillna(0)
+            data['peeringDB_info_prefixes6'] = data.peeringDB_info_prefixes6.astype('Int64')
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'peeringDB_ix_count':
+            data['peeringDB_ix_count'] = data.peeringDB_ix_count.fillna(0)
+            data['peeringDB_ix_count'] = data.peeringDB_ix_count.astype('Int64')
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'peeringDB_fac_count':
+            data['peeringDB_fac_count'] = data.peeringDB_fac_count.fillna(0)
+            data['peeringDB_fac_count'] = data.peeringDB_fac_count.astype('Int64')
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'is_personal_AS':
+            data['is_personal_AS'] = data.is_personal_AS.fillna(0)
+            data['is_personal_AS'] = data.is_personal_AS.astype('string')
+            y = histogram_plot_all(current, data, feature)
+            return y
+        elif feature == 'has_atlas_probe':
+            data['has_atlas_probe'] = data.has_atlas_probe.fillna(0)
+            data['has_atlas_probe'] = data.has_atlas_probe.astype('Int64')
+            y = histogram_plot_all(current, data, feature)
+            return y
+        else:
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+    elif type == np.object:
+        if feature == 'AS_rank_iso':
+            data['AS_rank_iso'] = convert_country_to_continent(data)
+            y = histogram_plot_all(current, data, feature)
+            return y
+        elif feature == 'peeringDB_created':
+            data['peeringDB_created'] = data.peeringDB_created.fillna(0)
+            data['peeringDB_created'] = convert_to_numerical(data)
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'peeringDB_info_type':
+            y = histogram_plot_all(current, data, feature)
+            return y
+        elif feature == 'AS_rank_source':
+            data['AS_rank_source'].fillna(np.nan, inplace=True)
+            y = histogram_plot_all(current, data, feature)
+            return y
+        else:
+            y = histogram_plot_all(current, data, feature)
+            return y
+
+
+def cdf_plot_all(unique_monitors, final, feature):
+    """
+    :param unique_monitors: Contains the unique AS numbers of RIPE RIS or the AS numbers of RIPE ATLAS probes
+    :param final: Contains a dataframe combining 4 datasets
+    :param feature: Is the column name of final
+    """
+    merged_data = pd.merge(unique_monitors, final, on='ASn', how='inner')
+    merged_data.sort_values('ASn', inplace=True)
+    merged_data.drop_duplicates(subset='ASn', keep=False, inplace=True)
+    merged_data.sort_values(feature, inplace=True)
+    ripe_cdf = ECDF(merged_data[feature].dropna())
+    plt.ylabel('CDF')
+    if feature == 'AS_rank_numberAddresses' or feature == 'AS_rank_numberAsns' or feature == 'AS_rank_numberPrefixes' \
+            or feature == 'AS_rank_peer' or feature == 'AS_rank_provider' or feature == 'AS_rank_total' \
+            or feature == 'ASn' or feature == 'AS_rank_customer' or feature == 'peeringDB_info_prefixes4' or \
+            feature == 'peeringDB_info_prefixes6' or feature == 'peeringDB_ix_count' or feature == 'peeringDB_fac_count' \
+            or feature == 'peeringDB_created':
+        plt.xscale('log')
+    else:
+        plt.xscale('linear')
+
+    return ripe_cdf.x, ripe_cdf.y
+
+
+def histogram_plot_all(unique_monitors, final, feature):
+    """
+    :param monitors_origin:
+    :param ripe: Contains the AS numbers of RIPE RIS
+    :param final: Contains a dataframe combining 3 datasets
+    :param feature: Is the column name of final
+    """
+    # Without dropna we pass all arguments except one (NaN) and the plots are all wrong
+
+    merged_data = pd.merge(unique_monitors, final, on=['ASn'], how='inner')
+    y = merged_data[feature].astype(str)
+
+    return y
 
 
 def cdf_plot(unique_monitors, final, feature, monitors_origin):
@@ -257,7 +410,7 @@ def plot_analysis(dataset):
     :param dataset: It contains all the datasets that will be plot
     """
     final_dataframe = read_final_dataframe()
-    final_dataframe.rename(columns={'AS_rank_asn': 'ASn'}, inplace=True)
+    final_dataframe.rename(columns={'ASN': 'ASn'}, inplace=True)
     for dt in dataset:
         dd = final_dataframe.copy(deep=True)
         if dt == 'Ripe_Ris_monitors':
@@ -274,5 +427,12 @@ def plot_analysis(dataset):
             route_df.rename(columns={'RouteViews_ASn': 'ASn'}, inplace=True)
             type = 'RouteViews_peers'
             call_categorize(dd, route_df, type)
+        elif dt == 'Compare_All':
+            ripe = read_ripe_peers()
+            atlas = take_unique_ATLAS_ASNs()
+            atlas.rename(columns={'Atlas_ASN': 'ASn'}, inplace=True)
+            route = take_unique_RouteViews_ASNs()
+            route.rename(columns={'RouteViews_ASn': 'ASn'}, inplace=True)
+            call_categorize_all(dd, ripe, atlas, route)
         else:
             raise Exception('Not defined type of dataset')
