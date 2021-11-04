@@ -25,7 +25,6 @@ FIG_SCATTER_NB_FEEDS_VS_NB_UNIQUE_MIN_DIST_PEER_FNAME = './figures/fig_scatter_n
 FIG_SCATTER_NB_FEEDS_VS_PERC_UNIQUE_MIN_DIST_PEER_FNAME = './figures/fig_scatter_nb_feeds_vs_perc_unique_min_dist_peer.png'
 FIG_BAR_CORR_VARS_AVG_DIST_FNAME = './figures/fig_bar_corr_characteristics_vs_avg_dist.png'
 FIG_BAR_CORR_VARS_AVG_DIST_ONLY_FULL_FEED_FNAME = './figures/fig_bar_corr_characteristics_vs_avg_dist_only_full_feed.png'
-FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_ixps.png'
 FIG_SCATTER_AVG_DIST_VS_NB_NEIGH_TOTAL_FNAME = './figures/fig_scatter_avg_dist_vs_nb_neigh_total.png'
 FIG_SCATTER_AVG_DIST_VS_NB_NEIGH_PEERS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_neigh_peers.png'
 FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME = './figures/fig_scatter_avg_dist_vs_nb_ixps.png'
@@ -273,19 +272,6 @@ plt.xlabel('pearson correlation coef.', fontsize=fontsize)
 plt.title('network characteristics vs avg distance per peer', fontsize=fontsize_large)
 plt.grid()
 plt.savefig(FIG_BAR_CORR_VARS_AVG_DIST_ONLY_FULL_FEED_FNAME)
-plt.close()
-
-
-
-# scatter plot: avg distance vs #IXPs
-df.plot.scatter(x = 'avg_dist', y = 'peeringDB_ix_count', s=markersize)
-plt.xlabel('average distance', fontsize=fontsize_large)
-plt.ylabel('#IXPs (PDB)', fontsize=fontsize_large)
-plt.title('avg distance vs #IXPs', fontsize=fontsize_large)
-plt.yscale('log')
-plt.axis([0,6,1,500])
-plt.grid()
-plt.savefig(FIG_SCATTER_AVG_DIST_VS_NB_IXPS_FNAME)
 plt.close()
 
 
