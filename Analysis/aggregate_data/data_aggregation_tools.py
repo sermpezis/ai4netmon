@@ -170,6 +170,7 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
     # @Christos: this was wrong, it was dropping all the indexes that did not exist in the first dataframe
     # return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
     final_df = pd.concat(list_of_dataframes, axis=1)
+    final_df.loc[(final_df['AS_rank_longitude'] == 0) & (final_df['AS_rank_latitude'] == 0), ['AS_rank_longitude', 'AS_rank_latitude']] = None
     final_df.index.name = 'ASN'
     return final_df
 
