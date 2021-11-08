@@ -14,47 +14,12 @@ AS_HEGEMONY_PATH = '../../Datasets/AS_hegemony/AS_hegemony.csv'
 ALL_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
 
 
-## @Christos: this method was way too convoluted, and returned some values we didn't really need; I replaced it.
-# def create_df_from_Atlas_probes():
-#     """
-#     :return: The new dataframe where when 2 or more probes have the same AS number (only for asn_v4) returned in the same row
-#     """
-
-#     data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
-#     data.drop_duplicates(subset="prb_id", keep='first', inplace=True)
-#     data = data[(data['status'] == 'Connected')]
-
-
-#     data = data.assign(asn=pd.Series(np.random.randn(len(data['status']))).values)
-#     asn_list = []
-#     for i in range(0, len(data)):
-#         if data['asn_v4'].iloc[i] == np.nan:
-#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
-#         elif data['asn_v6'].iloc[i] == np.nan:
-#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-#         elif data['asn_v4'].iloc[i] == data['asn_v6'].iloc[i]:
-#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-#         elif data['asn_v4'].iloc[i] != data['asn_v6'].iloc[i]:
-#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v4'].iloc[i]])
-#             asn_list.append([data['prb_id'].iloc[i], data['asn_v4'].iloc[i], data['asn_v6'].iloc[i], data['status'].iloc[i], data['asn_v6'].iloc[i]])
-
-#     df = pd.DataFrame(asn_list, columns=['prb_id', 'asn_v4', 'asn_v6', 'status', 'asn'])
-#     df.dropna()
-#     df.drop_duplicates()
-#     df['status'] = (df['status'] == 'Connected').astype(int)
-#     df.rename(columns={'status': 'has_atlas_probe'}, inplace=True)
-#     df = df.groupby(['asn', 'has_atlas_probe'])['prb_id'].apply(lambda x: ','.join(x.astype(str))).reset_index()
-#     df = df.set_index('asn')
-
-#     return df
-
 
 def create_df_from_Atlas_probes():
     """
     Loads the list of RIPE Atlas probes, and returns a dataframe with the number of v4 and v6 probes per ASN (only for ASNs that have at least one probe).
     :return: A dataframe with index the ASN
     """
-
     data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
     data = data[(data['status'] == 'Connected')]
     s4 = data['asn_v4'].value_counts()
@@ -74,6 +39,7 @@ def create_df_from_AS_rank():
     data = pd.read_csv(PATH_AS_RANK, sep=",")
     new_columns = ['AS_rank_' + str(i) for i in data.columns]
     data = data.set_axis(new_columns, axis='columns', inplace=False)
+    data.loc[(data['AS_rank_longitude'] == 0) & (data['AS_rank_latitude'] == 0), ['AS_rank_longitude', 'AS_rank_latitude']] = None
     data = data.set_index('AS_rank_asn')
 
     return data
@@ -118,16 +84,8 @@ def create_df_from_PeeringDB():
                  'info_prefixes6', 'policy_general', 'ix_count', 'fac_count', 'created']
     for row in df.net['data']:
         net_row = [row.get(key) for key in keep_keys]
-        # @Christos: the following code is not needed, it can be replaced by the above line
-        # net_row = []
-        # for key in keep_keys:
-            # if key in row:
-            #     net_row.append(row[key])
-            # else:
-            #     net_row.append(None)
         data.append(net_row)
     df = pd.DataFrame(data, columns=keep_keys)
-    # rename column names add the prefix peeringDB_
     new_columns = ['peeringDB_' + str(i) for i in df.columns]
     df = df.set_axis(new_columns, axis='columns', inplace=False)
     df = df.set_index('peeringDB_asn')
@@ -167,10 +125,7 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
     list_of_dataframes = []
     for i in list_of_datasets:
         list_of_dataframes.append(create_df_from(i))
-    # @Christos: this was wrong, it was dropping all the indexes that did not exist in the first dataframe
-    # return pd.concat(list_of_dataframes, axis=1, ignore_index=False).reindex(list_of_dataframes[0].index)
     final_df = pd.concat(list_of_dataframes, axis=1)
-    final_df.loc[(final_df['AS_rank_longitude'] == 0) & (final_df['AS_rank_latitude'] == 0), ['AS_rank_longitude', 'AS_rank_latitude']] = None
     final_df.index.name = 'ASN'
     return final_df
 

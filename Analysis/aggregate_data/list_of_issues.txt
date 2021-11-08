@@ -7,26 +7,22 @@ DONE
 
 ### 2: t the AS_rank dataset, it does not fill with nan values the columns [longtitude, latitude], but it fills them with zeros
 --> the source of problem is probably at the creation of the asns.csv
+DONE
 
 
 ### 3: in Datasets AS_rank the README is missing
 --> among the other needed info in the README, add also the information about how the .csv is created
+--> We would need information about  how to run the js script (and how to install dependencies). However, since all the project is in python, do a  python script to download the data (e.g. use the requests package)
 
 ### 4: in Datasets PeeringDB the README is missing
+--> in the readme there is only description about the json file downloaded from CAIDA. Add description also for the netixlan.json: where you download it from (in the main Datasets/README.md) and how you download it and what information it contains (in the Datasets/PeeringDB/README.md)
 
 ### 5: in Datasets AS hegemony the README is missing. Also the code that creates the csv is missing
+--> include all scripts needed to download the data & create the csv
 
 ### 6: the method for creating the graphs should be in a different file/folder (e.g., in graph embeddings), and not in the aggregate data
 
+### 7: in Datasets Atlas_probe the README is missing
+--> add also the methods/scripts you use to download the dataset 
 
-
-
-LOG OF CHANGES
-- [Pavlos] fixed issue #1
-- [Pavlos] changed column_name "personal_is_matched" to "is_personal_AS"
-- [Pavlos] minor changes in create_df_from_personal() to make it simpler (without changing the functionality). Deleted the function keep_number(), it's no longer used
-- [Pavlos] minor changes in create_df_from_PeeringDB() to make it simpler (without changing the functionality). 
-- [Pavlos] changed column_name "hege" to "AS_hegemony"
-- [Pavlos] re-written the create_df_from_Atlas_probes() method. Changed the columns it returns as well.
-
-
+### 8: Remove from the Datasets/ folder all the folders and files that are not datasets and should not be in this folder:  CAIDA-Impact/, improvements20210601.txt
