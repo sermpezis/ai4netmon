@@ -136,7 +136,7 @@ def create_graph_from_AS_relationships():
     :return: A graph
     """
 
-    data = pd.read_csv(PATH_AS_RELATIONSHIPS, sep="|", skiprows=180)
+    data = pd.read_csv(PATH_AS_RELATIONSHIPS, sep="|", skiprows=180, header=None)
     data.columns = ['node1', 'node2', 'link', 'protocol']
     data.drop(['protocol'], axis=1, inplace=True)
 
