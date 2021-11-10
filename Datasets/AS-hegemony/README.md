@@ -1,2 +1,8 @@
 Networks connected to the Internet to transmit data depend on other networks concluding that their connectivity depends on other networks. The AS hegemony is a score based on BGP data and depicts the importance of an AS. It quantifies the likelihood of an AS lying on paths toward certain destination IP prefixes. We can obtain the scores of all ASes from IIJ’s Internet Health Report (IHR) API [Internet Health report](https://ihr.iijlab.net/ihr/hegemony/documentation#REST_API). 
 In order to create this dataset, we downloaded the AS hegemony score for each AS contained in our aggregate dataset for the date 2/10/2021.
+
+Instructions to obtain your own dataset:
+* First go to folder Analysis/AS_hegemony and run add_AS_hegemony_feature. (You can set your own dates)
+* After running the above script 10 output.json files will be created. (We could have all these files in one json file, but IIJ’s Internet Health Report (IHR) API [Internet Health report](https://ihr.iijlab.net/ihr/hegemony/documentation#REST_API) is not so stable and there is a chance to run down if we repeat the process. Furthermore, in case of limited memory device, the script can be run properly as it requires low memory capacity).
+* Continuously, the user can merge the json files by running the script **merge_json_files.py**
+* Finally, by running the **Calculate_hegemony_for_each_AS.py** script the user will have created the *AS_hegemony.csv*
