@@ -1,5 +1,15 @@
-This dataset is created with the use of Javascript. Specifically, we stored in a global array the below features. 
+This dataset is created with the use of Javascript. 
+In order to run the script we will need:
+* Node.js
+* npm
+Then, we open cmd in the folder Datasets/As-rank, and we run the following command:
+* npm install (Only the first time we run the project. Npm install will download the dependencies).
+Finally, we run:
+* node index.js (In order to run the script).
+Dependencies:
+* [Library needle](https://github.com/tomas/needle?fbclid=IwAR31rnPqzQJtBp-XWnku2ld5bsaVZiSAurAH1MOEe2XFT632f0bTlND5HKQ).
 
+Specifically, we stored in a global array the below features.
 * **AS number**: Each AS has a unique number
 * **Rank**:
 * **Source**: Company/Organization in which each AS belongs to.
