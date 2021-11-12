@@ -9,6 +9,8 @@ RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_o
 NODE2VEC_EMBEDDINGS = 'Embeddings/embeddings.emb'
 DIFF2VEC_EMBEDDINGS = 'Embeddings/Diff2Vec_embeddings.csv'
 NETMF_EMBEDDINGS = 'Embeddings/NetMF_embeddings.csv'
+NODESKETCH_EMBEDDINGS = 'Embeddings/NodeSketch_embeddings.csv'
+WALKLETS_EMBEDDINGS = 'Embeddings/Walklets_embeddings.csv'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 
 
@@ -39,11 +41,18 @@ def read_karateClub_embeddings_file(emb):
         df = pd.read_csv(DIFF2VEC_EMBEDDINGS, sep=',')
     elif emb == 'NetMF':
         df = pd.read_csv(NETMF_EMBEDDINGS, sep=',')
+    elif emb == 'NodeSketch':
+        df = pd.read_csv(NODESKETCH_EMBEDDINGS, sep=',')
+    elif emb == 'Walklets':
+        df = pd.read_csv(WALKLETS_EMBEDDINGS, sep=',')
     else:
         raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
-    dimensions = 64
+    if emb == 'Walklets':
+        dimensions = 256
+    else:
+        dimensions = 64
     rng = range(1, dimensions + 1)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']
