@@ -3,11 +3,14 @@ import call_ML_models as cmm
 import numpy as np
 
 karate_club_emb = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets']
+graph_emb_user_choice = ''
+graph_emb_dimensions = 64
 
 improvement_df = dp.read_RIS_improvement_score()
-# embeddings_df = dp.read_Node2Vec_embeddings_file()
-embeddings_df = dp.read_karateClub_embeddings_file(karate_club_emb[3])
-
+if graph_emb_user_choice == 'Node2Vec':
+    embeddings_df = dp.read_Node2Vec_embeddings_file()
+else:
+    embeddings_df = dp.read_karateClub_embeddings_file(karate_club_emb[3], dimensions=graph_emb_dimensions)
 mergedStuff = dp.merge_datasets(improvement_df, embeddings_df)
 
 y = mergedStuff['Improvement_score']

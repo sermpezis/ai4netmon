@@ -6,13 +6,19 @@ import numpy as np
 import json
 
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
-NODE2VEC_EMBEDDINGS = 'Embeddings/embeddings.emb'
-DIFF2VEC_EMBEDDINGS = 'Embeddings/Diff2Vec_embeddings.csv'
-NETMF_EMBEDDINGS = 'Embeddings/NetMF_embeddings.csv'
-NODESKETCH_EMBEDDINGS = 'Embeddings/NodeSketch_embeddings.csv'
-WALKLETS_EMBEDDINGS = 'Embeddings/Walklets_embeddings.csv'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 
+# NODE2VEC_EMBEDDINGS = 'Embeddings/Node2Vec_embeddings.emb'
+DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
+NETMF_EMBEDDINGS_128 = 'Embeddings/NetMF_128.csv'
+NODESKETCH_EMBEDDINGS_128 = 'Embeddings/NodeSketch_128.csv'
+WALKLETS_EMBEDDINGS_256 = 'Embeddings/Walklets_256.csv'
+
+NODE2VEC_EMBEDDINGS_64 = 'Embeddings/Node2Vec_embeddings.emb'
+DIFF2VEC_EMBEDDINGS_64 = 'Embeddings/Diff2Vec_64.csv'
+NETMF_EMBEDDINGS_64 = 'Embeddings/NetMF_64.csv'
+NODESKETCH_EMBEDDINGS_64 = 'Embeddings/NodeSketch_64.csv'
+WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
 
 def read_RIS_improvement_score():
     with open(RIPE_RIS_PEERS) as handle:
@@ -25,7 +31,7 @@ def read_RIS_improvement_score():
 
 
 def read_Node2Vec_embeddings_file():
-    emb_df = pd.read_table(NODE2VEC_EMBEDDINGS, skiprows=1, header=None, sep=" ")
+    emb_df = pd.read_table(NODE2VEC_EMBEDDINGS_64, skiprows=1, header=None, sep=" ")
     # name the columns
     rng = range(0, 65)
     new_cols = ['dim_' + str(i) for i in rng]
@@ -36,23 +42,35 @@ def read_Node2Vec_embeddings_file():
     return emb_df
 
 
-def read_karateClub_embeddings_file(emb):
-    if emb == 'Diff2Vec':
-        df = pd.read_csv(DIFF2VEC_EMBEDDINGS, sep=',')
-    elif emb == 'NetMF':
-        df = pd.read_csv(NETMF_EMBEDDINGS, sep=',')
-    elif emb == 'NodeSketch':
-        df = pd.read_csv(NODESKETCH_EMBEDDINGS, sep=',')
-    elif emb == 'Walklets':
-        df = pd.read_csv(WALKLETS_EMBEDDINGS, sep=',')
+def read_karateClub_embeddings_file(emb, dimensions):
+    if dimensions == 64:
+        if emb == 'Diff2Vec':
+            df = pd.read_csv(DIFF2VEC_EMBEDDINGS_64, sep=',')
+        elif emb == 'NetMF':
+            df = pd.read_csv(NETMF_EMBEDDINGS_64, sep=',')
+        elif emb == 'NodeSketch':
+            df = pd.read_csv(NODESKETCH_EMBEDDINGS_64, sep=',')
+        elif emb == 'Walklets':
+            df = pd.read_csv(WALKLETS_EMBEDDINGS_128, sep=',')
+        else:
+            raise Exception('Not defined dataset')
     else:
-        raise Exception('Not defined dataset')
+        if emb == 'Diff2Vec':
+            df = pd.read_csv(DIFF2VEC_EMBEDDINGS_128, sep=',')
+        elif emb == 'NetMF':
+            df = pd.read_csv(NETMF_EMBEDDINGS_128, sep=',')
+        elif emb == 'NodeSketch':
+            df = pd.read_csv(NODESKETCH_EMBEDDINGS_128, sep=',')
+        elif emb == 'Walklets':
+            df = pd.read_csv(WALKLETS_EMBEDDINGS_256, sep=',')
+        else:
+            raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
     if emb == 'Walklets':
-        dimensions = 256
+        dimensions = dimensions*2
     else:
-        dimensions = 64
+        dimensions = dimensions
     rng = range(1, dimensions + 1)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']

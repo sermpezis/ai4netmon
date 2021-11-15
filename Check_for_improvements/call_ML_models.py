@@ -1,9 +1,7 @@
-from sklearn.linear_model import Lasso
 from sklearn.svm import SVR
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from xgboost.sklearn import XGBRegressor
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.neural_network import MLPRegressor
 from sklearn.dummy import DummyRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
@@ -39,15 +37,7 @@ def get_scatter_plot(model, y_test, y_predicted):
 
 
 def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_train_pca, y_test_pca):
-    # Lasso Regression
-    lassoRegressionModel = Lasso(alpha=1)
-    lassoRegressionModel.fit(x_train_pca, y_train_pca)
-    y_predicted = lassoRegressionModel.predict(x_test_pca)
-    print("Lasso Regression: ")
-    get_metrics(y_test_pca, y_predicted)
-    get_scatter_plot(lassoRegressionModel, y_test_pca, y_predicted)
 
-    # Support Vector Regression
     svRegressionModel = SVR(kernel="poly", max_iter=30000)
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)
@@ -55,26 +45,12 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     get_metrics(y_test, y_predicted)
     get_scatter_plot(svRegressionModel, y_test, y_predicted)
 
-    treeRegressionModel = DecisionTreeRegressor(random_state=0)
-    treeRegressionModel.fit(x_train_pca, y_train_pca)
-    y_predicted = treeRegressionModel.predict(x_test_pca)
-    print("Decision Tree Regression: ")
-    get_metrics(y_test_pca, y_predicted)
-    get_scatter_plot(treeRegressionModel, y_test_pca, y_predicted)
-
     randomForestModel = RandomForestRegressor(random_state=0)
     randomForestModel.fit(x_train_pca, y_train_pca)
     y_predicted = randomForestModel.predict(x_test_pca)
     print("Random Forest Regression: ")
     get_metrics(y_test_pca, y_predicted)
     get_scatter_plot(randomForestModel, y_test_pca, y_predicted)
-
-    xgbreg = XGBRegressor()
-    xgbreg.fit(x_train_pca, y_train_pca)
-    y_predicted = xgbreg.predict(x_test_pca)
-    print("XGBoost Regression: ")
-    get_metrics(y_test_pca, y_predicted)
-    get_scatter_plot(xgbreg, y_test_pca, y_predicted)
 
     reg = GradientBoostingRegressor()
     reg.fit(x_train_pca, y_train_pca)
@@ -84,8 +60,14 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     get_scatter_plot(reg, y_test_pca, y_predicted)
 
     dummy_reg = DummyRegressor(strategy="median")
-    dummy_reg.fit(x_train, y_train)
-    y_predicted = dummy_reg.predict(x_test)
+    dummy_reg.fit(x_train_pca, y_train_pca)
+    y_predicted = dummy_reg.predict(x_test_pca)
     print("Dummy Regression: ")
+    get_metrics(y_test_pca, y_predicted)
+
+    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", random_state=1, max_iter=512)
+    mlp_reg.fit(x_train, y_train)
+    y_predicted = mlp_reg.predict(x_test)
+    print("MLP Regression: ")
     get_metrics(y_test, y_predicted)
-    get_scatter_plot(dummy_reg, y_test, y_predicted)
+    # get_scatter_plot((mlp_reg, y_test, y_predicted))
