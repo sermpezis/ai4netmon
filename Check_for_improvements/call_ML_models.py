@@ -10,12 +10,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def get_metrics(y_test, y_predicted):
+def get_y_without_log(y_test, y_predicted):
     y_pred_without_log = []
     for i in y_predicted:
         x = np.exp(i)
         y_pred_without_log.append(x)
-    y_pred = np.array(y_pred_without_log)
+    y_predicted_new = np.array(y_pred_without_log)
 
     y_test_without_log = []
     for i in y_test:
@@ -23,10 +23,14 @@ def get_metrics(y_test, y_predicted):
         y_test_without_log.append(x)
     y_test_new = np.array(y_test_without_log)
 
-    print("Mean Squared Error: %2f" % mean_squared_error(y_test_new, y_pred))
-    print("Mean Absolute Error: %2f" % mean_absolute_error(abs(y_test_new), abs(y_pred)))
-    print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test_new, y_pred)))
-    print("R2 score: %2f" % r2_score(y_test_new, y_pred))
+    return y_test_new, y_predicted_new
+
+
+def get_metrics(y_test, y_predicted):
+    print("Mean Squared Error: %2f" % mean_squared_error(y_test, y_predicted))
+    print("Mean Absolute Error: %2f" % mean_absolute_error(abs(y_test), abs(y_predicted)))
+    print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
+    print("R2 score: %2f" % r2_score(y_test, y_predicted))
     print("--------------------------")
     print()
 
@@ -59,16 +63,18 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     randomForestModel = RandomForestRegressor(random_state=0)
     randomForestModel.fit(x_train_pca, y_train_pca)
     y_predicted = randomForestModel.predict(x_test_pca)
+    y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
     print("Random Forest Regression: ")
-    get_metrics(y_test_pca, y_predicted)
-    get_scatter_plot(randomForestModel, y_test_pca, y_predicted)
+    get_metrics(y_test_without_log, y_predicted_without_log)
+    get_scatter_plot(randomForestModel, y_test_without_log, y_predicted_without_log)
 
     reg = GradientBoostingRegressor()
     reg.fit(x_train_pca, y_train_pca)
     y_predicted = reg.predict(x_test_pca)
+    y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
     print("GradientBoosting Regression: ")
-    get_metrics(y_test_pca, y_predicted)
-    get_scatter_plot(reg, y_test_pca, y_predicted)
+    get_metrics(y_test_without_log, y_predicted_without_log)
+    get_scatter_plot(reg, y_test_without_log, y_predicted_without_log)
 
     dummy_reg = DummyRegressor(strategy="median")
     dummy_reg.fit(x_train_pca, y_train_pca)
@@ -81,4 +87,4 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     y_predicted = mlp_reg.predict(x_test)
     print("MLP Regression: ")
     get_metrics(y_test, y_predicted)
-    # get_scatter_plot((mlp_reg, y_test, y_predicted))
+    get_scatter_plot(mlp_reg, y_test, y_predicted)
