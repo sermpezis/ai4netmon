@@ -11,10 +11,22 @@ import numpy as np
 
 
 def get_metrics(y_test, y_predicted):
-    print("Mean Squared Error: %2f" % mean_squared_error(y_test, y_predicted))
-    print("Mean Absolute Error: %2f" % mean_absolute_error(abs(y_test), abs(y_predicted)))
-    print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
-    print("R2 score: %2f" % r2_score(y_test, y_predicted))
+    y_pred_without_log = []
+    for i in y_predicted:
+        x = np.exp(i)
+        y_pred_without_log.append(x)
+    y_pred = np.array(y_pred_without_log)
+
+    y_test_without_log = []
+    for i in y_test:
+        x = np.exp(i)
+        y_test_without_log.append(x)
+    y_test_new = np.array(y_test_without_log)
+
+    print("Mean Squared Error: %2f" % mean_squared_error(y_test_new, y_pred))
+    print("Mean Absolute Error: %2f" % mean_absolute_error(abs(y_test_new), abs(y_pred)))
+    print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test_new, y_pred)))
+    print("R2 score: %2f" % r2_score(y_test_new, y_pred))
     print("--------------------------")
     print()
 
@@ -37,7 +49,6 @@ def get_scatter_plot(model, y_test, y_predicted):
 
 
 def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_train_pca, y_test_pca):
-
     svRegressionModel = SVR(kernel="poly", max_iter=30000)
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)

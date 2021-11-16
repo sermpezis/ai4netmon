@@ -3,22 +3,27 @@ from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
+import scipy as sc
 import json
 
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 
 # NODE2VEC_EMBEDDINGS = 'Embeddings/Node2Vec_embeddings.emb'
+DEEPWALK_EMBEDDINGS_128 = 'Embeddings/DeepWalk_128.csv'
 DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
 NETMF_EMBEDDINGS_128 = 'Embeddings/NetMF_128.csv'
 NODESKETCH_EMBEDDINGS_128 = 'Embeddings/NodeSketch_128.csv'
 WALKLETS_EMBEDDINGS_256 = 'Embeddings/Walklets_256.csv'
 
 NODE2VEC_EMBEDDINGS_64 = 'Embeddings/Node2Vec_embeddings.emb'
+NODE2VEC_LOCAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_p2_64.csv'
+NODE2VEC_GLOBAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_q2_64.csv'
 DIFF2VEC_EMBEDDINGS_64 = 'Embeddings/Diff2Vec_64.csv'
 NETMF_EMBEDDINGS_64 = 'Embeddings/NetMF_64.csv'
 NODESKETCH_EMBEDDINGS_64 = 'Embeddings/NodeSketch_64.csv'
 WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
+
 
 def read_RIS_improvement_score():
     with open(RIPE_RIS_PEERS) as handle:
@@ -43,6 +48,13 @@ def read_Node2Vec_embeddings_file():
 
 
 def read_karateClub_embeddings_file(emb, dimensions):
+    """
+    Karateclub library requires nodes to be named with consecutive Integer numbers. In the end gives as an output
+    containing the embeddings in ascending order. So in this function we need to reassign each ASN to its own embedding.
+    :param emb: A dataset containing pretrained embeddings
+    :param dimensions: The dimensions of the given dataset
+    :return: A dataframe containing pretrained embeddings
+    """
     if dimensions == 64:
         if emb == 'Diff2Vec':
             df = pd.read_csv(DIFF2VEC_EMBEDDINGS_64, sep=',')
@@ -52,6 +64,10 @@ def read_karateClub_embeddings_file(emb, dimensions):
             df = pd.read_csv(NODESKETCH_EMBEDDINGS_64, sep=',')
         elif emb == 'Walklets':
             df = pd.read_csv(WALKLETS_EMBEDDINGS_128, sep=',')
+        elif emb == 'Node2Vec_Local':
+            df = pd.read_csv(NODE2VEC_LOCAL_EMBEDDINGS_64, sep=',')
+        elif emb == 'Node2Vec_Global':
+            df = pd.read_csv(NODE2VEC_GLOBAL_EMBEDDINGS_64, sep=',')
         else:
             raise Exception('Not defined dataset')
     else:
@@ -63,12 +79,14 @@ def read_karateClub_embeddings_file(emb, dimensions):
             df = pd.read_csv(NODESKETCH_EMBEDDINGS_128, sep=',')
         elif emb == 'Walklets':
             df = pd.read_csv(WALKLETS_EMBEDDINGS_256, sep=',')
+        elif emb == 'DeepWalk':
+            df = pd.read_csv(DEEPWALK_EMBEDDINGS_128, sep=',')
         else:
             raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
     if emb == 'Walklets':
-        dimensions = dimensions*2
+        dimensions = dimensions * 2
     else:
         dimensions = dimensions
     rng = range(1, dimensions + 1)
@@ -90,24 +108,42 @@ def read_karateClub_embeddings_file(emb, dimensions):
     final_df = pd.concat([previous_data, df], axis=1)
     final_df.drop('ASN', axis=1, inplace=True)
     final_df.rename(columns={0: 'ASN'}, inplace=True)
-    print(final_df)
 
     return final_df
 
 
-def merge_datasets(improvement_df, embeddings_df):
-    print(improvement_df['ASN'].isin(embeddings_df['ASN']).value_counts())
+def clear_dataset_from_outliers(data):
+    """
+    :param data: Take as input the merged dataframe created in merge_datasets function
+    :return: A new dataframe where there are no outliers
+    """
+    z_scores = sc.stats.zscore(data)
+    abs_z_scores = np.abs(z_scores)
+    filtered_entities = (abs_z_scores < 3).all(axis=1)
+    new_df = data[filtered_entities]
 
+    return new_df
+
+
+def merge_datasets(improvement_df, embeddings_df):
+    """
+    :param improvement_df: Contains the improvement score that each ASN will bring to the network
+    :param embeddings_df: Contains pretrained embeddings
+    :return: A new merged dataset (containing improvement_score and the embedding of each ASN)
+    """
+    print(improvement_df['ASN'].isin(embeddings_df['ASN']).value_counts())
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
     mergedStuff.replace('', np.nan, inplace=True)
     mergedStuff = mergedStuff.dropna()
+    clear_df = clear_dataset_from_outliers(mergedStuff)
 
-    return mergedStuff
+    return clear_df
 
 
 def implement_pca(X):
-    pca = PCA(n_components=10)
+    pca = PCA(n_components=0.95)
     X_new = pca.fit_transform(X)
+
     return X_new
 
 
