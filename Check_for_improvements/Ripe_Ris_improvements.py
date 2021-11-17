@@ -15,6 +15,6 @@ mergedStuff = dp.merge_datasets(improvement_df, embeddings_df)
 
 y = mergedStuff['Improvement_score']
 X = mergedStuff.drop(['Improvement_score', 'ASN'], axis=1)
-x_train_pca, x_test_pca, y_train_pca, y_test_pca = dp.split_data_with_pca(X, np.log(y))
+x_train_pca, x_test_pca, y_train_pca, y_test_pca = dp.split_data_with_pca(mergedStuff, X, np.log(y))
 x_train, x_test, y_train, y_test = dp.split_data(X, y)
 cmm.call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_train_pca, y_test_pca)

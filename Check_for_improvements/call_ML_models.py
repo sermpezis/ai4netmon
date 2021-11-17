@@ -36,6 +36,12 @@ def get_metrics(y_test, y_predicted):
 
 
 def get_scatter_plot(model, y_test, y_predicted):
+    """
+    :param model: The machine learning algorithm
+    :param y_test: The true/real y label
+    :param y_predicted: The y label that our model predict
+    :return: Plots showing the performance of our Machine Learning model
+    """
     plt.figure(figsize=(10, 10))
     plt.scatter(y_test, y_predicted, c='crimson')
     plt.yscale('log')
@@ -53,6 +59,18 @@ def get_scatter_plot(model, y_test, y_predicted):
 
 
 def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_train_pca, y_test_pca):
+    """
+    :param x_train: The features that are given as input to our model for training.
+    :param x_test: The features that will be given to our machine learning in order to predict their labels.
+    :param y_train: The given features label.
+    :param y_test: The y label that our model predicts.
+    :param x_train_pca: The features that are given as input to our model for training. The features have been
+    transformed using PCA.
+    :param x_test_pca: The features that will be given to our machine learning in order to predict their labels.
+    The features have been transformed using PCA.
+    :param y_train_pca: The given features label.The features have been transformed using PCA.
+    :param y_test_pca: The y label that our model predicts. The features have been transformed using PCA.
+    """
     svRegressionModel = SVR(kernel="poly", max_iter=30000)
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)
@@ -77,10 +95,10 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     get_scatter_plot(reg, y_test_without_log, y_predicted_without_log)
 
     dummy_reg = DummyRegressor(strategy="median")
-    dummy_reg.fit(x_train_pca, y_train_pca)
-    y_predicted = dummy_reg.predict(x_test_pca)
+    dummy_reg.fit(x_train, y_train)
+    y_predicted = dummy_reg.predict(x_test)
     print("Dummy Regression: ")
-    get_metrics(y_test_pca, y_predicted)
+    get_metrics(y_test, y_predicted)
 
     mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", random_state=1, max_iter=512)
     mlp_reg.fit(x_train, y_train)

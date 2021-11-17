@@ -1,6 +1,7 @@
 from sklearn.decomposition import PCA
 from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
 import scipy as sc
@@ -26,6 +27,10 @@ WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
 
 
 def read_RIS_improvement_score():
+    """
+    :return: A dataframe containing 2 columns. The first one contains ASNs and the second one the improvement score
+     that each ASN will bring to the Network
+    """
     with open(RIPE_RIS_PEERS) as handle:
         dictdump = json.loads(handle.read())
 
@@ -36,6 +41,9 @@ def read_RIS_improvement_score():
 
 
 def read_Node2Vec_embeddings_file():
+    """
+    :return: A dataframe containing the ASNs and the embeddings of each ASn created based on Node2Vec algorithm.
+    """
     emb_df = pd.read_table(NODE2VEC_EMBEDDINGS_64, skiprows=1, header=None, sep=" ")
     # name the columns
     rng = range(0, 65)
@@ -141,26 +149,43 @@ def merge_datasets(improvement_df, embeddings_df):
 
 
 def implement_pca(X):
+    """
+    :param X: The training set with the original number of features
+    :return: The new training set with a smaller number of components that represent the 95% of variance
+    """
     pca = PCA(n_components=0.95)
     X_new = pca.fit_transform(X)
+    print("The number of components in order to keep variance in 95%: " + str(pca.n_components_))
 
     return X_new
 
 
-def split_data_with_pca(X, y):
-    # Implement PCA
+def split_data_with_pca(data, X, y):
+    """
+    We need to implement first MinMaxScaler and after PCA
+    :param data: The final dataframe
+    :param X: The features that we give to our model in order to be trained
+    :param y: The label we want to predict
+    :return: Splits the data in x_train, x_test, y_train, y_test
+    """
+    scaler_choice = 'MinMaxScaler'
+    if scaler_choice == 'MinMaxScaler':
+        scaler_choice = MinMaxScaler(feature_range=(0, 1))
+    elif scaler_choice == 'StandarScaler':
+        scaler_choice = StandardScaler()
+    scaler_choice.fit_transform(data)
     X = implement_pca(X)
-
     x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    scaler.fit(x_train)
-    x_train = scaler.transform(x_train)
-    x_test = scaler.transform(x_test)
 
     return x_train, x_test, y_train, y_test
 
 
 def split_data(X, y):
+    """
+    :param X: The training set
+    :param y: The label that we want to predict
+    :return:
+    """
     x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
     scaler = MinMaxScaler(feature_range=(0, 1))
     scaler.fit(x_train)
