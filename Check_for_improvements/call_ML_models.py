@@ -71,7 +71,7 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     :param y_train_pca: The given features label.The features have been transformed using PCA.
     :param y_test_pca: The y label that our model predicts. The features have been transformed using PCA.
     """
-    svRegressionModel = SVR(kernel="poly", max_iter=30000)
+    svRegressionModel = SVR(kernel="poly")
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)
     print("Support Vector Regression: ")
@@ -99,8 +99,17 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     y_predicted = dummy_reg.predict(x_test)
     print("Dummy Regression: ")
     get_metrics(y_test, y_predicted)
+    get_scatter_plot(dummy_reg, y_test, y_predicted)
 
-    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", random_state=1, max_iter=512)
+    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='sgd', random_state=1, max_iter=750)
+    mlp_reg.fit(x_train_pca, y_train_pca)
+    y_predicted = mlp_reg.predict(x_test_pca)
+    y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
+    print("MLP Regression: ")
+    get_metrics(y_test_without_log, y_predicted_without_log)
+    get_scatter_plot(mlp_reg, y_test_without_log, y_predicted_without_log)
+
+    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='adam', random_state=1, max_iter=512)
     mlp_reg.fit(x_train, y_train)
     y_predicted = mlp_reg.predict(x_test)
     print("MLP Regression: ")

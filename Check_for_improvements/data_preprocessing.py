@@ -143,9 +143,9 @@ def merge_datasets(improvement_df, embeddings_df):
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
     mergedStuff.replace('', np.nan, inplace=True)
     mergedStuff = mergedStuff.dropna()
-    clear_df = clear_dataset_from_outliers(mergedStuff)
+    # clear_df = clear_dataset_from_outliers(mergedStuff)
 
-    return clear_df
+    return mergedStuff
 
 
 def implement_pca(X):
@@ -160,7 +160,21 @@ def implement_pca(X):
     return X_new
 
 
-def split_data_with_pca(data, X, y):
+def regression_stratify(y):
+    """
+    This function separates data into 2 bins in order to have always the same training and testing set.
+    :param y: The label we want to predict
+    :return:
+    """
+    min = np.amin(y)
+    max = np.amax(y)
+
+    bins = np.linspace(start=min, stop=max, num=2)
+    y_binned = np.digitize(y, bins, right=True)
+    return y_binned
+
+
+def split_data_with_pca(X, y):
     """
     We need to implement first MinMaxScaler and after PCA
     :param data: The final dataframe
@@ -173,9 +187,10 @@ def split_data_with_pca(data, X, y):
         scaler_choice = MinMaxScaler(feature_range=(0, 1))
     elif scaler_choice == 'StandarScaler':
         scaler_choice = StandardScaler()
-    scaler_choice.fit_transform(data)
-    X = implement_pca(X)
-    x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
+    X_scaled = scaler_choice.fit_transform(X)
+    X_after_pca = implement_pca(X_scaled)
+    y_binned = regression_stratify(y)
+    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1, stratify=y_binned, random_state=0)
 
     return x_train, x_test, y_train, y_test
 
@@ -184,12 +199,16 @@ def split_data(X, y):
     """
     :param X: The training set
     :param y: The label that we want to predict
-    :return:
+    :return: Splits the data in x_train, x_test, y_train, y_test
     """
-    x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    scaler.fit(x_train)
-    x_train = scaler.transform(x_train)
-    x_test = scaler.transform(x_test)
+    scaler_choice = 'MinMaxScaler'
+    if scaler_choice == 'MinMaxScaler':
+        scaler_choice = MinMaxScaler(feature_range=(0, 1))
+    elif scaler_choice == 'StandarScaler':
+        scaler_choice = StandardScaler()
+    X_scaled = scaler_choice.fit_transform(X)
+    y_binned = regression_stratify(y)
+    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, stratify=y_binned,
+                                                                        random_state=0)
 
     return x_train, x_test, y_train, y_test
