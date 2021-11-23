@@ -147,6 +147,7 @@ def read_karateClub_embeddings_file(emb, dimensions):
             raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
+    df.drop('0', axis=1, inplace=True)
     if emb == 'Walklets':
         dimensions = dimensions * 2
     else:
