@@ -10,7 +10,6 @@ import json
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 
-# NODE2VEC_EMBEDDINGS = 'Embeddings/Node2Vec_embeddings.emb'
 DEEPWALK_EMBEDDINGS_128 = 'Embeddings/DeepWalk_128.csv'
 DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
 NETMF_EMBEDDINGS_128 = 'Embeddings/NetMF_128.csv'
@@ -120,17 +119,37 @@ def read_karateClub_embeddings_file(emb, dimensions):
     return final_df
 
 
-def clear_dataset_from_outliers(data):
+def clear_dataset_from_outliers_z_score(data):
     """
-    :param data: Take as input the merged dataframe created in merge_datasets function
+    :param data: The merged dataframe created in merge_datasets function
     :return: A new dataframe where there are no outliers
     """
+    # z-score may is not the right way to remove outliers for our dataset
     z_scores = sc.stats.zscore(data)
     abs_z_scores = np.abs(z_scores)
     filtered_entities = (abs_z_scores < 3).all(axis=1)
     new_df = data[filtered_entities]
+    print(len(new_df))
 
     return new_df
+
+
+def clear_dataset_from_outliers_inner_outer_fences(data):
+    """
+    :param data: The merged dataframe created in merge_datasets function
+    :return: A dataframe that does not contain outliers
+    """
+    Q1 = data.Improvement_score.quantile(0.25)
+    Q3 = data.Improvement_score.quantile(0.75)
+    IQR = Q3 - Q1
+    no_outliers = data.Improvement_score[
+        (Q1 - 1.5 * IQR < data.Improvement_score) & (data.Improvement_score < Q3 + 1.5 * IQR)]
+    outliers = data.Improvement_score[
+        (Q1 - 1.5 * IQR >= data.Improvement_score) | (data.Improvement_score >= Q3 + 1.5 * IQR)]
+    print(len(no_outliers))
+    print(len(outliers))
+
+    return no_outliers
 
 
 def merge_datasets(improvement_df, embeddings_df):
@@ -143,7 +162,11 @@ def merge_datasets(improvement_df, embeddings_df):
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
     mergedStuff.replace('', np.nan, inplace=True)
     mergedStuff = mergedStuff.dropna()
-    # clear_df = clear_dataset_from_outliers(mergedStuff)
+    outliers = 'Inner_Outer_Fences'
+    if outliers == 'z_score':
+        clear_df = clear_dataset_from_outliers_z_score(mergedStuff)
+    elif outliers == 'Inner_Outer_Fences':
+        clear_df = clear_dataset_from_outliers_inner_outer_fences(mergedStuff)
 
     return mergedStuff
 
@@ -190,7 +213,8 @@ def split_data_with_pca(X, y):
     X_scaled = scaler_choice.fit_transform(X)
     X_after_pca = implement_pca(X_scaled)
     y_binned = regression_stratify(y)
-    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1, stratify=y_binned, random_state=0)
+    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1,
+                                                                        stratify=y_binned, random_state=0)
 
     return x_train, x_test, y_train, y_test
 
