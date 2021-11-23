@@ -92,11 +92,12 @@ def read_karateClub_embeddings_file(emb, dimensions):
             raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
+    df.drop('0', axis=1, inplace=True)
     if emb == 'Walklets':
         dimensions = dimensions * 2
     else:
         dimensions = dimensions
-    rng = range(1, dimensions + 1)
+    rng = range(1, dimensions)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']
     new_cols = np.concatenate((first_col, other_cols), axis=0)
