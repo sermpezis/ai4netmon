@@ -2,7 +2,7 @@ import networkx as nx
 import pandas as pd
 import numpy as np
 import os.path
-from karateclub import Diff2Vec
+from karateclub import Node2Vec
 
 if not os.path.isfile('./convert_to_consecutive.csv'):
 
@@ -39,11 +39,11 @@ for line in data.values:
     graph.add_edge(line[0], line[1])
 
 dimensions = 64
-model = Diff2Vec(dimensions=dimensions)
+model = Node2Vec(dimensions=dimensions, walk_length=5, p=0.5, q=2.0, window_size=2, epochs=3)
 model.fit(graph)
 embedding = model.get_embedding()
 
 id = [i for i in range(0, len(embedding))]
 embedding = np.insert(embedding, 0, id, axis=1)
-pd.DataFrame(embedding).to_csv("Diff2Vec_embeddings.csv", sep=',', index=False)
+pd.DataFrame(embedding).to_csv("Node2Vec_64_wl5_ws2_ep3.csv", sep=',', index=False)
 
