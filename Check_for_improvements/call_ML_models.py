@@ -28,7 +28,7 @@ def get_y_without_log(y_test, y_predicted):
 
 def get_metrics(y_test, y_predicted):
     print("Mean Squared Error: %2f" % mean_squared_error(y_test, y_predicted))
-    print("Mean Absolute Error: %2f" % mean_absolute_error(abs(y_test), abs(y_predicted)))
+    print("Mean Absolute Error: %2f" % mean_absolute_error(y_test, y_predicted))
     print("RMSE: %2f" % np.sqrt(mean_squared_error(y_test, y_predicted)))
     print("R2 score: %2f" % r2_score(y_test, y_predicted))
     print("--------------------------")
@@ -109,7 +109,7 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     get_metrics(y_test_without_log, y_predicted_without_log)
     get_scatter_plot(mlp_reg, y_test_without_log, y_predicted_without_log)
 
-    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='adam', random_state=1, max_iter=512)
+    mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='sgd', random_state=1, max_iter=512)
     mlp_reg.fit(x_train, y_train)
     y_predicted = mlp_reg.predict(x_test)
     print("MLP Regression: ")

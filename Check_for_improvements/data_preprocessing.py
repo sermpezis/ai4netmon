@@ -9,6 +9,7 @@ import json
 
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
+STUB_ASES = '../Analysis/remove_Stubs_from_AS_relationships/Stub_ASes.csv'
 
 DEEPWALK_EMBEDDINGS_128 = 'Embeddings/DeepWalk_128.csv'
 DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
@@ -54,6 +55,14 @@ def read_Node2Vec_embeddings_file():
     return emb_df
 
 
+def read_df_of_Stub_ASes():
+    data = pd.read_csv(STUB_ASES)
+    data.columns = ['ASN']
+    data['ASN'] = data['ASN'].astype(float)
+
+    return data
+
+
 def read_karateClub_embeddings_file(emb, dimensions):
     """
     Karateclub library requires nodes to be named with consecutive Integer numbers. In the end gives as an output
@@ -92,12 +101,11 @@ def read_karateClub_embeddings_file(emb, dimensions):
             raise Exception('Not defined dataset')
 
     df['0'] = df['0'].astype(int)
-    df.drop('0', axis=1, inplace=True)
     if emb == 'Walklets':
         dimensions = dimensions * 2
     else:
         dimensions = dimensions
-    rng = range(1, dimensions)
+    rng = range(1, dimensions+1)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']
     new_cols = np.concatenate((first_col, other_cols), axis=0)
@@ -130,7 +138,7 @@ def clear_dataset_from_outliers_z_score(data):
     abs_z_scores = np.abs(z_scores)
     filtered_entities = (abs_z_scores < 3).all(axis=1)
     new_df = data[filtered_entities]
-    print(len(new_df))
+    # print(len(new_df))
 
     return new_df
 
@@ -147,8 +155,8 @@ def clear_dataset_from_outliers_inner_outer_fences(data):
         (Q1 - 1.5 * IQR < data.Improvement_score) & (data.Improvement_score < Q3 + 1.5 * IQR)]
     outliers = data.Improvement_score[
         (Q1 - 1.5 * IQR >= data.Improvement_score) | (data.Improvement_score >= Q3 + 1.5 * IQR)]
-    print(len(no_outliers))
-    print(len(outliers))
+    # print(len(no_outliers))
+    # print(len(outliers))
 
     return no_outliers
 
