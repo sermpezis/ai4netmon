@@ -2,6 +2,7 @@ from sklearn.decomposition import PCA
 from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
+import call_ML_models as cm
 import pandas as pd
 import numpy as np
 import scipy as sc
@@ -24,6 +25,11 @@ DIFF2VEC_EMBEDDINGS_64 = 'Embeddings/Diff2Vec_64.csv'
 NETMF_EMBEDDINGS_64 = 'Embeddings/NetMF_64.csv'
 NODESKETCH_EMBEDDINGS_64 = 'Embeddings/NodeSketch_64.csv'
 WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
+NODE2VEC_WL5_E3_LOCAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
+NODE2VEC_WL5_E3_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
+NODE2VEC_64_WL5_E1_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_global.csv'
+BGP2VEC_64 = 'Embeddings/Node2Vec_bgp2Vec.csv'
+BGP2VEC_32 = 'Embeddings/BGP2VEC_32'
 
 
 def read_RIS_improvement_score():
@@ -84,6 +90,16 @@ def read_karateClub_embeddings_file(emb, dimensions):
             df = pd.read_csv(NODE2VEC_LOCAL_EMBEDDINGS_64, sep=',')
         elif emb == 'Node2Vec_Global':
             df = pd.read_csv(NODE2VEC_GLOBAL_EMBEDDINGS_64, sep=',')
+        elif emb == 'Node2Vec_wl5_global':
+            df = pd.read_csv(NODE2VEC_64_WL5_E1_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_global':
+            df = pd.read_csv(NODE2VEC_WL5_E3_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_local':
+            df = pd.read_csv(NODE2VEC_WL5_E3_LOCAL, sep=',')
+        elif emb == 'bgp2vec_64':
+            df = pd.read_csv(BGP2VEC_64, sep=',')
+        elif emb == 'bgp2vec_32':
+            df = pd.read_csv(BGP2VEC_32, sep=',')
         else:
             raise Exception('Not defined dataset')
     else:
@@ -104,8 +120,8 @@ def read_karateClub_embeddings_file(emb, dimensions):
     if emb == 'Walklets':
         dimensions = dimensions * 2
     else:
-        dimensions = dimensions
-    rng = range(1, dimensions+1)
+        dimensions = 32
+    rng = range(1, dimensions + 1)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']
     new_cols = np.concatenate((first_col, other_cols), axis=0)
@@ -206,7 +222,7 @@ def regression_stratify(y):
     return y_binned
 
 
-def split_data_with_pca(X, y):
+def split_data_with_pca(X, y, k_fold):
     """
     We need to implement first MinMaxScaler and after PCA
     :param data: The final dataframe
@@ -221,14 +237,17 @@ def split_data_with_pca(X, y):
         scaler_choice = StandardScaler()
     X_scaled = scaler_choice.fit_transform(X)
     X_after_pca = implement_pca(X_scaled)
-    y_binned = regression_stratify(y)
-    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1,
+    if k_fold:
+        new_X = pd.DataFrame(data=X_after_pca[1:, 1:], index=X_after_pca[1:, 0], columns=X_after_pca[0, 1:])
+        k_fold_cross_validation(new_X, y, False)
+    else:
+        y_binned = regression_stratify(y)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1,
                                                                         stratify=y_binned, random_state=0)
+        return x_train, x_test, y_train, y_test
 
-    return x_train, x_test, y_train, y_test
 
-
-def split_data(X, y):
+def split_data(X, y, k_fold):
     """
     :param X: The training set
     :param y: The label that we want to predict
@@ -240,8 +259,27 @@ def split_data(X, y):
     elif scaler_choice == 'StandarScaler':
         scaler_choice = StandardScaler()
     X_scaled = scaler_choice.fit_transform(X)
-    y_binned = regression_stratify(y)
-    x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, stratify=y_binned,
+    if k_fold:
+        new_X = pd.DataFrame(data=X_scaled[1:, 1:], index=X_scaled[1:, 0], columns=X_scaled[0, 1:])
+        k_fold_cross_validation(new_X, y, True)
+    else:
+        y_binned = regression_stratify(y)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, stratify=y_binned,
                                                                         random_state=0)
+        return x_train, x_test, y_train, y_test
 
-    return x_train, x_test, y_train, y_test
+
+def k_fold_cross_validation(X, y, model_flag):
+    """
+    :param X: The training set
+    :param y: The label that we want to predict
+    :param model_flag: This flag helps us to give the correct input to Machine Learning models
+    """
+    kf = model_selection.KFold(n_splits=5, random_state=None)
+    for train_index, test_index in kf.split(X):
+        x_train, x_test = X.iloc[train_index, :], X.iloc[test_index, :]
+        y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+        if model_flag:
+            cm.call_methods_without_log(x_train, x_test, y_train, y_test)
+        else:
+            cm.call_methods_with_log(x_train, x_test, y_train, y_test)
