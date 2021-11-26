@@ -17,6 +17,11 @@ DIFF2VEC_EMBEDDINGS_64 = 'StorePreprocessedEmb/PreprocessedDiff2Vec64.csv'
 NETMF_EMBEDDINGS_64 = 'StorePreprocessedEmb/PreprocessedNetMF64.csv'
 NODESKETCH_EMBEDDINGS_64 = 'StorePreprocessedEmb/PreprocessedNodeSketch64.csv'
 WALKLETS_EMBEDDINGS_128 = 'StorePreprocessedEmb/PreprocessedWalklets128.csv'
+NODE2VEC_WL5_E3_LOCAL = 'StorePreprocessedEmb/PreprocessedNode2Vec_wl5_e3_local64.csv'
+NODE2VEC_WL5_E3_GLOBAL = 'StorePreprocessedEmb/PreprocessedNode2Vec_wl5_e3_global64.csv'
+NODE2VEC_64_WL5_E1_GLOBAL = 'StorePreprocessedEmb/PreprocessedNode2Vec_wl5_global64.csv'
+BGP2VEC_64 = 'StorePreprocessedEmb/Preprocessedbgp2vec64.csv'
+BGP2VEC_32 = 'StorePreprocessedEmb/Preprocessedbgp2vec_32.csv'
 
 
 def create_embedding_plot(two_dimensions, df_all, model_name):
@@ -29,6 +34,7 @@ def create_embedding_plot(two_dimensions, df_all, model_name):
     scatter = plt.scatter(
         two_dimensions[:, 0],
         two_dimensions[:, 1],
+        s=10,
         c=[sns.color_palette()[x] for x in df_all.AS_rank_iso.map({"Europe": 0, "North America": 1, "Asia": 2,
                                                                    "South America": 3, "Oceania": 4, "Africa": 5})])
 
@@ -81,7 +87,7 @@ def read_embedding_model(path):
     return new_data, models_name
 
 
-data, model_name = read_embedding_model(WALKLETS_EMBEDDINGS_128)
+data, model_name = read_embedding_model(BGP2VEC_32)
 df_stubs = read_Stub_csv(STUB_ASES)
 # we have drop ASes that have no info about AS_rank_iso in create_csv_for_visualization.py,
 # that's why we have this difference (42 elements missing)
