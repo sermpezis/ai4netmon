@@ -169,12 +169,20 @@ def clear_dataset_from_outliers_inner_outer_fences(data):
     IQR = Q3 - Q1
     no_outliers = data.Improvement_score[
         (Q1 - 1.5 * IQR < data.Improvement_score) & (data.Improvement_score < Q3 + 1.5 * IQR)]
+    no_outliers = no_outliers.to_frame()
+
     outliers = data.Improvement_score[
         (Q1 - 1.5 * IQR >= data.Improvement_score) | (data.Improvement_score >= Q3 + 1.5 * IQR)]
-    # print(len(no_outliers))
-    # print(len(outliers))
+    print(len(no_outliers))
+    print(len(outliers))
 
-    return no_outliers
+    new_df = pd.merge(no_outliers, data, left_index=True, right_index=True)
+
+    new_df.drop(['Improvement_score_y', 'ASN'], axis=1, inplace=True)
+    new_df.reset_index(inplace=True)
+    new_df = new_df.rename(columns={'index': 'ASN', 'Improvement_score_x': 'Improvement_score'})
+
+    return new_df
 
 
 def merge_datasets(improvement_df, embeddings_df):
@@ -192,7 +200,8 @@ def merge_datasets(improvement_df, embeddings_df):
         clear_df = clear_dataset_from_outliers_z_score(mergedStuff)
     elif outliers == 'Inner_Outer_Fences':
         clear_df = clear_dataset_from_outliers_inner_outer_fences(mergedStuff)
-
+    else:
+        raise Exception('Choose z_score or Inner_Outer_Fences')
     return mergedStuff
 
 
@@ -243,7 +252,7 @@ def split_data_with_pca(X, y, k_fold):
     else:
         y_binned = regression_stratify(y)
         x_train, x_test, y_train, y_test = model_selection.train_test_split(X_after_pca, y, test_size=0.1,
-                                                                        stratify=y_binned, random_state=0)
+                                                                            stratify=y_binned, random_state=0)
         return x_train, x_test, y_train, y_test
 
 
@@ -264,8 +273,8 @@ def split_data(X, y, k_fold):
         k_fold_cross_validation(new_X, y, True)
     else:
         y_binned = regression_stratify(y)
-        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, stratify=y_binned,
-                                                                        random_state=0)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1,
+                                                                            stratify=y_binned, random_state=0)
         return x_train, x_test, y_train, y_test
 
 
