@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 import scipy as sc
 import json
+import smogn
+
 
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
@@ -30,6 +32,16 @@ NODE2VEC_WL5_E3_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
 NODE2VEC_64_WL5_E1_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_global.csv'
 BGP2VEC_64 = 'Embeddings/Node2Vec_bgp2Vec.csv'
 BGP2VEC_32 = 'Embeddings/BGP2VEC_32'
+
+
+def call_smogn(final, flag_k_fold):
+    smt = smogn.smoter(data=final, y='Improvement_score')
+    y_smt = smt['Improvement_score']
+    X_smt = smt.drop(['Improvement_score', 'ASN'], axis=1)
+    x_train, x_test, y_train, y_test = split_data(X_smt, y_smt, flag_k_fold)
+    x_train_pca, x_test_pca, y_train_pca, y_test_pca = split_data_with_pca(X_smt, np.log(y_smt), flag_k_fold)
+    cm.call_methods_without_log(x_train, x_test, y_train, y_test)
+    cm.call_methods_with_log(x_train_pca, x_test_pca, y_train_pca, y_test_pca)
 
 
 def read_RIS_improvement_score():
@@ -173,11 +185,10 @@ def clear_dataset_from_outliers_inner_outer_fences(data):
 
     outliers = data.Improvement_score[
         (Q1 - 1.5 * IQR >= data.Improvement_score) | (data.Improvement_score >= Q3 + 1.5 * IQR)]
-    print(len(no_outliers))
-    print(len(outliers))
+    # print(len(no_outliers))
+    # print(len(outliers))
 
     new_df = pd.merge(no_outliers, data, left_index=True, right_index=True)
-
     new_df.drop(['Improvement_score_y', 'ASN'], axis=1, inplace=True)
     new_df.reset_index(inplace=True)
     new_df = new_df.rename(columns={'index': 'ASN', 'Improvement_score_x': 'Improvement_score'})
@@ -195,13 +206,14 @@ def merge_datasets(improvement_df, embeddings_df):
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
     mergedStuff.replace('', np.nan, inplace=True)
     mergedStuff = mergedStuff.dropna()
-    outliers = 'Inner_Outer_Fences'
+    outliers = 'z_score'
     if outliers == 'z_score':
         clear_df = clear_dataset_from_outliers_z_score(mergedStuff)
     elif outliers == 'Inner_Outer_Fences':
         clear_df = clear_dataset_from_outliers_inner_outer_fences(mergedStuff)
     else:
         raise Exception('Choose z_score or Inner_Outer_Fences')
+
     return mergedStuff
 
 
@@ -210,7 +222,7 @@ def implement_pca(X):
     :param X: The training set with the original number of features
     :return: The new training set with a smaller number of components that represent the 95% of variance
     """
-    pca = PCA(n_components=0.95)
+    pca = PCA(n_components=0.95, svd_solver='full')
     X_new = pca.fit_transform(X)
     print("The number of components in order to keep variance in 95%: " + str(pca.n_components_))
 
@@ -225,9 +237,9 @@ def regression_stratify(y):
     """
     min = np.amin(y)
     max = np.amax(y)
-
     bins = np.linspace(start=min, stop=max, num=2)
     y_binned = np.digitize(y, bins, right=True)
+
     return y_binned
 
 
