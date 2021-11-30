@@ -206,7 +206,7 @@ def merge_datasets(improvement_df, embeddings_df):
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
     mergedStuff.replace('', np.nan, inplace=True)
     mergedStuff = mergedStuff.dropna()
-    outliers = 'z_score'
+    outliers = 'Inner_Outer_Fences'
     if outliers == 'z_score':
         clear_df = clear_dataset_from_outliers_z_score(mergedStuff)
     elif outliers == 'Inner_Outer_Fences':
@@ -214,7 +214,7 @@ def merge_datasets(improvement_df, embeddings_df):
     else:
         raise Exception('Choose z_score or Inner_Outer_Fences')
 
-    return mergedStuff
+    return clear_df
 
 
 def implement_pca(X):
@@ -285,8 +285,7 @@ def split_data(X, y, k_fold):
         k_fold_cross_validation(new_X, y, True)
     else:
         y_binned = regression_stratify(y)
-        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1,
-                                                                            stratify=y_binned, random_state=0)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, random_state=0)
         return x_train, x_test, y_train, y_test
 
 
@@ -304,3 +303,12 @@ def k_fold_cross_validation(X, y, model_flag):
             cm.call_methods_without_log(x_train, x_test, y_train, y_test)
         else:
             cm.call_methods_with_log(x_train, x_test, y_train, y_test)
+
+    for i in cm.get_lists_containing_metrics():
+        mse = np.mean([mse[0] for mse in i])
+        mae = np.mean([mse[1] for mse in i])
+        rmse = np.mean([mse[2] for mse in i])
+        r2 = np.mean([mse[3] for mse in i])
+        print(mse, mae, rmse, r2)
+
+

@@ -9,6 +9,10 @@ from sklearn.metrics import r2_score
 import matplotlib.pyplot as plt
 import numpy as np
 
+list1 = []
+list2 = []
+list3 = []
+
 
 def get_y_without_log(y_test, y_predicted):
     y_pred_without_log = []
@@ -24,6 +28,15 @@ def get_y_without_log(y_test, y_predicted):
     y_test_new = np.array(y_test_without_log)
 
     return y_test_new, y_predicted_new
+
+
+def cal_metrics(y_test, y_predicted):
+    mse = mean_squared_error(y_test, y_predicted)
+    mae = mean_absolute_error(y_test, y_predicted)
+    rmse = np.sqrt(mean_squared_error(y_test, y_predicted))
+    r2 = r2_score(y_test, y_predicted)
+
+    return mse, mae, rmse, r2
 
 
 def get_metrics(y_test, y_predicted):
@@ -56,6 +69,12 @@ def get_scatter_plot(model, y_test, y_predicted):
     plt.axis('equal')
     plt.tight_layout()
     plt.show()
+
+
+def clear_lists():
+    list1.clear()
+    list2.clear()
+    list3.clear()
 
 
 def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_train_pca, y_test_pca):
@@ -128,22 +147,26 @@ def call_methods_without_log(x_train, x_test, y_train, y_test):
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)
     print("Support Vector Regression: ")
-    get_metrics(y_test, y_predicted)
-    get_scatter_plot(svRegressionModel, y_test, y_predicted)
+    mse, mae, rmse, r2 = cal_metrics(y_test, y_predicted)
+    list1.append([mse, mae, rmse, r2])
 
     dummy_reg = DummyRegressor(strategy="median")
     dummy_reg.fit(x_train, y_train)
     y_predicted = dummy_reg.predict(x_test)
     print("Dummy Regression: ")
-    get_metrics(y_test, y_predicted)
-    get_scatter_plot(dummy_reg, y_test, y_predicted)
+    mse, mae, rmse, r2 = cal_metrics(y_test, y_predicted)
+    list2.append([mse, mae, rmse, r2])
 
     mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='sgd', random_state=1, max_iter=512)
     mlp_reg.fit(x_train, y_train)
     y_predicted = mlp_reg.predict(x_test)
     print("MLP Regression: ")
-    get_metrics(y_test, y_predicted)
-    get_scatter_plot(mlp_reg, y_test, y_predicted)
+    mse, mae, rmse, r2 = cal_metrics(y_test, y_predicted)
+    list3.append([mse, mae, rmse, r2])
+
+
+def get_lists_containing_metrics():
+    return [list1, list2, list3]
 
 
 def call_methods_with_log(x_train_pca, x_test_pca, y_train_pca, y_test_pca):
@@ -160,21 +183,21 @@ def call_methods_with_log(x_train_pca, x_test_pca, y_train_pca, y_test_pca):
     y_predicted = randomForestModel.predict(x_test_pca)
     y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
     print("Random Forest Regression: ")
-    get_metrics(y_test_without_log, y_predicted_without_log)
-    get_scatter_plot(randomForestModel, y_test_without_log, y_predicted_without_log)
+    mse, mae, rmse, r2 = cal_metrics(y_test_without_log, y_predicted_without_log)
+    list1.append([mse, mae, rmse, r2])
 
     reg = GradientBoostingRegressor()
     reg.fit(x_train_pca, y_train_pca)
     y_predicted = reg.predict(x_test_pca)
     y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
     print("GradientBoosting Regression: ")
-    get_metrics(y_test_without_log, y_predicted_without_log)
-    get_scatter_plot(reg, y_test_without_log, y_predicted_without_log)
+    mse, mae, rmse, r2 = cal_metrics(y_test_without_log, y_predicted_without_log)
+    list2.append([mse, mae, rmse, r2])
 
     mlp_reg = MLPRegressor(hidden_layer_sizes=2048, activation="relu", solver='sgd', random_state=1, max_iter=750)
     mlp_reg.fit(x_train_pca, y_train_pca)
     y_predicted = mlp_reg.predict(x_test_pca)
     y_test_without_log, y_predicted_without_log = get_y_without_log(y_test_pca, y_predicted)
     print("MLP Regression: ")
-    get_metrics(y_test_without_log, y_predicted_without_log)
-    get_scatter_plot(mlp_reg, y_test_without_log, y_predicted_without_log)
+    mse, mae, rmse, r2 = cal_metrics(y_test_without_log, y_predicted_without_log)
+    list3.append([mse, mae, rmse, r2])

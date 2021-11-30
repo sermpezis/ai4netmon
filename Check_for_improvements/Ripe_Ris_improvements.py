@@ -33,13 +33,13 @@ else:
     df_without_Stubs.drop(['_merge'], axis=1, inplace=True)
     final = df_without_Stubs
 
-
 y = final['Improvement_score']
 X = final.drop(['Improvement_score', 'ASN'], axis=1)
 
-flag_k_fold = False
+flag_k_fold = True
 if flag_k_fold:
     dp.split_data_with_pca(X, np.log(y), flag_k_fold)
+    cmm.clear_lists()
     dp.split_data(X, y, flag_k_fold)
 else:
     x_train_pca, x_test_pca, y_train_pca, y_test_pca = dp.split_data_with_pca(X, np.log(y), flag_k_fold)
