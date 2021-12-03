@@ -5,32 +5,31 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import r2_score
 from sklearn import model_selection
 from sklearn.preprocessing import MinMaxScaler
-from sklearn import preprocessing
 import pandas as pd
 import numpy as np
 
-RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
-PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
-STUB_ASES = '../Analysis/remove_Stubs_from_AS_relationships/Stub_ASes.csv'
+RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
+PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
+STUB_ASES = '../../Analysis/remove_Stubs_from_AS_relationships/Stub_ASes.csv'
 
-DEEPWALK_EMBEDDINGS_128 = 'Embeddings/DeepWalk_128.csv'
-DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
-NETMF_EMBEDDINGS_128 = 'Embeddings/NetMF_128.csv'
-NODESKETCH_EMBEDDINGS_128 = 'Embeddings/NodeSketch_128.csv'
-WALKLETS_EMBEDDINGS_256 = 'Embeddings/Walklets_256.csv'
+DEEPWALK_EMBEDDINGS_128 = '../Embeddings/DeepWalk_128.csv'
+DIFF2VEC_EMBEDDINGS_128 = '../Embeddings/Diff2Vec_128.csv'
+NETMF_EMBEDDINGS_128 = '../Embeddings/NetMF_128.csv'
+NODESKETCH_EMBEDDINGS_128 = '../Embeddings/NodeSketch_128.csv'
+WALKLETS_EMBEDDINGS_256 = '../Embeddings/Walklets_256.csv'
 
-NODE2VEC_EMBEDDINGS_64 = 'Embeddings/Node2Vec_embeddings.emb'
-NODE2VEC_LOCAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_p2_64.csv'
-NODE2VEC_GLOBAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_q2_64.csv'
-DIFF2VEC_EMBEDDINGS_64 = 'Embeddings/Diff2Vec_64.csv'
-NETMF_EMBEDDINGS_64 = 'Embeddings/NetMF_64.csv'
-NODESKETCH_EMBEDDINGS_64 = 'Embeddings/NodeSketch_64.csv'
-WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
-NODE2VEC_WL5_E3_LOCAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
-NODE2VEC_WL5_E3_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
-NODE2VEC_64_WL5_E1_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_global.csv'
-BGP2VEC_64 = 'Embeddings/Node2Vec_bgp2Vec.csv'
-BGP2VEC_32 = 'Embeddings/BGP2VEC_32'
+NODE2VEC_EMBEDDINGS_64 = '../Embeddings/Node2Vec_embeddings.emb'
+NODE2VEC_LOCAL_EMBEDDINGS_64 = '../Embeddings/Node2Vec_p2_64.csv'
+NODE2VEC_GLOBAL_EMBEDDINGS_64 = '../Embeddings/Node2Vec_q2_64.csv'
+DIFF2VEC_EMBEDDINGS_64 = '../Embeddings/Diff2Vec_64.csv'
+NETMF_EMBEDDINGS_64 = '../Embeddings/NetMF_64.csv'
+NODESKETCH_EMBEDDINGS_64 = '../Embeddings/NodeSketch_64.csv'
+WALKLETS_EMBEDDINGS_128 = '../Embeddings/Walklets_128.csv'
+NODE2VEC_WL5_E3_LOCAL = '../Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
+NODE2VEC_WL5_E3_GLOBAL = '../Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
+NODE2VEC_64_WL5_E1_GLOBAL = '../Embeddings/Node2Vec_64_wl5_ws2_global.csv'
+BGP2VEC_64 = '../Embeddings/Node2Vec_bgp2Vec.csv'
+BGP2VEC_32 = '../Embeddings/BGP2VEC_32'
 
 karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_Local', 'Node2Vec_Global',
                       'Node2Vec_wl5_global', 'Node2Vec_wl5_e3_global', 'Node2Vec_wl5_e3_local', 'bgp2vec_64',
@@ -154,7 +153,7 @@ def call_regression_models(x_train, x_test, y_train, y_test):
     get_metrics(y_test, y_predicted)
 
 
-final_df = pd.read_csv('../Analysis/aggregate_data/final_dataframe.csv')
+final_df = pd.read_csv('../../Analysis/aggregate_data/final_dataframe.csv')
 embeddings_df = read_karateClub_embeddings_file(karate_club_emb_64[10], dimensions=graph_emb_dimensions)
 embeddings_df['ASN'] = embeddings_df.ASN.astype(float)
 mergedStuff = merge_datasets(final_df, embeddings_df)
