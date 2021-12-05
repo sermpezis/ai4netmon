@@ -7,7 +7,7 @@ karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_L
                       'bgp2vec_32']
 karate_club_emb_128 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'DeepWalk']
 graph_emb_dimensions = 64
-proceed_to_classification = False
+proceed_to_classification = True
 
 final_df = pd.read_csv('../../Analysis/aggregate_data/final_dataframe.csv')
 embeddings_df = dp.read_karateClub_embeddings_file(karate_club_emb_64[10], dimensions=graph_emb_dimensions)

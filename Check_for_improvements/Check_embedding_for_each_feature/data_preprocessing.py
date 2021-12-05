@@ -111,10 +111,14 @@ def read_karateClub_embeddings_file(emb, dimensions):
 
 
 def merge_datasets(improvement_df, embeddings_df):
+    """
+    :param improvement_df: Contains the improvement score that each ASN will bring to the network
+    :param embeddings_df: Contains pretrained embeddings
+    :return: A new merged dataset (containing improvement_score and the embedding of each ASN)
+    """
     print(improvement_df['ASN'].isin(embeddings_df['ASN']).value_counts())
     mergedStuff = pd.merge(embeddings_df, improvement_df, on=['ASN'], how='left')
     mergedStuff.replace('', 0, inplace=True)
-    # mergedStuff.replace(np.nan, 0.0, inplace=True)
 
     return mergedStuff
 
@@ -169,9 +173,15 @@ def my_confusion_matrix(y_actual, y_predicted):
 
 
 def change_string_class_to_categorical(data, feature):
+    """
+    This function convert strings to categorical values in order to proceed the classification procedure
+    :param data: The given dataframe
+    :param feature: The feature we want to convert to categorical
+    :return: The feature with categorical values
+    """
     le = preprocessing.LabelEncoder()
-    le.fit(data.peeringDB_info_traffic)
-    data[feature] = le.transform(data.peeringDB_info_traffic)
+    le.fit(data[feature])
+    data[feature] = le.transform(data[feature])
 
     return data
 
