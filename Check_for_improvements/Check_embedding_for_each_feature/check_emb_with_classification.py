@@ -4,7 +4,6 @@ from sklearn import preprocessing
 from sklearn import metrics
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import model_selection
-import Check_for_improvements.Check_embedding_for_each_feature.check_emb_with_regression as cewr
 import numpy as np
 import pandas as pd
 
@@ -72,8 +71,92 @@ def change_string_class_to_categorical(data, feature):
     return data
 
 
+def read_karateClub_embeddings_file(emb, dimensions):
+    """
+    Karateclub library requires nodes to be named with consecutive Integer numbers. In the end gives as an output
+    containing the embeddings in ascending order. So in this function we need to reassign each ASN to its own embedding.
+    :param emb: A dataset containing pretrained embeddings
+    :param dimensions: The dimensions of the given dataset
+    :return: A dataframe containing pretrained embeddings
+    """
+    if dimensions == 64:
+        if emb == 'Diff2Vec':
+            df = pd.read_csv(DIFF2VEC_EMBEDDINGS_64, sep=',')
+        elif emb == 'NetMF':
+            df = pd.read_csv(NETMF_EMBEDDINGS_64, sep=',')
+        elif emb == 'NodeSketch':
+            df = pd.read_csv(NODESKETCH_EMBEDDINGS_64, sep=',')
+        elif emb == 'Walklets':
+            df = pd.read_csv(WALKLETS_EMBEDDINGS_128, sep=',')
+        elif emb == 'Node2Vec_Local':
+            df = pd.read_csv(NODE2VEC_LOCAL_EMBEDDINGS_64, sep=',')
+        elif emb == 'Node2Vec_Global':
+            df = pd.read_csv(NODE2VEC_GLOBAL_EMBEDDINGS_64, sep=',')
+        elif emb == 'Node2Vec_wl5_global':
+            df = pd.read_csv(NODE2VEC_64_WL5_E1_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_global':
+            df = pd.read_csv(NODE2VEC_WL5_E3_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_local':
+            df = pd.read_csv(NODE2VEC_WL5_E3_LOCAL, sep=',')
+        elif emb == 'bgp2vec_64':
+            df = pd.read_csv(BGP2VEC_64, sep=',')
+        elif emb == 'bgp2vec_32':
+            df = pd.read_csv(BGP2VEC_32, sep=',')
+        else:
+            raise Exception('Not defined dataset')
+    else:
+        if emb == 'Diff2Vec':
+            df = pd.read_csv(DIFF2VEC_EMBEDDINGS_128, sep=',')
+        elif emb == 'NetMF':
+            df = pd.read_csv(NETMF_EMBEDDINGS_128, sep=',')
+        elif emb == 'NodeSketch':
+            df = pd.read_csv(NODESKETCH_EMBEDDINGS_128, sep=',')
+        elif emb == 'Walklets':
+            df = pd.read_csv(WALKLETS_EMBEDDINGS_256, sep=',')
+        elif emb == 'DeepWalk':
+            df = pd.read_csv(DEEPWALK_EMBEDDINGS_128, sep=',')
+        else:
+            raise Exception('Not defined dataset')
+
+    df['0'] = df['0'].astype(int)
+    if emb == 'Walklets':
+        dimensions = dimensions * 2
+    else:
+        dimensions = 32
+    rng = range(1, dimensions + 1)
+    other_cols = ['dim_' + str(i) for i in rng]
+    first_col = ['ASN']
+    new_cols = np.concatenate((first_col, other_cols), axis=0)
+    df.columns = new_cols
+
+    # Replace the consecutive ASNs given from KarateClub library with the initial ASNs
+    data = pd.read_csv(PATH_AS_RELATIONSHIPS, sep="|", skiprows=180, header=None)
+    data.columns = ['source', 'target', 'link', 'protocol']
+    data.drop(['link', 'protocol'], axis=1, inplace=True)
+    unique_nodes1 = set(data.source)
+    unique_nodes2 = set(data.target)
+    all_nodes = set(unique_nodes1.union(unique_nodes2))
+    sort_nodes = sorted(all_nodes)
+    previous_data = pd.DataFrame(sort_nodes)
+
+    final_df = pd.concat([previous_data, df], axis=1)
+    final_df.drop('ASN', axis=1, inplace=True)
+    final_df.rename(columns={0: 'ASN'}, inplace=True)
+
+    return final_df
+
+
+def merge_datasets(improvement_df, embeddings_df):
+    print(improvement_df['ASN'].isin(embeddings_df['ASN']).value_counts())
+    mergedStuff = pd.merge(embeddings_df, improvement_df, on=['ASN'], how='left')
+    mergedStuff.replace('', 0, inplace=True)
+    # mergedStuff.replace(np.nan, 0.0, inplace=True)
+
+    return mergedStuff
+
+
 def call_classification_models(x_train, x_test, y_train, y_test):
-    logreg = LogisticRegression(C=1e5, solver='lbfgs', multi_class='multinomial')
+    logreg = LogisticRegression(C=1e5, solver='saga', multi_class='multinomial', max_iter=1000)
     logreg.fit(x_train, y_train)
     y_predicted = logreg.predict(x_test)
     print("================ Logistic Regression: ================")
@@ -86,14 +169,13 @@ def call_classification_models(x_train, x_test, y_train, y_test):
     get_metrics(y_test, y_predicted)
 
 
-final_df = pd.read_csv('../Analysis/aggregate_data/final_dataframe.csv')
-embeddings_df = cewr.read_karateClub_embeddings_file(karate_club_emb_64[3], dimensions=graph_emb_dimensions)
+final_df = pd.read_csv('../../Analysis/aggregate_data/final_dataframe.csv')
+embeddings_df = read_karateClub_embeddings_file(karate_club_emb_64[10], dimensions=graph_emb_dimensions)
 embeddings_df['ASN'] = embeddings_df.ASN.astype(float)
-mergedStuff = cewr.merge_datasets(final_df, embeddings_df)
-
-mergedStuff.dropna(subset=['peeringDB_info_traffic'], inplace=True)
-new_data = change_string_class_to_categorical(mergedStuff, 'peeringDB_info_traffic')
-y = mergedStuff['peeringDB_info_traffic']
+mergedStuff = merge_datasets(final_df, embeddings_df)
+mergedStuff.dropna(subset=['peeringDB_info_type'], inplace=True)
+new_data = change_string_class_to_categorical(mergedStuff, 'peeringDB_info_type')
+y = mergedStuff['peeringDB_info_type']
 X = mergedStuff.drop(
     ['ASN', 'AS_rank_rank', 'AS_rank_source', 'AS_rank_longitude', 'AS_rank_latitude', 'AS_rank_numberAsns',
      'AS_rank_numberPrefixes', 'AS_rank_numberAddresses', 'AS_rank_iso', 'AS_rank_total', 'AS_rank_customer',
