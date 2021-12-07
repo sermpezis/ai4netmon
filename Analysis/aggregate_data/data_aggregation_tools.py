@@ -10,9 +10,8 @@ PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
 PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
 PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
 PATH_BGP = '../bgp_paths/random_data.txt'
-AS_HEGEMONY_PATH = '../../Datasets/AS_hegemony/AS_hegemony.csv'
-ALL_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
-
+AS_HEGEMONY_PATH = '../../Datasets/AS-hegemony/AS_hegemony.csv'
+ALL_ATLAS_PROBES = '../../Datasets/RIPE_Atlas_probes/bq_results.json'
 
 
 def create_df_from_Atlas_probes():
@@ -24,9 +23,9 @@ def create_df_from_Atlas_probes():
     data = data[(data['status'] == 'Connected')]
     s4 = data['asn_v4'].value_counts()
     s6 = data['asn_v6'].value_counts()
-    df = pd.concat([s4,s6], axis=1)
-    df.index.name='asn'
-    df = df.rename(columns={'asn_v4':'nb_atlas_probes_v4','asn_v6':'nb_atlas_probes_v6'})
+    df = pd.concat([s4, s6], axis=1)
+    df.index.name = 'asn'
+    df = df.rename(columns={'asn_v4': 'nb_atlas_probes_v4', 'asn_v6': 'nb_atlas_probes_v6'})
 
     return df
 
@@ -39,7 +38,8 @@ def create_df_from_AS_rank():
     data = pd.read_csv(PATH_AS_RANK, sep=",")
     new_columns = ['AS_rank_' + str(i) for i in data.columns]
     data = data.set_axis(new_columns, axis='columns', inplace=False)
-    data.loc[(data['AS_rank_longitude'] == 0) & (data['AS_rank_latitude'] == 0), ['AS_rank_longitude', 'AS_rank_latitude']] = None
+    data.loc[(data['AS_rank_longitude'] == 0) & (data['AS_rank_latitude'] == 0), ['AS_rank_longitude',
+                                                                                  'AS_rank_latitude']] = None
     data = data.set_index('AS_rank_asn')
 
     return data
@@ -51,7 +51,7 @@ def create_df_from_AS_hegemony():
     :return: A dataframe with index the ASN
     """
     data = pd.read_csv(AS_HEGEMONY_PATH, sep=",")
-    data = data.rename(columns={'hege':'AS_hegemony'})
+    data = data.rename(columns={'hege': 'AS_hegemony'})
     data = data.set_index('asn')
 
     return data
