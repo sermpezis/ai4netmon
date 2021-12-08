@@ -6,7 +6,8 @@ from matplotlib import pyplot as plt
 import json
 
 
-SAMPLES_FNAME = './data/samples_pathlens.csv'
+SAMPLES_FNAME = './data/samples_pathlens_100000.csv'
+SIMILARITY_MATRIX_FNAME = './data/similarity_matrix_distances_pathlens_100k.csv'
 RIPE_RIS_PEERS_FNAME = 'list_of_RIPE_RIS_peers.json'
 PATHLEN_DISTANCES_SUM_FNAME = './data/pathlen_distances_sum.json'
 PATHLEN_DISTANCES_AVG_FNAME = './data/pathlen_distances_avg.json'
@@ -16,10 +17,10 @@ PATHLEN_DISTANCES_SUM_5MAX_FNAME = './data/pathlen_distances_sum_5max.json'
 PATHLEN_DISTANCES_SUM_10MAX_FNAME = './data/pathlen_distances_sum_10max.json'
 PATHLEN_DISTANCES_SUM_5MIN_FNAME = './data/pathlen_distances_sum_5min.json'
 PATHLEN_DISTANCES_SUM_10MIN_FNAME = './data/pathlen_distances_sum_10min.json'
-PATHLEN_DISTANCES_SUM_5MAX_FNAME = 'pathlen_distances_sum_5max.json'
-PATHLEN_DISTANCES_SUM_10MAX_FNAME = 'pathlen_distances_sum_10max.json'
-PATHLEN_DISTANCES_SUM_5MIN_FNAME = 'pathlen_distances_sum_5min.json'
-PATHLEN_DISTANCES_SUM_10MIN_FNAME = 'pathlen_distances_sum_10min.json'
+PATHLEN_DISTANCES_SUM_5MAX_FNAME = './data/pathlen_distances_sum_5max.json'
+PATHLEN_DISTANCES_SUM_10MAX_FNAME = './data/pathlen_distances_sum_10max.json'
+PATHLEN_DISTANCES_SUM_5MIN_FNAME = './data/pathlen_distances_sum_5min.json'
+PATHLEN_DISTANCES_SUM_10MIN_FNAME = './data/pathlen_distances_sum_10min.json'
 THRESHOLD_MIN_SAMPLES = 200
 
 normalized_nan_euclidean_distances = lambda x : nan_euclidean_distances(x)/x.shape[1]
@@ -27,8 +28,9 @@ adapted_normalized_nan_euclidean_distances = lambda x,max_size : nan_euclidean_d
 
 
 
-
+print('Reading csv file with pathlens...')
 df = pd.read_csv(SAMPLES_FNAME, delimiter=',')
+print('Basic data handling ...')
 df = df.replace(-1,np.nan)
 df = df.dropna(axis=0,how='all')
 df = df.dropna(axis=1,how='all')
@@ -40,7 +42,7 @@ df = df.dropna(axis=1,how='all')
 # print(df1)
 # print(df1.shape)
 
-
+print('Calculating transpose ...')
 a = df.to_numpy().transpose()
 
 
@@ -64,20 +66,29 @@ a = df.to_numpy().transpose()
 # plt.show()
 
 
+print('Calculating Euclidean distances...')
 distance_matrix = normalized_nan_euclidean_distances(a)
 np.fill_diagonal(distance_matrix,np.nan)
-for i in range(distance_matrix.shape[1]):
-    print(i)
-    for j in range(distance_matrix.shape[1]):
-        if (sum(df.iloc[:,i].notna() & df.iloc[:,j].notna())<THRESHOLD_MIN_SAMPLES):
-            distance_matrix[i,j] = np.nan
+
+print('Creating the distance matrix...')
+df[~df.isna()] = 1
+df[df.isna()] = 0
+u = df.to_numpy()
+common_samples = np.matmul(u.transpose(),u)
+distance_matrix[common_samples<THRESHOLD_MIN_SAMPLES] = np.nan
+
+
+print('Saving the distance matrix...')
+pd.DataFrame(distance_matrix, columns=df.columns).to_csv(SIMILARITY_MATRIX_FNAME, index=False)
 
 
 
+print('Calculating distance metrics...')
 with open(RIPE_RIS_PEERS_FNAME, 'r') as f:
     ripe_ris_peers = json.load(f)
 
 sum_distances = np.nansum(distance_matrix, axis=0)
+sum_distances[np.isnan(distance_matrix).all(axis=0)] = np.nan
 avg_distances = np.nanmean(distance_matrix, axis=0)
 min_distances = np.nanmin(distance_matrix, axis=0)
 max_distances = np.nanmax(distance_matrix, axis=0)
@@ -85,10 +96,14 @@ total_distance = {df.columns[i]: sum_distances[i] for i in range(sum_distances.s
 avg_distance = {df.columns[i]: avg_distances[i] for i in range(avg_distances.shape[0])}
 min_distance = {df.columns[i]: min_distances[i] for i in range(min_distances.shape[0])}
 max_distance = {df.columns[i]: max_distances[i] for i in range(max_distances.shape[0])}
-sum_5max_distances = {df.columns[i]:np.nansum(np.sort(distance_matrix[i,:])[0:5]) for i in range(sum_distances.shape[0])}
-sum_10max_distances = {df.columns[i]:np.nansum(np.sort(distance_matrix[i,:])[0:10]) for i in range(sum_distances.shape[0])}
-sum_5min_distances = {df.columns[i]:np.nansum(np.sort(distance_matrix[i,~np.isnan(distance_matrix[i,:])])[::-1][0:5]) for i in range(sum_distances.shape[0])}
-sum_10min_distances = {df.columns[i]:np.nansum(np.sort(distance_matrix[i,~np.isnan(distance_matrix[i,:])])[::-1][0:10]) for i in range(sum_distances.shape[0])}
+
+
+nan_nansum = lambda x: np.nan if np.isnan(x).all() else np.nansum(x)
+
+sum_5max_distances = {df.columns[i]:nan_nansum(np.sort(distance_matrix[i,:])[0:5]) for i in range(sum_distances.shape[0])}
+sum_10max_distances = {df.columns[i]:nan_nansum(np.sort(distance_matrix[i,:])[0:10]) for i in range(sum_distances.shape[0])}
+sum_5min_distances = {df.columns[i]:nan_nansum(np.sort(distance_matrix[i,~np.isnan(distance_matrix[i,:])])[::-1][0:5]) for i in range(sum_distances.shape[0])}
+sum_10min_distances = {df.columns[i]:nan_nansum(np.sort(distance_matrix[i,~np.isnan(distance_matrix[i,:])])[::-1][0:10]) for i in range(sum_distances.shape[0])}
 
 
 with open(PATHLEN_DISTANCES_SUM_FNAME,'w') as f:
