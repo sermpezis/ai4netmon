@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 import networkx as nx
-import re
 import json
+import pycountry_convert as pc
 
-PATH_AS_RANK = '../../Datasets/As-rank/asns.csv'
+PATH_AS_RANK = '../../Datasets/AS-rank/asns.csv'
 PATH_PERSONAL = '../../Datasets/bgp.tools/perso.txt'
 PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
 PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
@@ -12,6 +12,42 @@ PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
 PATH_BGP = '../bgp_paths/random_data.txt'
 AS_HEGEMONY_PATH = '../../Datasets/AS-hegemony/AS_hegemony.csv'
 ALL_ATLAS_PROBES = '../../Datasets/RIPE_Atlas_probes/bq_results.json'
+
+
+def cc2cont(country_code):
+    '''
+    Receives a country code ISO2 (e.g., 'US') and returns the corresponding continent name (e.g., 'North America'). 
+    Exceptions: 
+        - if 'EU' is given as country code (it happened in data), then it is treated as the continent code
+        - if the country code is not found, then a None value is returned
+    :param  country_code:   (str) ISO2 country code
+    :return:    (str) continent name of the given country(-ies)
+    '''
+    if country_code in ['EU']:
+        continent_code = country_code
+    else:
+        try:
+            continent_code = pc.country_alpha2_to_continent_code(country_code)
+        except KeyError:
+            return None
+    continent_name = pc.convert_continent_code_to_continent_name(continent_code)
+    return continent_name
+    
+
+def get_continent(country_code):
+    '''
+    Receives a series of country codes ISO2 (e.g., 'US') and returns the corresponding continent names (e.g., 'North America'). 
+    For NaN or None elements, it returns a None value
+    :param  country_code:   (pandas Series) ISO2 country codes
+    :return:    (list of str) continent names of the given countries
+    '''
+    continent_name = []
+    for cc in country_code.tolist():
+        if pd.isna(cc):
+            continent_name.append(None)
+        else:
+            continent_name.append( cc2cont(cc) )
+    return continent_name
 
 
 def create_df_from_Atlas_probes():
@@ -40,6 +76,7 @@ def create_df_from_AS_rank():
     data = data.set_axis(new_columns, axis='columns', inplace=False)
     data.loc[(data['AS_rank_longitude'] == 0) & (data['AS_rank_latitude'] == 0), ['AS_rank_longitude',
                                                                                   'AS_rank_latitude']] = None
+    data['AS_rank_continent'] = get_continent(data['AS_rank_iso'])
     data = data.set_index('AS_rank_asn')
 
     return data
