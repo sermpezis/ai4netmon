@@ -51,4 +51,4 @@ df['rrc'] = [ripe_ris_peer_ip2rrc.get(ip, np.nan) for ip in df.index]
 
 
 print('\t writing to file ...')
-df.to_csv(TSNE_DATASET_FNAME,index=True)
+df.to_csv(TSNE_DATASET_FNAME, index=True, index_label='Peer IP')
