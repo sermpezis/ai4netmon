@@ -29,7 +29,7 @@ df = su.similarity_matrix_to_2D_vector(similarity_matrix)
 print('\t enriching with monitors data ...')
 df = pd.DataFrame(df)
 df.index = similarity_matrix.index
-df.columns = ['TSNE_x', 'TSNE_y']
+df.columns = ['X', 'Y']
 
 print('\t\t loading RIPE RIS data ...')
 with open(RIPE_RIS_PEERS_FNAME, 'r') as f:
