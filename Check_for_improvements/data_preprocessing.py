@@ -10,6 +10,7 @@ import json
 import smogn
 
 
+FINAL_DATASET = '../Analysis/aggregate_data/final_dataframe.csv'
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 STUB_ASES = '../Analysis/remove_Stubs_from_AS_relationships/Stub_ASes.csv'
@@ -56,6 +57,10 @@ def read_RIS_improvement_score():
 
     data['ASN'] = data['ASN'].astype(np.int64)
     return data
+
+
+def read_final_dataset():
+    return pd.read_csv(FINAL_DATASET)
 
 
 def read_Node2Vec_embeddings_file():
@@ -132,7 +137,7 @@ def read_karateClub_embeddings_file(emb, dimensions):
     if emb == 'Walklets':
         dimensions = dimensions * 2
     else:
-        dimensions = 32
+        dimensions = 64
     rng = range(1, dimensions + 1)
     other_cols = ['dim_' + str(i) for i in rng]
     first_col = ['ASN']
@@ -154,6 +159,24 @@ def read_karateClub_embeddings_file(emb, dimensions):
     final_df.rename(columns={0: 'ASN'}, inplace=True)
 
     return final_df
+
+
+def convert_nan_values_to_median(data):
+    data['AS_rank_rank'].fillna((data['AS_rank_rank'].mean()), inplace=True)
+    data['AS_rank_numberAsns'].fillna((data['AS_rank_numberAsns'].mean()), inplace=True)
+    data['AS_rank_numberPrefixes'].fillna((data['AS_rank_numberPrefixes'].mean()), inplace=True)
+    data['AS_rank_numberAddresses'].fillna((data['AS_rank_numberAddresses'].mean()), inplace=True)
+    data['AS_rank_total'].fillna((data['AS_rank_total'].mean()), inplace=True)
+    data['AS_rank_customer'].fillna((data['AS_rank_customer'].mean()), inplace=True)
+    data['AS_rank_peer'].fillna((data['AS_rank_peer'].mean()), inplace=True)
+    data['AS_rank_provider'].fillna((data['AS_rank_provider'].mean()), inplace=True)
+
+    data['peeringDB_ix_count'].fillna((data['peeringDB_ix_count'].mean()), inplace=True)
+    data['peeringDB_fac_count'].fillna((data['peeringDB_fac_count'].mean()), inplace=True)
+    data['AS_hegemony'].fillna((data['AS_hegemony'].mean()), inplace=True)
+    data.replace(np.nan, 0, inplace=True)
+
+    return data
 
 
 def clear_dataset_from_outliers_z_score(data):
@@ -196,21 +219,26 @@ def clear_dataset_from_outliers_inner_outer_fences(data):
     return new_df
 
 
-def merge_datasets(improvement_df, embeddings_df):
+def merge_datasets(improvement_df, embeddings_df, final_df, z_score_flag, inner_outer_fences_flag):
     """
+    :param inner_outer_fences_flag:  It shows us if we will use the tool (Inner_Outer_Fences)
+    :param z_score_flag: It shows us if we will use the tool (Z-score)
     :param improvement_df: Contains the improvement score that each ASN will bring to the network
     :param embeddings_df: Contains pretrained embeddings
     :return: A new merged dataset (containing improvement_score and the embedding of each ASN)
     """
     print(improvement_df['ASN'].isin(embeddings_df['ASN']).value_counts())
     mergedStuff = pd.merge(improvement_df, embeddings_df, on=['ASN'], how='left')
-    mergedStuff.replace('', np.nan, inplace=True)
-    mergedStuff = mergedStuff.dropna()
-    outliers = 'Inner_Outer_Fences'
-    if outliers == 'z_score':
-        clear_df = clear_dataset_from_outliers_z_score(mergedStuff)
-    elif outliers == 'Inner_Outer_Fences':
-        clear_df = clear_dataset_from_outliers_inner_outer_fences(mergedStuff)
+    mergedStuff['ASN'] = mergedStuff['ASN'].astype(float)
+    data = pd.merge(mergedStuff, final_df, on=['ASN'], how='left')
+    data.replace('', np.nan, inplace=True)
+    data_new = convert_nan_values_to_median(data)
+    data_new.replace(np.nan, 0, inplace=True)
+    if z_score_flag:
+        df = data_new[data_new.T[data_new.dtypes != np.object].index]
+        clear_df = clear_dataset_from_outliers_z_score(df)
+    elif inner_outer_fences_flag:
+        clear_df = clear_dataset_from_outliers_inner_outer_fences(data)
     else:
         raise Exception('Choose z_score or Inner_Outer_Fences')
 
@@ -280,12 +308,13 @@ def split_data(X, y, k_fold):
     elif scaler_choice == 'StandarScaler':
         scaler_choice = StandardScaler()
     X_scaled = scaler_choice.fit_transform(X)
+    X_after_pca = implement_pca(X_scaled)
     if k_fold:
         new_X = pd.DataFrame(data=X_scaled[1:, 1:], index=X_scaled[1:, 0], columns=X_scaled[0, 1:])
         k_fold_cross_validation(new_X, y, True)
     else:
         y_binned = regression_stratify(y)
-        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, random_state=0)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
         return x_train, x_test, y_train, y_test
 
 
