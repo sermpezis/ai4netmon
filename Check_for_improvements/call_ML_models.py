@@ -90,7 +90,7 @@ def call_methods(x_train, x_test, y_train, y_test, x_train_pca, x_test_pca, y_tr
     :param y_train_pca: The given features label.The features have been transformed using PCA.
     :param y_test_pca: The y label that our model predicts. The features have been transformed using PCA.
     """
-    svRegressionModel = SVR(kernel="poly")
+    svRegressionModel = SVR(kernel="rbf")
     svRegressionModel.fit(x_train, y_train)
     y_predicted = svRegressionModel.predict(x_test)
     print("Support Vector Regression: ")

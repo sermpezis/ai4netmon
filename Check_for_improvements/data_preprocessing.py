@@ -10,7 +10,7 @@ import json
 import smogn
 
 
-FINAL_DATASET = '../Analysis/aggregate_data/final_dataframe.csv'
+FINAL_DATASET = '../Analysis/aggregate_data/asn_aggregate_data_20211201.csv'
 RIPE_RIS_PEERS = '../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
 PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
 STUB_ASES = '../Analysis/remove_Stubs_from_AS_relationships/Stub_ASes.csv'
@@ -161,21 +161,21 @@ def read_karateClub_embeddings_file(emb, dimensions):
     return final_df
 
 
-def convert_nan_values_to_median(data):
-    data['AS_rank_rank'].fillna((data['AS_rank_rank'].mean()), inplace=True)
-    data['AS_rank_numberAsns'].fillna((data['AS_rank_numberAsns'].mean()), inplace=True)
-    data['AS_rank_numberPrefixes'].fillna((data['AS_rank_numberPrefixes'].mean()), inplace=True)
-    data['AS_rank_numberAddresses'].fillna((data['AS_rank_numberAddresses'].mean()), inplace=True)
-    data['AS_rank_total'].fillna((data['AS_rank_total'].mean()), inplace=True)
-    data['AS_rank_customer'].fillna((data['AS_rank_customer'].mean()), inplace=True)
-    data['AS_rank_peer'].fillna((data['AS_rank_peer'].mean()), inplace=True)
-    data['AS_rank_provider'].fillna((data['AS_rank_provider'].mean()), inplace=True)
+def convert_string_to_categorical(data):
 
-    data['peeringDB_ix_count'].fillna((data['peeringDB_ix_count'].mean()), inplace=True)
-    data['peeringDB_fac_count'].fillna((data['peeringDB_fac_count'].mean()), inplace=True)
-    data['AS_hegemony'].fillna((data['AS_hegemony'].mean()), inplace=True)
+    data.AS_rank_continent = pd.factorize(data.AS_rank_continent)[0]
+    data.peeringDB_info_ratio = pd.factorize(data.peeringDB_info_ratio)[0]
+    data.peeringDB_info_scope = pd.factorize(data.peeringDB_info_scope)[0]
+    data.peeringDB_info_type = pd.factorize(data.peeringDB_info_type)[0]
+    data.peeringDB_policy_general = pd.factorize(data.peeringDB_policy_general)[0]
+    data.peeringDB_info_traffic.replace(np.nan, 0, inplace=True)
+    data['peeringDB_info_traffic'] = data['peeringDB_info_traffic'].map({"0-20Mbps": 1, "20-100Mbps": 2, "100-1000Mbps": 3,
+                                                                         "1-5Gbps": 4, "5-10Gbps": 5, "10-20Gbps": 6,
+                                                                         "20-50Gbps": 7, "50-100Gbps": 8, "100-200Gbps": 9,
+                                                                         "200-300Gbps": 10, "300-500Gbps": 11, "1-5Tbps": 12,
+                                                                         "5-10Tbps": 13, "10-20Tbps": 14, "20-50Tbps": 15,
+                                                                         "50-100Tbps": 16, "100+Tbps": 17, "500-1000Gbps": 18})
     data.replace(np.nan, 0, inplace=True)
-
     return data
 
 
@@ -232,15 +232,14 @@ def merge_datasets(improvement_df, embeddings_df, final_df, z_score_flag, inner_
     mergedStuff['ASN'] = mergedStuff['ASN'].astype(float)
     data = pd.merge(mergedStuff, final_df, on=['ASN'], how='left')
     data.replace('', np.nan, inplace=True)
-    data_new = convert_nan_values_to_median(data)
-    data_new.replace(np.nan, 0, inplace=True)
     if z_score_flag:
+        data_new = convert_string_to_categorical(data)
         df = data_new[data_new.T[data_new.dtypes != np.object].index]
         clear_df = clear_dataset_from_outliers_z_score(df)
     elif inner_outer_fences_flag:
         clear_df = clear_dataset_from_outliers_inner_outer_fences(data)
     else:
-        raise Exception('Choose z_score or Inner_Outer_Fences')
+        clear_df = data
 
     return clear_df
 
@@ -308,13 +307,13 @@ def split_data(X, y, k_fold):
     elif scaler_choice == 'StandarScaler':
         scaler_choice = StandardScaler()
     X_scaled = scaler_choice.fit_transform(X)
-    X_after_pca = implement_pca(X_scaled)
+    # X_after_pca = implement_pca(X_scaled)
     if k_fold:
         new_X = pd.DataFrame(data=X_scaled[1:, 1:], index=X_scaled[1:, 0], columns=X_scaled[0, 1:])
         k_fold_cross_validation(new_X, y, True)
     else:
         y_binned = regression_stratify(y)
-        x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.1, random_state=0)
+        x_train, x_test, y_train, y_test = model_selection.train_test_split(X_scaled, y, test_size=0.1, random_state=0)
         return x_train, x_test, y_train, y_test
 
 

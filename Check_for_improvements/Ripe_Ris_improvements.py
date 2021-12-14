@@ -10,8 +10,8 @@ karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_L
                       'bgp2vec_32']
 karate_club_emb_128 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'DeepWalk']
 graph_emb_user_choice = ''
-run_script_with_Stubs = False
-z_score = True
+run_script_with_Stubs = True
+z_score = False
 inner_outer_fences = False
 graph_emb_dimensions = 64
 
@@ -40,15 +40,14 @@ else:
 
 if z_score:
     y = final['Improvement_score']
-    X = final.drop(['AS_rank_longitude', 'AS_rank_latitude', 'is_personal_AS', 'peeringDB_info_prefixes4',
-                    'peeringDB_info_prefixes6'], axis=1)
+    X = final.drop(['ASN', 'AS_rank_rank', 'AS_rank_longitude', 'AS_rank_latitude',
+                    'nb_atlas_probes_v4', 'nb_atlas_probes_v6', 'Improvement_score'], axis=1)
 else:
-    final = dp.convert_nan_values_to_median(final)
+    final = dp.convert_string_to_categorical(final)
     y = final['Improvement_score']
-    X = final.drop(['ASN', 'AS_rank_source', 'AS_rank_longitude', 'AS_rank_latitude', 'AS_rank_iso',
-                    'is_personal_AS', 'peeringDB_info_ratio', 'peeringDB_info_traffic',
-                    'peeringDB_info_scope', 'peeringDB_info_type', 'peeringDB_info_prefixes4',
-                    'peeringDB_info_prefixes6', 'peeringDB_policy_general', 'peeringDB_created'], axis=1)
+    X = final.drop(['ASN', 'AS_rank_rank', 'AS_rank_source', 'AS_rank_longitude', 'AS_rank_latitude', 'AS_rank_iso',
+                    'nb_atlas_probes_v4', 'nb_atlas_probes_v6', 'peeringDB_created', 'Improvement_score'], axis=1)
+
 
 flag_k_fold = False
 if flag_k_fold:
