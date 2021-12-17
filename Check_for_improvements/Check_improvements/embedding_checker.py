@@ -8,29 +8,31 @@ from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
 
-PATH_AS_RELATIONSHIPS = '../Datasets/AS-relationships/20210701.as-rel2.txt'
+PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
 
-DEEPWALK_EMBEDDINGS_128 = 'Embeddings/DeepWalk_128.csv'
-DIFF2VEC_EMBEDDINGS_128 = 'Embeddings/Diff2Vec_128.csv'
-NETMF_EMBEDDINGS_128 = 'Embeddings/NetMF_128.csv'
-NODESKETCH_EMBEDDINGS_128 = 'Embeddings/NodeSketch_128.csv'
-WALKLETS_EMBEDDINGS_256 = 'Embeddings/Walklets_256.csv'
+DEEPWALK_EMBEDDINGS_128 = '../Embeddings/DeepWalk_128.csv'
+DIFF2VEC_EMBEDDINGS_128 = '../Embeddings/Diff2Vec_128.csv'
+NETMF_EMBEDDINGS_128 = '../Embeddings/NetMF_128.csv'
+NODESKETCH_EMBEDDINGS_128 = '../Embeddings/NodeSketch_128.csv'
+WALKLETS_EMBEDDINGS_256 = '../Embeddings/Walklets_256.csv'
 
-NODE2VEC_EMBEDDINGS_64 = 'Embeddings/Node2Vec_embeddings.emb'
-NODE2VEC_LOCAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_p2_64.csv'
-NODE2VEC_GLOBAL_EMBEDDINGS_64 = 'Embeddings/Node2Vec_q2_64.csv'
-DIFF2VEC_EMBEDDINGS_64 = 'Embeddings/Diff2Vec_64.csv'
-NETMF_EMBEDDINGS_64 = 'Embeddings/NetMF_64.csv'
-NODESKETCH_EMBEDDINGS_64 = 'Embeddings/NodeSketch_64.csv'
-WALKLETS_EMBEDDINGS_128 = 'Embeddings/Walklets_128.csv'
-NODE2VEC_WL5_E3_LOCAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
-NODE2VEC_WL5_E3_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
-NODE2VEC_64_WL5_E1_GLOBAL = 'Embeddings/Node2Vec_64_wl5_ws2_global.csv'
-BGP2VEC_64 = 'Embeddings/Node2Vec_bgp2Vec.csv'
-BGP2VEC_32 = 'Embeddings/BGP2VEC_32'
-BGP2VEC_32_WS5 = 'Embeddings/BGP2Vec_32_wl6_ws5_ep3_wn40_p4_q05.csv'
+NODE2VEC_EMBEDDINGS_64 = '../Embeddings/Node2Vec_embeddings.emb'
+NODE2VEC_LOCAL_EMBEDDINGS_64 = '../Embeddings/Node2Vec_p2_64.csv'
+NODE2VEC_GLOBAL_EMBEDDINGS_64 = '../Embeddings/Node2Vec_q2_64.csv'
+DIFF2VEC_EMBEDDINGS_64 = '../Embeddings/Diff2Vec_64.csv'
+NETMF_EMBEDDINGS_64 = '../Embeddings/NetMF_64.csv'
+NODESKETCH_EMBEDDINGS_64 = '../Embeddings/NodeSketch_64.csv'
+WALKLETS_EMBEDDINGS_128 = '../Embeddings/Walklets_128.csv'
+NODE2VEC_WL5_E3_LOCAL = '../Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
+NODE2VEC_WL5_E3_GLOBAL = '../Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
+NODE2VEC_64_WL5_E1_GLOBAL = '../Embeddings/Node2Vec_64_wl5_ws2_global.csv'
+BGP2VEC_64 = '../Embeddings/Node2Vec_bgp2Vec.csv'
 
-karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_Local', 'Node2Vec_Global', 'Node2Vec_wl5_global', 'Node2Vec_wl5_e3_global', 'Node2Vec_wl5_e3_local', 'bgp2vec_64', 'bgp2vec_32', 'bgp2vec_32_ws5']
+NODE2VEC_32_WL6_WN40_EP3 = '../Embeddings/Node2Vec_32_wl6_ws5_ep3_wn40_p2_q05.csv'
+BGP2VEC_32 = '../Embeddings/BGP2VEC_32'
+BGP2VEC_32_WS5 = '../Embeddings/BGP2Vec_32_wl6_ws5_ep3_wn40_p4_q05.csv'
+
+karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_Local', 'Node2Vec_Global', 'Node2Vec_wl5_global', 'Node2Vec_wl5_e3_global', 'Node2Vec_wl5_e3_local', 'bgp2vec_64', 'bgp2vec_32', 'bgp2vec_32_ws5', 'node2vec_32_wl6_wn40_e3']
 karate_club_emb_128 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'DeepWalk']
 graph_emb_dimensions = 64
 
@@ -67,6 +69,8 @@ def read_karateClub_embeddings_file(emb, dimensions):
         elif emb == 'bgp2vec_32':
             df = pd.read_csv(BGP2VEC_32, sep=',')
         elif emb == 'bgp2vec_32_ws5':
+            df = pd.read_csv(BGP2VEC_32_WS5, sep=',')
+        elif emb == 'node2vec_32_wl6_wn40_e3':
             df = pd.read_csv(BGP2VEC_32_WS5, sep=',')
         else:
             raise Exception('Not defined dataset')
@@ -158,7 +162,7 @@ def call_methods(x_train, x_test, y_train, y_test):
     get_metrics(y_test, y_predicted)
 
 
-data = pd.read_csv("../Datasets/improvements20210601.txt", sep=" ")
+data = pd.read_csv("../../Datasets/improvements20210601.txt", sep=" ")
 data.columns = ['location', 'IPV4-6', 'ASN', 'improvement_score']
 # keep only GLOBAL and IPV-4 examples
 new_data = data.loc[(data["location"] == "GLOBAL") & (data["IPV4-6"] == 4)]
@@ -171,7 +175,7 @@ df_stack = df_stack.reset_index(drop=True)
 df_stack['ASN'] = df_stack['ASN'].astype(str).astype(float)
 
 
-embeddings_df = read_karateClub_embeddings_file(karate_club_emb_64[11], dimensions=graph_emb_dimensions)
+embeddings_df = read_karateClub_embeddings_file(karate_club_emb_64[12], dimensions=graph_emb_dimensions)
 embeddings_df['ASN'] = embeddings_df.ASN.astype(float)
 mergedStuff = merge_datasets(df_stack, embeddings_df)
 print(mergedStuff)
