@@ -13,6 +13,7 @@ INITIAL_PROXIMITY = 1443060#MAX_LENGTH*len(asn2asn.keys())
 ASN2ASN_DIST_FNAME = '../../data/misc/asn2asn__only_peers_pfx.json'
 PROXIMITY_FNAME = 'proximity_selected_monitors_ripe_ris_pathlens_100k.json'
 ONLY_v4 = False
+ONLY_v6 = False
 
 '''
 Auxiliary methods used for calculating the target objective "proximity". The proximity quantifies 
@@ -60,6 +61,10 @@ if ONLY_v4:
     peers_v4 = [m for m in similarity_matrix.index if ':' not in m]
     similarity_matrix = similarity_matrix.loc[peers_v4, peers_v4]
     full_feeders = set(full_feeders).intersection(set(peers_v4))
+elif ONLY_v6:
+    peers_v6 = [m for m in similarity_matrix.index if ':' in m]
+    similarity_matrix = similarity_matrix.loc[peers_v6, peers_v6]
+    full_feeders = set(full_feeders).intersection(set(peers_v6))
 
 
 print('### Similarity matrix ###')
