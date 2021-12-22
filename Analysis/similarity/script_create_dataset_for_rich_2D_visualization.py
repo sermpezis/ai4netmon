@@ -29,7 +29,11 @@ df = su.similarity_matrix_to_2D_vector(similarity_matrix)
 print('\t enriching with monitors data ...')
 df = pd.DataFrame(df)
 df.index = similarity_matrix.index
+<<<<<<< HEAD
 df.columns = ['TSNE_x', 'TSNE_y']
+=======
+df.columns = ['X', 'Y']
+>>>>>>> main
 
 print('\t\t loading RIPE RIS data ...')
 with open(RIPE_RIS_PEERS_FNAME, 'r') as f:
@@ -51,4 +55,8 @@ df['rrc'] = [ripe_ris_peer_ip2rrc.get(ip, np.nan) for ip in df.index]
 
 
 print('\t writing to file ...')
+<<<<<<< HEAD
 df.to_csv(TSNE_DATASET_FNAME,index=True)
+=======
+df.to_csv(TSNE_DATASET_FNAME, index=True, index_label='Peer IP')
+>>>>>>> main
