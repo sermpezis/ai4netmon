@@ -2,7 +2,9 @@ import pandas as pd
 import embedding_preprocessing as ep
 
 
-karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_Local', 'Node2Vec_Global']
+karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_Local', 'Node2Vec_Global',
+                      'Node2Vec_wl5_global', 'Node2Vec_wl5_e3_global', 'Node2Vec_wl5_e3_local', 'bgp2vec_64',
+                      'bgp2vec_32']
 karate_club_emb_128 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'DeepWalk']
 graph_emb_user_choice = ''
 graph_emb_dimensions = 64
@@ -13,7 +15,7 @@ if graph_emb_user_choice == 'Node2Vec':
     graph_embedding_model = 'Node2Vec'
 else:
     if graph_emb_dimensions == 64:
-        graph_embedding_model = karate_club_emb_64[5]
+        graph_embedding_model = karate_club_emb_64[6]
     elif graph_emb_dimensions == 128:
         graph_embedding_model = karate_club_emb_128[0]
     embeddings_df = ep.read_karateClub_embeddings_file(graph_embedding_model, dimensions=graph_emb_dimensions)

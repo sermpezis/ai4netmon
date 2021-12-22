@@ -19,6 +19,11 @@ NODE2VEC_GLOBAL_EMBEDDINGS_64 = '../Check_for_improvements/Embeddings/Node2Vec_q
 DIFF2VEC_EMBEDDINGS_64 = '../Check_for_improvements/Embeddings/Diff2Vec_64.csv'
 NETMF_EMBEDDINGS_64 = '../Check_for_improvements/Embeddings/NetMF_64.csv'
 NODESKETCH_EMBEDDINGS_64 = '../Check_for_improvements/Embeddings/NodeSketch_64.csv'
+NODE2VEC_WL5_E3_LOCAL = '../Check_for_improvements/Embeddings/Node2Vec_64_wl5_ws2_ep3_local.csv'
+NODE2VEC_WL5_E3_GLOBAL = '../Check_for_improvements/Embeddings/Node2Vec_64_wl5_ws2_ep3_global.csv'
+NODE2VEC_64_WL5_E1_GLOBAL = '../Check_for_improvements/Embeddings/Node2Vec_64_wl5_ws2_global.csv'
+BGP2VEC_64 = '../Check_for_improvements/Embeddings/Node2Vec_bgp2Vec.csv'
+BGP2VEC_32 = '../Check_for_improvements/Embeddings/BGP2VEC_32'
 WALKLETS_EMBEDDINGS_128 = '../Check_for_improvements/Embeddings/Walklets_128.csv'
 STORE_CSV_TO_FOLDER = '../Embeddings_Visualization/StorePreprocessedEmb'
 
@@ -89,7 +94,7 @@ def get_path_and_filename(model, dimensions):
     file_name = 'Preprocessed' + str(model) + str(dimensions) + f'.csv'
     outdir = STORE_CSV_TO_FOLDER
     if not os.path.exists(outdir):
-        os.makedir(outdir)
+        os.mkdir(outdir)
     full_name = os.path.join(outdir, file_name)
     return full_name
 
@@ -130,6 +135,16 @@ def read_karateClub_embeddings_file(emb, dimensions):
             df = pd.read_csv(NODE2VEC_LOCAL_EMBEDDINGS_64, sep=',')
         elif emb == 'Node2Vec_Global':
             df = pd.read_csv(NODE2VEC_GLOBAL_EMBEDDINGS_64, sep=',')
+        elif emb == 'Node2Vec_wl5_global':
+            df = pd.read_csv(NODE2VEC_64_WL5_E1_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_global':
+            df = pd.read_csv(NODE2VEC_WL5_E3_GLOBAL, sep=',')
+        elif emb == 'Node2Vec_wl5_e3_local':
+            df = pd.read_csv(NODE2VEC_WL5_E3_LOCAL, sep=',')
+        elif emb == 'bgp2vec_64':
+            df = pd.read_csv(BGP2VEC_64, sep=',')
+        elif emb == 'bgp2vec_32':
+            df = pd.read_csv(BGP2VEC_32, sep=',')
         else:
             raise Exception('Not defined dataset')
     else:
