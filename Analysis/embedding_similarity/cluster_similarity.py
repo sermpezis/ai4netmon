@@ -284,9 +284,9 @@ print('Greedy min: first 4 selected items')
 print(selected_items1[0:4])
 print()
 
-nb_clusters = 6
+nb_clusters = 22
 kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': nb_clusters}
 selected_items2 = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
-print('Clustering: first 4 selected items')
+print('Clustering: First ' + str(nb_clusters) + ' selected items')
 print(selected_items2[0:nb_clusters])
 print()
