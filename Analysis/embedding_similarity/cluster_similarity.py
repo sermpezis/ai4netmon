@@ -147,9 +147,9 @@ def sample_from_clusters(cluster_members_dict, nb_items=None):
 
 def getAffinityMatrix(coordinates, k=7):
     """
-    Calculate affinity matrix based on input coordinates matrix and the numeber
+    The Affinity matrix determines how close or similar are 2 points in our space.
+    Calculate affinity matrix based on input coordinates matrix and the number
     of nearest neighbours.
-
     Apply local scaling based on the k nearest neighbour
         References:
     https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf
@@ -206,6 +206,7 @@ def eigenDecomposition(A, topK=5):
     plt.title('Largest eigen values of input matrix')
     plt.scatter(np.arange(len(eigenvalues)), eigenvalues)
     plt.grid()
+    plt.show()
 
     # Identify the optimal number of clusters as the index corresponding
     # to the larger gap between eigen values
@@ -226,8 +227,9 @@ def get_optimal_number_of_clusters(similarity):
             similarity)
         distortions.append(clustering.inertia_)
     plt.plot(range(1, 11), distortions, marker='o')
-    plt.xlabel('Number of clusters')
+    plt.xlabel('Number of clusters (k)')
     plt.ylabel('Sum of squared distance')
+    plt.title("Elbow Method for Optimal k")
     plt.show()
 
 
@@ -245,7 +247,7 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
     sim = similarity_matrix.to_numpy()
     sim = np.nan_to_num(sim, nan=0)
     if clustering_method == 'SpectralClustering':
-        clustering = getAffinityMatrix(sim, k=10)
+        clustering = getAffinityMatrix(sim, k=7)
         k, _, _ = eigenDecomposition(clustering)
         clustering = SpectralClustering(n_clusters=nb_clusters, affinity='precomputed', **kwargs).fit(sim)
         print(f'Optimal number of clusters {k}')
