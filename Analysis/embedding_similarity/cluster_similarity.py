@@ -234,7 +234,7 @@ def get_optimal_number_of_clusters(similarity):
     plt.show()
 
 
-def get_plot_for_different_k_values(similarity):
+def get_plot_for_different_k_values(similarity, model_name):
     """
     This function plots points after applying a cluster method for k=3,4,5,6. Furthermore prints silhouette score for each k
     :param similarity: Contains our dataset (The similarity of RIPE monitors)
@@ -244,7 +244,10 @@ def get_plot_for_different_k_values(similarity):
     f = plt.figure()
     f.add_subplot(2, 2, 1)
     for i in range(3, 7):
-        sc = SpectralClustering(n_clusters=i, affinity='precomputed').fit(similarity)
+        if model_name == 'Spectral':
+            sc = SpectralClustering(n_clusters=i, affinity='precomputed').fit(similarity)
+        else:
+            sc = KMeans(n_clusters=i, init='random', n_init=10, max_iter=300, tol=1e-04, random_state=0).fit(similarity)
         silhouette_scores.append(silhouette_score(similarity, sc.labels_))
         f.add_subplot(2, 2, i - 2)
         plt.scatter(similarity[:, 0], similarity[:, 1], s=5, c=sc.labels_, label="n_cluster-" + str(i))
@@ -273,14 +276,21 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         clustering = SpectralClustering(n_clusters=nb_clusters, affinity='precomputed', **kwargs).fit(sim)
         labels = clustering.labels_
         plt.scatter(sim[:, 0], sim[:, 1], c=labels)
+        plt.title('Number of Clusters: ' + str(nb_clusters))
         plt.show()
-        silhouette_scores = get_plot_for_different_k_values(sim)
+        model = 'Spectral'
+        silhouette_scores = get_plot_for_different_k_values(sim, model)
         print(silhouette_scores)
         print(f'Optimal number of clusters {k}')
     elif clustering_method == 'Kmeans':
         get_optimal_number_of_clusters(sim)
         clustering = KMeans(n_clusters=nb_clusters, **kwargs).fit(sim)
-        silhouette_scores = get_plot_for_different_k_values(sim)
+        labels = clustering.labels_
+        plt.scatter(sim[:, 0], sim[:, 1], c=labels)
+        plt.title('Number of Clusters: ' + str(nb_clusters))
+        plt.show()
+        model = 'Kmeans'
+        silhouette_scores = get_plot_for_different_k_values(sim, model)
         print(silhouette_scores)
     else:
         raise ValueError
@@ -304,7 +314,7 @@ def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
     return selected_items
 
 
-similarity_matrix = pd.read_csv('calculate_distance_and_similarity/RIPE_RIS_similarity_embeddings_20211221.csv',
+similarity_matrix = pd.read_csv('calculate_distance_and_similarity/RIPE_RIS_similarity_embeddings_20211226.csv',
                                 header=0, index_col=0)
 similarity_matrix.columns = similarity_matrix.columns.astype(float)
 
@@ -314,7 +324,7 @@ print('Greedy min: first 4 selected items')
 print(selected_items1[0:4])
 print()
 
-nb_clusters = 6
+nb_clusters = 3
 kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': nb_clusters}
 selected_items2 = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
 print('Clustering: First ' + str(nb_clusters) + ' selected items')
