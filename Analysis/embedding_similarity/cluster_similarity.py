@@ -7,6 +7,7 @@ from sklearn.cluster import KMeans, SpectralClustering
 from scipy.spatial.distance import pdist, squareform
 from scipy.sparse import csgraph
 from numpy import linalg as LA
+from sklearn.metrics import silhouette_score
 
 
 def get_argmax_total_similarity(similarity_matrix, from_items=None, rank_normalization=False):
@@ -222,15 +223,35 @@ def get_optimal_number_of_clusters(similarity):
     :param similarity: The similarity matrix from graph embeddings
     '''
     distortions = []
-    for i in range(1, 11):
+    for i in range(1, 20):
         clustering = KMeans(n_clusters=i, init='random', n_init=10, max_iter=300, tol=1e-04, random_state=0).fit(
             similarity)
         distortions.append(clustering.inertia_)
-    plt.plot(range(1, 11), distortions, marker='o')
+    plt.plot(range(1, 20), distortions, marker='o')
     plt.xlabel('Number of clusters (k)')
     plt.ylabel('Sum of squared distance')
     plt.title("Elbow Method for Optimal k")
     plt.show()
+
+
+def get_plot_for_different_k_values(similarity):
+    """
+    This function plots points after applying a cluster method for k=3,4,5,6. Furthermore prints silhouette score for each k
+    :param similarity: Contains our dataset (The similarity of RIPE monitors)
+    :return: A list containing silhouette score
+    """
+    silhouette_scores = []
+    f = plt.figure()
+    f.add_subplot(2, 2, 1)
+    for i in range(3, 7):
+        sc = SpectralClustering(n_clusters=i, affinity='precomputed').fit(similarity)
+        silhouette_scores.append(silhouette_score(similarity, sc.labels_))
+        f.add_subplot(2, 2, i - 2)
+        plt.scatter(similarity[:, 0], similarity[:, 1], s=5, c=sc.labels_, label="n_cluster-" + str(i))
+        plt.legend()
+    plt.show()
+
+    return silhouette_scores
 
 
 def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters, nb_items=None, **kwargs):
@@ -250,10 +271,17 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         clustering = getAffinityMatrix(sim, k=7)
         k, _, _ = eigenDecomposition(clustering)
         clustering = SpectralClustering(n_clusters=nb_clusters, affinity='precomputed', **kwargs).fit(sim)
+        labels = clustering.labels_
+        plt.scatter(sim[:, 0], sim[:, 1], c=labels)
+        plt.show()
+        silhouette_scores = get_plot_for_different_k_values(sim)
+        print(silhouette_scores)
         print(f'Optimal number of clusters {k}')
     elif clustering_method == 'Kmeans':
         get_optimal_number_of_clusters(sim)
         clustering = KMeans(n_clusters=nb_clusters, **kwargs).fit(sim)
+        silhouette_scores = get_plot_for_different_k_values(sim)
+        print(silhouette_scores)
     else:
         raise ValueError
 
@@ -286,7 +314,7 @@ print('Greedy min: first 4 selected items')
 print(selected_items1[0:4])
 print()
 
-nb_clusters = 22
+nb_clusters = 6
 kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': nb_clusters}
 selected_items2 = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
 print('Clustering: First ' + str(nb_clusters) + ' selected items')
