@@ -257,6 +257,21 @@ def get_plot_for_different_k_values(similarity, model_name):
     return silhouette_scores
 
 
+def plot_silhouette_score_for_various_k(similarity, model_name):
+    sil = []
+    for i in range(2, 21):
+        if model_name == 'Spectral':
+            sc = SpectralClustering(n_clusters=i, affinity='precomputed').fit(similarity)
+        else:
+            sc = KMeans(n_clusters=i, init='random', n_init=10, max_iter=300, tol=1e-04, random_state=0).fit(similarity)
+        sil.append(silhouette_score(similarity, sc.labels_))
+    plt.plot(range(2, 21), sil[:], '--bo')
+    plt.title('Silhouette score for different cluster sizes for ' + str(model_name))
+    plt.xlabel('Silhouette Score')
+    plt.ylabel('Number of clusters (K)')
+    plt.show()
+
+
 def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters, nb_items=None, **kwargs):
     '''
     Applies a clustering algorithm to the similarity matrix to cluster items, and then selects samples from the classes.
@@ -282,6 +297,7 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         silhouette_scores = get_plot_for_different_k_values(sim, model)
         print(silhouette_scores)
         print(f'Optimal number of clusters {k}')
+        plot_silhouette_score_for_various_k(sim, model)
     elif clustering_method == 'Kmeans':
         get_optimal_number_of_clusters(sim)
         clustering = KMeans(n_clusters=nb_clusters, **kwargs).fit(sim)
@@ -292,6 +308,7 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         model = 'Kmeans'
         silhouette_scores = get_plot_for_different_k_values(sim, model)
         print(silhouette_scores)
+        plot_silhouette_score_for_various_k(sim, model)
     else:
         raise ValueError
 
@@ -324,8 +341,8 @@ print('Greedy min: first 4 selected items')
 print(selected_items1[0:4])
 print()
 
-nb_clusters = 3
-kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': nb_clusters}
+nb_clusters = 4
+kwargs = {'clustering_method': 'Kmeans', 'nb_clusters': nb_clusters}
 selected_items2 = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
 print('Clustering: First ' + str(nb_clusters) + ' selected items')
 print(selected_items2[0:nb_clusters])
