@@ -2,10 +2,12 @@ import pandas as pd
 import numpy as np
 import json
 
-EMBEDDING_PATH = '../../../Check_for_improvements/Embeddings/Node2Vec_64_wl5_ws2_global.csv'
+EMBEDDING_PATH = '../../../Check_for_improvements/Embeddings/BGP2Vec_32_wl6_ws5_ep3_wn40_p4_q05.csv'
 PATH_AS_RELATIONSHIPS = '../../../Datasets/AS-relationships/20210701.as-rel2.txt'
 RIPE_RIS_PEERS = '../../../Datasets/RIPE_RIS_peers/improvements_RIPE_RIS_peers_leave_one_out.json'
-dimensions = 64
+ALL_RIPE_RIS_PEERS = '../../../Datasets/RIPE_RIS_peers/list_of_RIPE_RIS_peers.json'
+all_ripe_peers = True
+dimensions = 32
 
 
 def read_dataset():
@@ -37,17 +39,24 @@ def read_dataset():
     return final_df
 
 
-def read_RIS_improvement_score():
+def read_RIS_improvement_score(all_peers):
     """
     :return: A dataframe containing 2 columns. The first one contains monitors and the second one the improvement score
      that each monitor will bring to the Network
     """
-    with open(RIPE_RIS_PEERS) as handle:
-        dictdump = json.loads(handle.read())
+    if all_peers:
+        with open(ALL_RIPE_RIS_PEERS) as handle:
+            dictdump = json.loads(handle.read())
 
-    data = pd.DataFrame(dictdump.items(), columns=['ASN', 'Improvement_score'])
+        data = pd.DataFrame(dictdump.items(), columns=['IP_ADDRESS', 'ASN'])
+        data['ASN'] = data['ASN'].astype(np.int64)
+    else:
+        with open(RIPE_RIS_PEERS) as handle:
+            dictdump = json.loads(handle.read())
 
-    data['ASN'] = data['ASN'].astype(np.int64)
+        data = pd.DataFrame(dictdump.items(), columns=['ASN', 'Improvement_score'])
+
+        data['ASN'] = data['ASN'].astype(np.int64)
     return data
 
 
@@ -86,14 +95,16 @@ def calculate_euclidean_distance(new_data):
     return monitors, flat_list
 
 
-improvement_df = read_RIS_improvement_score()
+improvement_df = read_RIS_improvement_score(all_ripe_peers)
 embeddings_df = read_dataset()
 data = merge_datasets(improvement_df, embeddings_df)
-data.drop('Improvement_score', axis=1, inplace=True)
+if all_ripe_peers:
+    data.drop('IP_ADDRESS', axis=1, inplace=True)
+else:
+    data.drop('Improvement_score', axis=1, inplace=True)
 print(data)
 monitors, flat_list = calculate_euclidean_distance(data)
 df = pd.DataFrame(flat_list, columns=monitors)
 # drop all rows that have all values NaN
 df.dropna(axis=1, how='all', inplace=True)
-print(df)
-df.to_csv('RIPE_RIS_distance_embeddings_20211221.csv', sep=',', index=False)
+df.to_csv('ALL_RIPE_RIS_distance_embeddings_BGP2VEC_20210107.csv', sep=',', index=False)
