@@ -3,7 +3,7 @@ import numpy as np
 import os
 import json
 import random
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, SpectralClustering
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
@@ -62,7 +62,7 @@ def sample_from_clusters(cluster_members_dict, nb_items=None):
     return selected_items
 
 
-def clustering_based_selection(similarity_matrix, nb_clusters, nb_items=None, **kwargs):
+def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters, nb_items=None, **kwargs):
     '''
     Applies a clustering algorithm to the similarity matrix to cluster items, and then selects samples from the classes.
     :param  similarity_matrix:  (pandas.DataFrame) an NxN dataframe; should be (a) symmetric and (b) values {i,j} to
@@ -72,8 +72,12 @@ def clustering_based_selection(similarity_matrix, nb_clusters, nb_items=None, **
     '''
     sim = similarity_matrix.to_numpy()
     sim = np.nan_to_num(sim, nan=0)
-
-    clustering = KMeans(n_clusters=nb_clusters, **kwargs).fit(sim)
+    if clustering_method == 'SpectralClustering':
+        clustering = SpectralClustering(n_clusters=nb_clusters, affinity='precomputed', **kwargs).fit(sim)
+    elif clustering_method == 'Kmeans':
+        clustering = KMeans(n_clusters=nb_clusters, **kwargs).fit(sim)
+    else:
+        raise ValueError
     cluster_members_dict = defaultdict(list)
     for i, label in enumerate(clustering.labels_):
         cluster_members_dict[label].append(similarity_matrix.index[i])
@@ -84,7 +88,7 @@ def clustering_based_selection(similarity_matrix, nb_clusters, nb_items=None, **
 def plot_proximity_score_for_different_values_of_k(proximity_vector):
     fontsize = 15
     linewidth = 2
-    colors = ['g', 'r', 'b']
+    colors = ['g', 'r', 'b', '--g', '--r', '--b']
     leg_str = []
     for i, k in enumerate(proximity_vector.keys()):
         X = list(range(1, 1 + len(proximity_vector[k])))
@@ -109,12 +113,18 @@ with open(ASN2ASN_DIST_FNAME, 'r') as f:
 similarity_matrix = pd.read_csv(SIMILARITY_MATRIX, header=0, index_col=0)
 
 method_param_dict = {
+    'Clustering kmeans k6': {'sim_matrix': similarity_matrix,
+                             'args': {'clustering_method': 'Kmeans', 'nb_clusters': 6}},
+    'Clustering kmeans k7': {'sim_matrix': similarity_matrix,
+                             'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
+    'Clustering kmeans k8': {'sim_matrix': similarity_matrix,
+                             'args': {'clustering_method': 'Kmeans', 'nb_clusters': 8}},
     'Clustering spectral k6': {'sim_matrix': similarity_matrix,
-                               'args': {'nb_clusters': 6}},
+                               'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 6}},
     'Clustering spectral k7': {'sim_matrix': similarity_matrix,
-                               'args': {'nb_clusters': 7}},
+                               'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
     'Clustering spectral k8': {'sim_matrix': similarity_matrix,
-                               'args': {'nb_clusters': 8}}}
+                               'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 8}}}
 
 print('### Selected monitors by method ###')
 for m, params in method_param_dict.items():
