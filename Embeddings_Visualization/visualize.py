@@ -28,7 +28,7 @@ BGP2VEC_64 = 'StorePreprocessedEmb/Preprocessedbgp2vec64.csv'
 BGP2VEC_32 = 'StorePreprocessedEmb/Preprocessedbgp2vec_32.csv'
 
 run_script_with_All_ASES = False
-choose_model = BGP2VEC_32
+choose_model = NODE2VEC_WL5_E3_GLOBAL
 
 
 def create_embedding_plot(two_dimensions, df_all, model_name):
@@ -42,8 +42,8 @@ def create_embedding_plot(two_dimensions, df_all, model_name):
         two_dimensions[:, 0],
         two_dimensions[:, 1],
         s=10,
-        c=[sns.color_palette()[x] for x in df_all.AS_rank_iso.map({"Europe": 0, "North America": 1, "Asia": 2,
-                                                                   "South America": 3, "Oceania": 4, "Africa": 5})])
+        c=[sns.color_palette()[x] for x in df_all.AS_rank_iso.map({"Asia": 0, "North America": 1, "South America": 2,
+                                                                   "Europe": 3, "Africa": 4, "Oceania": 5})])
 
     pops = []
     for i in range(0, len(df_all.AS_rank_iso.unique())):
