@@ -130,11 +130,12 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
 
     for d, color in zip(case_data, colors):
         ax.plot(theta, d, color=color)
-        ax.fill(theta, d, facecolor=color, alpha=alpha)
-    ax.set_varlabels(features)
-
-    # add legend relative to top-left plot
     legend = ax.legend(labels, loc=(0.9, .95), labelspacing=0.1, fontsize=fontsize)
+
+    for d, color in zip(case_data, colors):
+            ax.fill(theta, d, facecolor=color, alpha=alpha)
+
+    ax.set_varlabels(features)
 
     if save_filename is not None:
         plt.savefig(save_filename)
