@@ -80,7 +80,7 @@ def calculate_euclidean_distance(new_data):
     :return: The column names for the dataframe and a list of lists containing the distance matrix
     """
     # store the ASNs in a list
-    monitors = ['ASN'] + new_data['ASN'].tolist()
+    monitors = ['IP_ADDRESS'] + new_data['IP_ADDRESS'].tolist()
     list = []
     final_list = [[] for i in range(len(new_data.index))]
     for i in range(len(new_data.index)):
@@ -99,12 +99,10 @@ improvement_df = read_RIS_improvement_score(all_ripe_peers)
 embeddings_df = read_dataset()
 data = merge_datasets(improvement_df, embeddings_df)
 if all_ripe_peers:
-    data.drop('IP_ADDRESS', axis=1, inplace=True)
+    data.drop('ASN', axis=1, inplace=True)
 else:
     data.drop('Improvement_score', axis=1, inplace=True)
 print(data)
 monitors, flat_list = calculate_euclidean_distance(data)
 df = pd.DataFrame(flat_list, columns=monitors)
-# drop all rows that have all values NaN
-df.dropna(axis=1, how='all', inplace=True)
 df.to_csv('ALL_RIPE_RIS_distance_embeddings_BGP2VEC_20210107.csv', sep=',', index=False)
