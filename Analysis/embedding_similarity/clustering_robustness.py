@@ -104,27 +104,34 @@ def plot_proximity_score_for_different_values_of_k(proximity_vector):
     print(max_monitors_number)
     median_monitors_number = int(statistics.median(keep_len_set))
     new_list = list(keep_len_set)
+    # If the median is not in the list, take the most similar to it.
     new_median = new_list[min(range(len(new_list)), key=lambda i: abs(new_list[i] - median_monitors_number))]
     print(median_monitors_number)
+    min_flag = True
+    max_flag = True
+    median_flag = True
     for i, k in enumerate(proximity_vector.keys()):
-        if len(proximity_vector[k]) == min_monitors_number:
+        if len(proximity_vector[k]) == min_monitors_number and min_flag:
             print('Min ' + str(len(proximity_vector[k])))
             X = list(range(1, 1 + len(proximity_vector[k])))
             plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'Kmeans k7 min'
+            k_new = 'SpectralClustering k7 min'
             leg_str.append(k_new)
-        if len(proximity_vector[k]) == max_monitors_number:
+            min_flag = False
+        if len(proximity_vector[k]) == max_monitors_number and max_flag:
             print('Max ' + str(len(proximity_vector[k])))
             X = list(range(1, 1 + len(proximity_vector[k])))
             plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'Kmeans k7 max'
+            k_new = 'SpectralClustering k7 max'
             leg_str.append(k_new)
-        if len(proximity_vector[k]) == new_median:
+            max_flag = False
+        if len(proximity_vector[k]) == new_median and median_flag:
             print('Median ' + str(len(proximity_vector[k])))
             X = list(range(1, 1 + len(proximity_vector[k])))
             plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'Kmeans k7 median'
+            k_new = 'SpectralClustering k7 median'
             leg_str.append(k_new)
+            median_flag = False
 
     plt.xscale('log')
     plt.xlabel('#monitors', fontsize=fontsize)
@@ -146,17 +153,16 @@ similarity_matrix = pd.read_csv(SIMILARITY_MATRIX, header=0, index_col=0)
 similarity_matrix.replace(np.nan, 0, inplace=True)
 
 method_param_dict = {
-    # 'Clustering spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}}}
-    'Clustering1 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering2 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering3 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering4 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering5 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering6 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering7 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering8 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering9 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering10 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}}}
+    'Clustering1 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering2 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering3 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering4 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering5 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering6 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering7 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering8 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering9 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
+    'Clustering10 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}}}
 
 print('### Selected monitors by method ###')
 for m, params in method_param_dict.items():
