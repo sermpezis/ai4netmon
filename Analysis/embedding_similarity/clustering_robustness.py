@@ -8,7 +8,6 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 from collections import defaultdict
 
-
 MAX_LENGTH = 20
 INITIAL_PROXIMITY = 1443060
 ASN2ASN_DIST_FNAME = '../../Datasets/RIPE_RIS_peers/asn2asn__only_peers_pfx.json'
@@ -89,50 +88,35 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
 def plot_proximity_score_for_different_values_of_k(proximity_vector):
     fontsize = 15
     linewidth = 2
-    colors = ['g', '--g', 'r', '--r', 'b', '--b', 'k', '--k', 'm', '--m']
-    leg_str = []
-    keep_len_set = set()
-    for i, k in enumerate(proximity_vector.keys()):
-        keep_len_set.add(len(proximity_vector[k]))
-    for j in keep_len_set:
-        print(j)
-    print('----------')
+    all_lists = []
+    min_list = []
+    max_list = []
+    median_list = []
 
-    min_monitors_number = min(keep_len_set)
-    print(min_monitors_number)
-    max_monitors_number = max(keep_len_set)
-    print(max_monitors_number)
-    median_monitors_number = int(statistics.median(keep_len_set))
-    new_list = list(keep_len_set)
-    # If the median is not in the list, take the most similar to it.
-    new_median = new_list[min(range(len(new_list)), key=lambda i: abs(new_list[i] - median_monitors_number))]
-    print(median_monitors_number)
-    min_flag = True
-    max_flag = True
-    median_flag = True
     for i, k in enumerate(proximity_vector.keys()):
-        if len(proximity_vector[k]) == min_monitors_number and min_flag:
-            print('Min ' + str(len(proximity_vector[k])))
-            X = list(range(1, 1 + len(proximity_vector[k])))
-            plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'SpectralClustering k7 min'
-            leg_str.append(k_new)
-            min_flag = False
-        if len(proximity_vector[k]) == max_monitors_number and max_flag:
-            print('Max ' + str(len(proximity_vector[k])))
-            X = list(range(1, 1 + len(proximity_vector[k])))
-            plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'SpectralClustering k7 max'
-            leg_str.append(k_new)
-            max_flag = False
-        if len(proximity_vector[k]) == new_median and median_flag:
-            print('Median ' + str(len(proximity_vector[k])))
-            X = list(range(1, 1 + len(proximity_vector[k])))
-            plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
-            k_new = 'SpectralClustering k7 median'
-            leg_str.append(k_new)
-            median_flag = False
+        all_lists.append(proximity_vector[k])
 
+    # find max length from all lists
+    max_list_len = [len(i) for i in all_lists]
+    max_length = max(max_list_len)
+
+    for i in range(0, max_length):
+        temp = []
+        for k in range(len(all_lists)):
+            if i < len(all_lists[k]):
+                temp.append(all_lists[k][i])
+        min_temp = min(temp)
+        max_temp = max(temp)
+        median_temp = statistics.median(temp)
+
+        min_list.append(min_temp)
+        max_list.append(max_temp)
+        median_list.append(median_temp)
+
+    X = list(range(1, 1 + len(max_list)))
+    plt.plot(X, min_list, label="Min K-means k5", linewidth=linewidth)
+    plt.plot(X, median_list, label="Median K-means k5", linewidth=linewidth)
+    plt.plot(X, max_list, label="Max K-means k5", linewidth=linewidth)
     plt.xscale('log')
     plt.xlabel('#monitors', fontsize=fontsize)
     plt.ylabel('Proximity (normalized)', fontsize=fontsize)
@@ -140,7 +124,7 @@ def plot_proximity_score_for_different_values_of_k(proximity_vector):
     plt.yticks(fontsize=fontsize)
     plt.tight_layout()
     plt.axis([1, 1500, 0.1, 0.35])
-    plt.legend(leg_str)
+    plt.legend()
     plt.grid(True)
     # plt.savefig('fig_ripe_ris_subset_selection_vs_proximity.png')
     plt.show()
@@ -153,16 +137,26 @@ similarity_matrix = pd.read_csv(SIMILARITY_MATRIX, header=0, index_col=0)
 similarity_matrix.replace(np.nan, 0, inplace=True)
 
 method_param_dict = {
-    'Clustering1 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering2 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering3 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering4 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering5 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering6 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering7 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering8 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering9 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}},
-    'Clustering10 spectral k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}}}
+    'Clustering1 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering2 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering3 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering4 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering5 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering6 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering7 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering8 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering9 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                              'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}},
+    'Clustering10 kmeans k7': {'method': 'Clustering', 'sim_matrix': similarity_matrix,
+                               'args': {'clustering_method': 'Kmeans', 'nb_clusters': 5}}}
 
 print('### Selected monitors by method ###')
 for m, params in method_param_dict.items():
