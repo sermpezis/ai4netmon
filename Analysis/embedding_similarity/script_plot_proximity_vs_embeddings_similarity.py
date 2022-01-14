@@ -17,6 +17,23 @@ ONLY_v4 = True
 ONLY_v6 = False
 
 
+def calculate_proximity(next_item, asn2asn, proximity):
+    for o_asn, dict_o_asn in asn2asn.items():
+        if (next_item in dict_o_asn.keys()) and (dict_o_asn[next_item] < proximity[o_asn]):
+            proximity[o_asn] = dict_o_asn[next_item]
+    return proximity
+
+
+def get_proximity_vector(selected_items, asn2asn):
+    proximity = {o_asn: MAX_LENGTH for o_asn in asn2asn.keys()}
+    proximity_vector = []
+    for i, item in tqdm(enumerate(selected_items)):
+        proximity = calculate_proximity(item, asn2asn, proximity)
+        proximity_vector.append(sum(proximity.values()))
+    proximity_vector = [(i - 1) / INITIAL_PROXIMITY for i in proximity_vector]  # normalize proximity to [0,1]
+    return proximity_vector
+
+
 def get_argmax_total_similarity(similarity_matrix, from_items=None, rank_normalization=False):
     '''
     Finds the item of a matrix (similarity_matrix) that has the maximum aggregate similarity to all other items.
@@ -122,21 +139,26 @@ def greedy_least_similar_selection(similarity_matrix, nb_items=None):
     return selected_items
 
 
-def calculate_proximity(next_item, asn2asn, proximity):
-    for o_asn, dict_o_asn in asn2asn.items():
-        if (next_item in dict_o_asn.keys()) and (dict_o_asn[next_item] < proximity[o_asn]):
-            proximity[o_asn] = dict_o_asn[next_item]
-    return proximity
+def random_selection(similarity_matrix, nb_items=None):
+    """
+    Selects randomly an item from the given similarity_matrix
+    :param  similarity_matrix:  (pandas.DataFrame) an NxN dataframe; should be (a) symmetric and (b) values {i,j} to
+                                represent the similarity between item of row i and column j
+    :param  nb_items:           (int) number of items to be selected; if None all items are selected in the returned list
+    :return:                    (list) a list of random items
+    """
 
+    selected_items = []
 
-def get_proximity_vector(selected_items, asn2asn):
-    proximity = {o_asn: MAX_LENGTH for o_asn in asn2asn.keys()}
-    proximity_vector = []
-    for i, item in tqdm(enumerate(selected_items)):
-        proximity = calculate_proximity(item, asn2asn, proximity)
-        proximity_vector.append(sum(proximity.values()))
-    proximity_vector = [(i - 1) / INITIAL_PROXIMITY for i in proximity_vector]  # normalize proximity to [0,1]
-    return proximity_vector
+    nb_total_items = similarity_matrix.shape[0]
+    if (nb_items is None) or (nb_items > nb_total_items):
+        nb_items = nb_total_items
+
+    for i in range(nb_items):
+        temp = random.sample(list(similarity_matrix), 1)[0]
+        selected_items.append(temp)
+
+    return selected_items
 
 
 def sample_from_clusters(cluster_members_dict, nb_items=None):
@@ -199,6 +221,8 @@ def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
         selected_items = greedy_least_similar_selection(similarity_matrix, **kwargs)
     elif method == 'Clustering':
         selected_items = clustering_based_selection(similarity_matrix, **kwargs)
+    elif method == 'Random':
+        selected_items = random_selection(similarity_matrix, **kwargs)
     else:
         raise ValueError
     return selected_items
@@ -249,6 +273,7 @@ elif ONLY_v6:
     full_feeders = set(full_feeders).intersection(set(peers_v6))
 
 method_param_dict = {
+    'Random ': {'method': 'Random', 'sim_matrix': similarity_matrix, 'args': {}},
     'Greedy min Geo': {'method': 'Greedy min', 'sim_matrix': similarity_matrix, 'args': {}},
     'Greedy min full Geo': {'method': 'Greedy min', 'sim_matrix': similarity_matrix.loc[full_feeders, full_feeders], 'args': {}},
     'Greedy max Geo': {'method': 'Greedy max', 'sim_matrix': similarity_matrix, 'args': {}},
