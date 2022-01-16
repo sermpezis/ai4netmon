@@ -80,7 +80,7 @@ def calculate_euclidean_distance(new_data):
     :return: The column names for the dataframe and a list of lists containing the distance matrix
     """
     # store the ASNs in a list
-    monitors = ['IP_ADDRESS'] + new_data['IP_ADDRESS'].tolist()
+    monitors = ['ASN'] + new_data['ASN'].tolist()
     list = []
     final_list = [[] for i in range(len(new_data.index))]
     for i in range(len(new_data.index)):
@@ -96,13 +96,17 @@ def calculate_euclidean_distance(new_data):
 
 
 improvement_df = read_RIS_improvement_score(all_ripe_peers)
+# There are duplicates monitors having IPV4 and IPV6 and create problem in next scripts when we use ASN instead of IP_ADDRESS
+improvement_df.drop_duplicates(subset='ASN', keep="first", inplace=True)
 embeddings_df = read_dataset()
 data = merge_datasets(improvement_df, embeddings_df)
+print(data)
 if all_ripe_peers:
-    data.drop('ASN', axis=1, inplace=True)
+    data.drop('IP_ADDRESS', axis=1, inplace=True)
 else:
     data.drop('Improvement_score', axis=1, inplace=True)
 print(data)
 monitors, flat_list = calculate_euclidean_distance(data)
 df = pd.DataFrame(flat_list, columns=monitors)
-df.to_csv('ALL_RIPE_RIS_distance_embeddings_BGP2VEC_20210107.csv', sep=',', index=False)
+# df.dropna(axis=1, how='all', inplace=True)
+df.to_csv('ALL_RIPE_RIS_withASns_distance_embeddings_BGP2VEC_20210107.csv', sep=',', index=False)
