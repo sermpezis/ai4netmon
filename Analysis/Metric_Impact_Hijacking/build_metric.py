@@ -1,7 +1,7 @@
 import pandas as pd
-import numpy as np
-import random
+from sklearn import model_selection
 import metric_preprocessing as mp
+import call_standar_ml_models as asmm
 import give_metric_ases_from_clusters as gmafc
 
 run_script_with_embeddings = True
@@ -42,7 +42,7 @@ data_for_metric = []
 data_caida_monitors = list(data_CAIDA.columns.values)
 data_caida_monitors = data_caida_monitors[7: 295]
 data_caida_monitors = [int(x) for x in data_caida_monitors]
-print(data_caida_monitors)
+
 
 final_list = []
 for index, row in data_CAIDA.iterrows():
@@ -50,11 +50,10 @@ for index, row in data_CAIDA.iterrows():
     monitors_counter = 0
     rand_monitors = []
     new_list = [new_row]
-    #  ++ θα πρέπει να έχω και μια μεταβλητή (monitors_counter) που όταν βρει 50 ίδια να σταματάει
-    greedy_min = greedy_min[:100]
+    cluster_spectral = cluster_spectral[:]
 
-    for monitor in greedy_min:
-        if monitor in data_caida_monitors and monitors_counter < 10:
+    for monitor in cluster_spectral:
+        if monitor in data_caida_monitors and monitors_counter < 50:
             monitors_counter = monitors_counter + 1
             monitor_index = data_caida_monitors.index(monitor)
             rand_monitor = row.iloc[monitor_index]
@@ -64,16 +63,21 @@ for index, row in data_CAIDA.iterrows():
     head, tail = new_list
     if new_list != [new_row]:
         final_list.append([head] + tail)
-    print(final_list)
 
 
 # Create column names
 initial_col = ['impact', 'observation_1']
-obs_range = range(2, 11)
+obs_range = range(2, 51)
 middle_cols = ['observation_' + str(i) for i in obs_range]
 counter = 1
 for i in middle_cols:
     initial_col.append(i)
 
 final_df = pd.DataFrame(final_list, columns=initial_col)
-print(final_df)
+final_df[initial_col] = final_df[initial_col].apply(pd.to_numeric, errors='coerce', axis=1)
+
+
+y = final_df['impact']
+X = final_df.drop(['impact'], axis=1)
+x_train, x_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.20)
+asmm.ml_models(x_train, x_test, y_train, y_test)

@@ -57,7 +57,7 @@ def compare_ases_from_caida_ripe(data_CAIDA, ripe_monitors):
 
 
 def read_caida_ases():
-    data_CAIDA = pd.read_csv(CAIDA_ASES, sep=",", dtype='unicode')
+    data_CAIDA = pd.read_csv(CAIDA_ASES, sep=",", header=0, dtype='unicode')
 
     # impact = label = #total hijacked ASes /  #total ASes with path to prefix
     data_CAIDA['impact'] = (data_CAIDA.iloc[:, 4].astype(float)) / (data_CAIDA.iloc[:, 2].astype(float))

@@ -302,8 +302,8 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         plt.show()
         model = 'Spectral'
         silhouette_scores = get_plot_for_different_k_values(sim, model)
-        print(silhouette_scores)
-        print(f'Optimal number of clusters {k}')
+        # print(silhouette_scores)
+        # print(f'Optimal number of clusters {k}')
 
         plot_silhouette_score_for_various_k(sim, model)
     elif clustering_method == 'Kmeans':
@@ -315,7 +315,7 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
         plt.show()
         model = 'Kmeans'
         silhouette_scores = get_plot_for_different_k_values(sim, model)
-        print(silhouette_scores)
+        # print(silhouette_scores)
         plot_silhouette_score_for_various_k(sim, model)
     else:
         raise ValueError
@@ -339,29 +339,40 @@ def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
     return selected_items
 
 
-similarity_matrix = pd.read_csv('ALL_RIPE_RIS_withASns_similarity_embeddings_BGP2VEC_20210107.csv',
-                                header=0, index_col=0)
-similarity_matrix.columns = similarity_matrix.columns.astype(float)
+def return_the_selected_monitors_from_methods():
+    similarity_matrix = pd.read_csv('ALL_RIPE_RIS_withASns_similarity_embeddings_BGP2VEC_20210107.csv',
+                                    header=0, index_col=0)
+    similarity_matrix.columns = similarity_matrix.columns.astype(float)
+
+    selected_items_greedy_min = select_from_similarity_matrix(similarity_matrix, 'Greedy min')
+    selected_items_greedy_max = select_from_similarity_matrix(similarity_matrix, 'Greedy max')
+    kwargs = {'clustering_method': 'Kmeans', 'nb_clusters': 10}
+    selected_items_Kmeans = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
+    kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': 10}
+    selected_items_Spectral = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
+
+    return selected_items_greedy_min, selected_items_greedy_max, selected_items_Kmeans, selected_items_Spectral
 
 
-method_param_dict = {
-    'Greedy min':    {'method': 'Greedy min', 'sim_matrix': similarity_matrix, 'args': {}},
-    'Greedy max':    {'method': 'Greedy max', 'sim_matrix': similarity_matrix, 'args': {}},
-    'Clustering kmeans k10 full':      {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
-    'Clustering spectral k10':    {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}}}
+# method_param_dict = {
+#     'Greedy min':    {'method': 'Greedy min', 'sim_matrix': similarity_matrix, 'args': {}},
+#     'Greedy max':    {'method': 'Greedy max', 'sim_matrix': similarity_matrix, 'args': {}},
+#     'Clustering kmeans k10 full':      {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'Kmeans', 'nb_clusters': 7}},
+#     'Clustering spectral k10':    {'method': 'Clustering', 'sim_matrix': similarity_matrix, 'args': {'clustering_method': 'SpectralClustering', 'nb_clusters': 7}}}
+#
+# for m, params in method_param_dict.items():
+#     selected_items = select_from_similarity_matrix(params['sim_matrix'], params['method'], **params['args'])
+#     print('\t{} [DONE]'.format(m))
+#     with open('dataset_selected_monitors_ripe_ris_pathlens_100k_{}.json'.format('_'.join(m.lower().translate('()').split(' '))), 'w') as f:
+#         json.dump(selected_items, f)
+#
+# asns_per_method = dict()
+# for m, params in method_param_dict.items():
+#     with open('dataset_selected_monitors_ripe_ris_pathlens_100k_{}.json'.format('_'.join(m.lower().split(' '))), 'r') as f:
+#         selected_items = json.load(f)
+#     asns_per_method[m] = selected_items
+#     print('\t{} [DONE]'.format(m))
+# with open(PROXIMITY_FNAME, 'w') as f:
+#     json.dump(asns_per_method, f)
 
-for m, params in method_param_dict.items():
-    selected_items = select_from_similarity_matrix(params['sim_matrix'], params['method'], **params['args'])
-    print('\t{} [DONE]'.format(m))
-    with open('dataset_selected_monitors_ripe_ris_pathlens_100k_{}.json'.format('_'.join(m.lower().translate('()').split(' '))), 'w') as f:
-        json.dump(selected_items, f)
-
-asns_per_method = dict()
-for m, params in method_param_dict.items():
-    with open('dataset_selected_monitors_ripe_ris_pathlens_100k_{}.json'.format('_'.join(m.lower().split(' '))), 'r') as f:
-        selected_items = json.load(f)
-    asns_per_method[m] = selected_items
-    print('\t{} [DONE]'.format(m))
-with open(PROXIMITY_FNAME, 'w') as f:
-    json.dump(asns_per_method, f)
 
