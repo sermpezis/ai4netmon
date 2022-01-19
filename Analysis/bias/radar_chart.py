@@ -96,7 +96,7 @@ def radar_factory(num_vars, frame='circle'):
 
 
 
-def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.2, 0.4, 0.6, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small'):
+def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.2, 0.4, 0.6, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small', varlabels=None):
     '''
     Generates a radar plot from the given dataframe (df) with axes the rows of the df, surfaces the columns of the df
     and the values along each axis correspond to the values of the df. 
@@ -107,6 +107,7 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
     :param  cmap:           (string) the cmap of the colors to be used; if colors is not None, it is not taken into account
     :param  save_filename:  (string) the filename to save the generated plot
     :param  show:           (boolean) if True it shows the plot
+    :param  varlabels:      (dict) dict with mapping of feature names in the df (str) to names appearing in the plot (str)
 
     the other parameters are set for formatting the plot
     '''
@@ -118,7 +119,8 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
     M = len(labels)
     theta = radar_factory(N, frame=frame)   # get the radar plot 
     fig, ax = plt.subplots(figsize=(9, 9), nrows=1, ncols=1, subplot_kw=dict(projection='radar'))
-    fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
+    fig.subplots_adjust(wspace=0.05, hspace=0.05, top=0.95, bottom=0.05)#, right=0.85, left=0.15)
+
     if colors is None:
         cmap = get_cmap(cmap)
         if M>10:
@@ -133,9 +135,12 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
     legend = ax.legend(labels, loc=(0.9, .95), labelspacing=0.1, fontsize=fontsize)
 
     for d, color in zip(case_data, colors):
-            ax.fill(theta, d, facecolor=color, alpha=alpha)
+        ax.fill(theta, d, facecolor=color, alpha=alpha)
 
-    ax.set_varlabels(features)
+    if varlabels is None:
+        ax.set_varlabels(features)
+    else:
+        ax.set_varlabels([varlabels[i] for i in features])
 
     if save_filename is not None:
         plt.savefig(save_filename)
