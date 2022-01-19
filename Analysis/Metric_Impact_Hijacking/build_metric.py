@@ -29,8 +29,9 @@ final_data = final_data.drop(['AS_rank_source', 'AS_rank_longitude', 'AS_rank_la
                               'peeringDB_info_prefixes4', 'peeringDB_info_prefixes6', 'peeringDB_info_scope',
                               'peeringDB_info_type', 'peeringDB_info_ratio', 'peeringDB_info_traffic'], axis=1)
 
-greedy_min, greedy_max, cluster_kmeans, cluster_spectral = gmafc.return_the_selected_monitors_from_methods()
+random, greedy_min, greedy_max, cluster_kmeans, cluster_spectral = gmafc.return_the_selected_monitors_from_methods()
 
+random = [int(number) for number in random]
 greedy_min = [int(number) for number in greedy_min]
 greedy_max = [int(number) for number in greedy_max]
 cluster_kmeans = [int(number) for number in cluster_kmeans]

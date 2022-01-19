@@ -148,6 +148,28 @@ def sample_from_clusters(cluster_members_dict, nb_items=None):
     return selected_items
 
 
+def random_selection(similarity_matrix, nb_items=None):
+    """
+    Selects randomly an item from the given similarity_matrix
+    :param  similarity_matrix:  (pandas.DataFrame) an NxN dataframe; should be (a) symmetric and (b) values {i,j} to
+                                represent the similarity between item of row i and column j
+    :param  nb_items:           (int) number of items to be selected; if None all items are selected in the returned list
+    :return:                    (list) a list of random items
+    """
+
+    selected_items = []
+
+    nb_total_items = similarity_matrix.shape[0]
+    if (nb_items is None) or (nb_items > nb_total_items):
+        nb_items = nb_total_items
+
+    for i in range(nb_items):
+        temp = random.sample(list(similarity_matrix), 1)[0]
+        selected_items.append(temp)
+
+    return selected_items
+
+
 def getAffinityMatrix(coordinates, k=7):
     """
     The Affinity matrix determines how close or similar are 2 points in our space.
@@ -334,6 +356,8 @@ def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
         selected_items = greedy_least_similar_selection(similarity_matrix, **kwargs)
     elif method == 'Clustering':
         selected_items = clustering_based_selection(similarity_matrix, **kwargs)
+    elif method == 'Random':
+        selected_items = random_selection(similarity_matrix, **kwargs)
     else:
         raise ValueError
     return selected_items
@@ -344,6 +368,7 @@ def return_the_selected_monitors_from_methods():
                                     header=0, index_col=0)
     similarity_matrix.columns = similarity_matrix.columns.astype(float)
 
+    selected_items_greedy_random = select_from_similarity_matrix(similarity_matrix, 'Random')
     selected_items_greedy_min = select_from_similarity_matrix(similarity_matrix, 'Greedy min')
     selected_items_greedy_max = select_from_similarity_matrix(similarity_matrix, 'Greedy max')
     kwargs = {'clustering_method': 'Kmeans', 'nb_clusters': 10}
@@ -351,7 +376,7 @@ def return_the_selected_monitors_from_methods():
     kwargs = {'clustering_method': 'SpectralClustering', 'nb_clusters': 10}
     selected_items_Spectral = select_from_similarity_matrix(similarity_matrix, 'Clustering', **kwargs)
 
-    return selected_items_greedy_min, selected_items_greedy_max, selected_items_Kmeans, selected_items_Spectral
+    return selected_items_greedy_random, selected_items_greedy_min, selected_items_greedy_max, selected_items_Kmeans, selected_items_Spectral
 
 
 # method_param_dict = {
