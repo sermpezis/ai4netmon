@@ -12,6 +12,8 @@ MAX_LENGTH = 20
 INITIAL_PROXIMITY = 1443060#MAX_LENGTH*len(asn2asn.keys())
 ASN2ASN_DIST_FNAME = '../../data/misc/asn2asn__only_peers_pfx.json'
 PROXIMITY_FNAME = 'proximity_selected_monitors_ripe_ris_pathlens_100k.json'
+ONLY_v4 = False
+ONLY_v6 = False
 
 '''
 Auxiliary methods used for calculating the target objective "proximity". The proximity quantifies 
@@ -50,14 +52,19 @@ for o_asn, dict_o_asn in asn2asn.items():
 full_feeders = [m_asn for m_asn, nb_feeds in feed.items() if nb_feeds > 65000]
 
 
-
-# items = ['a','b','c','d']
-# similarity_matrix = pd.DataFrame([[1.0,0.5,0.9,0.2],[0.5,1.0,0.3,0.5],[0.9,0.3,1.0,0.7],[0.2,0.5,0.7,1.0]], columns=items, index=items)
-
 # load distance matrix and transform it to similarity matrix
-DISTANCE_MATRIX_FNAME = '../data/similarity/ripe_ris_distance_pathlens_100k_20210701.csv'
+DISTANCE_MATRIX_FNAME = '../../data/similarity/ripe_ris_distance_pathlens_100k_20210701.csv'
 distance_matrix = pd.read_csv(DISTANCE_MATRIX_FNAME, header=0, index_col=0)
 similarity_matrix = su.dist_to_similarity_matrix(distance_matrix)
+
+if ONLY_v4:
+    peers_v4 = [m for m in similarity_matrix.index if ':' not in m]
+    similarity_matrix = similarity_matrix.loc[peers_v4, peers_v4]
+    full_feeders = set(full_feeders).intersection(set(peers_v4))
+elif ONLY_v6:
+    peers_v6 = [m for m in similarity_matrix.index if ':' in m]
+    similarity_matrix = similarity_matrix.loc[peers_v6, peers_v6]
+    full_feeders = set(full_feeders).intersection(set(peers_v6))
 
 
 print('### Similarity matrix ###')
@@ -116,7 +123,6 @@ markersize = 10
 colors = ['g','--g','r','--r','b','--b','k','--k']
 leg_str = []
 for i, k in enumerate(proximity_vector.keys()):
-    print(k, proximity_vector[k][100])
     X = list(range(1,1+len(proximity_vector[k])))
     plt.plot(X, proximity_vector[k], colors[i], linewidth=linewidth)
     leg_str.append(k)
