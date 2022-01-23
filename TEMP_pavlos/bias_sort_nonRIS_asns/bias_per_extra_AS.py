@@ -7,10 +7,10 @@ from ai4netmon.Analysis.bias import bias_utils as bu
 from ai4netmon.Analysis.bias import radar_chart
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../data/aggregate_data/asn_aggregate_data_20211201.csv'
-RIPE_RIS_FNAME = '../data/misc/RIPE_RIS_peers_ip2asn.json'
-SELECTED_FNAME = '../use_cases/ripe_ris_subsampling/dataset_selected_monitors_ripe_ris_pathlens_100k_greedy_min_full_v4.json'
-TIER1_FNAME = '../data/misc/tier1_networks.json'
+AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
+RIPE_RIS_FNAME = '../../data/misc/RIPE_RIS_peers_ip2asn.json'
+SELECTED_FNAME = '../../use_cases/ripe_ris_subsampling/dataset_selected_monitors_ripe_ris_pathlens_100k_greedy_min_full_v4.json'
+TIER1_FNAME = '../../data/misc/tier1_networks.json'
 
 ## features
 CATEGORICAL_FEATURES =  ['AS_rank_source', 'AS_rank_iso', 'AS_rank_continent', 'is_personal_AS', 'peeringDB_info_ratio', 
@@ -119,8 +119,8 @@ for feature in FEATURES:
 
 bias_diff = bias_df.sum(axis=0)
 
-bias_df.to_csv('bias_df.csv', index=True, header=True)
-bias_diff.sort_values().to_csv('bias_diff.csv', index=True, header=True)
+bias_df.to_csv('./data/bias_df.csv', index=True, header=True)
+bias_diff.sort_values().to_csv('./data/bias_total_df.csv', index=True, header=True)
 # print(bias_diff.value_counts())
 
 # sq=bias_diff.value_counts()
