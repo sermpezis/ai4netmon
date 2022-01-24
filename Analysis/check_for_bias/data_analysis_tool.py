@@ -9,9 +9,9 @@ from datetime import datetime
 from statsmodels.distributions.empirical_distribution import ECDF
 
 FINAL_DATAFRAME = '../aggregate_data/final_dataframe.csv'
-PATH_RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers_monitors/list_of_RIPE_RIS_peers.json'
-RIPE_ATLAS_PROBES = '../../Datasets/Atlas_probe/bq_results.json'
-ROUTEVIEWS_PEERS = '../../Datasets/RouteViews_Peering/RouteViews-Peering-1_11_21.csv'
+PATH_RIPE_RIS_PEERS = '../../Datasets/RIPE_RIS_peers/list_of_RIPE_RIS_peers.json'
+RIPE_ATLAS_PROBES = '../../Datasets/RIPE_Atlas_probes/bq_results.json'
+ROUTEVIEWS_PEERS = '../../Datasets/RouteViews_peers/RouteViews-Peering-1_11_21.csv'
 
 
 def read_ripe_peers():
@@ -297,7 +297,7 @@ def categorize_features_all(data, current, type, feature):
             x, y = cdf_plot_all(current, data, feature)
             return x, y
         elif feature == 'is_personal_AS':
-            data['is_personal_AS'] = data.is_personal_AS.fillna(0)
+            data['is_personal_AS'] = data['is_personal_AS'].replace('', np.nan)
             data['is_personal_AS'] = data.is_personal_AS.astype('string')
             y = histogram_plot_all(current, data, feature)
             return y
