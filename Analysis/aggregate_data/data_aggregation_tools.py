@@ -1,17 +1,16 @@
 import pandas as pd
 import numpy as np
-import networkx as nx
 import json
 import pycountry_convert as pc
+from ai4netmon.Analysis.aggregate_data import data_collectors as dc
 
-PATH_AS_RANK = '../../Datasets/AS-rank/asns.csv'
-PATH_PERSONAL = '../../Datasets/bgp.tools/perso.txt'
-PATH_PEERINGDB = '../../Datasets/PeeringDB/peeringdb_2_dump_2021_07_01.json'
-PATH_AS_RELATIONSHIPS = '../../Datasets/AS-relationships/20210701.as-rel2.txt'
-PATH_PEERINGDB_NETIXLAN = '../../Datasets/PeeringDB/netixlan.json'
-PATH_BGP = '../bgp_paths/random_data.txt'
-AS_HEGEMONY_PATH = '../../Datasets/AS-hegemony/AS_hegemony.csv'
-ALL_ATLAS_PROBES = '../../Datasets/RIPE_Atlas_probes/bq_results.json'
+FILES_LOCATION = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/misc/'
+PATH_AS_RANK = FILES_LOCATION+'ASrank.csv'
+PATH_PERSONAL = FILES_LOCATION+'perso.txt'
+PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
+AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
+ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
+ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_peers.json'
 
 
 def cc2cont(country_code):
@@ -49,6 +48,35 @@ def get_continent(country_code):
             continent_name.append( cc2cont(cc) )
     return continent_name
 
+def create_df_from_RouteViews():
+    """
+    Collects the list of RouteViews peers, and returns a dataframe with RouteViews peers ASNs
+    :return: A dataframe with index the ASN
+    """
+    df = pd.read_json(ROUTEVIEWS_PEERS)
+    df.columns = ['asn']
+    df = df.drop_duplicates()
+    df['is_routeviews_peer'] = 1
+    df = df.set_index('asn')
+    
+    return df
+
+def create_df_from_RIPE_RIS():
+    """
+    Collects the list of RIPE RIS peers, and returns a dataframe with the v4 and v6 RIS peers ASNs.
+    :return: A dataframe with index the ASN
+    """
+    ris_peer_ip2asn, _ = dc.get_ripe_ris_data()
+    unique_asns = set(ris_peer_ip2asn.values())
+    unique_asns_v4 = set([asn for ip,asn in ris_peer_ip2asn.items() if ':' not in ip])
+    unique_asns_v6 = set([asn for ip,asn in ris_peer_ip2asn.items() if ':' in ip])
+
+    df = pd.DataFrame(columns=['is_ris_peer_v4', 'is_ris_peer_v6'], index=unique_asns)
+    df.loc[unique_asns_v4, 'is_ris_peer_v4'] = 1
+    df.loc[unique_asns_v6, 'is_ris_peer_v6'] = 1
+    df.index.name = 'asn'
+    
+    return df
 
 def create_df_from_Atlas_probes():
     """
@@ -147,6 +175,10 @@ def create_df_from(dataset):
         data = create_df_from_AS_hegemony()
     elif dataset == 'Atlas_probes':
         data = create_df_from_Atlas_probes()
+    elif dataset == 'RIPE_RIS':
+        data = create_df_from_RIPE_RIS()
+    elif dataset == 'RouteViews':
+        data = create_df_from_RouteViews()
     else:
         raise Exception('Not defined dataset')
     return data
@@ -165,64 +197,3 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
     final_df = pd.concat(list_of_dataframes, axis=1)
     final_df.index.name = 'ASN'
     return final_df
-
-
-def create_graph_from_AS_relationships():
-    """
-    This function takes as input 20210701.as-rel2.txt  and creates a graph based on NetworkX library.
-    :return: A graph
-    """
-
-    data = pd.read_csv(PATH_AS_RELATIONSHIPS, sep="|", skiprows=180, header=None)
-    data.columns = ['node1', 'node2', 'link', 'protocol']
-    data.drop(['protocol'], axis=1, inplace=True)
-
-    graph = nx.Graph()
-    graph.add_nodes_from(data.node1, node_type="node")
-    graph.add_nodes_from(data.node2, node_type="node")
-
-    for line in data.values:
-        graph.add_edge(line[0], line[1])
-
-    return graph
-
-
-def create_bigraph_from_netixlan():
-    """
-    This function takes as input netixlan.json  and creates a graph based on NetworkX library.
-    :return: A bipartite graph (with node1=ixlan_id and node2=asn)
-    """
-
-    data = json.load(open(PATH_PEERINGDB_NETIXLAN))
-    df = pd.DataFrame(data["data"])
-    df = df[['ixlan_id', 'asn']]
-
-    graph = nx.Graph()
-    graph.add_nodes_from(df.ixlan_id, bipartite=0)
-    graph.add_nodes_from(df.asn, bipartite=1)
-
-    for node1, node2 in df.values:
-        graph.add_edge(node1, node2)
-
-    return graph
-
-
-def create_graph_from_bgp_paths(paths):
-    """
-    :param paths: A list of lists containing paths (random_generated)
-    :return: A graph based on the random generated paths
-    """
-    columns = ['node' + str(i) for i in range(1, 16)]
-    df = pd.DataFrame(columns=columns, data=paths)
-    print(df)
-    graph = nx.Graph()
-
-    for node in df:
-        for i in range(0, len(df)):
-            graph.add_nodes_from([df[node].values[i]], node_type="node")
-
-    for i in range(0, len(df)):
-        for j in range(1, len(df.columns)):
-            graph.add_edges_from([(df['node{}'.format(j)].values[i], df['node{}'.format(j + 1)].values[i])])
-
-    return graph
