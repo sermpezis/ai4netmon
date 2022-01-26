@@ -16,6 +16,7 @@ SAVE_TO_JSON = False
 ## data parameters
 DATA_FILE = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
 RIPE_RIS_DATA_FILE = '../../data/misc/RIPE_RIS_peers_ip2asn.json'
+ROUTEVIEWS_FNAME = '../../data/misc/RouteViews_peers.json'
 SAVE_PLOTS_FNAME_FORMAT = './figures/Fig_{}_{}' # the first brackets to be filled with 'CDF' or 'Histogram', and the second with the feature name
 
 CDF_features = ['AS_rank_numberAsns', 'AS_rank_numberPrefixes', 'AS_rank_numberAddresses','AS_rank_total','AS_rank_customer', 
@@ -155,9 +156,13 @@ ris_asns = pd.read_json(RIPE_RIS_DATA_FILE, orient='index')[0].unique().tolist()
 ris_asns = [i for i in ris_asns if i in df.index]
 df_ris = df.loc[ris_asns,:]
 
+routeviews_asns = pd.read_json(ROUTEVIEWS_FNAME)[0].unique().tolist()
+routeviews_asns = [i for i in routeviews_asns if i in df.index]
+df_rv = df.loc[routeviews_asns,:]
+
 
 ## generate json (and plots)
-dict_network_sets = {'All ASes': df, 'RIPE Atlas': df_atlas, 'RIPE RIS': df_ris}
+dict_network_sets = {'All ASes': df, 'RIPE Atlas': df_atlas, 'RIPE RIS': df_ris, 'RouteViews': df_rv}
 for feature in CDF_features:
     data = generate_plot_json(feature, 'CDF', dict_network_sets)
     filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('CDF',feature)

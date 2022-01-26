@@ -1,0 +1,20 @@
+,RIPE RIS (all),RIPE Atlas (all),RouteViews (all)
+RIR region,0.0566,0.0631,0.0046
+Location (country),0.2155,0.1028,0.2106
+Location (continent),0.0572,0.0583,0.0099
+Customer cone (#ASNs),0.2205,0.0701,0.2266
+Customer cone (#prefixes),0.2536,0.1138,0.3085
+Customer cone (#addresses),0.2763,0.2267,0.2776
+AS hegemony,0.1563,0.0386,0.1756
+#neighbors (total),0.5748,0.1234,0.442
+#neighbors (peers),0.5516,0.0745,0.4378
+#neighbors (customers),0.2016,0.0586,0.2218
+#neighbors (providers),0.1827,0.0643,0.1641
+#IXPs (PeeringDB),0.2506,0.0344,0.2285
+#facilities (PeeringDB),0.1975,0.0349,0.1848
+Peering policy (PeeringDB),0.0304,0.0069,0.0249
+Network type (PeeringDB),0.1506,0.025,0.1337
+Traffic ratio (PeeringDB),0.1162,0.0196,0.0924
+Traffic volume (PeeringDB),0.0797,0.0222,0.1347
+Scope (PeeringDB),0.1602,0.0367,0.1723
+Personal ASN,0.0037,0.0016,0.0

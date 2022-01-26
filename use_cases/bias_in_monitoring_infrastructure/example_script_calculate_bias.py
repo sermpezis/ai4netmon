@@ -8,11 +8,12 @@ from ai4netmon.Analysis.bias import radar_chart
 
 
 
-print('####### Example 2 - bias in RIPE monitors')
-
 ## datasets
 AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
 RIPE_RIS_FNAME = '../../data/misc/RIPE_RIS_peers_ip2asn.json'
+ROUTEVIEWS_FNAME = '../../data/misc/RouteViews_peers.json'
+FIG_SAVENAME_FORMAT = './figures/fig_radar_{}.png'
+BIAS_CSV_FNAME = './data/bias_values_ris_atlas_rv.csv'
 
 ## features
 CATEGORICAL_FEATURES =  ['AS_rank_source', 'AS_rank_iso', 'AS_rank_continent', 'is_personal_AS', 'peeringDB_info_ratio', 
@@ -76,13 +77,24 @@ ris_asns = [i for i in ris_dict.values() if i in df.index]
 ris_asns_v4 = [i for k,i in ris_dict.items() if (':' not in k) and (i in df.index)]
 ris_asns_v6 = [i for k,i in ris_dict.items() if (':' in k) and (i in df.index)]
 
+with open(ROUTEVIEWS_FNAME, 'r') as f:
+    routeviews_asns = json.load(f)
+routeviews_asns = [i for i in routeviews_asns if i in df.index]
 
 ## calculate bias for all features
 bias_df = pd.DataFrame(index=FEATURES)
 bias_df_tv = pd.DataFrame(index=FEATURES)
 bias_df_max = pd.DataFrame(index=FEATURES)
 
-network_sets = ['all', 'RIPE RIS (all)', 'RIPE RIS (v4)', 'RIPE RIS (v6)', 'RIPE Atlas (all)', 'RIPE Atlas (v4)', 'RIPE Atlas (v6)']
+NETWORK_SETS = ['all', 
+                'RIPE RIS (all)', 
+                'RIPE RIS (v4)', 
+                'RIPE RIS (v6)', 
+                'RIPE Atlas (all)', 
+                'RIPE Atlas (v4)', 
+                'RIPE Atlas (v6)', 
+                'RouteViews (all)',
+                'RIPE RIS + RouteViews (all)']
 network_sets_dict = dict()
 network_sets_dict['all'] = df
 network_sets_dict['RIPE RIS (all)'] = df.loc[ris_asns]
@@ -91,13 +103,15 @@ network_sets_dict['RIPE RIS (v6)'] = df.loc[ris_asns_v6]
 network_sets_dict['RIPE Atlas (all)'] = df.loc[ (df['nb_atlas_probes_v4'] >0) | (df['nb_atlas_probes_v6'] >0) ]
 network_sets_dict['RIPE Atlas (v4)'] = df.loc[df['nb_atlas_probes_v4'] >0]
 network_sets_dict['RIPE Atlas (v6)'] = df.loc[df['nb_atlas_probes_v6'] >0]
+network_sets_dict['RouteViews (all)'] = df.loc[routeviews_asns]
+network_sets_dict['RIPE RIS + RouteViews (all)'] = df.loc[ris_asns+routeviews_asns]
 
 
 
 for feature in FEATURES:
 	params={'data_type':get_feature_type(feature), 'bins':10, 'alpha':0.01}
 	network_data_processed = dict()
-	for s in network_sets:
+	for s in NETWORK_SETS:
 		d = network_sets_dict[s][feature].copy()
 		d = d[(d.notnull())]
 		if params['data_type'] == 'numerical': # pre-processing for the numerical cases
@@ -106,23 +120,35 @@ for feature in FEATURES:
 			d[np.isinf(d)] = -0.1
 		network_data_processed[s] = d
 
-	for s in network_sets[1:]:
+	for s in NETWORK_SETS[1:]:
 		bias_df.loc[feature,s] = bu.bias_score(network_data_processed['all'], network_data_processed[s], method='kl_divergence', **params)
 		bias_df_tv.loc[feature,s] = bu.bias_score(network_data_processed['all'], network_data_processed[s], method='total_variation', **params)
 		bias_df_max.loc[feature,s] = bu.bias_score(network_data_processed['all'], network_data_processed[s], method='max_variation', **params)
 
 print('Bias per monitor set (columns) and per feature (rows)')
-print_df = bias_df[['RIPE RIS (all)','RIPE Atlas (all)']].copy()
+print_df = bias_df[['RIPE RIS (all)','RIPE Atlas (all)', 'RouteViews (all)']].copy()
 print_df.index = [n.replace('\n','') for n in FEATURE_NAMES_DICT.values()]
+# print results
 print(print_df.round(2))
+# save results to file
+print_df.round(4).to_csv(BIAS_CSV_FNAME, header=True, index=True)
 
 
 ## plot the radar plot of biases
-plot_df = bias_df[network_sets[1:]]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename='fig_radar_detailed.png', varlabels=FEATURE_NAMES_DICT)
+# all RIPE - details
+plot_df = bias_df[['RIPE RIS (all)', 'RIPE RIS (v4)', 'RIPE RIS (v6)', 'RIPE Atlas (all)', 'RIPE Atlas (v4)', 'RIPE Atlas (v6)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE_detailed'), varlabels=FEATURE_NAMES_DICT)
+# all RIPE
 plot_df = bias_df[['RIPE RIS (all)','RIPE Atlas (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename='fig_radar.png', varlabels=FEATURE_NAMES_DICT)
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE'), varlabels=FEATURE_NAMES_DICT)
+# all RIPE - TV
 plot_df = bias_df_tv[['RIPE RIS (all)','RIPE Atlas (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename='fig_radar_tv.png', varlabels=FEATURE_NAMES_DICT)
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE_tv'), varlabels=FEATURE_NAMES_DICT)
+# all RIPE - Max
 plot_df = bias_df_max[['RIPE RIS (all)','RIPE Atlas (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename='fig_radar_max.png', varlabels=FEATURE_NAMES_DICT)
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE_max'), varlabels=FEATURE_NAMES_DICT)
+# all RIPE + RouteViews
+plot_df = bias_df[['RIPE RIS (all)','RouteViews (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE_RV'), varlabels=FEATURE_NAMES_DICT)
+plot_df = bias_df_tv[['RIPE RIS (all)','RouteViews (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_SAVENAME_FORMAT.format('RIPE_RV_tv'), varlabels=FEATURE_NAMES_DICT)
