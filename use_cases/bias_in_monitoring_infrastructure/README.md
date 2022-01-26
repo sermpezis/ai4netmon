@@ -83,9 +83,21 @@ RIPE - bias (Total Variation)             |  RIPE - bias (Max Variation)
 
 Below we compare the bias between RIPE RIS and RouteViews route collectors
 
-RIPE vs RouteViews - bias (KL)             |  RIPE vs RouteViews - bias (TV)
+RIPE RIS vs RouteViews - bias (KL)             |  RIPE RIS vs RouteViews - bias (TV)
 :-------------------------:|:-------------------------:
 ![Radar plot - bias - ripe rv](./figures/fig_radar_RIPE_RV.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/fig_radar_RIPE_RV_tv.png?raw=true)
+
+
+
+#### Bias in RIPE RIS special cases: (i) full feeders, (ii) extending infrastructure
+
+Below we first compare the bias in RIPE RIS when considering all monitors and only full-feeders. We see that _**full feeders are considerably _more biased**_. 
+
+Moreover, we present the expected bias of the RIPE RIS infrastructure if a number of N extra monitors are added as peers. We consider N = 10, 50, 100, 200 extra monitors, selected from an ordered list of ASNs that [we calculated]( https://github.com/sermpezis/ai4netmon/tree/dev/TEMP_pavlos/bias_sort_nonRIS_asns ) that would decrease most the bias (i.e., for N=50 we select the first 50 ASNs appearing in the list). The more monitors we add the less the bias (as expected), however, the figure allows to quantify the added gains.
+
+RIPE RIS: all vs full-feeders             |  Extending RIPE RIS with extra monitors
+:-------------------------:|:-------------------------:
+![Radar plot - bias - ripe rv](./figures/fig_radar_RIPE_full.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/fig_radar_RIPE_plus.png?raw=true)
 
 
 
