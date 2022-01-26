@@ -246,7 +246,7 @@ def categorize_features(data, current, type, feature, type_of_monitors):
             data['peeringDB_fac_count'] = data.peeringDB_fac_count.astype('Int64')
             cdf_plot(current, data, feature, type_of_monitors)
         elif feature == 'is_personal_AS':
-            data['is_personal_AS'] = data.is_personal_AS.fillna(0)
+            data['is_personal_AS'] = data['is_personal_AS'].replace('', np.nan)
             data['is_personal_AS'] = data.is_personal_AS.astype('Int64')
             histogram_plot(current, data, feature, type_of_monitors)
         elif feature == 'has_atlas_probe':
@@ -294,6 +294,11 @@ def categorize_features_all(data, current, type, feature):
         elif feature == 'peeringDB_fac_count':
             data['peeringDB_fac_count'] = data.peeringDB_fac_count.fillna(0)
             data['peeringDB_fac_count'] = data.peeringDB_fac_count.astype('Int64')
+            x, y = cdf_plot_all(current, data, feature)
+            return x, y
+        elif feature == 'AS_hegemony':
+            data['AS_hegemony'] = data.AS_hegemony.replace('', np.nan)
+            data['AS_hegemony'] = data.AS_hegemony.astype(float)
             x, y = cdf_plot_all(current, data, feature)
             return x, y
         elif feature == 'is_personal_AS':
@@ -347,7 +352,7 @@ def cdf_plot_all(unique_monitors, final, feature):
             or feature == 'AS_rank_peer' or feature == 'AS_rank_provider' or feature == 'AS_rank_total' \
             or feature == 'ASn' or feature == 'AS_rank_customer' or feature == 'peeringDB_info_prefixes4' or \
             feature == 'peeringDB_info_prefixes6' or feature == 'peeringDB_ix_count' or feature == 'peeringDB_fac_count' \
-            or feature == 'peeringDB_created':
+            or feature == 'peeringDB_created' or feature == 'AS_hegemony':
         plt.xscale('log')
     else:
         plt.xscale('linear')
