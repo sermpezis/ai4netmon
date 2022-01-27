@@ -189,10 +189,10 @@ def call_categorize_all(final_df, ripe, atlas, route):
             x_2 = [x + bar_width for x in x_1]
             x_3 = [x + bar_width for x in x_2]
             x_4 = [x + bar_width for x in x_3]
-            plt.bar(x_1, y0_list, label='All ASes', alpha=0.5, width=bar_width)
-            plt.bar(x_2, y1_list, label='Ripe Ris', alpha=0.5, width=bar_width)
-            plt.bar(x_3, y2_list, label='ATLAS', alpha=0.5, width=bar_width)
-            plt.bar(x_4, y3_list, label='RouteView', alpha=0.5, width=bar_width)
+            plt.bar(x_1, y0_list, label='All ASes', width=bar_width)
+            plt.bar(x_2, y1_list, label='Ripe Ris', width=bar_width)
+            plt.bar(x_3, y2_list, label='ATLAS', width=bar_width)
+            plt.bar(x_4, y3_list, label='RouteView', width=bar_width)
 
             plt.legend(prop={'size': 10})
             plt.ylabel('CDF')
