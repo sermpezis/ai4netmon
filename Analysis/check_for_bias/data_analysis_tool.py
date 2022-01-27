@@ -139,18 +139,55 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif dataTypeObj == np.object:
-            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
-            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
-            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
-            x = final_df[column_name].dropna()
+            x =final_df[column_name].unique()
             x = x.astype(str)
-            plt.hist([x, y1, y2, y3], density=True, bins=abs(final_df[column_name].nunique()), histtype='bar', align='left',
-                     label=['All_ASes', 'Ripe Ris', 'Atlas', 'RouteViews'])
+            print(x)
+            print(column_name)
+            y0 = final_df[column_name]
+            y0_counts = y0.value_counts()
+            y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            y1_counts = y1.value_counts()
+            y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            y2_counts = y2.value_counts()
+            y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            y3_counts = y3.value_counts()
+
+            y0_list = []
+            y1_list = []
+            y2_list = []
+            y3_list = []
+            for item in x:
+                y0_value = 0
+                y1_value = 0
+                y2_value = 0
+                y3_value = 0
+                if item in y0_counts:
+                    y0_value = y0_counts[item]
+                if item in y1_counts:
+                    y1_value = y1_counts[item]
+                if item in y2_counts:
+                    y2_value = y2_counts[item]
+                if item in y3_counts:
+                    y3_value = y3_counts[item]
+                y0_list.append(y0_value / len(y0))
+                y1_list.append(y1_value/len(y1))
+                y2_list.append(y2_value/len(y2))
+                y3_list.append(y3_value/len(y3))
+            bar_width = 0.2
+            x_1 = np.arange(len(x))
+            x_2 = [x + bar_width for x in x_1]
+            x_3 = [x + bar_width for x in x_2]
+            x_4 = [x + bar_width for x in x_3]
+            plt.bar(x_1, y1_list, color="b", alpha=0.5, width=bar_width)
+            plt.bar(x_2, y2_list, color="r", alpha=0.5, width=bar_width)
+            plt.bar(x_3, y3_list, color="g", alpha=0.5, width=bar_width)
+            plt.bar(x_4, y0_list, color="y", alpha=0.5, width=bar_width)
+
             plt.legend(prop={'size': 10})
             plt.ylabel('CDF')
             plt.ylim(0, 1)
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
-            plt.xticks(rotation='vertical')
+            plt.xticks([r + bar_width for r in range(len(x))], x, rotation='vertical')
             plt.tight_layout()
             plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
