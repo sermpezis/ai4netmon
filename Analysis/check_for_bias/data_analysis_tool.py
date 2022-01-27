@@ -103,7 +103,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks(rotation='vertical')
             plt.tight_layout()
-            # plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif column_name == 'AS_rank_iso':
             y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
@@ -121,7 +121,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks(rotation='vertical')
             plt.tight_layout()
-            # plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif dataTypeObj == np.int64 or dataTypeObj == np.float64:
             x1, y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
@@ -136,7 +136,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.title('Feature: ' + str(column_name), fontsize=14)
             plt.legend()
             plt.tight_layout()
-            # plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif dataTypeObj == np.object:
             temp = final_df[column_name].dropna()
@@ -145,10 +145,22 @@ def call_categorize_all(final_df, ripe, atlas, route):
             y0 = temp
             y0_counts = y0.value_counts()
             y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
+            c1 = 0
+            c2 = 0
+            c3 = 0
+            for i in y1:
+                if i == 'nan':
+                    c1 = c1 + 1
             y1_counts = y1.value_counts()
             y2 = categorize_features_all(dcopy, atlas, dataTypeObj, column_name)
+            for i in y2:
+                if i == 'nan':
+                    c2 = c2 + 1
             y2_counts = y2.value_counts()
             y3 = categorize_features_all(dcopy, route, dataTypeObj, column_name)
+            for i in y3:
+                if i == 'nan':
+                    c3 = c3 + 1
             y3_counts = y3.value_counts()
 
             y0_list = []
@@ -169,9 +181,9 @@ def call_categorize_all(final_df, ripe, atlas, route):
                 if item in y3_counts:
                     y3_value = y3_counts[item]
                 y0_list.append(y0_value/len(y0))
-                y1_list.append(y1_value/len(y1))
-                y2_list.append(y2_value/len(y2))
-                y3_list.append(y3_value/len(y3))
+                y1_list.append(y1_value/(len(y1) - c1))
+                y2_list.append(y2_value/(len(y2) - c2))
+                y3_list.append(y3_value/(len(y3) - c3))
             bar_width = 0.2
             x_1 = np.arange(len(x))
             x_2 = [x + bar_width for x in x_1]
@@ -188,7 +200,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks([r + bar_width for r in range(len(x))], x, rotation='vertical')
             plt.tight_layout()
-            # plt.savefig(str(column_name) + 'All' + f'.png')
+            plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
             plt.close()
 
@@ -439,7 +451,7 @@ def cdf_plot(unique_monitors, final, feature, monitors_origin):
     plt.title('Feature: ' + str(feature), fontsize=14)
     plt.legend()
     plt.tight_layout()
-    #plt.savefig(str(feature) + str(monitors_origin) + f'.png')
+    plt.savefig(str(feature) + str(monitors_origin) + f'.png')
     plt.show()
 
 
@@ -464,7 +476,7 @@ def histogram_plot(unique_monitors, final, feature, monitors_origin):
     plt.suptitle('Feature: ' + str(feature), fontsize=14)
     plt.xticks(rotation='vertical')
     plt.tight_layout()
-    # plt.savefig(str(feature) + str(monitors_origin) + f'.png')
+    plt.savefig(str(feature) + str(monitors_origin) + f'.png')
     plt.show()
 
 
