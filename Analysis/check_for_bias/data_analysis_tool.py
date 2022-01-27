@@ -103,7 +103,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks(rotation='vertical')
             plt.tight_layout()
-            plt.savefig(str(column_name) + 'All' + f'.png')
+            # plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif column_name == 'AS_rank_iso':
             y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
@@ -121,7 +121,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks(rotation='vertical')
             plt.tight_layout()
-            plt.savefig(str(column_name) + 'All' + f'.png')
+            # plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif dataTypeObj == np.int64 or dataTypeObj == np.float64:
             x1, y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
@@ -136,14 +136,13 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.title('Feature: ' + str(column_name), fontsize=14)
             plt.legend()
             plt.tight_layout()
-            plt.savefig(str(column_name) + 'All' + f'.png')
+            # plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
         elif dataTypeObj == np.object:
-            x =final_df[column_name].unique()
+            temp = final_df[column_name].dropna()
+            x = temp.unique()
             x = x.astype(str)
-            print(x)
-            print(column_name)
-            y0 = final_df[column_name]
+            y0 = temp
             y0_counts = y0.value_counts()
             y1 = categorize_features_all(dcopy, ripe, dataTypeObj, column_name)
             y1_counts = y1.value_counts()
@@ -169,7 +168,7 @@ def call_categorize_all(final_df, ripe, atlas, route):
                     y2_value = y2_counts[item]
                 if item in y3_counts:
                     y3_value = y3_counts[item]
-                y0_list.append(y0_value / len(y0))
+                y0_list.append(y0_value/len(y0))
                 y1_list.append(y1_value/len(y1))
                 y2_list.append(y2_value/len(y2))
                 y3_list.append(y3_value/len(y3))
@@ -178,10 +177,10 @@ def call_categorize_all(final_df, ripe, atlas, route):
             x_2 = [x + bar_width for x in x_1]
             x_3 = [x + bar_width for x in x_2]
             x_4 = [x + bar_width for x in x_3]
-            plt.bar(x_1, y1_list, color="b", alpha=0.5, width=bar_width)
-            plt.bar(x_2, y2_list, color="r", alpha=0.5, width=bar_width)
-            plt.bar(x_3, y3_list, color="g", alpha=0.5, width=bar_width)
-            plt.bar(x_4, y0_list, color="y", alpha=0.5, width=bar_width)
+            plt.bar(x_1, y0_list, label='All ASes', alpha=0.5, width=bar_width)
+            plt.bar(x_2, y1_list, label='Ripe Ris', alpha=0.5, width=bar_width)
+            plt.bar(x_3, y2_list, label='ATLAS', alpha=0.5, width=bar_width)
+            plt.bar(x_4, y3_list, label='RouteView', alpha=0.5, width=bar_width)
 
             plt.legend(prop={'size': 10})
             plt.ylabel('CDF')
@@ -189,8 +188,9 @@ def call_categorize_all(final_df, ripe, atlas, route):
             plt.suptitle('Feature: ' + str(column_name), fontsize=14)
             plt.xticks([r + bar_width for r in range(len(x))], x, rotation='vertical')
             plt.tight_layout()
-            plt.savefig(str(column_name) + 'All' + f'.png')
+            # plt.savefig(str(column_name) + 'All' + f'.png')
             plt.show()
+            plt.close()
 
 
 
@@ -439,7 +439,7 @@ def cdf_plot(unique_monitors, final, feature, monitors_origin):
     plt.title('Feature: ' + str(feature), fontsize=14)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(str(feature) + str(monitors_origin) + f'.png')
+    #plt.savefig(str(feature) + str(monitors_origin) + f'.png')
     plt.show()
 
 
@@ -464,7 +464,7 @@ def histogram_plot(unique_monitors, final, feature, monitors_origin):
     plt.suptitle('Feature: ' + str(feature), fontsize=14)
     plt.xticks(rotation='vertical')
     plt.tight_layout()
-    plt.savefig(str(feature) + str(monitors_origin) + f'.png')
+    # plt.savefig(str(feature) + str(monitors_origin) + f'.png')
     plt.show()
 
 
