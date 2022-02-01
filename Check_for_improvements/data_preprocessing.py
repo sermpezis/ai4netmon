@@ -45,6 +45,22 @@ def call_smogn(final, flag_k_fold):
     cm.call_methods_with_log(x_train_pca, x_test_pca, y_train_pca, y_test_pca)
 
 
+def read_improvement_score():
+    data = pd.read_csv("../Datasets/improvements20210601.txt", sep=" ")
+    data.columns = ['location', 'IPV4-6', 'ASN', 'improvement_score']
+    # keep only GLOBAL and IPV-4 examples
+    new_data = data.loc[(data["location"] == "GLOBAL") & (data["IPV4-6"] == 4)]
+    # GLOBAL 4 {21687,30104,46887} 1  --> 21687 1 || 30104 1 || 46887 1
+    df_stack = pd.DataFrame(new_data.ASN.str.split(",").to_list(), index=new_data.improvement_score).stack()
+    df_stack = df_stack.reset_index(["improvement_score"])
+    df_stack.columns = ["Improvement_score", "ASN"]
+    df_stack['ASN'] = df_stack['ASN'].str.strip('{}')
+    df_stack = df_stack.reset_index(drop=True)
+    df_stack['ASN'] = df_stack['ASN'].astype(str).astype(float)
+
+    return df_stack
+
+
 def read_RIS_improvement_score():
     """
     :return: A dataframe containing 2 columns. The first one contains ASNs and the second one the improvement score

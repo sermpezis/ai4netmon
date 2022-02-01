@@ -10,12 +10,17 @@ karate_club_emb_64 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'Node2Vec_L
                       'bgp2vec_32']
 karate_club_emb_128 = ['Diff2Vec', 'NetMF', 'NodeSketch', 'Walklets', 'DeepWalk']
 graph_emb_user_choice = ''
-run_script_with_Stubs = True
+run_script_with_Stubs = False
 z_score = False
 inner_outer_fences = False
+run_only_RIPE_RIS = False
 graph_emb_dimensions = 64
 
-improvement_df = dp.read_RIS_improvement_score()
+if run_only_RIPE_RIS:
+    improvement_df = dp.read_RIS_improvement_score()
+else:
+    improvement_df = dp.read_improvement_score()
+
 if graph_emb_user_choice == 'Node2Vec':
     embeddings_df = dp.read_Node2Vec_embeddings_file()
 else:
