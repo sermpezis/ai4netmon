@@ -145,35 +145,35 @@ def plot_histogram(data, dict_network_sets, filename, show_plot=False):
     plt.close()
 
 
+if __name__ == '__main__':
+    ## load data, create dataframes
+    df = pd.read_csv(DATA_FILE, header=0, index_col=0)
+    df['is_personal_AS'].fillna(0, inplace=True)
 
-## load data, create dataframes
-df = pd.read_csv(DATA_FILE, header=0, index_col=0)
-df['is_personal_AS'].fillna(0, inplace=True)
+    df_atlas = df.loc[(~df['nb_atlas_probes_v4'].isna())|(~df['nb_atlas_probes_v4'].isna()),:]
 
-df_atlas = df.loc[(~df['nb_atlas_probes_v4'].isna())|(~df['nb_atlas_probes_v4'].isna()),:]
+    ris_asns = pd.read_json(RIPE_RIS_DATA_FILE, orient='index')[0].unique().tolist()
+    ris_asns = [i for i in ris_asns if i in df.index]
+    df_ris = df.loc[ris_asns,:]
 
-ris_asns = pd.read_json(RIPE_RIS_DATA_FILE, orient='index')[0].unique().tolist()
-ris_asns = [i for i in ris_asns if i in df.index]
-df_ris = df.loc[ris_asns,:]
-
-routeviews_asns = pd.read_json(ROUTEVIEWS_FNAME)[0].unique().tolist()
-routeviews_asns = [i for i in routeviews_asns if i in df.index]
-df_rv = df.loc[routeviews_asns,:]
+    routeviews_asns = pd.read_json(ROUTEVIEWS_FNAME)[0].unique().tolist()
+    routeviews_asns = [i for i in routeviews_asns if i in df.index]
+    df_rv = df.loc[routeviews_asns,:]
 
 
-## generate json (and plots)
-dict_network_sets = {'All ASes': df, 'RIPE Atlas': df_atlas, 'RIPE RIS': df_ris, 'RouteViews': df_rv}
-for feature in CDF_features:
-    data = generate_plot_json(feature, 'CDF', dict_network_sets)
-    filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('CDF',feature)
-    if SAVE_TO_JSON:
-        with open(filename_no_ext+'.json', 'w') as f:
-            json.dump(data,f)
-    plot_cdf(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
-for feature in Histogram_features:
-    data = generate_plot_json(feature, 'histogram', dict_network_sets)
-    filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('Histogram',feature)
-    if SAVE_TO_JSON:
-        with open(filename_no_ext+'.json', 'w') as f:
-            json.dump(data,f)
-    plot_histogram(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
+    ## generate json (and plots)
+    dict_network_sets = {'All ASes': df, 'RIPE Atlas': df_atlas, 'RIPE RIS': df_ris, 'RouteViews': df_rv}
+    for feature in CDF_features:
+        data = generate_plot_json(feature, 'CDF', dict_network_sets)
+        filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('CDF',feature)
+        if SAVE_TO_JSON:
+            with open(filename_no_ext+'.json', 'w') as f:
+                json.dump(data,f)
+        plot_cdf(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
+    for feature in Histogram_features:
+        data = generate_plot_json(feature, 'histogram', dict_network_sets)
+        filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('Histogram',feature)
+        if SAVE_TO_JSON:
+            with open(filename_no_ext+'.json', 'w') as f:
+                json.dump(data,f)
+        plot_histogram(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
