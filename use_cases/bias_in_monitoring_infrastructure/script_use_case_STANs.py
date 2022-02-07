@@ -50,7 +50,8 @@ FEATURES = list(FEATURE_NAMES_DICT.keys())
 df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
 df['is_personal_AS'].fillna(0, inplace=True)
 
-STAN_COUNTRIES = ['KZ', 'TJ', 'UZ', 'KG', 'TM', 'AF', 'PK']
+# STAN_COUNTRIES = ['KZ', 'TJ', 'UZ', 'KG', 'TM', 'AF', 'PK']
+STAN_COUNTRIES = ['KZ', 'TJ', 'UZ', 'KG', 'TM']
 df_stan = df[df['AS_rank_iso'].isin(STAN_COUNTRIES)]
 
 
