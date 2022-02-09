@@ -3,6 +3,8 @@ import numpy as np
 import json
 import pycountry_convert as pc
 from ai4netmon.Analysis.aggregate_data import data_collectors as dc
+from ai4netmon.Analysis.aggregate_data import graph_methods as gm
+
 
 FILES_LOCATION = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/misc/'
 PATH_AS_RANK = FILES_LOCATION+'ASrank.csv'
@@ -11,6 +13,7 @@ PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
 AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
 ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_peers.json'
+AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
 
 
 def cc2cont(country_code):
@@ -47,6 +50,24 @@ def get_continent(country_code):
         else:
             continent_name.append( cc2cont(cc) )
     return continent_name
+
+def create_df_from_AS_relationships():
+    """
+    Loads the CAIDA AS-relationships datasets from the source file. Returns a dataframe with index the ASN\
+    and columns features derived from the graph; appends in the column names the prefix "AS_rel_".
+    The returned features are:
+        - "is_stub":    a column that is 1 if the node is a stub AS (i.e., has only one link)
+    
+    :return: A dataframe with index the ASN
+    """
+    G = gm.create_graph_from_AS_relationships(AS_RELATIONSHIPS)
+    stubs = gm.get_stubs_from_AS_graph(G)
+
+    data = pd.DataFrame(index=stubs)
+    data.index.name = 'asn'
+    data['AS_rel_is_stub'] = 1
+    
+    return data
 
 def create_df_from_RouteViews():
     """
@@ -124,9 +145,9 @@ def create_df_from_AS_hegemony():
 
 def create_df_from_personal():
     """
-    Loads the bgp.tools personal AS dataset from the source file. Creates a dataframe with index the ASN of the ASes that are personal use ASes; the dataframe has only one column with 1 for all rows
+    Loads the bgp.tools personal AS dataset from the source file. Creates a dataframe with index the ASN of 
+    the ASes that are personal use ASes; the dataframe has only one column with 1 for all rows
     :return: A dataframe with index the ASN
-    :return: the a dataframe which contains only one column.
     """
     data = pd.read_csv(PATH_PERSONAL, header=None)
     data.columns = ['asn']
@@ -179,6 +200,8 @@ def create_df_from(dataset):
         data = create_df_from_RIPE_RIS()
     elif dataset == 'RouteViews':
         data = create_df_from_RouteViews()
+    elif dataset == 'AS_relationships':
+        data = create_df_from_AS_relationships()
     else:
         raise Exception('Not defined dataset')
     return data
