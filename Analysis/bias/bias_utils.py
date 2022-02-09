@@ -131,3 +131,73 @@ def bias_score(target_data, sample_data, method='kl_divergence', **params):
 		raise TypeError
 
 	return bias_score 
+
+
+
+
+
+def get_feature_type(feature, all_features=False):
+	'''
+	:param 	feature: 		(str) name of the feature (in case all_features=False) or name of feature category (in case all_features=True)
+	:param 	all_features: 	(Boolean) 
+	:return:				(str) the type of the given feature (if all_features=False)
+							or (list) a list of the features in the given feature category (if all_features=True)
+	'''
+
+	FEATURE_TYPES = dict()
+	# binary features are included in categorical features
+	FEATURE_TYPES['categorical'] =  ['AS_rank_source', 'AS_rank_iso', 'AS_rank_continent', 'is_personal_AS', 'peeringDB_info_ratio', 
+	'peeringDB_info_traffic', 'peeringDB_info_scope', 'peeringDB_info_type', 'peeringDB_policy_general', 'is_ris_peer_v4', 
+	'is_ris_peer_v6', 'is_routeviews_peer']
+	FEATURE_TYPES['numerical'] =  ['AS_rank_numberAsns', 'AS_rank_numberPrefixes', 'AS_rank_numberAddresses', 'AS_rank_total',
+	'AS_rank_customer', 'AS_rank_peer', 'AS_rank_provider', 'peeringDB_ix_count', 'peeringDB_fac_count', 'AS_hegemony', 
+	'peeringDB_info_prefixes4', 'peeringDB_info_prefixes6', 'nb_atlas_probes_v4', 'nb_atlas_probes_v6']
+	FEATURE_TYPES['ordinal'] = ['AS_rank_rank']
+	FEATURE_TYPES['other'] = ['AS_rank_longitude', 'AS_rank_latitude', 'peeringDB_created']
+
+	
+	if all_features:
+		return FEATURE_TYPES[feature]
+	else:
+		for ftype, flist in FEATURE_TYPES.items():
+			if feature in flist:
+				return ftype
+		raise ValueError	# if the feature is not found in any type of features
+
+
+
+def preprocess_data_series(ds):
+	'''
+	Receives a pandas.Series and process it, by 
+		(i) removing null values
+		(ii) if the type of data is numerical, it takes the logarithm of the data and then replaces inf values (due to log(0)) to -0.1
+	:param	ds:	(pandas.Series)
+	:return:	(pandas.Series)
+	'''
+	d = ds.copy()
+	d = d[(d.notnull())]
+
+	ftype = get_feature_type(d.name)
+	if ftype == 'numerical': # pre-processing for the numerical cases
+		# d[d<=1] = 0.9#np.nan
+		d = np.log(d)
+		d[np.isinf(d)] = -0.1
+	
+	return d
+
+
+
+def bias_score_dataframe(target_df, sample_df_dict, preprocess=True, **params):
+	bias_df = pd.DataFrame(index=target_df.columns)
+	for col in target_df.columns:
+		ds1 = target_df[col]
+		if preprocess:
+			ds1 = preprocess_data_series(ds1)
+
+		for s_name, s_df in sample_df_dict.items():
+			ds2 = s_df[col]
+			if preprocess:
+				ds2 = preprocess_data_series(ds2)
+			params['data_type'] = get_feature_type(col)
+			bias_df.loc[col, s_name] = bias_score(ds1, ds2, **params)
+	return bias_df
