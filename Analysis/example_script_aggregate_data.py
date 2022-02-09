@@ -11,7 +11,7 @@ print(df.columns)
 # generate file
 from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
-ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews']
+ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships']
 df = dat.create_dataframe_from_multiple_datasets(ALL_DATASETS)
 
 print(df)
