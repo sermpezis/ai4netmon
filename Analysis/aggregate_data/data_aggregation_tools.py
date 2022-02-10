@@ -53,21 +53,18 @@ def get_continent(country_code):
 
 def create_df_from_AS_relationships():
     """
-    Loads the CAIDA AS-relationships datasets from the source file. Returns a dataframe with index the ASN\
+    Loads the CAIDA AS-relationships datasets from the source file. Returns a dataframe with index the ASN
     and columns features derived from the graph; appends in the column names the prefix "AS_rel_".
     The returned features are:
-        - "is_stub":    a column that is 1 if the node is a stub AS (i.e., has only one link)
+        - "degree":    a column with the degree (i.e., #neighbors) of each AS
     
     :return: A dataframe with index the ASN
     """
     G = gm.create_graph_from_AS_relationships(AS_RELATIONSHIPS)
-    stubs = gm.get_stubs_from_AS_graph(G)
+    df = pd.DataFrame(G.degree(), columns=['asn','AS_rel_degree'])
+    df = df.set_index('asn')
 
-    data = pd.DataFrame(index=stubs)
-    data.index.name = 'asn'
-    data['AS_rel_is_stub'] = 1
-    
-    return data
+    return df
 
 def create_df_from_RouteViews():
     """
