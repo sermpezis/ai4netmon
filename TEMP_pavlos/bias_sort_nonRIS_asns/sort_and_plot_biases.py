@@ -3,8 +3,10 @@ from matplotlib import pyplot as plt
 from statsmodels.distributions.empirical_distribution import ECDF
 import json
 
-BIAS_DF = './data/bias_df.csv'
-BIAS_DIFF = './data/bias_diff.csv'
+BIAS_DF = './data/bias_df__no_stubs.csv'
+BIAS_DIFF = './data/bias_total_df__no_stubs.csv'
+SAVEFIG_FORMAT = './figures/cdf_bias_diff_{}.png'
+SAVE_JSON_FNAME = './data/sorted_asns_by_ascending_biases.json'
 
 bias_df = pd.read_csv(BIAS_DF, header=0, index_col=0)
 print(bias_df)
@@ -31,7 +33,7 @@ def plot_cdf_bias(plot_df, feature_name, show_plot=False):
 	plt.xticks(fontsize=FONTSIZE)
 	plt.yticks(fontsize=FONTSIZE)
 	plt.grid(True)
-	plt.savefig('./figures/cdf_bias_diff_{}.png'.format(feature_name))
+	plt.savefig(SAVEFIG_FORMAT.format(feature_name))
 	if show_plot:
 		plt.show()
 	plt.close()
@@ -42,18 +44,25 @@ def get_sorted_list(plot_df):
 
 
 
-dict_of_biases = dict()
+
 # plot total bias
 plot_df = bias_diff['0']
 plot_cdf_bias(plot_df, 'total')
 
-dict_of_biases['total'] = get_sorted_list(plot_df)
 
+ris_bias = bias_diff.loc['RIPE RIS','0']
+plot_df = (bias_diff['0'] - ris_bias) / ris_bias * 100
+plot_cdf_bias(plot_df, 'total difference %')
+
+
+
+dict_of_biases = dict()
+dict_of_biases['total'] = get_sorted_list(plot_df)
 # plot partial bias
 for feature in bias_df.index:
 	plot_df = bias_df.loc[feature]
 	plot_cdf_bias(plot_df, feature)
 	dict_of_biases[feature] = get_sorted_list(plot_df)
 
-with open('./data/sorted_asns_by_ascending_biases.json', 'w') as f:
+with open(SAVE_JSON_FNAME, 'w') as f:
 	json.dump(dict_of_biases, f)
