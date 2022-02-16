@@ -201,3 +201,39 @@ def bias_score_dataframe(target_df, sample_df_dict, preprocess=True, **params):
 			params['data_type'] = get_feature_type(col)
 			bias_df.loc[col, s_name] = bias_score(ds1, ds2, **params)
 	return bias_df
+
+
+def get_features_dict_for_visualizations():
+	'''
+	returns a dict with 
+		- keys (str): the feature names in the aggregated dataframe (i.e., column names)
+		- values (str): the names to be shown in the visualization plots
+	Important: only a subset of features from the aggregated dataframe is returned
+	'''
+	features_dict = {
+	    # Location-related info
+	    'AS_rank_source': 'RIR region',
+	    'AS_rank_iso': 'Location\n (country)',
+	    'AS_rank_continent': 'Location\n (continent)',
+	    # network size info
+	    'AS_rank_numberAsns': 'Customer cone\n (#ASNs)', 
+	    'AS_rank_numberPrefixes': 'Customer cone\n (#prefixes)',
+	    'AS_rank_numberAddresses': 'Customer cone\n (#addresses)',
+	    'AS_hegemony': 'AS hegemony',
+	    # Topology info
+	    'AS_rank_total': '#neighbors\n (total)',
+	    'AS_rank_peer': '#neighbors\n (peers)', 
+	    'AS_rank_customer': '#neighbors\n (customers)', 
+	    'AS_rank_provider': '#neighbors\n (providers)',
+	    # IXP related
+	    'peeringDB_ix_count': '#IXPs\n (PeeringDB)', 
+	    'peeringDB_fac_count': '#facilities\n (PeeringDB)', 
+	    'peeringDB_policy_general': 'Peering policy\n (PeeringDB)',
+	    # Network type
+	    'peeringDB_info_type': 'Network type\n (PeeringDB)',
+	    'peeringDB_info_ratio': 'Traffic ratio\n (PeeringDB)',
+	    'peeringDB_info_traffic': 'Traffic volume\n (PeeringDB)', 
+	    'peeringDB_info_scope': 'Scope\n (PeeringDB)',
+	    'is_personal_AS': 'Personal ASN', 
+	}
+	return features_dict
