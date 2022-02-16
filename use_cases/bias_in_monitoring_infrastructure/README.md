@@ -107,7 +107,7 @@ RIPE RIS: all vs full-feeders             |  Extending RIPE RIS with extra monit
 
 Here, we present the detailed distributions per dimension (based on which the bias is calculated). The following figures depict the distributions of values for all ASes and for RIPE NCC monitors, along different dimensions. CDFs are used for numerical dimensions (e.g., number of neighbors), and histograms for categorical dimensions (e.g., type of network).
 
-You can click on a figure to zoom in. The results below are generated with the script `generate_distribution_plots.py`. All images can be found in the `./figures/` folder.  
+You can click on a figure to zoom in. The results below are generated with the same script (``example_script_calculate_bias.py``). All images can be found in the `./figures/` folder.  
 
 **Location related dimensions**
 

@@ -1,58 +1,16 @@
-#!/usr/bin/env python3
-#
-# Author: Pavlos Sermpezis (https://sites.google.com/site/pavlossermpezis/)
-#
 import pandas as pd
 import numpy as np
 from statsmodels.distributions.empirical_distribution import ECDF
 from matplotlib import pyplot as plt
 import json
-
-SHOW_PLOTS = False
-SAVE_TO_JSON = False
-
-
+from ai4netmon.Analysis.bias import bias_utils as bu
 
 ## data parameters
-DATA_FILE = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
-RIPE_RIS_DATA_FILE = '../../data/misc/RIPE_RIS_peers_ip2asn.json'
-ROUTEVIEWS_FNAME = '../../data/misc/RouteViews_peers.json'
-SAVE_PLOTS_FNAME_FORMAT = './figures/Fig_{}_{}' # the first brackets to be filled with 'CDF' or 'Histogram', and the second with the feature name
-
 CDF_features = ['AS_rank_numberAsns', 'AS_rank_numberPrefixes', 'AS_rank_numberAddresses','AS_rank_total','AS_rank_customer', 
         'AS_rank_peer', 'AS_rank_provider', 'peeringDB_ix_count', 'peeringDB_fac_count', 'AS_hegemony']
 
 Histogram_features = ['AS_rank_source', 'AS_rank_continent', 'peeringDB_info_ratio','peeringDB_info_traffic', 
         'peeringDB_info_scope', 'peeringDB_info_type','peeringDB_policy_general', 'is_personal_AS']
-
-
-FEATURE_NAMES_DICT = {
-    # Location-related info
-    'AS_rank_source': 'RIR region',
-    'AS_rank_iso': 'Location\n (country)',
-    'AS_rank_continent': 'Location\n (continent)',
-    # network size info
-    'AS_rank_numberAsns': 'Customer cone\n (#ASNs)', 
-    'AS_rank_numberPrefixes': 'Customer cone\n (#prefixes)',
-    'AS_rank_numberAddresses': 'Customer cone\n (#addresses)',
-    'AS_hegemony': 'AS hegemony',
-    # Topology info
-    'AS_rank_total': '#neighbors\n (total)',
-    'AS_rank_peer': '#neighbors\n (peers)', 
-    'AS_rank_customer': '#neighbors\n (customers)', 
-    'AS_rank_provider': '#neighbors\n (providers)',
-    # IXP related
-    'peeringDB_ix_count': '#IXPs\n (PeeringDB)', 
-    'peeringDB_fac_count': '#facilities\n (PeeringDB)', 
-    'peeringDB_policy_general': 'Peering policy\n (PeeringDB)',
-    # Network type
-    'peeringDB_info_type': 'Network type\n (PeeringDB)',
-    'peeringDB_info_ratio': 'Traffic ratio\n (PeeringDB)',
-    'peeringDB_info_traffic': 'Traffic volume\n (PeeringDB)', 
-    'peeringDB_info_scope': 'Scope\n (PeeringDB)',
-    'is_personal_AS': 'Personal ASN', 
-}
-
 
 ## plotting parameters
 FONTSIZE = 15
@@ -73,6 +31,7 @@ def generate_plot_json(feature, plot_type, dict_network_sets):
     '''
     data = dict()
     data['feature'] = feature
+    FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations() 
     data['xlabel'] = FEATURE_NAMES_DICT[feature]
     if plot_type == 'CDF':
         data['ylabel'] = 'CDF'
@@ -145,35 +104,30 @@ def plot_histogram(data, dict_network_sets, filename, show_plot=False):
     plt.close()
 
 
-if __name__ == '__main__':
-    ## load data, create dataframes
-    df = pd.read_csv(DATA_FILE, header=0, index_col=0)
-    df['is_personal_AS'].fillna(0, inplace=True)
+def plot_all(dict_network_sets, filename_format, save_json=False, show_plot=False):
+    '''
+    Plots the distibutions (CDF or Histogram) for all "CDF_features" and "Histogram_features" for the given data. 
+    The set of features to be plotted are defined in this file (it's not from the given data)
+    It saves the figures, and depending on the arguments it can show the figures and/or save the plot data in json.
 
-    df_atlas = df.loc[(~df['nb_atlas_probes_v4'].isna())|(~df['nb_atlas_probes_v4'].isna()),:]
-
-    ris_asns = pd.read_json(RIPE_RIS_DATA_FILE, orient='index')[0].unique().tolist()
-    ris_asns = [i for i in ris_asns if i in df.index]
-    df_ris = df.loc[ris_asns,:]
-
-    routeviews_asns = pd.read_json(ROUTEVIEWS_FNAME)[0].unique().tolist()
-    routeviews_asns = [i for i in routeviews_asns if i in df.index]
-    df_rv = df.loc[routeviews_asns,:]
-
-
-    ## generate json (and plots)
-    dict_network_sets = {'All ASes': df, 'RIPE Atlas': df_atlas, 'RIPE RIS': df_ris, 'RouteViews': df_rv}
+    :param  dict_network_sets:  (dict {str:pandas.Series}) keys are the name of the network set (e.g., 'All ASes' or 'RIPE Atlas') 
+                                and values the corresponding dataframe (i.e., with only the specific rows)
+    :param  filename_format:    (str) the filename template to be used for saving the figures (and json files)
+    :param  save_json:          (boolean) if true it saves the plot data in json
+    :param  show_plot:          (boolean) if true it also shows the plots when generating them
+    '''
     for feature in CDF_features:
         data = generate_plot_json(feature, 'CDF', dict_network_sets)
-        filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('CDF',feature)
-        if SAVE_TO_JSON:
+        filename_no_ext = filename_format.format('CDF',feature)
+        if save_json:
             with open(filename_no_ext+'.json', 'w') as f:
                 json.dump(data,f)
-        plot_cdf(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
+        plot_cdf(data, dict_network_sets, filename_no_ext, show_plot=show_plot)
+
     for feature in Histogram_features:
         data = generate_plot_json(feature, 'histogram', dict_network_sets)
-        filename_no_ext = SAVE_PLOTS_FNAME_FORMAT.format('Histogram',feature)
-        if SAVE_TO_JSON:
+        filename_no_ext = filename_format.format('Histogram',feature)
+        if save_json:
             with open(filename_no_ext+'.json', 'w') as f:
                 json.dump(data,f)
-        plot_histogram(data, dict_network_sets, filename_no_ext, show_plot=SHOW_PLOTS)
+        plot_histogram(data, dict_network_sets, filename_no_ext, show_plot=show_plot)
