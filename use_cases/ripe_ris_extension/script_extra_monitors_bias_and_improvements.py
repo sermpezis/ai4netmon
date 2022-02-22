@@ -6,8 +6,8 @@ from matplotlib import cm, colors
 
 AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/dev/data/aggregate_data/asn_aggregate_data_20211201.csv'
 BIAS_TOTAL_DF = './data/bias_total_df__no_stubs.csv'
-IMPROVEMENTS = '../../Datasets/improvements20210601.txt'
-ORDERED_LIST_BIASES = './data/sorted_asns_by_ascending_biases__no_stubs.json'
+IMPROVEMENTS = '../../data/misc/improvements20210601.txt'
+ORDERED_LIST_BIASES = './data/sorted_asns_by_ascending_biases.json'
 SAVE_PLOTS_FNAME_FORMAT = './figures/Fig_extra_monitors_{}_{}'
 SAVE_CSV_FNAME = './data/df_bias_vs_improvement.csv'
 PLOT_SCATTER_FNAME = './figures/Fig_scatter_bias_vs_improvement.png'
