@@ -2,6 +2,7 @@ import requests
 from datetime import date
 
 RIPE_STAT_RIS_PEERS_URL = 'https://stat.ripe.net/data/ris-peers/data.json?query_time={}'
+RIPE_ATLAS_API_URL_PROBES = 'https://atlas.ripe.net/api/v2/probes'
 
 def get_ripe_ris_data(query_time=None):
     '''
@@ -21,3 +22,17 @@ def get_ripe_ris_data(query_time=None):
             ris_peer_ip2rrc[peer['ip']]  = rrc
 
     return ris_peer_ip2asn, ris_peer_ip2rrc
+
+
+def get_ripe_atlas_probes_data():
+    '''
+    Gets data about the RIPE Atlas probes from the RIPE Atlas API
+    :return:              (list) of dicts, where each dict corresponds to the data of a probe
+    '''
+    data = requests.get(RIPE_ATLAS_API_URL_PROBES).json()
+    probes = data['results']
+    while data['next'] is not None:
+        url = data['next']
+        data = requests.get(url).json()
+        probes.extend(data['results'])
+    return probes
