@@ -13,6 +13,7 @@ From the analysis, we **_omitted the stub ASes_**
 - [Data](#data)  
 - [Results: CDFs of bias of RIPE RIS plus extra ASN](#results-cdfs-of-bias-of-ripe-ris-plus-extra-asn)  
 - [Results: CDFs of characteristics of top-K extra ASNs that reduce most the bias](#results-cdfs-of-characteristics-of-top-k-extra-asns-that-reduce-most-the-bias)
+- [Results: CDFs of characteristics of top-K extra ASNs that reduce most the bias (filtered by improvement)](#results-cdfs-of-characteristics-of-top-k-extra-asns-that-reduce-most-the-bias-filtered)
 
 
 ## Data 
@@ -42,3 +43,7 @@ We calculate the distribution of the resulting bias values for the set {RIPE RIS
 ## Results: CDFs of characteristics of top-K extra ASNs that reduce most the bias
 
 We calculate the detailed distributions per dimension for the top-K (K=50 or K=200) extra monitors that could be added to RIPE RIS to decrease the bias the most. See detailed plots [here](./Plots_charactertistics_extra_monitors.md)
+
+## Results: CDFs of characteristics of top-K extra ASNs that reduce most the bias filtered
+
+We calculate the detailed distributions per dimension for the top-K (K=50 or K=200) extra monitors that could be added to RIPE RIS to decrease the bias the most; _we consider only extra monitors that bring proximity improvement more than 1000_. See detailed plots [here](./Plots_characteristics_extra_monitors_filtered.md)
