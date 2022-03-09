@@ -141,7 +141,6 @@ def barh_plots_scope(df, s_cols, count_for_png, kind):
         total += df[s_cols[i]].count().sum()
 
     counts_d = []
-    counts_o = []
 
     other_answers = ["update", "bgp", "AS", "PTR", "Cybersecurity"]
     default_answers = ['Paths', 'Reachability', 'Latency', 'Throughput']
@@ -156,13 +155,20 @@ def barh_plots_scope(df, s_cols, count_for_png, kind):
         i += 1
 
     j = 0
-    other_sum = 0
+    other_sum_idxs = []
     while j < len(other_answers):
-
+        idx = []
         for col in s_cols:
-            other_sum += df[col].str.count(other_answers[i]).sum()
-
+            idx.append(df.index[df[col].str.contains(other_answers[j], na=False)].tolist())
+        other_sum_idxs.append(idx)
         j += 1
+
+
+    flat_other_sum = [item for sublist in other_sum_idxs for item in sublist]
+    flat_other_sum_idxs = [item for sublist in flat_other_sum for item in sublist]
+
+    flat_other_sum_idxs = list(set(flat_other_sum_idxs))
+    other_sum = len(flat_other_sum_idxs)
 
     data = []
 
@@ -200,9 +206,9 @@ def barh_plots_scope(df, s_cols, count_for_png, kind):
 def barh_plots_inf(df, inf_cols, count_for_png, kind):
 
     total = 0
-    for i in range(len(inf_cols)):
-        total += df[inf_cols[i]].count().sum()
-
+    for ix in range(len(inf_cols)):
+        total += df[inf_cols[ix]].count().sum()
+    print(total)
     counts_d = []
 
     other_answers = ["rpki", "NLRING", "dig", "MTR.sh", "bgp.tools", "whois", "ITDK", "Speedtest.net", "isolario",
@@ -212,21 +218,29 @@ def barh_plots_inf(df, inf_cols, count_for_png, kind):
 
     i = 0
     while i < len(default_answers):
-        sum = 0
+        summ = 0
         for col in inf_cols:
-            sum += df[col].str.count(default_answers[i]).sum()
 
-        counts_d.append(sum)
+            summ += df[col].str.count(default_answers[i]).sum()
+
+        counts_d.append(summ)
         i += 1
 
     j = 0
-
+    other_sum_idxs = []
     while j < len(other_answers):
-
+        idx = []
         for col in inf_cols:
-            other_sum += df[col].str.count(other_answers[i]).sum()
-
+            idx.append(df.index[df[col].str.contains(other_answers[j], na=False)].tolist())
+        other_sum_idxs.append(idx)
         j += 1
+
+    # print(other_sum_idxs)
+    flat_other_sum = [item for sublist in other_sum_idxs for item in sublist]
+    flat_other_sum_idxs = [item for sublist in flat_other_sum for item in sublist]
+
+    flat_other_sum_idxs = list(set(flat_other_sum_idxs))
+    other_sum = len(flat_other_sum_idxs)
 
     data = []
 
@@ -267,7 +281,6 @@ def barh_plots_loc(df, loc_cols, count_for_png, kind):
         total += df[loc_cols[i]].count().sum()
 
     counts_d = []
-    counts_o = []
 
     # just give keywords of the answers
     other_answers = ["Depend", "between", "Hyper-local", "Company", "physical"]
@@ -442,7 +455,6 @@ def barh_plots_ifyesbias(df, bias2_cols, count_for_png, kind):
         total += df[bias2_cols[i]].count().sum()
 
     counts_d = []
-    counts_o = []
 
     # just give keywords of the answers
     other_answers = ["partial", "imho", "nobody", "representative", "ourselves", "stub.", "Scarcity", "IPv6",
@@ -459,16 +471,22 @@ def barh_plots_ifyesbias(df, bias2_cols, count_for_png, kind):
         i += 1
 
     j = 0
-    other_sum = 0
+    other_sum_idxs = []
     while j < len(other_answers):
-
+        idx = []
         for col in bias2_cols:
-            other_sum += df[col].str.count(other_answers[j]).sum()
-
+            idx.append(df.index[df[col].str.contains(other_answers[j], na=False)].tolist())
+        other_sum_idxs.append(idx)
         j += 1
 
-    data = []
+    # print(other_sum_idxs)
+    flat_other_sum = [item for sublist in other_sum_idxs for item in sublist]
+    flat_other_sum_idxs = [item for sublist in flat_other_sum for item in sublist]
 
+    flat_other_sum_idxs = list(set(flat_other_sum_idxs))
+    other_sum = len(flat_other_sum_idxs)
+
+    data = []
     for i in range(len(counts_d)):
         data.append((default_answers[i], counts_d[i]))
 
@@ -482,7 +500,7 @@ def barh_plots_ifyesbias(df, bias2_cols, count_for_png, kind):
     plt.figure()
     plt.rcParams.update({'font.size': FONTSIZE})
 
-    ax = df_bias.plot(kind='barh', title=loc_cols[0], figsize=FIGSIZE, color='k')
+    ax = df_bias.plot(kind='barh', title=bias2_cols[0], figsize=FIGSIZE, color='k')
 
     locator = matplotlib.ticker.MultipleLocator(LOCATOR)
     ax.xaxis.set_major_locator(locator)
@@ -649,6 +667,8 @@ pd.set_option('display.width', 1000)
 df_1 = df.loc[df['What is your main professional role?'] == "Network operator / engineer"]
 # researchers
 df_2 = df.loc[df['What is your main professional role?'] == "Researcher"]
+# display(df_2)
+
 # measurements / control
 df_c1 = df.loc[df["Measurement types"].str.contains("Control", na=False)]
 df_c2 = df.loc[df["Measurement types.1"].str.contains("Control", na=False)]
@@ -683,7 +703,7 @@ df_4 = df.iloc[f_idx_d]
 # display(df_4)
 
 count_for_png = barh_plots(df_4, basic_cols, count_for_png, kind=3)
-# count_for_png = barh_plots_measurement(df_2, measurement_cols, count_for_png, kind=1)
+count_for_png = barh_plots_measurement(df_4, measurement_cols, count_for_png, kind=3)
 count_for_png = barh_plots_scope(df_4, scope_cols, count_for_png, kind=3)
 count_for_png = barh_plots_inf(df_4, inf_cols, count_for_png, kind=3)
 count_for_png = barh_plots_loc(df_4, loc_cols, count_for_png, kind=3)
