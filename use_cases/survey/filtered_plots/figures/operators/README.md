@@ -3,7 +3,7 @@ Below we present the plots of the filtered survey answers, only for profession: 
 **First basic questions**
 
 Organization characterization | Continent of operation | Knowledge/Experience | &nbsp;
-:---:|:---:|:---:|:---:|:---:
+:---:|:---:|:---:|:---:
 ![](./fig_survey_only_operators_fig1.png?raw=true)|![](./fig_survey_only_operators_fig2.png?raw=true)|![](./fig_survey_only_operators_fig3.png?raw=true)|&nbsp;
 
 **Use cases questions**
