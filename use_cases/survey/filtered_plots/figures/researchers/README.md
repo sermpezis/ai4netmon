@@ -1,4 +1,4 @@
-Below we present the plots of the filtered survey answers, only for profession: reaceracher.
+Below we present the plots of the filtered survey answers, only for profession: researcher.
 
 **First basic questions**
 
