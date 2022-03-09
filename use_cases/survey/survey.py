@@ -7,7 +7,7 @@ from matplotlib.ticker import MaxNLocator
 GRID = True
 LOCATOR = 4
 FONTSIZE = 15
-FIGSIZE = (20, 15)
+FIGSIZE = (15, 15)
 COLOR = "k"
 PLOT_FNAME = "fig_survey_fig{}"
 count_for_png = 0  # return it every time we call a plot function
@@ -55,12 +55,10 @@ loc_cols = [col for col in df.columns if 'Location' in col]
 
 
 def barh_plots(df, basic_cols, count_for_png):
-    # set the index that divides the basic columns of the use-cases-questions columns
-    total = df.shape[0]
 
     # plot basic columns
     for i in range(len(basic_cols)):
-
+        total = df[basic_cols[i]].count().sum()
         plt.figure()
         plt.grid(GRID)
         plt.rcParams.update({'font.size': FONTSIZE})
@@ -85,7 +83,10 @@ def barh_plots(df, basic_cols, count_for_png):
 
 
 def barh_plots_measurement(df, m_cols, count_for_png):
-    total = df.shape[0] * 3
+
+    total =0
+    for i in range(len(m_cols)):
+        total += df[m_cols[i]].count().sum()
 
     counts = []
 
@@ -130,7 +131,9 @@ def barh_plots_measurement(df, m_cols, count_for_png):
 
 
 def barh_plots_scope(df, s_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(s_cols)):
+        total += df[s_cols[i]].count().sum()
 
     counts_d = []
     counts_o = []
@@ -190,7 +193,9 @@ def barh_plots_scope(df, s_cols, count_for_png):
 
 
 def barh_plots_inf(df, inf_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(inf_cols)):
+        total += df[inf_cols[i]].count().sum()
 
     counts_d = []
 
@@ -251,7 +256,9 @@ def barh_plots_inf(df, inf_cols, count_for_png):
 
 
 def barh_plots_loc(df, loc_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(loc_cols)):
+        total += df[loc_cols[i]].count().sum()
 
     counts_d = []
     counts_o = []
@@ -318,6 +325,7 @@ def barh_plots_loc(df, loc_cols, count_for_png):
 
 
 def hbar_networks(df, columns_of_networks, count_for_png):
+
     for network in columns_of_networks:
         df[network] = df[network].astype(str)
 
@@ -346,9 +354,10 @@ def hbar_networks(df, columns_of_networks, count_for_png):
     all_networks = []
     while j < len(networks):
         i = 0
-        sum1 = 0
-        sum2 = 0
+
         while i < len(networks[j]):
+            sum1 = 0
+            sum2 = 0
             for col in networks[j]:
                 sum1 += df[col].str.count("From").sum()
                 sum2 += df[col].str.count("To").sum()
@@ -376,7 +385,9 @@ def hbar_networks(df, columns_of_networks, count_for_png):
 
 
 def barh_plots_bias(df, bias_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(bias_cols)):
+        total += df[bias_cols[i]].count().sum()
 
     counts = []
 
@@ -420,7 +431,9 @@ def barh_plots_bias(df, bias_cols, count_for_png):
 
 
 def barh_plots_ifyesbias(df, bias2_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(bias2_cols)):
+        total += df[bias2_cols[i]].count().sum()
 
     counts_d = []
     counts_o = []
@@ -483,7 +496,9 @@ def barh_plots_ifyesbias(df, bias2_cols, count_for_png):
 
 
 def barh_plots_num(df, numerical_cols, count_for_png):
-    total = df.shape[0] * 3
+    total = 0
+    for i in range(len(numerical_cols)):
+        total += df[numerical_cols[i]].count().sum()
 
     counts = []
 
@@ -561,14 +576,10 @@ def hbar_trigger(df, columns_of_trigger, count_for_png):
 
 def barh_plots2(df, basic_cols2, count_for_png):
 
-    # set the index that divides the basic columns of the use-cases-questions columns
-    total = df.shape[0]
-
     # plot basic columns
     for i in range(len(basic_cols2)):
 
-        percent = df[basic_cols2[i]].str.split(r',\s*(?=[^)]*(?:\(|$))',
-                                               expand=True).stack().value_counts() / total * 100
+        total = df[basic_cols2[i]].count().sum()
 
         plt.figure()
         plt.grid(GRID)
@@ -588,7 +599,7 @@ def barh_plots2(df, basic_cols2, count_for_png):
         ax.xaxis.set_major_locator(locator)
         plt.savefig(PLOT_FNAME.format(count_for_png), dpi=300, bbox_inches="tight")
         count_for_png += 1
-        return count_for_png
+    return count_for_png
 
 
 def hbar_importance(df, columns_of_importance, count_for_png):
