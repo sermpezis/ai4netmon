@@ -8,7 +8,18 @@ LOCATOR = 4
 FONTSIZE = 15
 FIGSIZE = (15, 15)
 COLOR = "k"
-plot_kwargs = {'dpi':300, 'bbox_inches':'tight'}
+plot_kwargs = {'dpi': 300, 'bbox_inches': 'tight'}
+
+PLOT_KIND = [None, "operators", "researchers", "CP", "DP"]
+# choose kind to get plots. None is for regular plots, and the other strings stand
+# for the filtering is going to be made on plots
+kind = PLOT_KIND[0]
+
+if kind is None:
+    PLOT_FNAME = "fig_survey_fig{}"
+else:
+    PLOT_FNAME = "fig_survey_only_{}_fig{}"
+
 
 def add_percentages_to_plot(ax, total):
     for p in ax.patches:
@@ -18,8 +29,7 @@ def add_percentages_to_plot(ax, total):
         ax.annotate(percentage, (x, y))
 
 
-def barh_plots(df, basic_cols, count_for_png, save_filename):
-
+def barh_plots(df, basic_cols, count_for_png, save_filename, kind):
     # plot basic columns
     for i in range(len(basic_cols)):
         total = df[basic_cols[i]].count().sum()
@@ -36,14 +46,17 @@ def barh_plots(df, basic_cols, count_for_png, save_filename):
 
         locator = matplotlib.ticker.MultipleLocator(LOCATOR)
         ax.xaxis.set_major_locator(locator)
-
-        plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+        if kind is None:
+            plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+        else:
+            plt.savefig(save_filename.format(kind, count_for_png), **plot_kwargs)
         plt.close()
         count_for_png += 1
     return count_for_png
 
-def barh_plots_simple_answers_use_cases(df, cols, count_for_png, save_filename, default_answers, other_answers, true_answers, title):
 
+def barh_plots_simple_answers_use_cases(df, cols, count_for_png, save_filename, default_answers, other_answers,
+                                        true_answers, title, kind):
     total = 0
     for i in range(len(cols)):
         total += df[cols[i]].count().sum()
@@ -56,26 +69,25 @@ def barh_plots_simple_answers_use_cases(df, cols, count_for_png, save_filename, 
         for col in cols:
             df[col] = df[col].astype(str)
             sum += df[col].str.count(default_answers[i]).sum()
-          
+
         counts.append(sum)
         i += 1
     data = []
 
     for i in range(len(counts)):
-      data.append((default_answers[i], counts[i]))
+        data.append((default_answers[i], counts[i]))
 
     if other_answers != None:
-      j = 0
-      other_sum = 0
-      while j < len(other_answers):
+        j = 0
+        other_sum = 0
+        while j < len(other_answers):
 
-          for col in cols:
-              other_sum += df[col].str.count(other_answers[j]).sum()
+            for col in cols:
+                other_sum += df[col].str.count(other_answers[j]).sum()
 
-          j += 1
+            j += 1
 
-      data.append(("Other", other_sum))
-
+        data.append(("Other", other_sum))
 
     df_loc = pd.DataFrame(data, columns=["Answers", "Question"])
     df_loc.index = true_answers
@@ -90,14 +102,18 @@ def barh_plots_simple_answers_use_cases(df, cols, count_for_png, save_filename, 
 
     add_percentages_to_plot(ax, total)
 
-    plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    if kind is None:
+        plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    else:
+        plt.savefig(save_filename.format(kind, count_for_png), **plot_kwargs)
     plt.close()
     count_for_png += 1
 
     return count_for_png
 
-def barh_plots_multiple_answers_use_cases(df, cols, count_for_png, save_filename, default_answers, other_answers, true_answers, title):
 
+def barh_plots_multiple_answers_use_cases(df, cols, count_for_png, save_filename, default_answers, other_answers,
+                                          true_answers, title, kind):
     total = 0
     for i in range(len(cols)):
         total += df[cols[i]].count().sum()
@@ -149,16 +165,17 @@ def barh_plots_multiple_answers_use_cases(df, cols, count_for_png, save_filename
     ax.xaxis.set_major_locator(locator)
 
     add_percentages_to_plot(ax, total)
-    plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    if kind is None:
+        plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    else:
+        plt.savefig(save_filename.format(kind, count_for_png), **plot_kwargs)
     plt.close()
     count_for_png += 1
 
-    
     return count_for_png
 
 
-def hbar_networks(df, columns_of_networks, count_for_png, save_filename):
-
+def hbar_networks(df, columns_of_networks, count_for_png, save_filename, kind):
     for network in columns_of_networks:
         df[network] = df[network].astype(str)
 
@@ -212,23 +229,25 @@ def hbar_networks(df, columns_of_networks, count_for_png, save_filename):
     locator = matplotlib.ticker.MultipleLocator(10)
     ax.xaxis.set_major_locator(locator)
     ax.set(ylabel=None)
-    plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    if kind is None:
+        plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    else:
+        plt.savefig(save_filename.format(kind, count_for_png), **plot_kwargs)
     plt.close()
     count_for_png += 1
     return count_for_png
 
-def hbar_multibar(df, cols, count_for_png, save_filename, responses, title):
+
+def hbar_multibar(df, cols, count_for_png, save_filename, responses, title, kind):
     values = []
     for c in cols:
         values.append([df[c].astype(str).str.count(r).sum() for r in responses])
 
     data = []
     for i in range(len(values)):
-        data.append([cols[i]]+[values[i][j] for j in range(len(responses))])
+        data.append([cols[i]] + [values[i][j] for j in range(len(responses))])
 
-    print(data)
-
-    df_plot = pd.DataFrame(data, columns=['Question']+responses)
+    df_plot = pd.DataFrame(data, columns=['Question'] + responses)
     df_plot = df_plot.set_index('Question')
 
     df_plot.index = df_plot.index.str.split('\[').str[-1].str.strip()
@@ -242,7 +261,10 @@ def hbar_multibar(df, cols, count_for_png, save_filename, responses, title):
 
     locator = matplotlib.ticker.MultipleLocator(LOCATOR)
     ax.xaxis.set_major_locator(locator)
-    plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    if kind is None:
+        plt.savefig(save_filename.format(count_for_png), **plot_kwargs)
+    else:
+        plt.savefig(save_filename.format(kind, count_for_png), **plot_kwargs)
     plt.close()
-    count_for_png+=1
+    count_for_png += 1
     return count_for_png
