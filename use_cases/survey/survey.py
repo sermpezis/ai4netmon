@@ -53,7 +53,7 @@ other_answers = None
 default_answers = ["Control", "Data", "know"]
 true_answers = ["Control-plane (BGP tables and messages/updates )", "Data-plane (ping, traceroute)", "I don't know"]
 cols = measurement_cols
-count_for_png = barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # Scope
 title = 'Scope'
@@ -62,7 +62,7 @@ default_answers = ['Paths', 'Reachability', 'Latency', 'Throughput']
 true_answers = ['Paths, routing policies, topology (e.g., BGP messages, traceroutes)', 'Reachability', 'Latency',
                       'Throughput', 'Other']
 cols = scope_cols
-count_for_png = barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # Infrastructure
 title = 'inf'
@@ -72,7 +72,7 @@ default_answers = ["RIS", "Atlas", "RIPEstat", "bgp.he.net", "RouteViews", "CAID
 true_answers = ["RIPE RIS", "RIPE Atlas", "RIPEstat", "bgp.he.net", "RouteViews", "CAIDA’s BGPStream", "Ark",
                     "M-lab", "Custom of proprietary measurement platform/service", "Other"]
 cols = inf_cols
-count_for_png = barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # Location
 title = 'loc'
@@ -81,7 +81,7 @@ default_answers = ["City-level", "Country-level", "Continent-level", "Global-lev
 true_answers = ["City-level", "Country-level", "Continent-level", "Global-level",
                                               "I don't know", "Other"]
 cols = loc_cols
-count_for_png = barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # Networks
 count_for_png = spm.hbar_networks(df, columns_of_networks, count_for_png, PLOT_FNAME)
@@ -92,7 +92,7 @@ other_answers = None
 default_answers = ["know", "No", "Yes"]
 true_answers = ["I don't know", "No/Probably no", "Yes/Probably yes"]
 cols = bias_cols
-count_for_png = barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # if yes for bias
 title = '[Optional] If yes, the bias is with respect to...?'
@@ -102,7 +102,7 @@ default_answers = ["Geography", "types"]
 true_answers = ["Geography / location (e.g., geographic locations)",
                      "Network types (e.g., eyeball, transit, CDNs)", "Other"]
 cols = bias2_cols
-count_for_png = barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # indication of bias
 title = 'Is a good indication of bias helpful?'
@@ -110,7 +110,7 @@ other_answers = None
 default_answers = ["1.0", "2.0", "3.0", "4.0", "5.0"]
 true_answers = default_answers
 cols = numerical_cols
-count_for_png = barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
 
 # trigger
 responses = ["Would it trigger use of measurement data or infrastructure?", "Are you concerned about bias in the data?"]
