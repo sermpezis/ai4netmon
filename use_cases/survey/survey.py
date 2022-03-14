@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker
 from matplotlib.ticker import MaxNLocator
 import survey_plot_methods as spm
-
-# # set parameters (global)
-PLOT_FNAME = "fig_survey_fig{}"
 count_for_png = 0  # return it every time we call a plot function
 
 df = pd.read_csv('SurveyAnswers.csv')
@@ -45,7 +42,7 @@ loc_cols = [col for col in df.columns if 'Location' in col]
 # count_for_png = spm.hbar_importance(df, columns_of_importance, count_for_png, PLOT_FNAME)
 
 # basic cols
-count_for_png = spm.barh_plots(df, basic_cols, count_for_png, PLOT_FNAME)
+count_for_png = spm.barh_plots(df, basic_cols, count_for_png, spm.PLOT_FNAME, spm.kind)
 
 # Measurment
 title = 'Measurement types'
@@ -53,7 +50,7 @@ other_answers = None
 default_answers = ["Control", "Data", "know"]
 true_answers = ["Control-plane (BGP tables and messages/updates )", "Data-plane (ping, traceroute)", "I don't know"]
 cols = measurement_cols
-count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
 
 # Scope
 title = 'Scope'
@@ -62,29 +59,35 @@ default_answers = ['Paths', 'Reachability', 'Latency', 'Throughput']
 true_answers = ['Paths, routing policies, topology (e.g., BGP messages, traceroutes)', 'Reachability', 'Latency',
                       'Throughput', 'Other']
 cols = scope_cols
-count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
+print(
+        "Other answers for Scope are: AS relationships, Uptime, bgp chum update behavior, Most often it's just a question of whether a given PTR naming is end user and what sort (dynamic residential, static business, shared or dedicated webhosting, etc.)")
 
 # Infrastructure
-title = 'inf'
+title = 'Infrastructure'
 other_answers = ["rpki", "NLRING", "dig", "MTR.sh", "bgp.tools", "whois", "ITDK", "Speedtest.net", "isolario",
                      "PTR", "Eyes", "looking-glass", "Radar", "PeeringDB", "Euro-IX", "PHC", "scans.io"]
 default_answers = ["RIS", "Atlas", "RIPEstat", "bgp.he.net", "RouteViews", "CAIDA’s", "Ark", "M-lab", "Custom"]
 true_answers = ["RIPE RIS", "RIPE Atlas", "RIPEstat", "bgp.he.net", "RouteViews", "CAIDA’s BGPStream", "Ark",
                     "M-lab", "Custom of proprietary measurement platform/service", "Other"]
 cols = inf_cols
-count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
+print(
+        "Other answers for Infrastructure / platforms / services are: rpki-clients.org and other rpki ressources, NLRING, dig, MTR.sh RIPE database, bgp.tools, whois, ITDK, Speedtest.net (ookla), isolario, We constantly run zdns PTR scans on the entirety of IPv4 via AWS, THousand Eyes, NUmerous looking-glass sites from various networks, Radar.qraot.net, PeeringDB, Euro-IX, PCH, scans.io")
 
 # Location
-title = 'loc'
+title = 'Location'
 other_answers = ["Depend", "between", "Hyper-local", "Company", "physical"]
 default_answers = ["City-level", "Country-level", "Continent-level", "Global-level", "know"]
 true_answers = ["City-level", "Country-level", "Continent-level", "Global-level",
                                               "I don't know", "Other"]
 cols = loc_cols
-count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
+print(
+        "Other answers for location are: Local, Company, I don't care for physical locations, Global and hyper-local(eg a specific point-to-to point link) but almost nothing in between', I dont care about physical locations, Depend on situation")
 
 # Networks
-count_for_png = spm.hbar_networks(df, columns_of_networks, count_for_png, PLOT_FNAME)
+count_for_png = spm.hbar_networks(df, columns_of_networks, count_for_png, spm.PLOT_FNAME, spm.kind)
 
 # bias
 title = 'Is there any kind of bias in the measurement data collected for this use case?'
@@ -92,7 +95,7 @@ other_answers = None
 default_answers = ["know", "No", "Yes"]
 true_answers = ["I don't know", "No/Probably no", "Yes/Probably yes"]
 cols = bias_cols
-count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
 
 # if yes for bias
 title = '[Optional] If yes, the bias is with respect to...?'
@@ -102,7 +105,9 @@ default_answers = ["Geography", "types"]
 true_answers = ["Geography / location (e.g., geographic locations)",
                      "Network types (e.g., eyeball, transit, CDNs)", "Other"]
 cols = bias2_cols
-count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_multiple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
+print(
+        "Other answers for question: If yes, the bias is with respect to...? are: Atlas is opt in you don't get a view from all networks, Acess network type ie wireless networks are generally missing, filtering from the vantage point, IPv6 HE tunnels for some RIPE Atlas probes. Would like to exclude them, Scarcity, we're stub. so covered, we often measure from ourselves, but select a representative subset depending on their needs, imho nobody should ever us all vantage points at the same time, partial coverage")
 
 # indication of bias
 title = 'Is a good indication of bias helpful?'
@@ -110,22 +115,22 @@ other_answers = None
 default_answers = ["1.0", "2.0", "3.0", "4.0", "5.0"]
 true_answers = default_answers
 cols = numerical_cols
-count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, PLOT_FNAME, default_answers, other_answers, true_answers, title)
+count_for_png = spm.barh_plots_simple_answers_use_cases(df, cols, count_for_png, spm.PLOT_FNAME, default_answers, other_answers, true_answers, title, spm.kind)
 
 # trigger
 responses = ["Would it trigger use of measurement data or infrastructure?", "Are you concerned about bias in the data?"]
 title = 'Which of the following types of events would trigger you to use measurement/monitoring data '
 cols = columns_of_trigger
-count_for_png = spm.hbar_multibar(df, cols, count_for_png, PLOT_FNAME, responses, title)
+count_for_png = spm.hbar_multibar(df, cols, count_for_png, spm.PLOT_FNAME, responses, title, spm.kind)
 
 # rest basic cols
-count_for_png = spm.barh_plots(df, basic_cols2, count_for_png, PLOT_FNAME)
+count_for_png = spm.barh_plots(df, basic_cols2, count_for_png, spm.PLOT_FNAME, spm.kind)
 
 # importance
 responses = ["1.0", "2.0", "3.0", "4.0", "5.0"]
 title = 'How important would be the following advances in Internet monitoring/measurements for you?'
 cols = columns_of_importance
-count_for_png = spm.hbar_multibar(df, cols, count_for_png, PLOT_FNAME, responses, title)
+count_for_png = spm.hbar_multibar(df, cols, count_for_png, spm.PLOT_FNAME, responses, title, spm.kind)
 
 
 
