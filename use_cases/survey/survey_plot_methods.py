@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker
 from matplotlib.ticker import MaxNLocator
 
+
 GRID = True
 LOCATOR = 4
 FONTSIZE = 15
@@ -13,7 +14,7 @@ plot_kwargs = {'dpi': 300, 'bbox_inches': 'tight'}
 PLOT_KIND = [None, "operators", "researchers", "CP", "DP"]
 # choose kind to get plots. None is for regular plots, and the other strings stand
 # for the filtering is going to be made on plots
-kind = PLOT_KIND[0]
+kind = PLOT_KIND[2]
 
 if kind is None:
     PLOT_FNAME = "fig_survey_fig{}"
@@ -34,6 +35,7 @@ def barh_plots(df, basic_cols, count_for_png, save_filename, kind):
     for i in range(len(basic_cols)):
         total = df[basic_cols[i]].count().sum()
         plt.figure()
+
         plt.grid(GRID)
         plt.rcParams.update({'font.size': FONTSIZE})
 
@@ -41,7 +43,7 @@ def barh_plots(df, basic_cols, count_for_png, save_filename, kind):
         ax = df[basic_cols[i]].str.split(r',\s*(?=[^)]*(?:\(|$))', expand=True).stack().value_counts().plot(kind='barh',
                                                                                                             figsize=FIGSIZE,
                                                                                                             color='k')
-
+        ax.set_xlim([0, total])
         add_percentages_to_plot(ax, total)
 
         locator = matplotlib.ticker.MultipleLocator(LOCATOR)
@@ -93,10 +95,11 @@ def barh_plots_simple_answers_use_cases(df, cols, count_for_png, save_filename, 
     df_loc.index = true_answers
 
     plt.figure()
+
     plt.rcParams.update({'font.size': FONTSIZE})
 
     ax = df_loc.plot(kind='barh', title=title, figsize=FIGSIZE, color='k')
-
+    ax.set_xlim([0, total])
     locator = matplotlib.ticker.MultipleLocator(LOCATOR)
     ax.xaxis.set_major_locator(locator)
 
@@ -157,9 +160,11 @@ def barh_plots_multiple_answers_use_cases(df, cols, count_for_png, save_filename
     df_bias.index = true_answers
 
     plt.figure()
+
     plt.rcParams.update({'font.size': FONTSIZE})
 
     ax = df_bias.plot(kind='barh', title=title, figsize=FIGSIZE, color='k')
+    ax.set_xlim([0, total])
 
     locator = matplotlib.ticker.MultipleLocator(LOCATOR)
     ax.xaxis.set_major_locator(locator)
@@ -176,6 +181,11 @@ def barh_plots_multiple_answers_use_cases(df, cols, count_for_png, save_filename
 
 
 def hbar_networks(df, columns_of_networks, count_for_png, save_filename, kind):
+
+    total = 0
+    for i in range(len(columns_of_networks)):
+        total += df[columns_of_networks[i]].count().sum()
+
     for network in columns_of_networks:
         df[network] = df[network].astype(str)
 
@@ -225,7 +235,7 @@ def hbar_networks(df, columns_of_networks, count_for_png, save_filename, kind):
     plt.rcParams.update({'font.size': FONTSIZE})
 
     ax = df_networks.plot(kind='barh', figsize=FIGSIZE, title='Network Type')
-
+    # ax.set_xlim([0, total])
     locator = matplotlib.ticker.MultipleLocator(10)
     ax.xaxis.set_major_locator(locator)
     ax.set(ylabel=None)
@@ -239,6 +249,11 @@ def hbar_networks(df, columns_of_networks, count_for_png, save_filename, kind):
 
 
 def hbar_multibar(df, cols, count_for_png, save_filename, responses, title, kind):
+
+    total = 0
+    for i in range(len(cols)):
+        total += df[cols[i]].count().sum()
+
     values = []
     for c in cols:
         values.append([df[c].astype(str).str.count(r).sum() for r in responses])
@@ -258,7 +273,7 @@ def hbar_multibar(df, cols, count_for_png, save_filename, responses, title, kind
 
     ax = df_plot.plot(kind='barh', figsize=FIGSIZE, title=title)
     ax.set(ylabel=None)
-
+    # ax.set_xlim([0, total])
     locator = matplotlib.ticker.MultipleLocator(LOCATOR)
     ax.xaxis.set_major_locator(locator)
     if kind is None:
@@ -268,3 +283,4 @@ def hbar_multibar(df, cols, count_for_png, save_filename, responses, title, kind
     plt.close()
     count_for_png += 1
     return count_for_png
+
