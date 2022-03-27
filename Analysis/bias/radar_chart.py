@@ -96,7 +96,7 @@ def radar_factory(num_vars, frame='circle'):
 
 
 
-def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.2, 0.4, 0.6, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small', varlabels=None):
+def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.2, 0.4, 0.6, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small', varlabels=None, legend_loc=(0.9, .95)):
     '''
     Generates a radar plot from the given dataframe (df) with axes the rows of the df, surfaces the columns of the df
     and the values along each axis correspond to the values of the df. 
@@ -132,7 +132,7 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
 
     for d, color in zip(case_data, colors):
         ax.plot(theta, d, color=color)
-    legend = ax.legend(labels, loc=(0.9, .95), labelspacing=0.1, fontsize=fontsize)
+    legend = ax.legend(labels, loc=legend_loc, labelspacing=0.1, fontsize=fontsize)
 
     for d, color in zip(case_data, colors):
         ax.fill(theta, d, facecolor=color, alpha=alpha)
