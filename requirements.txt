@@ -1,3 +1,5 @@
+abondance==0.1.2
+arrow==1.2.2
 attrs==21.4.0
 certifi==2021.10.8
 charset-normalizer==2.0.9
@@ -28,6 +30,7 @@ python-dateutil==2.8.2
 pytz==2021.3
 repoze.lru==0.7
 requests==2.26.0
+requests-futures==1.0.0
 scikit-learn==0.23.2
 scipy==1.7.3
 six==1.16.0
@@ -36,4 +39,6 @@ statsmodels==0.13.1
 threadpoolctl==3.0.0
 toml==0.10.2
 tomli==2.0.0
+tqdm==4.63.1
+ujson==5.1.0
 urllib3==1.26.7
