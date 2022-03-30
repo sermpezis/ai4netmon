@@ -3,6 +3,7 @@ from datetime import date, datetime
 from ihr.hegemony import Hegemony
 import pandas as pd
 import json
+import csv
 from tqdm import tqdm
 from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
@@ -116,3 +117,21 @@ def collect_AS_hegemony_dataset(save_filename, col_datetime=None):
     write_df = pd.DataFrame.from_dict(HEGE_DICT, orient='index')
     write_df.index.name = 'asn'
     write_df[['hege']].to_csv(save_filename.replace('.json','.csv'))
+
+
+
+def collect_bgp_tools_dataset(save_filename):
+    '''
+    Collects data from the bgp.tool website and saves them in a txt
+    '''
+    BGP_TOOLS_URL = 'https://bgp.tools/tags/perso.txt'
+
+    #fake an agent to retrieve data from bgp.tools
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    
+    r = requests.get(url, headers=headers)
+    list_of_perso_ASNs = [[i] for i in response.text.split('\n') if i.startswith('AS')]
+
+    with open(save_filename, 'w') as f:
+        w = csv.writer(f)
+        w.writerows(list_of_perso_ASNs)
