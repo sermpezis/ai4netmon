@@ -1,5 +1,11 @@
 import requests
-from datetime import date
+from datetime import date, datetime
+from ihr.hegemony import Hegemony
+import pandas as pd
+import json
+from tqdm import tqdm
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
+
 
 RIPE_STAT_RIS_PEERS_URL = 'https://stat.ripe.net/data/ris-peers/data.json?query_time={}'
 RIPE_ATLAS_API_URL_PROBES = 'https://atlas.ripe.net/api/v2/probes'
@@ -36,3 +42,77 @@ def get_ripe_atlas_probes_data():
         data = requests.get(url).json()
         probes.extend(data['results'])
     return probes
+
+
+
+def get_AS_hegemony_scores_dict(list_of_asns, col_datetime):
+    '''
+    Request the AS hegemony API for the given list of ASNs for the given datetime
+    :param      list_of_asns:   (list) list of ASNs (i.e., list of int) to be requested
+    :parama     col_datetime:   (str) datetime for the collection of the data; format must be "YYYY-MM-DD HH:MM" (e.g., "2018-09-15 00:00");
+                                The default value gets the current day ("today") at the time 00:00
+    :return:                (dict) dict of dicts; with keys the ASNs and values the hegemony values 
+                            for IPv4 (key: 'hege4'), IPv6 (key: 'hege6') and total (key: 'hege');
+                            e.g., for AS123 and AS456 {123:{'hege4':10, 'hege6':1.5, 'hege':11.5}, 456:{'hege4':...}, ... }
+    '''
+    hege = Hegemony(asns=list_of_asns, start=col_datetime, end=col_datetime)
+
+    HEGE_DICT = dict()
+    for r in hege.get_results():
+        asn = r[0].get('asn')
+        hege4 = sum([rr['hege'] for rr in r if rr.get('af')==4])
+        hege6 = sum([rr['hege'] for rr in r if rr.get('af')==6])
+        HEGE_DICT[asn] = {'hege4':hege4, 'hege6':hege6, 'hege':hege4+hege6}
+    return HEGE_DICT
+
+
+
+def collect_AS_hegemony_dataset(save_filename, col_datetime=None):
+    '''
+    Loads the list of ASNs from the aggregated dataframe, request the hegemony scores from the AS hegemony API (in batches), 
+    and saves the results in a file (json) and only the aggregate hegemony score to another file (csv).
+    :param  col_datetime:   (str) datetime for the collection of the data; format must be "YYYY-MM-DD HH:MM" (e.g., "2018-09-15 00:00");
+                            The default value gets the current day ("today") at the time 00:00
+    :return:                (dict) dict of dicst; with keys the ASNs and values the hegemony values 
+                            for IPv4 (key: 'hege4'), IPv6 (key: 'hege6') and total (key: 'hege');
+                            e.g., for AS123 and AS456 {123:{'hege4':10, 'hege6':1.5, 'hege':11.5}, 456:{'hege4':...}, ... }
+
+    '''
+    # set datetime of collection to request from AS hegemony API
+    if col_datetime is None:
+        col_datetime = str(datetime.today().date())+" 00:00"
+
+    # load list of ASNs
+    df = dat.load_aggregated_dataframe()
+    list_of_asns = [int(i) for i in df.index]
+
+    # set window size to request from AS_hege API 
+    window_size = 1000
+    nb_asns = len(list_of_asns)
+    nb_API_requests = int(nb_asns/window_size)
+
+    TEMP_FILE_SAVENAME_FORMAT = 'AS_hege_TEMP{}.json'
+    
+    # make sequential requests to the API and save results (dicts) in temporary files
+    HEGE_DICT = dict()
+    for i in tqdm(range(nb_API_requests)):
+        start_ind = i*window_size
+        end_ind = min((i+1)*window_size, nb_asns)
+        HD = get_AS_hegemony_scores_dict(list_of_asns[start_ind:end_ind], col_datetime)
+        with open(TEMP_FILE_SAVENAME_FORMAT.format(i),'w') as f:
+            json.dump(HD,f)
+
+    # merge the temporary files with the partial results to one final file
+    for i in range(nb_API_requests):
+        with open(TEMP_FILE_SAVENAME_FORMAT.format(i), 'r') as f:
+            HD = json.load(f)
+            HEGE_DICT = {**HEGE_DICT, **HD}
+
+    # save the data
+    with open(save_filename, 'w') as f:
+        json.dump(HEGE_DICT,f)
+
+    #s save the data also to csv
+    write_df = pd.DataFrame.from_dict(HEGE_DICT, orient='index')
+    write_df.index.name = 'asn'
+    write_df[['hege']].to_csv(save_filename.replace('.json','.csv'))

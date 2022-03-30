@@ -14,6 +14,7 @@ AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
 ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_peers.json'
 AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
+AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20211201.csv'
 
 
 def cc2cont(country_code):
@@ -217,3 +218,15 @@ def create_dataframe_from_multiple_datasets(list_of_datasets):
     final_df = pd.concat(list_of_dataframes, axis=1)
     final_df.index.name = 'ASN'
     return final_df
+
+
+def load_aggregated_dataframe(preprocess=False):
+    '''
+    Loads the aggregated dataframe
+    :param      preprocess:     (bollean) [optional] if set to True, it does some processing steps in the data (e.g., missing values)
+    :return:    (pandas.DataFrame) A dataframe with indexes the ASNs and columns the features of the different datasets
+    '''
+    df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
+    if preprocess:
+        df['is_personal_AS'].fillna(0, inplace=True)
+    return df
