@@ -1,10 +1,12 @@
 import requests
-from datetime import date, datetime
+from datetime import date, datetime 
+import time
 from ihr.hegemony import Hegemony
 import pandas as pd
 import json
 import csv
 from tqdm import tqdm
+from collections import defaultdict
 from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
 
@@ -68,7 +70,7 @@ def get_AS_hegemony_scores_dict(list_of_asns, col_datetime):
 
 
 
-def collect_AS_hegemony_dataset(save_filename, col_datetime=None):
+def AS_hegemony_collector(save_filename, col_datetime=None):
     '''
     Loads the list of ASNs from the aggregated dataframe, request the hegemony scores from the AS hegemony API (in batches), 
     and saves the results in a file (json) and only the aggregate hegemony score to another file (csv).
@@ -120,7 +122,7 @@ def collect_AS_hegemony_dataset(save_filename, col_datetime=None):
 
 
 
-def collect_bgp_tools_dataset(save_filename):
+def bgp_tools_collector(save_filename):
     '''
     Collects data from the bgp.tool website and saves them in a txt
     '''
@@ -135,3 +137,46 @@ def collect_bgp_tools_dataset(save_filename):
     with open(save_filename, 'w') as f:
         w = csv.writer(f)
         w.writerows(list_of_perso_ASNs)
+
+
+
+def AS_rank_collector(save_filename, window=500, offset=0):
+    """
+    Collects data from the CAIDA AS rank API, and saves them in the given filename as csv file. 
+
+    :param  save_filename:  (str) the file to be save the dataset
+    :param  window:         (int) check the CAIDA API docs https://api.asrank.caida.org/v2/restful/doc
+    :param  offset:         (int) check the CAIDA API docs https://api.asrank.caida.org/v2/restful/doc
+    """
+
+    AS_RANK_URL = 'https://api.asrank.caida.org/v2/restful/asns/?first={}&offset={}'
+
+    basic_cols = ["asn", "rank", "source", "longitude", "latitude"]
+    cone_cols = ["numberAsns", "numberPrefixes", "numberAddresses"]
+    asn_degree_cols = ["total", "customer", "peer", "provider"]
+
+    dict_ = defaultdict(dict)
+    offset = 0
+    has_next_page = True
+    i = 0
+    t = time.time()
+    while has_next_page:
+        print('step {} \t total time {} sec\r'.format(i, round(time.time()-t)), end='')
+        r = requests.get(AS_RANK_URL.format(window, offset)).json()
+        for e in r['data']['asns']['edges']:
+            node = e['node']
+            asn = node.get('asn')
+            for col in basic_cols:
+                dict_[asn][col] = node.get(col)
+            for col in cone_cols:
+                dict_[asn][col] = node.get('cone').get(col)
+            for col in asn_degree_cols:
+                dict_[asn][col] = node.get('asnDegree').get(col)
+            dict_[asn]['iso'] = node.get("country").get("iso")
+
+        has_next_page = r['data']['asns']['pageInfo']['hasNextPage']
+        offset += window
+        i += 1
+
+    df = pd.DataFrame.from_dict(dict_, orient='index')
+    df.to_csv(save_filename, index=False)
