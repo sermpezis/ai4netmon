@@ -12,7 +12,7 @@ PATH_PERSONAL = FILES_LOCATION+'perso.txt'
 PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
 AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
-ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_peers.json'
+ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402'
 AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
 AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20211201.csv'
 
