@@ -1,5 +1,5 @@
 import requests
-from datetime import date, datetime 
+from datetime import date, datetime, timedelta
 import time
 import os
 from urllib.request import urlopen
@@ -192,18 +192,26 @@ def data_collectors_peeringdb(save_filename):
     :param save_filename: (str) the file to be save the dataset
     """
     today = date.today()
+    month = today.strftime("%m")
     day = today.strftime("%d")
     # subtract some days because usually the data of today are not up yet
-    d = today - timedelta(days=3)
+    d = today - timedelta(days=1)
     d = str(d)
+    if str(day) == '01':
+      m = int(month)-1
+      m = '0' + str(m)
+    else:
+      m = month
+
     d = d[-2:]
 
-    d1 = today.strftime("%Y/%m")
-    d2 = today.strftime("%Y_%m_"+d)
-    d3 = today.strftime("%Y%m"+d)
+    d1 = today.strftime("%Y/"+m)
+    d2 = today.strftime("%Y_"+m+"_"+d)
+    d3 = today.strftime("%Y"+m+d)
+
     PEERING_DB_URL = "https://publicdata.caida.org/datasets/peeringdb/{}/peeringdb_2_dump_{}.json"
     data = requests.get(PEERING_DB_URL.format(d1, d2)).json()
-    with open(save_filename.format(d3), 'w') as f:
+    with open('peeringdb_{}'.format(d3), 'w') as f:
         json.dump(data, f)
    
 
