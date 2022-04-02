@@ -72,11 +72,13 @@ def create_df_from_RouteViews():
     Collects the list of RouteViews peers, and returns a dataframe with RouteViews peers ASNs
     :return: A dataframe with index the ASN
     """
-    df = pd.read_json(ROUTEVIEWS_PEERS)
-    df.columns = ['asn']
+    df = pd.read_csv(ROUTEVIEWS_PEERS, delimiter="|")
+    df = df[['AS_NUMBER']]
+
     df = df.drop_duplicates()
     df['is_routeviews_peer'] = 1
-    df = df.set_index('asn')
+    df.set_index('AS_NUMBER')
+   
     
     return df
 
