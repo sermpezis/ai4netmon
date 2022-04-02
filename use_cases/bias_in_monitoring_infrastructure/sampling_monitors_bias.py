@@ -111,7 +111,7 @@ for en, m in enumerate(mons):
     mean_bias = []
     std_bias = []
     for i in NB_SAMPLES:
-        cols = [c for c in bias_df.columns if c.startswith('{}{}'.format(m.split(' (')[0],i))]
+        cols = [c for c in bias_df.columns if c.startswith('{}{}_'.format(m.split(' (')[0],i))]
         mean_bias.append( bias_df[cols].mean().mean() )
         std_bias.append( bias_df[cols].mean().std() )
     plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
@@ -131,7 +131,7 @@ for ind in bias_df.index:
         mean_bias = []
         std_bias = []
         for i in NB_SAMPLES:
-            cols = [c for c in bias_df.columns if c.startswith('{}{}'.format(m.split(' (')[0],i))]
+            cols = [c for c in bias_df.columns if c.startswith('{}{}_'.format(m.split(' (')[0],i))]
             mean_bias.append( bias_df.loc[ind,cols].mean() )
             std_bias.append( bias_df.loc[ind,cols].std() )
         plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
@@ -156,7 +156,7 @@ for fg,ind in FEATURE_GROUPS.items():
         mean_bias = []
         std_bias = []
         for i in NB_SAMPLES:
-            cols = [c for c in bias_df.columns if c.startswith('{}{}'.format(m.split(' (')[0],i))]
+            cols = [c for c in bias_df.columns if c.startswith('{}{}_'.format(m.split(' (')[0],i))]
             mean_bias.append( bias_df.loc[ind,cols].mean().mean() )
             std_bias.append( bias_df.loc[ind,cols].mean().std() )
         plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
