@@ -6,4 +6,4 @@ Files:
 
 The files are generated with the script `example_script_plot_proximity_improvement_vs_similarity_methods.py`, which also produces the following plot that shows the performance of the selected monitors when the objective is the "proximity" of the selected set of RIPE RIS peers to the origin ASes (the plot corresponds to only IPv4 peers and proximity values). 
 
-![Subset selection methods and their efficiency wrt. the proximity metrix](./fig_ripe_ris_subset_selection_vs_proximity_v4.png?raw=true)
+![Subset selection methods and their efficiency wrt. the proximity metrix](./figures/fig_ripe_ris_subset_selection_vs_proximity_v4.png?raw=true)
