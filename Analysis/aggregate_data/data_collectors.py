@@ -188,7 +188,10 @@ def AS_rank_collector(save_filename, window=500, offset=0):
     
 def data_collectors_peeringdb(save_filename):
     """
-    Collects data from CAIDA peering db and saves them to json file
+    Collects data from CAIDA peering db API and saves them to json file. The current date is 
+    calculated, and the day before is used to extract data, because data of the same day 
+    sometimes are not uploaded. If it is the first day of the month, we change the month
+    by 1 too. Using those dates, the function gets the data from Peering db's api.
     :param save_filename: (str) the file to be save the dataset
     """
     today = date.today()
@@ -218,7 +221,9 @@ def data_collectors_peeringdb(save_filename):
 
 def as_rel_collector(save_filename):
     """
-    Collects data from CAIDA peering db and saves them to json file
+    Collects data from CAIDA's AS relationships API and saves them to json file.
+    The current date is calculated and using urllib, the function
+    unzips the file from this date in the API, and extracts the txt file. 
     :param save_filename: (str) the file to be save the dataset
     """
     AS_REL_URL = "https://publicdata.caida.org/datasets/as-relationships/serial-2/{}.as-rel2.txt.bz2"
@@ -241,8 +246,9 @@ def as_rel_collector(save_filename):
 
 def remove_empty_lines(filename):
     """
-    This function deletes the empty lines from the file
-    :param filename:
+    This function deletes the empty lines from the file of the route views that is collected
+    from Route Views.
+    :param filename
     :return:
     """
     if not os.path.isfile(filename):
@@ -259,9 +265,10 @@ def remove_empty_lines(filename):
         
 def collect_route_views(save_filename):
     """
-    Collects data from route views url and write them to a temporary text file. Then we clean the empty lines
-    and some rows that contain only bad words inside our data that we don't need. Finally we delete | from the data and
-    correct the spaces
+    Collects data from Route Views URL that contains an html file, and write them to a temporary text file. Then the empty lines
+    and some rows that contain only bad words inside the data are cleaned. Finally, the txt file is opened and a new final txt
+    is written, that in each line the
+    data are seperated in the same way, using the character '|'.
     :param save_filename: (str) the file to be save the dataset
     :return: writes a txt file
     """
