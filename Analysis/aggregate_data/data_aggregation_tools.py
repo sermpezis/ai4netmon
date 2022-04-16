@@ -12,9 +12,10 @@ PATH_PERSONAL = FILES_LOCATION+'perso.txt'
 PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
 AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
-ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402'
+ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402.txt'
 AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
-AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20211201.csv'
+AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20220416.csv'
+ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships']
 
 
 def cc2cont(country_code):
@@ -77,8 +78,7 @@ def create_df_from_RouteViews():
 
     df = df.drop_duplicates()
     df['is_routeviews_peer'] = 1
-    df.set_index('AS_NUMBER')
-   
+    df = df.set_index('AS_NUMBER')  
     
     return df
 
@@ -126,6 +126,7 @@ def create_df_from_AS_rank():
     data.loc[(data['AS_rank_longitude'] == 0) & (data['AS_rank_latitude'] == 0), ['AS_rank_longitude',
                                                                                   'AS_rank_latitude']] = None
     data['AS_rank_continent'] = get_continent(data['AS_rank_iso'])
+    data['AS_rank_source'].replace('JPNIC','APNIC',inplace=True)    # fix to CAIDA's data: replace JPNIC (which is NIR) with APNIC (which is RIR)
     data = data.set_index('AS_rank_asn')
 
     return data
@@ -158,6 +159,23 @@ def create_df_from_personal():
 
     return data
 
+def pdb_info_traffic_to_float(ds):
+    '''
+    Transforms the values of the PDB info_traffic field from str to float values.
+    The float values are measured in Mbps and taking the lower limit, e.g., the str '100-200Gbps' would be the float 100000
+    :param  ds: (pandas.Series) the Series that corresponds to the column 'info_traffic' of the dataframe (dtype: object, i.e., str)
+    :return:    (pandas.Series) the given Series tranformed to float values
+    '''
+    data = ds.copy()
+    data.replace('0-20Mbps', '1-20Mbps',inplace=True)
+    data.replace('100+Tbps', '100-Tbps',inplace=True)
+    data.replace('', np.nan,inplace=True)
+    traffic_str = [t for t in data.unique() if (isinstance(t,str)) and (len(t)>0)]
+    str2Mbps = {'Mbps':1, 'Gbps':1000, 'Tbps':1000000}
+    traffic_dict = {t: int(t.split('-')[0]) * str2Mbps[t[-4:]] for t in traffic_str}
+    for tr_str,tr_float in traffic_dict.items():
+        data.replace(tr_str,tr_float,inplace=True)
+    return data
 
 def create_df_from_PeeringDB():
     """
@@ -171,7 +189,8 @@ def create_df_from_PeeringDB():
     for row in df.net['data']:
         net_row = [row.get(key) for key in keep_keys]
         data.append(net_row)
-    df = pd.DataFrame(data, columns=keep_keys)
+    df = pd.DataFrame(data, columns=keep_keys)    
+    df['info_traffic'] = pdb_info_traffic_to_float(df['info_traffic'])
     new_columns = ['peeringDB_' + str(i) for i in df.columns]
     df = df.set_axis(new_columns, axis='columns', inplace=False)
     df = df.set_index('peeringDB_asn')
@@ -207,12 +226,15 @@ def create_df_from(dataset):
     return data
 
 
-def create_dataframe_from_multiple_datasets(list_of_datasets):
+def create_dataframe_from_multiple_datasets(list_of_datasets=None):
     """
     Creates a dataframe for each given dataset, and concatenates all the dataframes in a common dataframe. The final/returned dataframe has the ASN as the index, and as columns all the columns from all datasets. It fills with NaN non existing values. 
-    :param list_of_datasets:    a list of str, where each string corresponds to a dataset to be loaded 
-    :return: A dataframe with indexes the ASNs and columns the features loaded from each given dataset
+    :param list_of_datasets:    (list) a list of str, where each string corresponds to a dataset to be loaded; If not set, loads all available datasets
+    :return:                    A dataframe with indexes the ASNs and columns the features loaded from each given dataset
     """
+    if list_of_datasets is None:
+        # select all datasets
+        list_of_datasets = ALL_DATASETS
     data = pd.DataFrame()
     list_of_dataframes = []
     for i in list_of_datasets:
@@ -231,4 +253,7 @@ def load_aggregated_dataframe(preprocess=False):
     df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
     if preprocess:
         df['is_personal_AS'].fillna(0, inplace=True)
+        # pdb_columns = [c for c in df.columns if c.startswith('peeringDB')]
+        # pdb_columns_categorical = [c for c in df.columns if c.startswith('peeringDB') and df[c].dtype=='O']
+        # df.loc[df[pdb_columns].isna().all(axis=1), pdb_columns_categorical] = 'Not in PDB'
     return df

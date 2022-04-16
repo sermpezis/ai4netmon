@@ -5,13 +5,12 @@ import random
 from matplotlib import pyplot as plt
 from ai4netmon.Analysis.bias import bias_utils as bu
 from ai4netmon.Analysis.bias import radar_chart
-# from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 import os
 
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
-FIG_RADAR_FNAME_FORMAT = './figures/Fig_RIPE_LABS_radar_{}.png'
+FIG_RADAR_FNAME_FORMAT = './figures/Fig_RIPE_LABS_radar_{}_NEW.png'
 
 # select features for visualization
 FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations() 
@@ -19,8 +18,7 @@ FEATURES = list(FEATURE_NAMES_DICT.keys())
 
 
 ## load data
-df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
-df['is_personal_AS'].fillna(0, inplace=True)
+df = dat.load_aggregated_dataframe(preprocess=True)
 df_ris = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
 ris_asns = list(df_ris.index)
 df_rv = df.loc[df['is_routeviews_peer']>0]
