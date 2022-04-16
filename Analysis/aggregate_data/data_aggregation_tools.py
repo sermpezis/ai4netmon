@@ -193,6 +193,7 @@ def create_df_from_PeeringDB():
     df['info_traffic'] = pdb_info_traffic_to_float(df['info_traffic'])
     new_columns = ['peeringDB_' + str(i) for i in df.columns]
     df = df.set_axis(new_columns, axis='columns', inplace=False)
+    df['is_in_peeringDB'] = 1
     df = df.set_index('peeringDB_asn')
 
     return df
