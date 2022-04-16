@@ -10,7 +10,7 @@ import os
 
 
 ## datasets
-FIG_RADAR_FNAME_FORMAT = './figures/Fig_RIPE_LABS_radar_{}_NEW.png'
+FIG_RADAR_FNAME_FORMAT = './figures/Fig_RIPE_LABS_radar_{}.png'
 
 # select features for visualization
 FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations() 

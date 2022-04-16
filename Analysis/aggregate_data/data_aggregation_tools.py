@@ -254,6 +254,7 @@ def load_aggregated_dataframe(preprocess=False):
     df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
     if preprocess:
         df['is_personal_AS'].fillna(0, inplace=True)
+        df['is_in_peeringDB'].fillna(0, inplace=True)
         # pdb_columns = [c for c in df.columns if c.startswith('peeringDB')]
         # pdb_columns_categorical = [c for c in df.columns if c.startswith('peeringDB') and df[c].dtype=='O']
         # df.loc[df[pdb_columns].isna().all(axis=1), pdb_columns_categorical] = 'Not in PDB'
