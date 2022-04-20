@@ -9,10 +9,16 @@ import pandas as pd
 import json
 import csv
 from tqdm import tqdm
+from bs4 import BeautifulSoup
+import re
 from collections import defaultdict
 from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
 
+URL_ORIGINS = 'https://github.com/CAIDA/mapkit-cti-code/tree/master/PAM-Paper-Results/CTI/origin'
+URL_TOP = 'https://github.com/CAIDA/mapkit-cti-code/tree/master/PAM-Paper-Results/CTI'
+PATH_ORIGINS = 'https://raw.githubusercontent.com/CAIDA/mapkit-cti-code/master/PAM-Paper-Results/CTI/origin/{}'
+PATH_TOP = 'https://raw.githubusercontent.com/CAIDA/mapkit-cti-code/master/PAM-Paper-Results/CTI/{}'
 RIPE_STAT_RIS_PEERS_URL = 'https://stat.ripe.net/data/ris-peers/data.json?query_time={}'
 RIPE_ATLAS_API_URL_PROBES = 'https://atlas.ripe.net/api/v2/probes'
 
@@ -302,4 +308,68 @@ def collect_route_views(save_filename):
         for line in data[5:]:
             fout.write(' '.join(line.split()) + "\n")
         
+def list_of_filenames_for_top_and_origins(url):
+    """
+    Function that uses bs4 library to scrape html content from the github repositories where
+    the csv files are, and returns a list of the names of those csv files.
+    :param url: the url of the github repository
+    :return: a list with csv files names
+    """
+    result = requests.get(url)
+
+    soup = BeautifulSoup(result.text, 'html.parser')
+    csvfiles = soup.find_all(title=re.compile("\.csv$"))
+
+    filenames = []
+    for i in csvfiles:
+        filenames.append(i.extract().get_text())
+
+    return filenames
+
+
+def data_collector_cti(filenames, path):
+    """
+    Function that reads all the csv files in the list from list_of_filenames, and reads them to
+    pandas Dataframe and saves them to a list of dataframes.
+    :param filenames: the list of csv files names
+    :param path: the path to read the csv files from
+    :return: list of dataframes of the csv files
+    """
+    dfs = []
+    for i in range(len(filenames)):
+
+        df = pd.read_csv(path.format(filenames[i]), encoding='ISO-8859-1', header=None)
+        dfs.append(df)
+
+    return dfs
+
+
+def create_origins_df(dfs):
+    """
+    Creates the origins dataframe (by concatenating the input list), after throwing unneeded columns
+    and take only the names of the ASNs, and writes the dataframe to csv file.
+    :param dfs: list of dataframes of origin csv files
+    """
+    all_dfs_origins = pd.concat(dfs)
+    all_dfs_origins = all_dfs_origins.drop([0], axis=0)
+    all_dfs_origins.columns = ["ASN", "OriginASName", "%country", "prefix"]
+    all_dfs_origins = all_dfs_origins.drop(['OriginASName', 'prefix'], axis=1)
+
+    all_dfs_origins["ASN"] = all_dfs_origins["ASN"].str.split('-', n=1).str.get(0)
+    all_dfs_origins = all_dfs_origins.sort_values('%country').drop_duplicates('ASN', keep='last')
+    all_dfs_origins.to_csv('origins.csv')
+
+
+def create_top_df(dfs):
+    """
+    Creates the top dataframe (by concatenating the input list), after keeping only the name of the ASNs
+    :param dfs: list of dataframes of top csv files
+    """
+    all_dfs_top = pd.concat(dfs)
+    all_dfs_top[0] = all_dfs_top[0].str.split('-', n=1).str.get(0)
+    all_dfs_top = all_dfs_top.drop([0], axis=0)
+    all_dfs_top.columns = ["ASN", "prefix"]
+    all_dfs_top = all_dfs_top.sort_values('prefix').drop_duplicates('ASN', keep='last')
+    all_dfs_top.to_csv('top.csv')
+
 
