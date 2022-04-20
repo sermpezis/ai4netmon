@@ -14,8 +14,11 @@ AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
 ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402.txt'
 AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
+ASDB_PATH = 'https://asdb.stanford.edu/data/ases.csv'
+ORIGIN_PATH = FILES_LOCATION + 'origins.csv'
+TOP_PATH = FILES_LOCATION + 'top.csv'
 AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20220416.csv'
-ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships']
+ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2']
 
 
 def cc2cont(country_code):
@@ -198,6 +201,56 @@ def create_df_from_PeeringDB():
 
     return df
 
+def create_dataframe_from_asdb(way):
+    """
+    Function that reads the csv files from Stanford's page to pandas Dataframe, keeps the first 3 columns of
+    and merges the two columns of categories into one, based on two methods, as a tuple and as a single string
+    separated by underscore, and returns a dataframe with index the ASN.
+    :param way: the way that the categories are finally stored
+    :return: the dataframe to be added to the final dataframe
+    """
+    data = pd.read_csv(ASDB_PATH)
+    data = data[['ASN', 'Category 1 - Layer 1', 'Category 1 - Layer 2']]
+    data['ASN'] = data['ASN'].str.split('AS', n=1).str.get(-1)
+    if way == 1:
+        # way 1 - merge the two categorical columns into one column that is now a tuple
+        data = data.drop(['Category 1 - Layer 2'], axis=1)
+        data = data.rename(columns={'ASN': 'asn'})
+        data = data.rename(columns={'Category 1 - Layer 1': 'asdb_Category 1 - Layer 1'})
+        data = data.set_index('asn')
+        return data
+    else:
+        # way 2 - merge the two categorical columns into one column that contains the two strings seperated by _
+        data["Categroy1 - Layer 1 and 2"] = data["Category 1 - Layer 1"] + "_" + data["Category 1 - Layer 2"]
+        data = data.drop(['Category 1 - Layer 1', 'Category 1 - Layer 2'], axis=1)
+
+        data = data.rename(columns={'ASN': 'asn'})
+        data = data.rename(columns={"Categroy1 - Layer 1 and 2": "asdb_Categroy1 - Layer 1 and 2"})
+
+        data = data.set_index('asn')
+        return data
+
+
+def create_df_from_cti_top():
+
+    data = pd.read_csv(TOP_PATH)
+    data = data.rename(columns={'ASN': 'asn'})
+    data = data.rename(columns={'prefix': 'top_prefix'})
+    data = data.set_index('asn')
+    data = data.drop(['Unnamed: 0'], axis=1)
+    return data
+
+
+def create_df_from_cti_origins():
+
+    data = pd.read_csv(ORIGIN_PATH)
+    data = data.rename(columns={'ASN': 'asn'})
+    data = data.rename(columns={'%country': 'origins_%country'})
+    data = data.set_index('asn')
+    data = data.drop(['Unnamed: 0'], axis=1)
+    return data
+
+
 
 def create_df_from(dataset):
     """
@@ -222,6 +275,14 @@ def create_df_from(dataset):
         data = create_df_from_RouteViews()
     elif dataset == 'AS_relationships':
         data = create_df_from_AS_relationships()
+    elif dataset == 'origins':
+        data = create_df_from_cti_origins()
+    elif dataset == 'top':
+        data = create_df_from_cti_top()
+    elif dataset == 'asdb_1':
+        data = create_dataframe_from_asdb(1)
+    elif dataset == 'asdb_2':
+        data = create_dataframe_from_asdb(2)
     else:
         raise Exception('Not defined dataset')
     return data
