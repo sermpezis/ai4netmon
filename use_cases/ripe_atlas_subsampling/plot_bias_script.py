@@ -1,7 +1,7 @@
-from Analysis.bias import bias_utils as bu
-from Analysis.bias import radar_chart
-from Analysis.aggregate_data import data_aggregation_tools as dat
-from Analysis.bias import generate_distribution_plots as gdp
+from ai4netmon.Analysis.bias import bias_utils as bu
+from ai4netmon.Analysis.bias import radar_chart
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
+from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
 import pandas as pd
 
 ## datasets
