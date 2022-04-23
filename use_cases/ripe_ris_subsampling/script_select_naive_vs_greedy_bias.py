@@ -9,10 +9,10 @@ import csv
 import json 
 
 ## datasets
-FNAME_SORTED_LIST_NAIVE  = './data/sorted_list_naive.json'
-FNAME_SORTED_LIST_GREEDY = './data/sorted_list_greedy.json'
-FNAME_SORTED_BIAS_NAIVE  = './data/sorted_bias_naive.csv'
-FNAME_SORTED_BIAS_GREEDY = './data/sorted_bias_greedy.csv'
+FNAME_SORTED_LIST_NAIVE  = './data/sorted_list_naive_{}.json'
+FNAME_SORTED_LIST_GREEDY = './data/sorted_list_greedy_{}.json'
+FNAME_SORTED_BIAS_NAIVE  = './data/sorted_bias_naive_{}.csv'
+FNAME_SORTED_BIAS_GREEDY = './data/sorted_bias_greedy_{}.csv'
 
 # select features for visualization
 FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations() 
@@ -26,10 +26,10 @@ df.index = df.index.astype(str,copy=False)
 print(df)
 t1 = time.time()
 
-df_ris = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
-ris_asns = list(df_ris.index)
-non_ris_asns = list(set(df.index)-set(ris_asns))
-
+set_infra = dict()
+set_infra['RIS'] = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
+set_infra['Atlas'] = df.loc[(df['nb_atlas_probes_v4']>0) | (df['nb_atlas_probes_v6']>0)]
+set_infra['RV'] = df.loc[df['is_routeviews_peer']>0]
 
 
 params={'method':'kl_divergence', 'bins':10, 'alpha':0.01}
@@ -51,38 +51,39 @@ def select_greedy(df, set_of_monitors, bias_params, write_to_filename=None):
 		current_set.remove(ASN)
 		if write_to_filename is not None:
 			if len(ordered_list)>1:
-				with open(FNAME_SORTED_LIST_GREEDY,'r') as f: 
+				with open(write_to_filename,'r') as f: 
 					d = json.load(f)
 					d.append(ASN)
 			else:
 				d = [ASN]
-			with open(FNAME_SORTED_LIST_GREEDY,'w') as f:
+			with open(write_to_filename,'w') as f:
 				json.dump(d,f)
 		print(ASN)
 	return ordered_list
 
-set_of_monitors = set(df_ris.index)
-a = select_naive_sorting(df, set_of_monitors, params)
-with open(FNAME_SORTED_LIST_NAIVE,'w') as f:
-	json.dump(a,f)
+for k in ['RV', 'Atlas']:#set_infra.keys(): 
+	set_of_monitors = set(set_infra[k].index)
+	a = select_naive_sorting(df, set_of_monitors, params)
+	with open(FNAME_SORTED_LIST_NAIVE.format(k),'w') as f:
+		json.dump(a,f)
 
-b = select_greedy(df, set_of_monitors, params, FNAME_SORTED_LIST_GREEDY)
+	b = select_greedy(df, set_of_monitors, params, FNAME_SORTED_LIST_GREEDY.format(k))
 
-for i in range(10):
-	dd = bu.bias_score_dataframe(df[FEATURES], {'naive':df.loc[set_of_monitors- set(a[0:i]),FEATURES], 'greedy':df.loc[set_of_monitors- set(b[0:i]),FEATURES]}, **params).sum(axis=0)
-	if i>0:
-		with open(FNAME_SORTED_BIAS_NAIVE,'r') as f: 
-			d = json.load(f)
-			d.append(dd['naive'])
-	else:
-		d = [dd['naive']]
-	with open(FNAME_SORTED_BIAS_NAIVE,'w') as f:
-		json.dump(d,f)
-	if i>0:
-		with open(FNAME_SORTED_BIAS_GREEDY,'r') as f: 
-			d = json.load(f)
-			d.append(dd['greedy'])
-	else:
-		d = [dd['greedy']]
-	with open(FNAME_SORTED_BIAS_GREEDY,'w') as f:
-		json.dump(d,f)
+	for i in range(len(a)):
+		dd = bu.bias_score_dataframe(df[FEATURES], {'naive':df.loc[set_of_monitors- set(a[0:i]),FEATURES], 'greedy':df.loc[set_of_monitors- set(b[0:i]),FEATURES]}, **params).sum(axis=0)
+		if i>0:
+			with open(FNAME_SORTED_BIAS_NAIVE.format(k),'r') as f: 
+				d = json.load(f)
+				d.append(dd['naive'])
+		else:
+			d = [dd['naive']]
+		with open(FNAME_SORTED_BIAS_NAIVE.format(k),'w') as f:
+			json.dump(d,f)
+		if i>0:
+			with open(FNAME_SORTED_BIAS_GREEDY.format(k),'r') as f: 
+				d = json.load(f)
+				d.append(dd['greedy'])
+		else:
+			d = [dd['greedy']]
+		with open(FNAME_SORTED_BIAS_GREEDY.format(k),'w') as f:
+			json.dump(d,f)
