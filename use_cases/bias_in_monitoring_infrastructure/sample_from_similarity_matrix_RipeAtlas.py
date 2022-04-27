@@ -10,6 +10,12 @@ TOTAL_TIMES = 10
 filename = './ripe_atlas_probe_asn_similarity_jaccard_paths_v4_median75_asn_max_20211124.csv'
 
 df = pd.read_csv(filename, header=0, index_col=0)
+
+df.values[[np.arange(df.shape[0])]*2] = 1
+# methods to fill NaNs: with 0 or with the mean of column values
+df = df.fillna(0)
+# df = df.fillna(df.mean())
+
 NB_ITEMS = 1000
 
 def select_from_kmeans10(data):
