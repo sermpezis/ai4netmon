@@ -18,9 +18,9 @@ df = dat.load_aggregated_dataframe(preprocess=True)
 
 
 # datasets
-KMEANS_10 = './selected_from_k_means_10.csv'
-KMEANS_20 = './selected_from_k_means_20.csv'
-GREEDY_LEAST = './selected_from_greedy_least_similar.csv'
+KMEANS_10 = './data/selected_from_k_means_10.csv'
+KMEANS_20 = './data/selected_from_k_means_20.csv'
+GREEDY_LEAST = './data/selected_from_greedy_least_similar.csv'
 
 
 ## load first list of selected asns with clustering and greedy methods.
