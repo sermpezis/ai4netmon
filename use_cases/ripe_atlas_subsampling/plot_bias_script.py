@@ -3,37 +3,78 @@ from ai4netmon.Analysis.bias import radar_chart
 from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
 import pandas as pd
+import re
 
-## datasets
-FIG_RADAR_FNAME_FORMAT = './figures/Fig_SOFIA_radar_{}.png'
-SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_{}_{}'
+# choose simmilarity matrix to sample from, Ripe Atlas asn similarity or probe similarity
+# 'ASN' for the first option, 'PROBES' otherwise
+
+SIMMATRIX = 'ASN'
+if SIMMATRIX == 'PROBES':
+
+    ## datasets
+    FIG_RADAR_FNAME_FORMAT = './figures/Fig_SOFIA_radar_asns_from_probes{}.png'
+    SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_asns_from_probes_{}_{}'
+
+    # datasets
+    KMEANS_10 = './selected_from_kmeans10_asns_of_probes.csv'
+    KMEANS_20 = './selected_from_kmeans20_asns_of_probes.csv'
+    GREEDY_LEAST = './selected_from_greedy_least_similar_mean.csv'
+
+elif SIMMATRIX == 'ASN':
+
+    ## datasets
+    FIG_RADAR_FNAME_FORMAT = './figures/Fig_SOFIA_radar_{}.png'
+    SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_{}_{}'
+
+    # datasets
+    KMEANS_10 = './selected_from_k_means_10_mean.csv'
+    KMEANS_20 = './selected_from_k_means_20_mean.csv'
+    GREEDY_LEAST = './selected_from_greedy_least_similar_mean.csv'
 
 # select features for visualization
-FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations() 
+FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations()
 FEATURES = list(FEATURE_NAMES_DICT.keys())
-
 
 ## load data
 df = dat.load_aggregated_dataframe(preprocess=True)
 
-
-# datasets
-KMEANS_10 = './data/selected_from_k_means_10.csv'
-KMEANS_20 = './data/selected_from_k_means_20.csv'
-GREEDY_LEAST = './data/selected_from_greedy_least_similar.csv'
-
-
 ## load first list of selected asns with clustering and greedy methods.
+
 kmeans_10 = pd.read_csv(KMEANS_10)
 kmeans_20 = pd.read_csv(KMEANS_20)
 greedy_least = pd.read_csv(GREEDY_LEAST)
 
+# keep one column of sampled asns and drop nan values
+
 kmeans_10list = kmeans_10.iloc[:, 1]
+kmeans_10list = kmeans_10list.dropna()
+
 kmeans_20list = kmeans_20.iloc[:, 1]
-greedy_least_list = list(greedy_least.iloc[:, 3])
-print(greedy_least_list)
-# remove specific asn from greedy list because it is not present in the final dataframe.
-greedy_least_list.remove(399924)
+kmeans_20list = kmeans_20list.dropna()
+
+greedy_least_list = greedy_least.iloc[:, 1]
+greedy_least_list = greedy_least_list.dropna()
+
+# turn pandas series into lists
+kmeans_10list = list(kmeans_10list)
+kmeans_20list = list(kmeans_20list)
+greedy_least_list = list(greedy_least_list)
+
+# put lists inside a list and iterate it to check whether there are indices in the lists of sampled asns
+# that do not exist in the whole df
+
+sampled_lists = [kmeans_10list, kmeans_20list, greedy_least_list]
+
+for list_ in sampled_lists:
+    try:
+        df.loc[list_]
+    except KeyError as e:
+        idx = re.search(r"\[([A-Za-z0-9_.]+)\]", str(e))
+        if idx is not None:
+            if '.' in idx.group(1):
+                list_.remove(float(idx.group(1)))
+            else:
+                list_.remove(int(idx.group(1)))
 
 # create dict with sets
 network_sets_dict = dict()
