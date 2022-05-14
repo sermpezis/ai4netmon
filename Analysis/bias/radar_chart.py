@@ -59,8 +59,8 @@ def radar_factory(num_vars, frame='circle'):
                 y = np.append(y, y[0])
                 line.set_data(x, y)
 
-        def set_varlabels(self, labels):
-            self.set_thetagrids(np.degrees(theta), labels)
+        def set_varlabels(self, labels, fontsize):
+            self.set_thetagrids(np.degrees(theta), labels, fontsize=fontsize)
 
         def _gen_axes_patch(self):
             # The Axes patch must be centered at (0.5, 0.5) and of radius 0.5
@@ -96,7 +96,7 @@ def radar_factory(num_vars, frame='circle'):
 
 
 
-def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.2, 0.4, 0.6, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small', varlabels=None, legend_loc=(0.9, .95)):
+def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rgrids=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8], alpha=0.25, save_filename=None, show=False, fontsize='small', fontsize_features='small', varlabels=None, legend_loc=(0.9, .95)):
     '''
     Generates a radar plot from the given dataframe (df) with axes the rows of the df, surfaces the columns of the df
     and the values along each axis correspond to the values of the df. 
@@ -128,7 +128,7 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
         else:
             norm = Normalize(vmin=0, vmax=10)
         colors = [cmap(norm(i)) for i in range(M)]
-    ax.set_rgrids(rgrids)
+    ax.set_rgrids(rgrids, fontsize=fontsize)
 
     for d, color in zip(case_data, colors):
         ax.plot(theta, d, color=color)
@@ -138,9 +138,9 @@ def plot_radar_from_dataframe(df, colors=None, frame='polygon', cmap='tab10', rg
         ax.fill(theta, d, facecolor=color, alpha=alpha)
 
     if varlabels is None:
-        ax.set_varlabels(features)
+        ax.set_varlabels(features,fontsize=fontsize_features)
     else:
-        ax.set_varlabels([varlabels[i] for i in features])
+        ax.set_varlabels([varlabels[i] for i in features],fontsize=fontsize_features)
 
     if save_filename is not None:
         plt.savefig(save_filename)
