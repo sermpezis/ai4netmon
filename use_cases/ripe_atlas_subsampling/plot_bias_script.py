@@ -18,7 +18,7 @@ if SIMMATRIX == 'PROBES':
     # datasets
     KMEANS_10 = './selected_from_kmeans10_asns_of_probes.csv'
     KMEANS_20 = './selected_from_kmeans20_asns_of_probes.csv'
-    GREEDY_LEAST = './selected_from_greedy_least_similar_mean.csv'
+    GREEDY_LEAST = './selected_from_greedy_least_asns_of_probes.csv'
 
 elif SIMMATRIX == 'ASN':
 
