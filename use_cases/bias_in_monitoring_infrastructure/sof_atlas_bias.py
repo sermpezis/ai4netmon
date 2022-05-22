@@ -11,9 +11,9 @@ import os
 
 
 # datasets
-KMEANS_10 = './selected_from_k_means_10.csv'
-KMEANS_20 = './selected_from_k_means_20.csv'
-GREEDY_LEAST = './selected_from_greedy_least_similar.csv'
+KMEANS_10 = './data/selected_from_k_means_10.csv'
+KMEANS_20 = './data/selected_from_k_means_20.csv'
+GREEDY_LEAST = './data/selected_from_greedy_least_similar.csv'
 
 BIAS_CSV_FNAME = './data/bias_values_sampling_real_Atlas.csv'
 FIG_SAVE_FNAME = './figures/Fig_bias_vs_sampling_sof_Atlas_{}_{}.png'
