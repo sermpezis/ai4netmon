@@ -16,9 +16,9 @@ if SIMMATRIX == 'PROBES':
     SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_asns_from_probes_{}_{}'
 
     # datasets
-    KMEANS_10 = './selected_from_kmeans10_asns_of_probes.csv'
-    KMEANS_20 = './selected_from_kmeans20_asns_of_probes.csv'
-    GREEDY_LEAST = './selected_from_greedy_least_asns_of_probes.csv'
+    KMEANS_10 = './data/selected_from_kmeans10_asns_of_probes.csv'
+    KMEANS_20 = './data/selected_from_kmeans20_asns_of_probes.csv'
+    GREEDY_LEAST = './data/selected_from_greedy_least_asns_of_probes.csv'
 
 elif SIMMATRIX == 'ASN':
 
@@ -27,9 +27,9 @@ elif SIMMATRIX == 'ASN':
     SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_{}_{}'
 
     # datasets
-    KMEANS_10 = './selected_from_k_means_10_mean.csv'
-    KMEANS_20 = './selected_from_k_means_20_mean.csv'
-    GREEDY_LEAST = './selected_from_greedy_least_similar_mean.csv'
+    KMEANS_10 = './data/selected_from_k_means_10_mean.csv'
+    KMEANS_20 = './data/selected_from_k_means_20_mean.csv'
+    GREEDY_LEAST = './data/selected_from_greedy_least_similar_mean.csv'
 
 # select features for visualization
 FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations()
