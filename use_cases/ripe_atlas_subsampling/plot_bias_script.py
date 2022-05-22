@@ -12,8 +12,8 @@ SIMMATRIX = 'ASN'
 if SIMMATRIX == 'PROBES':
 
     ## datasets
-    FIG_RADAR_FNAME_FORMAT = './figures/Fig_SOFIA_radar_asns_from_probes{}.png'
-    SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures/Fig_SOFIA_asns_from_probes_{}_{}'
+    FIG_RADAR_FNAME_FORMAT = './figures_from_sampled_probes/Fig_SOFIA_radar_asns_from_probes{}.png'
+    SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT = './figures_from_sampled_probes/Fig_SOFIA_asns_from_probes_{}_{}'
 
     # datasets
     KMEANS_10 = './data/selected_from_kmeans10_asns_of_probes.csv'
