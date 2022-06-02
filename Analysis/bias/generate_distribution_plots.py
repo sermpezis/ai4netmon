@@ -3,7 +3,7 @@ import numpy as np
 from statsmodels.distributions.empirical_distribution import ECDF
 from matplotlib import pyplot as plt
 import json
-from ai4netmon.Analysis.bias import bias_utils as bu
+from Analysis.bias import bias_utils as bu
 
 ## data parameters
 CDF_features = ['AS_rank_numberAsns', 'AS_rank_numberPrefixes', 'AS_rank_numberAddresses','AS_rank_total','AS_rank_customer', 
