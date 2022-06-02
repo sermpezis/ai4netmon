@@ -3,19 +3,25 @@ import pandas as pd
 import json
 import random
 from matplotlib import pyplot as plt
-from Analysis.bias import bias_utils as bu
-from Analysis.aggregate_data import data_aggregation_tools as dat
+from ai4netmon.Analysis.bias import bias_utils as bu
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 # from ai4netmon.Analysis.bias import radar_chart
 # from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
 import os
 
 
-# datasets
-KMEANS_10 = './data/selected_from_k_means_10.csv'
-KMEANS_20 = './data/selected_from_k_means_20.csv'
-GREEDY_LEAST = './data/selected_from_greedy_least_similar.csv'
+# define fill nans method
+METHOD = '0'
 
-BIAS_CSV_FNAME = './data/bias_values_sampling_real_Atlas.csv'
+# datasets
+KMEANS_10 = '../ripe_atlas_subsampling/data/selected_from_k_means_10_mean.csv'
+KMEANS_20 = '../ripe_atlas_subsampling/data/selected_from_k_means_20_mean.csv'
+GREEDY_LEAST = '../ripe_atlas_subsampling/data/selected_from_greedy_least_similar_mean.csv'
+SPECTRAL_10 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_10_0.csv'
+SPECTRAL_20 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_20_0.csv'
+SPECTRAL_100 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_100_0.csv'
+
+BIAS_CSV_FNAME = '/home/sof/PycharmProjects/ai4netmon/use_cases/bias_in_monitoring_infrastructure/data/bias_values_sampling_real_Atlas.csv'
 FIG_SAVE_FNAME = './figures/Fig_bias_vs_sampling_sof_Atlas_{}_{}.png'
 
 BIAS_CSV_FNAME_NO_STUBS = './data/bias_values_sampling_real_Atlas__no_stubs.csv'
@@ -32,7 +38,6 @@ else:
     # select features for visualization
     FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations()
     FEATURES = list(FEATURE_NAMES_DICT.keys())
-
 
     ## load data
     df = dat.load_aggregated_dataframe(preprocess=True)
@@ -70,9 +75,9 @@ else:
     # with open(kmeans_10, 'r') as f:
     #     measurements_dict = json.load(f)
 
-    method = 'KMEANS_20' # choose the sampling method of which the bias will be plotted
+    method = 'SPECTRAL10' # choose the sampling method of which the bias will be plotted
 
-    sampled = pd.read_csv(KMEANS_10)  # change the parameter based on the sampled data that needs to be used
+    sampled = pd.read_csv(SPECTRAL_10)  # change the parameter based on the sampled data that needs to be used
 
     # create copy of df to change the type of its index
     df_with_index = df.copy()
@@ -149,7 +154,7 @@ for en, m in enumerate(mons):
     if m not in ['all', 'RIPE Atlas sof ']:
         plt.plot(NB_SAMPLES, [bias_df[m].mean()]*len(NB_SAMPLES), linestyle='--', color=COLORS[en])
     else:
-        print('### Avg bias for kmeans sampling ###')
+        print('### Avg bias for sampling ###')
         # print([str(nb) for nb in NB_SAMPLES])
         # print([str(nb) for nb in mean_bias])
         print('#samples: {}'.format('\t'.join([str(nb) for nb in NB_SAMPLES])))
