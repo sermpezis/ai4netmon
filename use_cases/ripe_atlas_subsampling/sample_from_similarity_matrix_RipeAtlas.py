@@ -5,7 +5,7 @@ import json
 
 # set total times of runs for the selection methods
 
-TOTAL_TIMES = 1
+TOTAL_TIMES = 10
 
 # set the path of the file with Ripe Atlas ASNs similarities
 
@@ -28,6 +28,7 @@ def select_from_clustering(data, clusters, clustering_method, fill_nan_method='0
     the ASNs collected each time the clustering method with selected clusters is performed, in the form of (k,v), where the key
     is the time the clustering algorithm runs, and value is a list of 1000 monitors that are collected.
     Then, the dictionary is stored to a csv in the form of dataframe.
+    The function also saves the clusters themselves, with all the asns they contain.
     :param data: the input dataframe
     :param clusters: number of clusters for the algorithm to create
     :param clustering_method: choose between two clustering algorithms, Kmeans or SpectralClustering
@@ -61,7 +62,8 @@ def select_from_clustering(data, clusters, clustering_method, fill_nan_method='0
     # json.dump(dict_of_clusters, open(SAVE_PATH+"clusters_lists_of_{}_{}_{}".format(clustering_method, clusters, fill_nan_method), 'w'))
 
     # pd.DataFrame(dict_of_clusters).to_csv(SAVE_PATH+"clusters_lists_of_{}_{}_{}.csv".format(clustering_method, clusters, fill_nan_method))
-    # pd.DataFrame(selected_from_clustering).to_csv(SAVE_PATH+"selected_from_{}_{}_{}.csv".format(clustering_method, clusters, fill_nan_method))
+    
+    pd.DataFrame(selected_from_clustering).to_csv(SAVE_PATH+"selected_from_{}_{}_{}.csv".format(clustering_method, clusters, fill_nan_method))
 
 
 def select_from_greedy_leastsimilar(data):
