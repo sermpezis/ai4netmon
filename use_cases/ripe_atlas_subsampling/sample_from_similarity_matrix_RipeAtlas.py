@@ -1,41 +1,67 @@
 import pandas as pd
 from ai4netmon.Analysis.similarity import select_from_similarity as sfs
 import numpy as np
+import json
+
 # set total times of runs for the selection methods
 
-TOTAL_TIMES = 10
+TOTAL_TIMES = 1
 
 # set the path of the file with Ripe Atlas ASNs similarities
 
 filename = './ripe_atlas_probe_asn_similarity_jaccard_paths_v4_median75_asn_max_20211124.csv'
 
 df = pd.read_csv(filename, header=0, index_col=0)
+
 df.values[[np.arange(df.shape[0])]*2] = 1
 # methods to fill NaNs: with 0 or with the mean of column values
 df = df.fillna(0)
 # df = df.fillna(df.mean())
 
 NB_ITEMS = 1000
+SAVE_PATH = './data/'
 
 
-def select_from_kmeans(data, clusters):
+def select_from_clustering(data, clusters, clustering_method, fill_nan_method='0'):
     """
     This function takes as input the dataframe of similarities and the number of clusters wanted, creates a dictionary that stores
-    the ASNs collected each time the k-means with selected clusters is performed, in the form of (k,v), where the key
-    is the time the k-means algorithm runs, and value is a list of 1000 monitors that are collected.
+    the ASNs collected each time the clustering method with selected clusters is performed, in the form of (k,v), where the key
+    is the time the clustering algorithm runs, and value is a list of 1000 monitors that are collected.
     Then, the dictionary is stored to a csv in the form of dataframe.
+    :param data: the input dataframe
+    :param clusters: number of clusters for the algorithm to create
+    :param clustering_method: choose between two clustering algorithms, Kmeans or SpectralClustering
+    :param fill_nan_method: method to fill nans in the df
     """
-    selected_from_k_means = {}
+    selected_from_clustering = {}
+
     for time in range(TOTAL_TIMES):
-        selected_from_k_means[str(time)] = sfs.select_from_similarity_matrix(similarity_matrix=data, method='Clustering',
-                                                                            clustering_method='Kmeans', nb_clusters=clusters,
+        selected_from_clustering[str(time)], _ = sfs.select_from_similarity_matrix(similarity_matrix=data, method='Clustering',
+                                                                            clustering_method=clustering_method, nb_clusters=clusters,
                                                                             nb_items=NB_ITEMS)
-    for key, value in selected_from_k_means.items():
+
+    for key, value in selected_from_clustering.items():
         if len(value) < NB_ITEMS:
             while len(value) < NB_ITEMS:
                 value.append('NaN')
 
-    pd.DataFrame(selected_from_k_means).to_csv("selected_from_k_means_{}_mean.csv".format(clusters))
+    _, dict_of_clusters = sfs.select_from_similarity_matrix(similarity_matrix=data,
+                                                                               method='Clustering',
+                                                                               clustering_method=clustering_method,
+                                                                               nb_clusters=clusters,
+                                                                               nb_items=NB_ITEMS)
+
+    for key, value in dict_of_clusters.items():
+        if len(value) < max(len(item) for item in dict_of_clusters.values()):
+            while len(value) < max(len(item) for item in dict_of_clusters.values()):
+                value.append('NaN')
+
+
+    print(dict_of_clusters)
+    # json.dump(dict_of_clusters, open(SAVE_PATH+"clusters_lists_of_{}_{}_{}".format(clustering_method, clusters, fill_nan_method), 'w'))
+
+    # pd.DataFrame(dict_of_clusters).to_csv(SAVE_PATH+"clusters_lists_of_{}_{}_{}.csv".format(clustering_method, clusters, fill_nan_method))
+    # pd.DataFrame(selected_from_clustering).to_csv(SAVE_PATH+"selected_from_{}_{}_{}.csv".format(clustering_method, clusters, fill_nan_method))
 
 
 def select_from_greedy_leastsimilar(data):
@@ -97,6 +123,7 @@ def map_function(selected_probes, dict_probes, sampling_method):
     print(df_)
 
     pd.DataFrame(df_).to_csv("selected_from_{}_asns_of_probes.csv".format(sampling_method))
+
 
 
 
