@@ -1,3 +1,14 @@
+import numpy as np
+import pandas as pd
+import json
+import random
+from matplotlib import pyplot as plt
+from Analysis.bias import bias_utils as bu
+from Analysis.aggregate_data import data_aggregation_tools as dat
+# from ai4netmon.Analysis.bias import radar_chart
+# from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
+import os
+
 
 # define fill nans method
 METHOD = '0'
@@ -5,6 +16,8 @@ METHOD = '0'
 # datasets
 KMEANS_10 = '../ripe_atlas_subsampling/data/selected_from_k_means_10_mean.csv'
 KMEANS_20 = '../ripe_atlas_subsampling/data/selected_from_k_means_20_mean.csv'
+KMEANS_100 = '../ripe_atlas_subsampling/data/selected_from_Kmeans_100_0.csv'
+
 GREEDY_LEAST = '../ripe_atlas_subsampling/data/selected_from_greedy_least_similar_mean.csv'
 SPECTRAL_10 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_10_0.csv'
 SPECTRAL_20 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_20_0.csv'
@@ -77,19 +90,20 @@ else:
     # with open(kmeans_10, 'r') as f:
     #     measurements_dict = json.load(f)
 
-    method = 'SPECTRAL10' # choose the sampling method of which the bias will be plotted
+    method = 'KMEANS100' # choose the sampling method of which the bias will be plotted
 
-    sampled = pd.read_csv(SPECTRAL_10)  # change the parameter based on the sampled data that needs to be used
+    sampled = pd.read_csv(KMEANS_100)  # change the parameter based on the sampled data that needs to be used
 
     # create copy of df to change the type of its index
     df_with_index = df.copy()
     df_with_index.index = df.index.astype('int64')
+    print(df_with_index.index)
     for i in NB_SAMPLES:
         lens = []
         for col in range(sampled.shape[1] - 1):
 
             m_asns = [k for k in sampled[str(col)] if k in df_with_index.index]
-            print(m_asns)
+
             if i < len(m_asns):
                 m_df = df.loc[m_asns[0:i]]
             else:
@@ -97,11 +111,10 @@ else:
             # print(m_asns)
             network_sets_dict['RIPE Atlas sof {}_{}_{}'.format(i, col, method)] = m_df
             lens.append(len(set(m_df.index)))
-            print(lens)
         import numpy as np
         print(i, np.mean(lens))
 
-    #
+
     network_sets_dict_for_bias = {k:v[FEATURES] for k,v in network_sets_dict.items() if k != 'all'}
 
     params={'method':'kl_divergence', 'bins':10, 'alpha':0.01}
@@ -125,7 +138,7 @@ else:
 FONTSIZE = 15
 COLORS = ['k','b','r','m','g']
 # mons = ['all', 'RIPE RIS (all)','RouteViews (all)','RIS + RV (all)','RIPE Atlas (all)']
-mons = ['all', 'RIPE Atlas (all)','RIPE Atlas sof ']
+mons = ['all', 'RIPE Atlas (all)','RIPE Atlas sof ', 'RIPE RIS optimal']
 
 
 def custom_plot_save_and_close(fname):
@@ -153,7 +166,7 @@ for en, m in enumerate(mons):
         mean_bias.append( bias_df[cols].mean().mean() )
         std_bias.append( bias_df[cols].mean().std() )
     plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
-    if m not in ['all', 'RIPE Atlas sof ']:
+    if m not in ['all', 'RIPE Atlas sof ', 'RIPE RIS optimal']:
         plt.plot(NB_SAMPLES, [bias_df[m].mean()]*len(NB_SAMPLES), linestyle='--', color=COLORS[en])
     else:
         print('### Avg bias for sampling ###')
@@ -173,7 +186,7 @@ for ind in bias_df.index:
             mean_bias.append( bias_df.loc[ind,cols].mean() )
             std_bias.append( bias_df.loc[ind,cols].std() )
         plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
-        if m not in ['all', 'RIPE Atlas sof ']:
+        if m not in ['all', 'RIPE Atlas sof ', 'RIPE RIS optimal']:
             plt.plot(NB_SAMPLES, [bias_df.loc[ind,m]]*len(NB_SAMPLES), linestyle='--', color=COLORS[en])
     custom_plot_save_and_close(FIG_SAVE_FNAME.format(ind.replace(' ','_'), method))
 
@@ -198,7 +211,7 @@ for fg,ind in FEATURE_GROUPS.items():
             mean_bias.append( bias_df.loc[ind,cols].mean().mean() )
             std_bias.append( bias_df.loc[ind,cols].mean().std() )
         plt.errorbar(NB_SAMPLES, mean_bias, [h*i for i in std_bias], color=COLORS[en], label=m.split(' (')[0])
-        if m not in ['all', 'RIPE Atlas sof ']:
+        if m not in ['all', 'RIPE Atlas sof ', 'RIPE RIS optimal']:
             plt.plot(NB_SAMPLES, [bias_df.loc[ind,m].mean()]*len(NB_SAMPLES), linestyle='--', color=COLORS[en])
     custom_plot_save_and_close(FIG_SAVE_FNAME.format('group_'+fg.replace(' ','_'), method))
 
