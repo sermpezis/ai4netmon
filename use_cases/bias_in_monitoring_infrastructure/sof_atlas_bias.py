@@ -1,14 +1,3 @@
-import numpy as np
-import pandas as pd
-import json
-import random
-from matplotlib import pyplot as plt
-from ai4netmon.Analysis.bias import bias_utils as bu
-from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
-# from ai4netmon.Analysis.bias import radar_chart
-# from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
-import os
-
 
 # define fill nans method
 METHOD = '0'
@@ -21,7 +10,10 @@ SPECTRAL_10 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_1
 SPECTRAL_20 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_20_0.csv'
 SPECTRAL_100 = '../ripe_atlas_subsampling/data/selected_from_SpectralClustering_100_0.csv'
 
-BIAS_CSV_FNAME = '/home/sof/PycharmProjects/ai4netmon/use_cases/bias_in_monitoring_infrastructure/data/bias_values_sampling_real_Atlas.csv'
+OPTIMAL_RIPE_RIS = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/data/sorted_list_greedy_Atlas.json'
+
+
+BIAS_CSV_FNAME = './data/bias_values_sampling_real_Atlas.csv'
 FIG_SAVE_FNAME = './figures/Fig_bias_vs_sampling_sof_Atlas_{}_{}.png'
 
 BIAS_CSV_FNAME_NO_STUBS = './data/bias_values_sampling_real_Atlas__no_stubs.csv'
@@ -30,7 +22,7 @@ OMIT_STUBS = False
 NB_SAMPLES = [10, 20, 50, 100, 500, 1000]
 NB_ITERATIONS = 10
 
-mons = ['all','RIPE Atlas (all)']
+mons = ['all','RIPE Atlas (all)', 'RIPE RIS optimal']
 
 if not os.path.exists(BIAS_CSV_FNAME):
     bias_df = pd.read_csv(BIAS_CSV_FNAME, header=0, index_col=0)
@@ -38,6 +30,11 @@ else:
     # select features for visualization
     FEATURE_NAMES_DICT = bu.get_features_dict_for_visualizations()
     FEATURES = list(FEATURE_NAMES_DICT.keys())
+
+    optimal_ripe_ris = pd.read_json(OPTIMAL_RIPE_RIS)
+
+    optimal_ripe_ris = optimal_ripe_ris.set_index(optimal_ripe_ris[0])
+    print(optimal_ripe_ris)
 
     ## load data
     df = dat.load_aggregated_dataframe(preprocess=True)
@@ -47,17 +44,22 @@ else:
     ## calculate bias for all features
 
     # define sets of interest
-    # df_ris = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
+    df_ris = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
     # ris_asns = list(df_ris.index)
     # df_rv = df.loc[df['is_routeviews_peer']>0]
     # rv_asns = list(df_rv.index)
     df_atlas = df.loc[(df['nb_atlas_probes_v4']>0) | (df['nb_atlas_probes_v6']>0)]
     atlas_asns = list(df_atlas.index)
+    # print(ris_asns)
+
+    df_ris_optimal = df[df.index.isin(optimal_ripe_ris.index)]
+    print(df_ris_optimal)
 
     network_sets_dict = dict()
     network_sets_dict['all'] = df
     # network_sets_dict['RIPE RIS (all)'] = df_ris
     network_sets_dict['RIPE Atlas (all)'] = df_atlas
+    network_sets_dict['RIPE RIS optimal'] = df_ris_optimal
     # network_sets_dict['RouteViews (all)'] = df_rv
     # network_sets_dict['RIS + RV (all)'] = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0) | (df['is_routeviews_peer']>0)]
 
