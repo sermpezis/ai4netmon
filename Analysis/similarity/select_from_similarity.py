@@ -170,8 +170,7 @@ def clustering_based_selection(similarity_matrix, clustering_method, nb_clusters
     for i, label in enumerate(clustering.labels_):
         cluster_members_dict[label].append(similarity_matrix.index[i])
     
-    return sample_from_clusters(cluster_members_dict, nb_items=nb_items)
-
+    return sample_from_clusters(cluster_members_dict, nb_items=nb_items), cluster_members_dict
 
 
 def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
@@ -180,7 +179,7 @@ def select_from_similarity_matrix(similarity_matrix, method, **kwargs):
     elif method == 'Greedy max':
         selected_items = greedy_least_similar_selection(similarity_matrix, **kwargs)
     elif method == 'Clustering':
-        selected_items = clustering_based_selection(similarity_matrix, **kwargs)
+        selected_items, returned_dict = clustering_based_selection(similarity_matrix, **kwargs)
     else:
         raise ValueError
-    return selected_items
+    return selected_items, returned_dict
