@@ -1,7 +1,7 @@
-from ai4netmon.Analysis.bias import bias_utils as bu
-from ai4netmon.Analysis.bias import radar_chart
-from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
-from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
+from Analysis.bias import bias_utils as bu
+from Analysis.bias import radar_chart
+from Analysis.aggregate_data import data_aggregation_tools as dat
+from Analysis.bias import generate_distribution_plots as gdp
 import pandas as pd
 import re
 
@@ -29,6 +29,7 @@ elif SIMMATRIX == 'ASN':
     # datasets
     KMEANS_10 = './data/selected_from_k_means_10_mean.csv'
     KMEANS_20 = './data/selected_from_k_means_20_mean.csv'
+    KMEANS_100 = './data/selected_from_Kmeans_100_0.csv'
     GREEDY_LEAST = './data/selected_from_greedy_least_similar_mean.csv'
     SPECTRAL_10 = './data/selected_from_SpectralClustering_10_0.csv'
     SPECTRAL_20 = './data/selected_from_SpectralClustering_20_0.csv'
@@ -93,12 +94,14 @@ def process_df(name):
 
 kmeans_10list = process_df(KMEANS_10)
 kmeans_20list = process_df(KMEANS_20)
+kmeans_100list = process_df(KMEANS_100)
+
 greedy_least_list = process_df(GREEDY_LEAST)
 spectral_10list = process_df(SPECTRAL_10)
 spectral_20list = process_df(SPECTRAL_20)
 spectral_100list = process_df(SPECTRAL_100)
 
-sampled_lists = [kmeans_10list, kmeans_20list, greedy_least_list, spectral_10list, spectral_20list, spectral_100list]
+sampled_lists = [kmeans_10list, kmeans_20list, kmeans_100list, greedy_least_list, spectral_10list, spectral_20list, spectral_100list]
 
 for list_ in sampled_lists:
     try:
@@ -117,6 +120,8 @@ network_sets_dict['all'] = df
 network_sets_dict['RIPE Atlas'] = df.loc[(df['nb_atlas_probes_v4']>0) | (df['nb_atlas_probes_v6']>0)]
 network_sets_dict['KMEANS 10'] = df.loc[kmeans_10list]
 network_sets_dict['KMEANS 20'] = df.loc[kmeans_20list]
+network_sets_dict['KMEANS 100'] = df.loc[kmeans_100list]
+
 network_sets_dict['GREEDY LEAST'] = df.loc[greedy_least_list]
 network_sets_dict['SPECTRAL 10'] = df.loc[spectral_10list]
 network_sets_dict['SPECTRAL 20'] = df.loc[spectral_20list]
@@ -135,7 +140,7 @@ print_df.index = [n.replace('\n','') for n in FEATURE_NAMES_DICT.values()]
 print(print_df.round(2))
     
 # plot radar plot
-plot_df = bias_df[['RIPE Atlas', 'KMEANS 10', 'KMEANS 20', 'GREEDY LEAST', 'SPECTRAL 10', 'SPECTRAL 20', 'SPECTRAL 100']]
+plot_df = bias_df[['RIPE Atlas', 'KMEANS 10', 'KMEANS 20', 'KMEANS 100', 'GREEDY LEAST', 'SPECTRAL 10', 'SPECTRAL 20', 'SPECTRAL 100']]
 radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_FNAME_FORMAT.format('all'), varlabels=FEATURE_NAMES_DICT)
 
 
@@ -144,6 +149,8 @@ network_sets_dict_plots = {'All ASes': network_sets_dict['all'],
                      'RIPE Atlas': network_sets_dict['RIPE Atlas'], 
                      'KMEANS 10': network_sets_dict['KMEANS 10'],
                      'KMEANS 20': network_sets_dict['KMEANS 20'],
+                           'KMEANS 100': network_sets_dict['KMEANS 100'],
+
                            'GREEDY LEAST': network_sets_dict['GREEDY LEAST'],
                            'SPECTRAL 10': network_sets_dict['SPECTRAL 10'],
                            'SPECTRAL 20': network_sets_dict['SPECTRAL 20'],
