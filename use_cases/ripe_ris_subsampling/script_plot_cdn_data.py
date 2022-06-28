@@ -81,6 +81,7 @@ def apply_plotting_format(filename):
     plt.yticks(fontsize=FONTSIZE)
     plt.legend(fontsize=FONTSIZE, ncol=1, loc='upper right')
     plt.grid(True)
+    plt.tight_layout(pad = 0.0)
     plt.savefig(filename)
     plt.close()
 

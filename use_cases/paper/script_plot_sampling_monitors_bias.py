@@ -84,10 +84,11 @@ def custom_plot_save_and_close(fname):
     plt.axis([9,1100,0,0.40])
     plt.xticks(fontsize=FONTSIZE)
     plt.yticks(fontsize=FONTSIZE)
-    plt.xlabel('#monitors', fontsize=FONTSIZE)
+    plt.xlabel('number of vantage points', fontsize=FONTSIZE)
     plt.ylabel('avg. bias score', fontsize=FONTSIZE)
     plt.grid(True)
-    plt.subplots_adjust(left=0.15, bottom=0.15)
+    # plt.subplots_adjust(left=0.15, bottom=0.15)
+    plt.tight_layout(pad = 0.0)
     plt.savefig(fname)
     plt.close()
 

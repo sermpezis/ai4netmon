@@ -102,11 +102,12 @@ def plot_bias_peers_per_rc(dict_rc_asn, multihop_rrcs, project, plot_per_project
             label='{}: multihop RCs'.format(project), c='g', marker=MARKERS[project], s=MARKERSIZE)
     plt.grid(True)
     plt.legend(fontsize=FONTSIZE)
-    plt.xlabel('#monitors', fontsize=FONTSIZE)
+    plt.xlabel('number of vantage points', fontsize=FONTSIZE)
     plt.ylabel('avg. bias score', fontsize=FONTSIZE)
     plt.xticks(fontsize=FONTSIZE)
     plt.yticks(fontsize=FONTSIZE)
-    plt.subplots_adjust(left=0.15, bottom=0.15)
+    # plt.subplots_adjust(left=0.15, bottom=0.15)
+    plt.tight_layout(pad = 0.0)
 
     if plot_per_project:
         # for i,t in enumerate(list_of_rrcs):

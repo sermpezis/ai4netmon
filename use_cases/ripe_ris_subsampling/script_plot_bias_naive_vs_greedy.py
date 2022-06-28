@@ -65,7 +65,7 @@ def apply_plot_formatting(legend_order, ncols, savename_suffix):
 	# FONTSIZE = 15
 	plt.axis([9,4000,0,0.40])
 	plt.xscale('log')
-	plt.xlabel('#monitors', fontsize=FONTSIZE)
+	plt.xlabel('number of vantage points', fontsize=FONTSIZE)
 	plt.ylabel('Bias score', fontsize=FONTSIZE)
 	plt.xticks(fontsize=FONTSIZE)
 	plt.yticks(fontsize=FONTSIZE)
@@ -73,7 +73,8 @@ def apply_plot_formatting(legend_order, ncols, savename_suffix):
 	handles, labels = plt.gca().get_legend_handles_labels()
 	plt.legend([handles[idx] for idx in legend_order],[labels[idx] for idx in legend_order], fontsize=FONTSIZE, ncol=ncols)
 	plt.grid(True)
-	plt.subplots_adjust(left=0.15, bottom=0.15)
+	# plt.subplots_adjust(left=0.15, bottom=0.15)
+	plt.tight_layout(pad = 0.0)
 	# plt.yticks([0.05*i for i in range(11)])
 	# plt.xticks([10*i for i in range(10)]+[100+i*100 for i in range])
 	# plt.axis([-10,len(naive_bias)+10,0,0.5])
