@@ -203,6 +203,48 @@ def bias_score_dataframe(target_df, sample_df_dict, preprocess=True, **params):
 	return bias_df
 
 
+
+
+def subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES):
+	network_sets_dict_for_bias = dict()
+	for ASN in set_of_monitors:
+		network_sets_dict_for_bias[str(ASN)] = df.loc[list(set(set_of_monitors)-set([ASN]))][FEATURES]
+	bias_df = bias_score_dataframe(df[FEATURES], network_sets_dict_for_bias, **bias_params)
+	bias_diff = bias_df.sum(axis=0)
+	return bias_diff.sort_values().index.tolist()
+
+def subsampling_greedy(df, set_of_monitors, bias_params, FEATURES):
+	current_set = set(set_of_monitors)
+	ordered_list = []
+	while len(current_set)>0:
+		ASN = subsampling_naive_sorting(df, current_set, bias_params, FEATURES)[0]
+		ordered_list.append(ASN)
+		current_set.remove(ASN)
+	return ordered_list
+
+
+def subsampling(method, df, set_of_monitors, bias_params, FEATURES):
+	'''
+	Method to return an ordered list of the monitors in the set_of_monitors in a way that they decrease the bias 
+	if they are removed (remove first the first monitors).
+
+	:param 	method:			(str) 'sorting' for naive sorting algorithm or 'greedy'
+	:param 	df:				(pandas.DataFrame) the dataframe with the network features; networks are in the index
+	:param 	set_of_monitors:(set) set of monitors (i.e. indexes of dataframe), from which we want to subsample
+	:param 	bias_params:	(dict) parameters for the bias calculation
+	:param 	FEATURES:		(list) list of features (i.e., columns of the dataframe) to be taken into account in the bias calculation
+
+	:return: 	(list) ordered list with monitors; the first monitor in the list is the first monitor to be removed
+	'''
+	if method == 'sorting':
+		return subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES)
+	elif method == 'greedy':
+		return subsampling_greedy(df, set_of_monitors, bias_params, FEATURES)
+	else:
+		raise TypeError
+
+
+
 def get_features_dict_for_visualizations():
 	'''
 	returns a dict with 
