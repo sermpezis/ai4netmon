@@ -4,20 +4,41 @@ import json
 import pycountry_convert as pc
 from ai4netmon.Analysis.aggregate_data import data_collectors as dc
 from ai4netmon.Analysis.aggregate_data import graph_methods as gm
+from collections import defaultdict
 
 
 FILES_LOCATION = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/misc/'
+
 PATH_AS_RANK = FILES_LOCATION+'ASrank.csv'
-PATH_PERSONAL = FILES_LOCATION+'perso.txt'
-PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
+PATH_PERSONAL = FILES_LOCATION+'bgptools_perso.txt'
+PATH_PEERINGDB = FILES_LOCATION+'PeeringDB.json'
 AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
 ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes.json'
-ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402.txt'
-AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
-ASDB_PATH = 'https://asdb.stanford.edu/data/ases.csv'
-ORIGIN_PATH = FILES_LOCATION + 'origins.csv'
-TOP_PATH = FILES_LOCATION + 'top.csv'
-AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20220416.csv'
+ALL_RIS_PEERS = FILES_LOCATION+'RIPE_RIS_collectors.json'
+ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews.txt'
+AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships.txt'
+ASDB_PATH = FILES_LOCATION+'ASDB.csv'
+ORIGIN_PATH = FILES_LOCATION + 'CTI_origin.csv'
+TOP_PATH = FILES_LOCATION + 'CTI_top.csv'
+
+FILES_LOCATION_AGGREGATE = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/'
+AGGREGATE_DATA_FNAME = 'asn_aggregate_data.csv'
+
+# PATH_AS_RANK = FILES_LOCATION+'ASrank.csv'
+# PATH_PERSONAL = FILES_LOCATION+'bgptools_perso_20220718.txt'
+# PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
+# AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
+# ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes_20220718.json'
+# ALL_RIS_PEERS = FILES_LOCATION+'RIPE_RIS_collectors_20220718.json'
+# ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402.txt'
+# AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
+# ASDB_PATH = 'https://asdb.stanford.edu/data/ases.csv'
+# ORIGIN_PATH = FILES_LOCATION + 'origins.csv'
+# TOP_PATH = FILES_LOCATION + 'top.csv'
+
+# AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20220416.csv'
+
+
 ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2']
 
 
@@ -90,10 +111,15 @@ def create_df_from_RIPE_RIS():
     Collects the list of RIPE RIS peers, and returns a dataframe with the v4 and v6 RIS peers ASNs.
     :return: A dataframe with index the ASN
     """
-    ris_peer_ip2asn, _ = dc.get_ripe_ris_data()
-    unique_asns = set(ris_peer_ip2asn.values())
-    unique_asns_v4 = set([asn for ip,asn in ris_peer_ip2asn.items() if ':' not in ip])
-    unique_asns_v6 = set([asn for ip,asn in ris_peer_ip2asn.items() if ':' in ip])
+    with open(ALL_RIS_PEERS, 'r') as f:
+        ris_dict = json.load(f)
+    unique_asns = set()
+    unique_asns_v4 = set()
+    unique_asns_v6 = set()
+    for rrc, peers in ris_dict.items():
+        unique_asns.update([int(p['asn']) for p in peers])
+        unique_asns_v4.update([int(p['asn']) for p in peers if ':' not in p['ip']])
+        unique_asns_v6.update([int(p['asn']) for p in peers if ':' in p['ip']])
 
     df = pd.DataFrame(columns=['is_ris_peer_v4', 'is_ris_peer_v6'], index=unique_asns)
     df.loc[unique_asns_v4, 'is_ris_peer_v4'] = 1
@@ -102,18 +128,28 @@ def create_df_from_RIPE_RIS():
     
     return df
 
+    
+
 def create_df_from_Atlas_probes():
     """
     Loads the list of RIPE Atlas probes, and returns a dataframe with the number of v4 and v6 probes per ASN (only for ASNs that have at least one probe).
     :return: A dataframe with index the ASN
     """
-    data = pd.read_json(ALL_ATLAS_PROBES, lines=True)
-    data = data[(data['status'] == 'Connected')]
-    s4 = data['asn_v4'].value_counts()
-    s6 = data['asn_v6'].value_counts()
-    df = pd.concat([s4, s6], axis=1)
+    with open(ALL_ATLAS_PROBES, 'r') as f:
+        probes = json.load(f)
+    data = defaultdict(lambda : {'nb_atlas_probes_v4':0, 'nb_atlas_probes_v6':0, 'nb_atlas_anchors':0})
+    for prb in probes:
+        if prb['status']['name'] == 'Connected':
+            asn_v4 = prb['asn_v4']
+            asn_v6 = prb['asn_v6']
+            if asn_v4 is not None:
+                data[asn_v4]['nb_atlas_probes_v4'] += 1
+                if prb['is_anchor']:
+                    data[asn_v4]['nb_atlas_anchors'] += 1
+            if asn_v6 is not None:
+                data[asn_v6]['nb_atlas_probes_v6'] += 1
+    df = pd.DataFrame.from_dict(data, orient='index')
     df.index.name = 'asn'
-    df = df.rename(columns={'asn_v4': 'nb_atlas_probes_v4', 'asn_v6': 'nb_atlas_probes_v6'})
 
     return df
 

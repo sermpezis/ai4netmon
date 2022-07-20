@@ -1,0 +1,955 @@
+ROUTEVIEWS_COLLECTOR|AS_NUMBER|PEERING_ADDRESS|PREFIXES|CC|REGION|ASNAME
+route-views.amsix.routeviews.org|8821|80.249.208.12|20|CH|ripencc|TELEZUG WWZ Telekom AG TELEZUG, CH
+route-views.amsix.routeviews.org|1103|80.249.208.34|886638|NL|ripencc|SURFNET-NL SURFnet, The Netherlands, NL
+route-views.amsix.routeviews.org|12859|80.249.208.35|882911|NL|ripencc|NL-BIT BIT BV, NL
+route-views.amsix.routeviews.org|1140|80.249.208.49|526323|NL|ripencc|SIDN, NL
+route-views.amsix.routeviews.org|1103|80.249.208.50|886638|NL|ripencc|SURFNET-NL SURFnet, The Netherlands, NL
+route-views.amsix.routeviews.org|6830|80.249.208.106|874563|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.amsix.routeviews.org|24875|80.249.208.126|305|NL|ripencc|NOVOSERVE-AS, NL
+route-views.amsix.routeviews.org|6667|80.249.208.127|512|FI|ripencc|EUNET-FINLAND, FI
+route-views.amsix.routeviews.org|39591|80.249.208.152|875287|NL|ripencc|GLOBAL-E, NL
+route-views.amsix.routeviews.org|49544|80.249.208.162|230|NL|ripencc|I3DNET, NL
+route-views.amsix.routeviews.org|12414|80.249.208.165|21|NL|ripencc|NL-SOLCON SOLCON, NL
+route-views.amsix.routeviews.org|16298|80.249.208.183|2|NL|ripencc|INTERBOX-AS InterBox Internet, NL
+route-views.amsix.routeviews.org|51088|80.249.208.209|875032|NL|ripencc|A2B, NL
+route-views.amsix.routeviews.org|21478|80.249.208.216|1|NL|ripencc|PLEX Plex ASN, NL
+route-views.amsix.routeviews.org|12779|80.249.209.17|875375|IT|ripencc|ITGATE, IT
+route-views.amsix.routeviews.org|34968|80.249.209.81|877679|NL|ripencc|IUNXI, NL
+route-views.amsix.routeviews.org|12414|80.249.209.165|21|NL|ripencc|NL-SOLCON SOLCON, NL
+route-views.amsix.routeviews.org|2119|80.249.209.192|845|NO|ripencc|TELENOR-NEXTEL Telenor Norge AS, NO
+route-views.amsix.routeviews.org|39120|80.249.210.28|875401|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views.amsix.routeviews.org|5394|80.249.210.29|879317|IT|ripencc|UNIDATA Unidata S.p.A. NOC - Italy, IT
+route-views.amsix.routeviews.org|34177|80.249.210.38|0|FR|ripencc|CELESTE-AS CELESTE - Internet services provider, FR
+route-views.amsix.routeviews.org|38182|80.249.210.50|203|MY|apnic |EXTREMEBB-AS-MY Extreme Broadband - Total Broadband Experience, MY
+route-views.amsix.routeviews.org|31449|80.249.210.71|2|BE|ripencc|AS31449 AS31449.net European Network, BE
+route-views.amsix.routeviews.org|50763|80.249.210.99|626820|GB|ripencc|MCKAYCOM, GB
+route-views.amsix.routeviews.org|8859|80.249.210.122|8|DE|ripencc|OSN OSN Online Service Nuernberg GmbH, DE
+route-views.amsix.routeviews.org|58601|80.249.210.132|119|BD|apnic |AAMRA-ATL-BD Aamra technologies limited, BD
+route-views.amsix.routeviews.org|199524|80.249.210.150|881581|LU|ripencc|GCORE, LU
+route-views.amsix.routeviews.org|47957|80.249.210.248|387128|FR|ripencc|ING-AS, FR
+route-views.amsix.routeviews.org|6762|80.249.211.42|163070|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.amsix.routeviews.org|30844|80.249.211.45|2585|GB|ripencc|LIQUID-AS, GB
+route-views.amsix.routeviews.org|61955|80.249.211.155|591698|DE|ripencc|COLOCATIONIX-AS, DE
+route-views.amsix.routeviews.org|714|80.249.211.160|1002|US|arin |APPLE-ENGINEERING, US
+route-views.amsix.routeviews.org|31019|80.249.211.199|885556|NL|ripencc|MEANIE Meanie Heavy Industries, NL
+route-views.amsix.routeviews.org|15943|80.249.211.221|82|DE|ripencc|WTNET-AS wilhelm.tel GmbH, DE
+route-views.amsix.routeviews.org|7713|80.249.211.240|0|ID|apnic |TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID
+route-views.amsix.routeviews.org|38880|80.249.212.75|919095|AU|apnic |M21-AS-AP Micron21 Datacentre Pty Ltd, AU
+route-views.amsix.routeviews.org|42541|80.249.212.84|864127|DK|ripencc|FIBERBY, DK
+route-views.amsix.routeviews.org|58511|80.249.212.104|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.amsix.routeviews.org|62955|80.249.212.124|22|US|arin |EBAYMTBB, US
+route-views.amsix.routeviews.org|3399|80.249.212.156|874918|SE|ripencc|OBE-NET, SE
+route-views.amsix.routeviews.org|293|80.249.213.7|905037|US|arin |ESNET, US
+route-views.amsix.routeviews.org|39351|80.249.213.131|70|SE|ripencc|ESAB-AS, SE
+route-views.amsix.routeviews.org|267613|80.249.213.223|902165|BR|lacnic |ELETRONET S.A., BR
+route-views.amsix.routeviews.org|213035|80.249.213.226|256|NL|ripencc|AS-SERVERION Serverion B.V., NL
+route-views.amsix.routeviews.org|16552|80.249.214.44|875712|US|arin |TIGGEE, US
+route-views.amsix.routeviews.org|41805|80.249.215.106|875419|IQ|ripencc|IQ-SAWADLAND-AS, IQ
+route-views.amsix.routeviews.org|3214|185.1.167.24|884993|DE|ripencc|XTOM xTom, DE
+route-views.amsix.routeviews.org|211398|185.1.167.45|910340|BE|ripencc|CRAZYGROUP-AS, BE
+route-views.amsix.routeviews.org|211398|185.1.167.76|883608|BE|ripencc|CRAZYGROUP-AS, BE
+route-views.amsix.routeviews.org|293|2001:7f8:1::a500:293:1|139274|US|arin |ESNET, US
+route-views.amsix.routeviews.org|714|2001:7f8:1::a500:714:1|162|US|arin |APPLE-ENGINEERING, US
+route-views.amsix.routeviews.org|1103|2001:7f8:1::a500:1103:1|141346|NL|ripencc|SURFNET-NL SURFnet, The Netherlands, NL
+route-views.amsix.routeviews.org|1103|2001:7f8:1::a500:1103:2|141346|NL|ripencc|SURFNET-NL SURFnet, The Netherlands, NL
+route-views.amsix.routeviews.org|1140|2001:7f8:1::a500:1140:1|139686|NL|ripencc|SIDN, NL
+route-views.amsix.routeviews.org|2119|2001:7f8:1::a500:2119:1|143|NO|ripencc|TELENOR-NEXTEL Telenor Norge AS, NO
+route-views.amsix.routeviews.org|3399|2001:7f8:1::a500:3399:1|139706|SE|ripencc|OBE-NET, SE
+route-views.amsix.routeviews.org|5394|2001:7f8:1::a500:5394:1|5|IT|ripencc|UNIDATA Unidata S.p.A. NOC - Italy, IT
+route-views.amsix.routeviews.org|6667|2001:7f8:1::a500:6667:1|86|FI|ripencc|EUNET-FINLAND, FI
+route-views.amsix.routeviews.org|6762|2001:7f8:1::a500:6762:1|25215|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.amsix.routeviews.org|6830|2001:7f8:1::a500:6830:2|138755|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.amsix.routeviews.org|7713|2001:7f8:1::a500:7713:1|235|ID|apnic |TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID
+route-views.amsix.routeviews.org|8821|2001:7f8:1::a500:8821:1|5|CH|ripencc|TELEZUG WWZ Telekom AG TELEZUG, CH
+route-views.amsix.routeviews.org|12414|2001:7f8:1::a501:2414:1|8|NL|ripencc|NL-SOLCON SOLCON, NL
+route-views.amsix.routeviews.org|12414|2001:7f8:1::a501:2414:2|8|NL|ripencc|NL-SOLCON SOLCON, NL
+route-views.amsix.routeviews.org|12779|2001:7f8:1::a501:2779:1|139446|IT|ripencc|ITGATE, IT
+route-views.amsix.routeviews.org|12859|2001:7f8:1::a501:2859:1|139617|NL|ripencc|NL-BIT BIT BV, NL
+route-views.amsix.routeviews.org|15943|2001:7f8:1::a501:5943:1|12|DE|ripencc|WTNET-AS wilhelm.tel GmbH, DE
+route-views.amsix.routeviews.org|16298|2001:7f8:1::a501:6298:1|1|NL|ripencc|INTERBOX-AS InterBox Internet, NL
+route-views.amsix.routeviews.org|16552|2001:7f8:1::a501:6552:1|139393|US|arin |TIGGEE, US
+route-views.amsix.routeviews.org|24875|2001:7f8:1::a502:4875:1|0|NL|ripencc|NOVOSERVE-AS, NL
+route-views.amsix.routeviews.org|30844|2001:7f8:1::a503:844:1|202|GB|ripencc|LIQUID-AS, GB
+route-views.amsix.routeviews.org|34177|2001:7f8:1::a503:4177:1|0|FR|ripencc|CELESTE-AS CELESTE - Internet services provider, FR
+route-views.amsix.routeviews.org|34968|2001:7f8:1::a503:4968:1|144377|NL|ripencc|IUNXI, NL
+route-views.amsix.routeviews.org|38182|2001:7f8:1::a503:8182:2|10|MY|apnic |EXTREMEBB-AS-MY Extreme Broadband - Total Broadband Experience, MY
+route-views.amsix.routeviews.org|38880|2001:7f8:1::a503:8880:1|148624|AU|apnic |M21-AS-AP Micron21 Datacentre Pty Ltd, AU
+route-views.amsix.routeviews.org|39120|2001:7f8:1::a503:9120:1|144450|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views.amsix.routeviews.org|39351|2001:7f8:1::a503:9351:1|318|SE|ripencc|ESAB-AS, SE
+route-views.amsix.routeviews.org|39591|2001:7f8:1::a503:9591:1|55879|NL|ripencc|GLOBAL-E, NL
+route-views.amsix.routeviews.org|41805|2001:7f8:1::a504:1805:1|71069|IQ|ripencc|IQ-SAWADLAND-AS, IQ
+route-views.amsix.routeviews.org|42541|2001:7f8:1::a504:2541:1|140112|DK|ripencc|FIBERBY, DK
+route-views.amsix.routeviews.org|47957|2001:7f8:1::a504:7957:1|140768|FR|ripencc|ING-AS, FR
+route-views.amsix.routeviews.org|49544|2001:7f8:1::a504:9544:1|54|NL|ripencc|I3DNET, NL
+route-views.amsix.routeviews.org|50763|2001:7f8:1::a505:763:1|143183|GB|ripencc|MCKAYCOM, GB
+route-views.amsix.routeviews.org|51088|2001:7f8:1::a505:1088:1|138979|NL|ripencc|A2B, NL
+route-views.amsix.routeviews.org|58511|2001:7f8:1::a505:8511:1|141568|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.amsix.routeviews.org|61955|2001:7f8:1::a506:1955:1|27967|DE|ripencc|COLOCATIONIX-AS, DE
+route-views.amsix.routeviews.org|62955|2001:7f8:1::a506:2955:1|2|US|arin |EBAYMTBB, US
+route-views.amsix.routeviews.org|199524|2001:7f8:1:0:a500:19:9524:1|144603|LU|ripencc|GCORE, LU
+route-views.amsix.routeviews.org|213035|2001:7f8:1:0:a500:21:3035:1|4|NL|ripencc|AS-SERVERION Serverion B.V., NL
+route-views.amsix.routeviews.org|267613|2001:7f8:1:0:a500:26:7613:1|146747|BR|lacnic |ELETRONET S.A., BR
+route-views.amsix.routeviews.org|3214|2001:7f8:f2:e1::3214:2|144604|DE|ripencc|XTOM xTom, DE
+route-views.amsix.routeviews.org|211398|2001:7f8:f2:e1:0:21:1398:1|146305|BE|ripencc|CRAZYGROUP-AS, BE
+route-views.amsix.routeviews.org|211398|2001:7f8:f2:e1:0:21:1398:2|146307|BE|ripencc|CRAZYGROUP-AS, BE
+route-views.amsix.routeviews.org|212983|2001:7f8:f2:e1:0:21:2983:1|1|FR|ripencc|SKYSERV, FR
+route-views.amsix.routeviews.org|56662|2001:7f8:f2:e1:0:a105:6662:1|131863|PL|ripencc|EUTPNET, PL
+route-views.amsix.routeviews.org|208753|2001:7f8:f2:e1:0:a520:8753:1|146987|IT|ripencc|NETSIX, IT
+route-views.amsix.routeviews.org|210633|2001:7f8:f2:e1:0:a521:633:1|8|DE|ripencc|DEVSTORAGE, DE
+route-views.bdix.routeviews.org|140684|103.151.196.1|5561|BD|apnic |BDIX-AS-AP Bangladesh Internet Exchange Trust, BD
+route-views.bdix.routeviews.org|140684|103.151.196.5|5214|BD|apnic |BDIX-AS-AP Bangladesh Internet Exchange Trust, BD
+route-views.bdix.routeviews.org|140684|2001:df3:d680::1|704|BD|apnic |BDIX-AS-AP Bangladesh Internet Exchange Trust, BD
+route-views.bdix.routeviews.org|140684|2001:df3:d680::5|741|BD|apnic |BDIX-AS-AP Bangladesh Internet Exchange Trust, BD
+route-views.bknix.routeviews.org|132280|203.159.68.122|607|TH|apnic |SYMPHONY-AP-TH Symphony Communication Thailand PCL., TH
+route-views.bknix.routeviews.org|132280|2001:deb:0:68::122|34|TH|apnic |SYMPHONY-AP-TH Symphony Communication Thailand PCL., TH
+route-views.chicago.routeviews.org|17350|208.115.136.5|884491|US|arin |MOODYS, US
+route-views.chicago.routeviews.org|19151|208.115.136.18|880303|US|arin |BBO-1, US
+route-views.chicago.routeviews.org|6325|208.115.136.22|167|US|arin |ILLINOIS-CENTURY, US
+route-views.chicago.routeviews.org|199524|208.115.136.42|875559|LU|ripencc|GCORE, LU
+route-views.chicago.routeviews.org|293|208.115.136.58|905040|US|arin |ESNET, US
+route-views.chicago.routeviews.org|852|208.115.136.67|875404|CA|arin |TELUS Communications, CA
+route-views.chicago.routeviews.org|17350|208.115.136.95|884491|US|arin |MOODYS, US
+route-views.chicago.routeviews.org|13727|208.115.136.117|15|CA|arin |ND-CA-ASN, CA
+route-views.chicago.routeviews.org|19016|208.115.136.119|412695|CA|arin |WCG-AS, CA
+route-views.chicago.routeviews.org|19653|208.115.136.133|885588|US|arin |CTSTELECOM, US
+route-views.chicago.routeviews.org|32709|208.115.136.134|818275|US|arin |1-JOINK, US
+route-views.chicago.routeviews.org|62955|208.115.136.179|22|US|arin |EBAYMTBB, US
+route-views.chicago.routeviews.org|714|208.115.136.182|1019|US|arin |APPLE-ENGINEERING, US
+route-views.chicago.routeviews.org|53828|208.115.136.220|876517|US|arin |NITEL, US
+route-views.chicago.routeviews.org|395570|208.115.136.229|910744|CA|arin |FIBRESTREAM, CA
+route-views.chicago.routeviews.org|4775|208.115.136.231|812|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.chicago.routeviews.org|25885|208.115.137.10|878426|US|arin |FORTINET, US
+route-views.chicago.routeviews.org|8220|208.115.137.35|874441|GB|ripencc|COLT COLT Technology Services Group Limited, GB
+route-views.chicago.routeviews.org|49544|208.115.137.50|244|NL|ripencc|I3DNET, NL
+route-views.chicago.routeviews.org|26744|208.115.137.62|365|US|arin |PCL, US
+route-views.chicago.routeviews.org|16552|208.115.137.69|875146|US|arin |TIGGEE, US
+route-views.chicago.routeviews.org|14630|208.115.137.100|875600|US|arin |INVESCO, US
+route-views.chicago.routeviews.org|14630|208.115.137.200|875600|US|arin |INVESCO, US
+route-views.chicago.routeviews.org|293|2001:504:0:4::293:1|139253|US|arin |ESNET, US
+route-views.chicago.routeviews.org|714|2001:504:0:4::714:2|174|US|arin |APPLE-ENGINEERING, US
+route-views.chicago.routeviews.org|852|2001:504:0:4::852:1|139766|CA|arin |TELUS Communications, CA
+route-views.chicago.routeviews.org|4775|2001:504:0:4::4775:1|3|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.chicago.routeviews.org|6325|2001:504:0:4::6325:1|2|US|arin |ILLINOIS-CENTURY, US
+route-views.chicago.routeviews.org|8220|2001:504:0:4::8220:1|143859|GB|ripencc|COLT COLT Technology Services Group Limited, GB
+route-views.chicago.routeviews.org|14630|2001:504:0:4:0:1:4630:1|143516|US|arin |INVESCO, US
+route-views.chicago.routeviews.org|14630|2001:504:0:4:0:1:4630:2|144083|US|arin |INVESCO, US
+route-views.chicago.routeviews.org|16552|2001:504:0:4:0:1:6552:1|138989|US|arin |TIGGEE, US
+route-views.chicago.routeviews.org|17350|2001:504:0:4:0:1:7350:1|138847|US|arin |MOODYS, US
+route-views.chicago.routeviews.org|17350|2001:504:0:4:0:1:7350:2|138717|US|arin |MOODYS, US
+route-views.chicago.routeviews.org|19016|2001:504:0:4:0:1:9016:1|62374|CA|arin |WCG-AS, CA
+route-views.chicago.routeviews.org|19151|2001:504:0:4:0:1:9151:1|141287|US|arin |BBO-1, US
+route-views.chicago.routeviews.org|19653|2001:504:0:4:0:1:9653:1|146527|US|arin |CTSTELECOM, US
+route-views.chicago.routeviews.org|25885|2001:504:0:4:0:2:5885:1|0|US|arin |FORTINET, US
+route-views.chicago.routeviews.org|49544|2001:504:0:4:0:4:9544:1|68|NL|ripencc|I3DNET, NL
+route-views.chicago.routeviews.org|53828|2001:504:0:4:0:5:3828:1|144110|US|arin |NITEL, US
+route-views.chicago.routeviews.org|62955|2001:504:0:4:0:6:2955:1|2|US|arin |EBAYMTBB, US
+route-views.chicago.routeviews.org|199524|2001:504:0:4:0:19:9524:1|139358|LU|ripencc|GCORE, LU
+route-views.chicago.routeviews.org|395570|2001:504:0:4:0:39:5570:1|4|CA|arin |FIBRESTREAM, CA
+route-views.chile.routeviews.org|27678|200.16.114.34|907373|CL|lacnic |NIC Chile, CL
+route-views.chile.routeviews.org|27678|200.16.114.53|0|CL|lacnic |NIC Chile, CL
+route-views.eqix.routeviews.org|2914|206.126.236.12|874256|US|arin |NTT-LTD-2914, US
+route-views.eqix.routeviews.org|3257|206.126.236.19|874279|US|ripencc|GTT-BACKBONE GTT, US
+route-views.eqix.routeviews.org|6079|206.126.236.25|875098|US|arin |RCN-AS, US
+route-views.eqix.routeviews.org|6939|206.126.236.37|903047|US|arin |HURRICANE, US
+route-views.eqix.routeviews.org|19151|206.126.236.47|880318|US|arin |BBO-1, US
+route-views.eqix.routeviews.org|32098|206.126.236.58|6021|US|arin |TRANSTELCO-INC, US
+route-views.eqix.routeviews.org|6830|206.126.236.117|874725|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.eqix.routeviews.org|41095|206.126.236.120|889613|GB|ripencc|IPTP, GB
+route-views.eqix.routeviews.org|293|206.126.236.137|905033|US|arin |ESNET, US
+route-views.eqix.routeviews.org|7795|206.126.236.156|445|US|arin |LUMOS, US
+route-views.eqix.routeviews.org|11039|206.126.236.172|887935|US|arin |GWU, US
+route-views.eqix.routeviews.org|8781|206.126.236.181|717|QA|ripencc|QA-ISP, QA
+route-views.eqix.routeviews.org|398465|206.126.236.209|921749|US|arin |RACKDOG-LLC, US
+route-views.eqix.routeviews.org|40934|206.126.236.218|318808|US|arin |FORTINET, US
+route-views.eqix.routeviews.org|62955|206.126.236.224|21|US|arin |EBAYMTBB, US
+route-views.eqix.routeviews.org|25885|206.126.236.234|894573|US|arin |FORTINET, US
+route-views.eqix.routeviews.org|199524|206.126.237.22|878039|LU|ripencc|GCORE, LU
+route-views.eqix.routeviews.org|4775|206.126.237.90|766|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.eqix.routeviews.org|59605|206.126.237.125|1448|BH|ripencc|ZAINGP-AS, BH
+route-views.eqix.routeviews.org|26744|206.126.237.130|365|US|arin |PCL, US
+route-views.eqix.routeviews.org|54054|206.126.237.179|11|US|arin |DETEQUE, US
+route-views.eqix.routeviews.org|49544|206.126.237.210|244|NL|ripencc|I3DNET, NL
+route-views.eqix.routeviews.org|37468|206.126.238.56|176342|AO|afrinic|ANGOLA-CABLES, AO
+route-views.eqix.routeviews.org|8220|206.126.238.64|874682|GB|ripencc|COLT COLT Technology Services Group Limited, GB
+route-views.eqix.routeviews.org|16552|206.126.238.92|876443|US|arin |TIGGEE, US
+route-views.eqix.routeviews.org|7195|206.126.238.207|1929|CO|lacnic |EDGEUNO SAS, CO
+route-views.eqix.routeviews.org|17350|206.126.238.208|884491|US|arin |MOODYS, US
+route-views.eqix.routeviews.org|17350|206.126.238.209|884491|US|arin |MOODYS, US
+route-views.eqix.routeviews.org|293|2001:504:0:2::293:1|139273|US|arin |ESNET, US
+route-views.eqix.routeviews.org|2914|2001:504:0:2::2914:1|134703|US|arin |NTT-LTD-2914, US
+route-views.eqix.routeviews.org|3257|2001:504:0:2::3257:1|138800|US|ripencc|GTT-BACKBONE GTT, US
+route-views.eqix.routeviews.org|4775|2001:504:0:2::4775:1|3|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.eqix.routeviews.org|6762|2001:504:0:2::6762:1|25205|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.eqix.routeviews.org|6830|2001:504:0:2::6830:1|138758|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.eqix.routeviews.org|6939|2001:504:0:2::6939:1|141873|US|arin |HURRICANE, US
+route-views.eqix.routeviews.org|7195|2001:504:0:2::7195:1|743|CO|lacnic |EDGEUNO SAS, CO
+route-views.eqix.routeviews.org|8220|2001:504:0:2::8220:1|143874|GB|ripencc|COLT COLT Technology Services Group Limited, GB
+route-views.eqix.routeviews.org|8781|2001:504:0:2::8781:1|254|QA|ripencc|QA-ISP, QA
+route-views.eqix.routeviews.org|11039|2001:504:0:2:0:1:1039:1|146197|US|arin |GWU, US
+route-views.eqix.routeviews.org|16552|2001:504:0:2:0:1:6552:1|139277|US|arin |TIGGEE, US
+route-views.eqix.routeviews.org|17350|2001:504:0:2:0:1:7350:1|139231|US|arin |MOODYS, US
+route-views.eqix.routeviews.org|17350|2001:504:0:2:0:1:7350:2|135779|US|arin |MOODYS, US
+route-views.eqix.routeviews.org|19151|2001:504:0:2:0:1:9151:1|141312|US|arin |BBO-1, US
+route-views.eqix.routeviews.org|25885|2001:504:0:2:0:2:5885:1|0|US|arin |FORTINET, US
+route-views.eqix.routeviews.org|26744|2001:504:0:2:0:2:6744:130|9|US|arin |PCL, US
+route-views.eqix.routeviews.org|37468|2001:504:0:2:0:3:7468:1|57102|AO|afrinic|ANGOLA-CABLES, AO
+route-views.eqix.routeviews.org|40934|2001:504:0:2:0:4:934:2|0|US|arin |FORTINET, US
+route-views.eqix.routeviews.org|49544|2001:504:0:2:0:4:9544:1|68|NL|ripencc|I3DNET, NL
+route-views.eqix.routeviews.org|54054|2001:504:0:2:0:5:4054:1|3|US|arin |DETEQUE, US
+route-views.eqix.routeviews.org|57695|2001:504:0:2:0:5:7695:1|139982|US|ripencc|MISAKA Misaka Network, Inc., US
+route-views.eqix.routeviews.org|59605|2001:504:0:2:0:5:9605:1|30|BH|ripencc|ZAINGP-AS, BH
+route-views.eqix.routeviews.org|62955|2001:504:0:2:0:6:2955:1|2|US|arin |EBAYMTBB, US
+route-views.eqix.routeviews.org|199524|2001:504:0:2:0:19:9524:1|140206|LU|ripencc|GCORE, LU
+route-views.eqix.routeviews.org|398465|2001:504:0:2:0:39:8465:1|145118|US|arin |RACKDOG-LLC, US
+route-views.flix.routeviews.org|19151|206.41.108.11|880302|US|arin |BBO-1, US
+route-views.flix.routeviews.org|20940|206.41.108.17|29|NL|ripencc|AKAMAI-ASN1, NL
+route-views.flix.routeviews.org|13335|206.41.108.18|2291|US|arin |CLOUDFLARENET, US
+route-views.flix.routeviews.org|6939|206.41.108.23|902620|US|arin |HURRICANE, US
+route-views.flix.routeviews.org|13030|206.41.108.28|718163|CH|ripencc|INIT7, CH
+route-views.flix.routeviews.org|28283|206.41.108.56|954|BR|lacnic |Adylnet Telecom, BR
+route-views.flix.routeviews.org|52320|206.41.108.60|888603|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.flix.routeviews.org|15280|206.41.108.66|172821|US|arin |HOSTLEASING2, US
+route-views.flix.routeviews.org|61832|206.41.108.72|874547|BR|lacnic |Fortel Fortaleza Telecomunicacoes Ltda, BR
+route-views.flix.routeviews.org|395880|206.41.108.79|33|US|arin |BCL-AS1, US
+route-views.flix.routeviews.org|13760|206.41.108.96|878609|US|arin |UNITI-FIBER, US
+route-views.flix.routeviews.org|26744|206.41.108.102|365|US|arin |PCL, US
+route-views.flix.routeviews.org|199524|206.41.108.115|878084|LU|ripencc|GCORE, LU
+route-views.flix.routeviews.org|62955|206.41.108.117|21|US|arin |EBAYMTBB, US
+route-views.flix.routeviews.org|7195|206.41.108.146|7441|CO|lacnic |EDGEUNO SAS, CO
+route-views.flix.routeviews.org|16552|206.41.108.147|875390|US|arin |TIGGEE, US
+route-views.flix.routeviews.org|47957|206.41.108.152|144918|FR|ripencc|ING-AS, FR
+route-views.flix.routeviews.org|263237|206.41.108.153|1385|CL|lacnic |PowerHost Telecom SPA, CL
+route-views.flix.routeviews.org|263009|206.41.108.158|150170|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views.flix.routeviews.org|142580|206.41.108.168|872075|AU|apnic |EOPL-AS-AP Edgevirt, AU
+route-views.flix.routeviews.org|13335|206.41.108.169|2291|US|arin |CLOUDFLARENET, US
+route-views.flix.routeviews.org|19151|2001:504:40:108::1:11|141311|US|arin |BBO-1, US
+route-views.flix.routeviews.org|20940|2001:504:40:108::1:17|1|NL|ripencc|AKAMAI-ASN1, NL
+route-views.flix.routeviews.org|13335|2001:504:40:108::1:18|192|US|arin |CLOUDFLARENET, US
+route-views.flix.routeviews.org|6939|2001:504:40:108::1:23|141881|US|arin |HURRICANE, US
+route-views.flix.routeviews.org|13030|2001:504:40:108::1:28|48609|CH|ripencc|INIT7, CH
+route-views.flix.routeviews.org|33132|2001:504:40:108::1:40|38|US|arin |FIBERNET-DIRECT, US
+route-views.flix.routeviews.org|28283|2001:504:40:108::1:56|333|BR|lacnic |Adylnet Telecom, BR
+route-views.flix.routeviews.org|52320|2001:504:40:108::1:60|142896|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.flix.routeviews.org|15280|2001:504:40:108::1:66|141298|US|arin |HOSTLEASING2, US
+route-views.flix.routeviews.org|61832|2001:504:40:108::1:72|0|BR|lacnic |Fortel Fortaleza Telecomunicacoes Ltda, BR
+route-views.flix.routeviews.org|395880|2001:504:40:108::1:79|1|US|arin |BCL-AS1, US
+route-views.flix.routeviews.org|13760|2001:504:40:108::1:96|140793|US|arin |UNITI-FIBER, US
+route-views.flix.routeviews.org|26744|2001:504:40:108::1:102|9|US|arin |PCL, US
+route-views.flix.routeviews.org|199524|2001:504:40:108::1:115|140416|LU|ripencc|GCORE, LU
+route-views.flix.routeviews.org|62955|2001:504:40:108::1:117|2|US|arin |EBAYMTBB, US
+route-views.flix.routeviews.org|7195|2001:504:40:108::1:146|2610|CO|lacnic |EDGEUNO SAS, CO
+route-views.flix.routeviews.org|16552|2001:504:40:108::1:147|139046|US|arin |TIGGEE, US
+route-views.flix.routeviews.org|47957|2001:504:40:108::1:152|48214|FR|ripencc|ING-AS, FR
+route-views.flix.routeviews.org|263237|2001:504:40:108::1:153|19|CL|lacnic |PowerHost Telecom SPA, CL
+route-views.flix.routeviews.org|263009|2001:504:40:108::1:158|59939|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views.flix.routeviews.org|13335|2001:504:40:108::1:169|192|US|arin |CLOUDFLARENET, US
+route-views.fortaleza.routeviews.org|267613|45.184.144.102|902162|BR|lacnic |ELETRONET S.A., BR
+route-views.fortaleza.routeviews.org|52320|45.184.144.128|889119|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.fortaleza.routeviews.org|264479|45.184.145.15|895961|BR|lacnic |Turbozone Internet, BR
+route-views.fortaleza.routeviews.org|7195|45.184.145.162|1338|CO|lacnic |EDGEUNO SAS, CO
+route-views.fortaleza.routeviews.org|199524|45.184.146.59|875103|LU|ripencc|GCORE, LU
+route-views.fortaleza.routeviews.org|267613|2001:12f8:0:9::102|146745|BR|lacnic |ELETRONET S.A., BR
+route-views.fortaleza.routeviews.org|52320|2001:12f8:0:9::128|143791|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.fortaleza.routeviews.org|263009|2001:12f8:0:9::161|130985|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views.fortaleza.routeviews.org|264479|2001:12f8:0:9::145:15|74626|BR|lacnic |Turbozone Internet, BR
+route-views.fortaleza.routeviews.org|7195|2001:12f8:0:9::145:162|1881|CO|lacnic |EDGEUNO SAS, CO
+route-views.fortaleza.routeviews.org|268011|2001:12f8:0:9::145:237|144049|BR|lacnic |S.BARROS DE SOUZA-ME, BR
+route-views.fortaleza.routeviews.org|199524|2001:12f8:0:9::146:59|137244|LU|ripencc|GCORE, LU
+route-views.gixa.routeviews.org|37623|196.201.2.31|2|GH|afrinic|SURFLINE_GHANA_AS, GH
+route-views.gorex.routeviews.org|35889|192.35.145.24|915|US|arin |GOREX, US
+route-views.gorex.routeviews.org|35889|2604:8ac0:3000:3005::1|121|US|arin |GOREX, US
+route-views.isc.routeviews.org|1280|198.32.176.3|160|US|arin |ISC-AS-1280, US
+route-views.isc.routeviews.org|6939|198.32.176.20|903062|US|arin |HURRICANE, US
+route-views.isc.routeviews.org|6762|198.32.176.70|171556|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.isc.routeviews.org|49544|198.32.176.95|244|NL|ripencc|I3DNET, NL
+route-views.isc.routeviews.org|30286|198.32.176.142|875179|US|arin |THM, US
+route-views.isc.routeviews.org|19151|198.32.176.164|880318|US|arin |BBO-1, US
+route-views.isc.routeviews.org|7575|198.32.176.177|893964|AU|apnic |AARNET-AS-AP Australian Academic and Research Network AARNet, AU
+route-views.isc.routeviews.org|36351|198.32.176.207|899385|US|arin |SOFTLAYER, US
+route-views.isc.routeviews.org|199524|198.32.176.226|875796|LU|ripencc|GCORE, LU
+route-views.isc.routeviews.org|714|198.32.176.237|1019|US|arin |APPLE-ENGINEERING, US
+route-views.isc.routeviews.org|1280|2001:504:d::1|47|US|arin |ISC-AS-1280, US
+route-views.isc.routeviews.org|6939|2001:504:d::10|141881|US|arin |HURRICANE, US
+route-views.isc.routeviews.org|6762|2001:504:d::46|25753|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.isc.routeviews.org|714|2001:504:d::714:1|175|US|arin |APPLE-ENGINEERING, US
+route-views.isc.routeviews.org|49544|2001:504:d::4:9544:1|68|NL|ripencc|I3DNET, NL
+route-views.isc.routeviews.org|199524|2001:504:d::19:9524:1|144298|LU|ripencc|GCORE, LU
+route-views.kixp.routeviews.org|37578|196.223.21.38|3|KE|afrinic|Tespok, KE
+route-views.kixp.routeviews.org|37704|196.223.21.65|6204|KE|afrinic|Nairobi-IX-Peering, KE
+route-views.kixp.routeviews.org|37704|196.223.21.66|100524|KE|afrinic|Nairobi-IX-Peering, KE
+route-views.kixp.routeviews.org|6939|196.223.21.74|903054|US|arin |HURRICANE, US
+route-views.kixp.routeviews.org|328475|196.223.21.99|24|KE|afrinic|Afriq-Network-Solutions-AS, KE
+route-views.kixp.routeviews.org|37704|2001:43f8:60:1::66|16719|KE|afrinic|Nairobi-IX-Peering, KE
+route-views.kixp.routeviews.org|6939|2001:43f8:60:1::74|141876|US|arin |HURRICANE, US
+route-views.kixp.routeviews.org|328475|2001:43f8:60:1::99|0|KE|afrinic|Afriq-Network-Solutions-AS, KE
+route-views.linx.routeviews.org|47957|195.66.224.12|387128|FR|ripencc|ING-AS, FR
+route-views.linx.routeviews.org|61955|195.66.224.13|583021|DE|ripencc|COLOCATIONIX-AS, DE
+route-views.linx.routeviews.org|6939|195.66.224.21|903052|US|arin |HURRICANE, US
+route-views.linx.routeviews.org|37497|195.66.224.25|875772|ZA|afrinic|Network-Platforms, ZA
+route-views.linx.routeviews.org|5413|195.66.224.29|876371|GB|ripencc|AS5413, GB
+route-views.linx.routeviews.org|6453|195.66.224.51|874354|US|arin |AS6453, US
+route-views.linx.routeviews.org|3292|195.66.224.64|746|DK|ripencc|TDC TDC AS, DK
+route-views.linx.routeviews.org|8426|195.66.224.66|876203|GB|ripencc|CLARANET-AS ClaraNET LTD, GB
+route-views.linx.routeviews.org|5511|195.66.224.83|133551|FR|ripencc|OPENTRANSIT, FR
+route-views.linx.routeviews.org|6830|195.66.224.89|874571|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.linx.routeviews.org|13237|195.66.224.99|878098|DE|ripencc|LAMBDANET-AS European Backbone of AS13237, DE
+route-views.linx.routeviews.org|6667|195.66.224.114|877741|FI|ripencc|EUNET-FINLAND, FI
+route-views.linx.routeviews.org|14537|195.66.224.118|877800|US|arin |CL-1379-14537, US
+route-views.linx.routeviews.org|2914|195.66.224.138|874295|US|arin |NTT-LTD-2914, US
+route-views.linx.routeviews.org|6762|195.66.224.153|162578|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.linx.routeviews.org|16552|195.66.224.157|876016|US|arin |TIGGEE, US
+route-views.linx.routeviews.org|38880|195.66.224.165|919095|AU|apnic |M21-AS-AP Micron21 Datacentre Pty Ltd, AU
+route-views.linx.routeviews.org|3491|195.66.224.167|875078|US|arin |BTN-ASN, US
+route-views.linx.routeviews.org|13030|195.66.224.175|878089|CH|ripencc|INIT7, CH
+route-views.linx.routeviews.org|31500|195.66.224.215|1735|AG|ripencc|GLOBALNET-AS, AG
+route-views.linx.routeviews.org|5459|195.66.224.254|0|GB|ripencc|LINX-AS London interconnection point, GB
+route-views.linx.routeviews.org|34288|195.66.225.86|891977|CH|ripencc|AS34288 EDU-ZG-CH - Public Schools in the Canton of Zug, CH
+route-views.linx.routeviews.org|35313|195.66.225.145|19|BH|ripencc|BH-INFONAS-ASN, BH
+route-views.linx.routeviews.org|49544|195.66.225.146|224|NL|ripencc|I3DNET, NL
+route-views.linx.routeviews.org|8674|195.66.225.151|4|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.linx.routeviews.org|8674|195.66.225.152|2|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.linx.routeviews.org|38182|195.66.225.178|191|MY|apnic |EXTREMEBB-AS-MY Extreme Broadband - Total Broadband Experience, MY
+route-views.linx.routeviews.org|41811|195.66.225.196|876025|GB|ripencc|CONVERGENCE-GROUP, GB
+route-views.linx.routeviews.org|47787|195.66.225.212|883739|PT|ripencc|EDGOO EDGOO NETWORKS, PT
+route-views.linx.routeviews.org|14061|195.66.226.25|876692|US|arin |DIGITALOCEAN-ASN, US
+route-views.linx.routeviews.org|59605|195.66.226.33|895584|BH|ripencc|ZAINGP-AS, BH
+route-views.linx.routeviews.org|267613|195.66.226.39|902166|BR|lacnic |ELETRONET S.A., BR
+route-views.linx.routeviews.org|41695|195.66.226.74|877071|GB|ripencc|VOSTRON-AS, GB
+route-views.linx.routeviews.org|39122|195.66.226.97|876535|IE|ripencc|BLACKNIGHT-AS, IE
+route-views.linx.routeviews.org|37271|195.66.226.102|876396|ZA|afrinic|Workonline, ZA
+route-views.linx.routeviews.org|714|195.66.226.145|1003|US|arin |APPLE-ENGINEERING, US
+route-views.linx.routeviews.org|58511|195.66.226.214|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.linx.routeviews.org|58601|195.66.227.59|119|BD|apnic |AAMRA-ATL-BD Aamra technologies limited, BD
+route-views.linx.routeviews.org|62955|195.66.227.75|21|US|arin |EBAYMTBB, US
+route-views.linx.routeviews.org|8455|195.66.227.118|876656|NL|ripencc|ATOM86-AS ATOM86, NL
+route-views.linx.routeviews.org|398465|195.66.227.122|230177|US|arin |RACKDOG-LLC, US
+route-views.linx.routeviews.org|4775|195.66.227.151|310|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.linx.routeviews.org|41805|195.66.227.196|875419|IQ|ripencc|IQ-SAWADLAND-AS, IQ
+route-views.linx.routeviews.org|5413|195.66.236.29|876376|GB|ripencc|AS5413, GB
+route-views.linx.routeviews.org|8426|195.66.236.66|178|GB|ripencc|CLARANET-AS ClaraNET LTD, GB
+route-views.linx.routeviews.org|6667|195.66.236.114|877741|FI|ripencc|EUNET-FINLAND, FI
+route-views.linx.routeviews.org|3491|195.66.236.167|875087|US|arin |BTN-ASN, US
+route-views.linx.routeviews.org|13030|195.66.236.175|878093|CH|ripencc|INIT7, CH
+route-views.linx.routeviews.org|5459|195.66.236.254|0|GB|ripencc|LINX-AS London interconnection point, GB
+route-views.linx.routeviews.org|199524|195.66.237.19|875698|LU|ripencc|GCORE, LU
+route-views.linx.routeviews.org|14061|195.66.238.25|876692|US|arin |DIGITALOCEAN-ASN, US
+route-views.linx.routeviews.org|37271|195.66.238.102|876396|ZA|afrinic|Workonline, ZA
+route-views.linx.routeviews.org|58511|195.66.238.214|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.linx.routeviews.org|62955|195.66.239.75|21|US|arin |EBAYMTBB, US
+route-views.linx.routeviews.org|714|2001:7f8:4::2ca:1|162|US|arin |APPLE-ENGINEERING, US
+route-views.linx.routeviews.org|2914|2001:7f8:4::b62:1|134709|US|arin |NTT-LTD-2914, US
+route-views.linx.routeviews.org|3257|2001:7f8:4::cb9:1|138800|US|ripencc|GTT-BACKBONE GTT, US
+route-views.linx.routeviews.org|3491|2001:7f8:4::da3:1|139056|US|arin |BTN-ASN, US
+route-views.linx.routeviews.org|4775|2001:7f8:4::12a7:1|141|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.linx.routeviews.org|5413|2001:7f8:4::1525:1|138842|GB|ripencc|AS5413, GB
+route-views.linx.routeviews.org|5459|2001:7f8:4::1553:1|0|GB|ripencc|LINX-AS London interconnection point, GB
+route-views.linx.routeviews.org|6667|2001:7f8:4::1a0b:1|140309|FI|ripencc|EUNET-FINLAND, FI
+route-views.linx.routeviews.org|6762|2001:7f8:4::1a6a:1|24655|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.linx.routeviews.org|6830|2001:7f8:4::1aae:4|138759|NL|ripencc|LIBERTYGLOBAL Liberty Global formerly UPC Broadband Holding, aka AORTA, NL
+route-views.linx.routeviews.org|6939|2001:7f8:4::1b1b:1|141873|US|arin |HURRICANE, US
+route-views.linx.routeviews.org|8426|2001:7f8:4::20ea:1|139896|GB|ripencc|CLARANET-AS ClaraNET LTD, GB
+route-views.linx.routeviews.org|8455|2001:7f8:4::2107:1|139971|NL|ripencc|ATOM86-AS ATOM86, NL
+route-views.linx.routeviews.org|8674|2001:7f8:4::21e2:1|4|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.linx.routeviews.org|8674|2001:7f8:4::21e2:2|2|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.linx.routeviews.org|13030|2001:7f8:4::32e6:1|140580|CH|ripencc|INIT7, CH
+route-views.linx.routeviews.org|16552|2001:7f8:4::40a8:1|139369|US|arin |TIGGEE, US
+route-views.linx.routeviews.org|34288|2001:7f8:4::85f0:1|146002|CH|ripencc|AS34288 EDU-ZG-CH - Public Schools in the Canton of Zug, CH
+route-views.linx.routeviews.org|37271|2001:7f8:4::9197:1|140067|ZA|afrinic|Workonline, ZA
+route-views.linx.routeviews.org|39122|2001:7f8:4::98d2:1|139935|IE|ripencc|BLACKNIGHT-AS, IE
+route-views.linx.routeviews.org|41695|2001:7f8:4::a2df:1|35552|GB|ripencc|VOSTRON-AS, GB
+route-views.linx.routeviews.org|41805|2001:7f8:4::a34d:1|71069|IQ|ripencc|IQ-SAWADLAND-AS, IQ
+route-views.linx.routeviews.org|41811|2001:7f8:4::a353:1|1|GB|ripencc|CONVERGENCE-GROUP, GB
+route-views.linx.routeviews.org|47787|2001:7f8:4::baab:1|140162|PT|ripencc|EDGOO EDGOO NETWORKS, PT
+route-views.linx.routeviews.org|47957|2001:7f8:4::bb55:1|140766|FR|ripencc|ING-AS, FR
+route-views.linx.routeviews.org|49544|2001:7f8:4::c188:1|51|NL|ripencc|I3DNET, NL
+route-views.linx.routeviews.org|35313|2001:7f8:4::c8ce:1|15|BH|ripencc|BH-INFONAS-ASN, BH
+route-views.linx.routeviews.org|58511|2001:7f8:4::e48f:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.linx.routeviews.org|59605|2001:7f8:4::e8d5:1|141629|BH|ripencc|ZAINGP-AS, BH
+route-views.linx.routeviews.org|62955|2001:7f8:4::f5eb:1|2|US|arin |EBAYMTBB, US
+route-views.linx.routeviews.org|267613|2001:7f8:4::4:155d:1|146747|BR|lacnic |ELETRONET S.A., BR
+route-views.linx.routeviews.org|398465|2001:7f8:4::6:1481:1|143816|US|arin |RACKDOG-LLC, US
+route-views.linx.routeviews.org|3491|2001:7f8:4:1::da3:1|139055|US|arin |BTN-ASN, US
+route-views.linx.routeviews.org|5413|2001:7f8:4:1::1525:1|139600|GB|ripencc|AS5413, GB
+route-views.linx.routeviews.org|5459|2001:7f8:4:1::1553:2|6|GB|ripencc|LINX-AS London interconnection point, GB
+route-views.linx.routeviews.org|6667|2001:7f8:4:1::1a0b:1|140309|FI|ripencc|EUNET-FINLAND, FI
+route-views.linx.routeviews.org|8426|2001:7f8:4:1::20ea:1|36|GB|ripencc|CLARANET-AS ClaraNET LTD, GB
+route-views.linx.routeviews.org|13030|2001:7f8:4:1::32e6:1|140585|CH|ripencc|INIT7, CH
+route-views.linx.routeviews.org|37271|2001:7f8:4:1::9197:1|140067|ZA|afrinic|Workonline, ZA
+route-views.linx.routeviews.org|58511|2001:7f8:4:1::e48f:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.linx.routeviews.org|62955|2001:7f8:4:1::f5eb:1|2|US|arin |EBAYMTBB, US
+route-views.linx.routeviews.org|199524|2001:7f8:4:1:0:3:b64:1|139172|LU|ripencc|GCORE, LU
+route-views.mwix.routeviews.org|19782|206.53.139.23|0|US|arin |INDIANAGIGAPOP, US
+route-views.mwix.routeviews.org|63293|206.53.139.29|1|US|arin |FACEBOOK-OFFNET, US
+route-views.mwix.routeviews.org|19782|2001:504:45:f3e8::16|0|US|arin |INDIANAGIGAPOP, US
+route-views.mwix.routeviews.org|63293|2001:504:45:f3e8::29|1|US|arin |FACEBOOK-OFFNET, US
+route-views.napafrica.routeviews.org|49544|196.60.8.6|8|NL|ripencc|I3DNET, NL
+route-views.napafrica.routeviews.org|327991|196.60.8.55|6|ZA|afrinic|MEGASURF-WIRELESS-INTERNET, ZA
+route-views.napafrica.routeviews.org|37468|196.60.8.60|893984|AO|afrinic|ANGOLA-CABLES, AO
+route-views.napafrica.routeviews.org|328512|196.60.8.113|913355|ZA|afrinic|Backspace-Technologies, ZA
+route-views.napafrica.routeviews.org|3741|196.60.8.126|1878|ZA|afrinic|IS, ZA
+route-views.napafrica.routeviews.org|32653|196.60.8.139|177967|ZA|afrinic|ENETWORKS, ZA
+route-views.napafrica.routeviews.org|3491|196.60.8.152|872328|US|arin |BTN-ASN, US
+route-views.napafrica.routeviews.org|327754|196.60.8.172|27|ZA|afrinic|RMS-Powertronics, ZA
+route-views.napafrica.routeviews.org|37053|196.60.8.179|137|ZA|afrinic|RSAWEB-AS, ZA
+route-views.napafrica.routeviews.org|37497|196.60.8.185|898085|ZA|afrinic|Network-Platforms, ZA
+route-views.napafrica.routeviews.org|2018|196.60.8.216|451|ZA|afrinic|TENET-1, ZA
+route-views.napafrica.routeviews.org|36968|196.60.8.219|28|ZA|afrinic|ECN-AS1, ZA
+route-views.napafrica.routeviews.org|328137|196.60.9.37|171270|ZA|afrinic|Web-Squad-Connect-AS, ZA
+route-views.napafrica.routeviews.org|15133|196.60.9.70|43|US|arin |EDGECAST, US
+route-views.napafrica.routeviews.org|328266|196.60.9.124|877231|ZA|afrinic|Atomic-AS, ZA
+route-views.napafrica.routeviews.org|32653|196.60.9.139|177967|ZA|afrinic|ENETWORKS, ZA
+route-views.napafrica.routeviews.org|328320|196.60.9.155|170785|ZA|afrinic|Kurlec-AS, ZA
+route-views.napafrica.routeviews.org|8674|196.60.9.160|5|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.napafrica.routeviews.org|714|196.60.9.161|12|US|arin |APPLE-ENGINEERING, US
+route-views.napafrica.routeviews.org|714|196.60.9.162|12|US|arin |APPLE-ENGINEERING, US
+route-views.napafrica.routeviews.org|199524|196.60.9.188|879424|LU|ripencc|GCORE, LU
+route-views.napafrica.routeviews.org|327991|196.60.10.48|6|ZA|afrinic|MEGASURF-WIRELESS-INTERNET, ZA
+route-views.napafrica.routeviews.org|16552|196.60.10.62|878630|US|arin |TIGGEE, US
+route-views.napafrica.routeviews.org|57351|196.60.10.174|1|GB|ripencc|HYPR, GB
+route-views.napafrica.routeviews.org|25139|196.60.10.203|31|MZ|ripencc|TVCABO-AS, MZ
+route-views.napafrica.routeviews.org|49544|2001:43f8:6d0::6|9|NL|ripencc|I3DNET, NL
+route-views.napafrica.routeviews.org|36968|2001:43f8:6d0::c|1|ZA|afrinic|ECN-AS1, ZA
+route-views.napafrica.routeviews.org|3491|2001:43f8:6d0::1b|138951|US|arin |BTN-ASN, US
+route-views.napafrica.routeviews.org|327991|2001:43f8:6d0::55|1|ZA|afrinic|MEGASURF-WIRELESS-INTERNET, ZA
+route-views.napafrica.routeviews.org|37468|2001:43f8:6d0::60|144911|AO|afrinic|ANGOLA-CABLES, AO
+route-views.napafrica.routeviews.org|328512|2001:43f8:6d0::113|144410|ZA|afrinic|Backspace-Technologies, ZA
+route-views.napafrica.routeviews.org|3741|2001:43f8:6d0::126|0|ZA|afrinic|IS, ZA
+route-views.napafrica.routeviews.org|32653|2001:43f8:6d0::139|6|ZA|afrinic|ENETWORKS, ZA
+route-views.napafrica.routeviews.org|327754|2001:43f8:6d0::172|4|ZA|afrinic|RMS-Powertronics, ZA
+route-views.napafrica.routeviews.org|2018|2001:43f8:6d0::216|22|ZA|afrinic|TENET-1, ZA
+route-views.napafrica.routeviews.org|328137|2001:43f8:6d0::9:37|141934|ZA|afrinic|Web-Squad-Connect-AS, ZA
+route-views.napafrica.routeviews.org|328206|2001:43f8:6d0::9:66|141934|ZA|afrinic|JAWUG, ZA
+route-views.napafrica.routeviews.org|15133|2001:43f8:6d0::9:70|19|US|arin |EDGECAST, US
+route-views.napafrica.routeviews.org|328266|2001:43f8:6d0::9:124|26473|ZA|afrinic|Atomic-AS, ZA
+route-views.napafrica.routeviews.org|32653|2001:43f8:6d0::9:139|6|ZA|afrinic|ENETWORKS, ZA
+route-views.napafrica.routeviews.org|8674|2001:43f8:6d0::9:160|4|SE|ripencc|NETNOD-IX Netnod Internet Exchange Sverige AB, SE
+route-views.napafrica.routeviews.org|714|2001:43f8:6d0::9:161|6|US|arin |APPLE-ENGINEERING, US
+route-views.napafrica.routeviews.org|714|2001:43f8:6d0::9:162|6|US|arin |APPLE-ENGINEERING, US
+route-views.napafrica.routeviews.org|199524|2001:43f8:6d0::9:188|144757|LU|ripencc|GCORE, LU
+route-views.napafrica.routeviews.org|327991|2001:43f8:6d0::10:48|1|ZA|afrinic|MEGASURF-WIRELESS-INTERNET, ZA
+route-views.napafrica.routeviews.org|16552|2001:43f8:6d0::10:62|140344|US|arin |TIGGEE, US
+route-views.napafrica.routeviews.org|57351|2001:43f8:6d0::10:174|1|GB|ripencc|HYPR, GB
+route-views.nwax.routeviews.org|1798|198.32.195.23|885661|US|arin |OREGON, US
+route-views.nwax.routeviews.org|6423|198.32.195.30|874708|US|arin |DF-BVR01, US
+route-views.nwax.routeviews.org|32869|198.32.195.32|61|US|arin |SILVERSTAR-NET, US
+route-views.nwax.routeviews.org|2044|198.32.195.35|30|US|arin |DF-PTL01, US
+route-views.nwax.routeviews.org|32261|198.32.195.85|7|US|arin |SUBSPACE, US
+route-views.nwax.routeviews.org|1798|2620:124:2000::23|146497|US|arin |OREGON, US
+route-views.nwax.routeviews.org|32261|2620:124:2000::85|5|US|arin |SUBSPACE, US
+route-views.perth.routeviews.org|7606|198.32.212.1|103207|AU|apnic |WAIA-AP Western Australian Internet Association, AU
+route-views.perth.routeviews.org|58511|198.32.212.5|887236|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|7606|198.32.212.254|103118|AU|apnic |WAIA-AP Western Australian Internet Association, AU
+route-views.perth.routeviews.org|58511|218.100.52.56|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|49544|218.100.52.60|7|NL|ripencc|I3DNET, NL
+route-views.perth.routeviews.org|62955|218.100.52.160|22|US|arin |EBAYMTBB, US
+route-views.perth.routeviews.org|9268|218.100.54.39|230275|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views.perth.routeviews.org|58511|218.100.54.54|887243|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|9268|218.100.76.8|888961|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views.perth.routeviews.org|58511|218.100.76.10|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|140627|218.100.76.17|899256|AU|apnic |ONEQODEASSETS-AS-AP OneQode Gaming Carrier, AU
+route-views.perth.routeviews.org|58511|218.100.76.47|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|136557|218.100.76.80|874919|AU|apnic |HOST-AS-AP Host Universal Pty Ltd, AU
+route-views.perth.routeviews.org|58511|218.100.78.35|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|62955|218.100.78.125|21|US|arin |EBAYMTBB, US
+route-views.perth.routeviews.org|7606|2001:7fa:11::1db6:0:1|52839|AU|apnic |WAIA-AP Western Australian Internet Association, AU
+route-views.perth.routeviews.org|58511|2001:7fa:11::e48f:0:1|141574|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|58511|2001:7fa:11:1:0:e48f:0:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|62955|2001:7fa:11:1:0:f5eb:0:1|2|US|arin |EBAYMTBB, US
+route-views.perth.routeviews.org|9268|2001:7fa:11:2:0:2434:0:1|142378|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views.perth.routeviews.org|58511|2001:7fa:11:2:0:e48f:0:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|58511|2001:7fa:11:2:0:e48f:0:2|141566|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|136557|2001:7fa:11:2:2:156d:0:1|141966|AU|apnic |HOST-AS-AP Host Universal Pty Ltd, AU
+route-views.perth.routeviews.org|9268|2001:7fa:11:3:0:2434:0:1|142289|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views.perth.routeviews.org|58511|2001:7fa:11:3:0:e48f:0:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|49544|2001:7fa:11:4:0:c188:0:1|1|NL|ripencc|I3DNET, NL
+route-views.perth.routeviews.org|58511|2001:7fa:11:4:0:e48f:0:1|141567|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.perth.routeviews.org|62955|2001:7fa:11:4:0:f5eb:0:1|2|US|arin |EBAYMTBB, US
+route-views.phoix.routeviews.org|135423|198.32.172.125|6|PH|apnic |TIM-GNS-AS-AP Total Information Management Corporation, PH
+route-views.phoix.routeviews.org|137818|198.32.172.129|2|PH|apnic |PANTELCO-AS-AP Panay Telephone Corporation, PH
+route-views.rio.routeviews.org|267613|45.6.52.62|902123|BR|lacnic |ELETRONET S.A., BR
+route-views.rio.routeviews.org|52320|45.6.52.193|889119|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.rio.routeviews.org|268207|45.6.53.103|8|BR|lacnic |RVT SERVICOS DE TELECOMUNICACOES LTDA, BR
+route-views.rio.routeviews.org|52720|45.6.53.106|904564|BR|lacnic |WEBFOCO TELECOMUNICACOES LTDA, BR
+route-views.rio.routeviews.org|264479|45.6.53.167|897064|BR|lacnic |Turbozone Internet, BR
+route-views.rio.routeviews.org|268430|45.6.53.210|901182|BR|lacnic |L&R Solucoes em Telecomunicacoes e Servicos Ltda, BR
+route-views.rio.routeviews.org|7195|45.6.53.236|3744|CO|lacnic |EDGEUNO SAS, CO
+route-views.rio.routeviews.org|199524|45.6.54.171|880771|LU|ripencc|GCORE, LU
+route-views.rio.routeviews.org|267613|2001:12f8:0:2::62|146703|BR|lacnic |ELETRONET S.A., BR
+route-views.rio.routeviews.org|263009|2001:12f8:0:2::186|130987|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views.rio.routeviews.org|52320|2001:12f8:0:2::193|143798|CO|lacnic |GlobeNet Cabos Submarinos Colombia, S.A.S., CO
+route-views.rio.routeviews.org|268207|2001:12f8:0:2::53:103|2|BR|lacnic |RVT SERVICOS DE TELECOMUNICACOES LTDA, BR
+route-views.rio.routeviews.org|52720|2001:12f8:0:2::53:106|152646|BR|lacnic |WEBFOCO TELECOMUNICACOES LTDA, BR
+route-views.rio.routeviews.org|264479|2001:12f8:0:2::53:167|74626|BR|lacnic |Turbozone Internet, BR
+route-views.rio.routeviews.org|268430|2001:12f8:0:2::53:210|0|BR|lacnic |L&R Solucoes em Telecomunicacoes e Servicos Ltda, BR
+route-views.rio.routeviews.org|7195|2001:12f8:0:2::53:236|1861|CO|lacnic |EDGEUNO SAS, CO
+route-views.rio.routeviews.org|199524|2001:12f8:0:2::54:171|141293|LU|ripencc|GCORE, LU
+route-views.routeviews.org|3356|4.68.4.46|872806|US|arin |LEVEL3, US
+route-views.routeviews.org|7018|12.0.1.63|873954|US|arin |ATT-INTERNET4, US
+route-views.routeviews.org|57866|37.139.139.17|875291|NL|ripencc|FUSIX-AS, NL
+route-views.routeviews.org|6939|64.71.137.241|903067|US|arin |HURRICANE, US
+route-views.routeviews.org|3257|89.149.178.10|874252|US|ripencc|GTT-BACKBONE GTT, US
+route-views.routeviews.org|49788|91.218.184.60|878092|NO|ripencc|NEXTHOP, NO
+route-views.routeviews.org|8283|94.142.247.3|879443|NL|ripencc|COLOCLUE-AS Netwerkvereniging Coloclue, Amsterdam, Netherlands, NL
+route-views.routeviews.org|1351|132.198.255.253|914709|US|arin |UVM-EDU-AS, US
+route-views.routeviews.org|701|137.39.3.55|874959|US|arin |UUNET, US
+route-views.routeviews.org|20130|140.192.8.16|905294|US|arin |DEPAUL, US
+route-views.routeviews.org|1239|144.228.241.130|55430|US|arin |SPRINTLINK, US
+route-views.routeviews.org|852|154.11.12.212|875403|CA|arin |TELUS Communications, CA
+route-views.routeviews.org|4901|162.250.137.254|878110|US|arin |CAAREN, US
+route-views.routeviews.org|53767|162.251.163.2|872246|US|arin |ICASTCENTER, US
+route-views.routeviews.org|3333|193.0.0.56|887922|NL|ripencc|RIPE-NCC-AS Reseaux IP Europeens Network Coordination Centre RIPE NCC, NL
+route-views.routeviews.org|3267|194.85.40.15|883018|RU|ripencc|RUNNET, RU
+route-views.routeviews.org|20080|198.32.252.33|19347|US|arin |AMPATH, US
+route-views.routeviews.org|24441|202.93.8.242|4242|KH|apnic |CITYLINK-AS-KH CityLink Corporation, LTD, KH
+route-views.routeviews.org|2497|202.232.0.2|888412|JP|apnic |IIJ Internet Initiative Japan Inc., JP
+route-views.routeviews.org|1221|203.62.252.83|881764|AU|apnic |ASN-TELSTRA Telstra Corporation Ltd, AU
+route-views.routeviews.org|7660|203.181.248.168|719036|JP|apnic |APAN-JP Asia Pacific Advanced Network - Japan, JP
+route-views.routeviews.org|3561|206.24.210.80|872917|US|arin |CENTURYLINK-LEGACY-SAVVIS, US
+route-views.routeviews.org|3549|208.51.134.254|874297|US|arin |LVLT-3549, US
+route-views.routeviews.org|19214|208.74.64.40|356979|US|arin |CENTAURI-COMMUNICATIONS-COM, US
+route-views.routeviews.org|101|209.124.176.223|877991|US|arin |WASH-NSF-AS, US
+route-views.routeviews.org|20912|212.66.96.126|878088|IT|ripencc|ASN-PANSERVICE, IT
+route-views.routeviews.org|3303|217.192.89.50|901665|CH|ripencc|SWISSCOM Swisscom Switzerland Ltd, CH
+route-views.routeviews.org|7575|2001:388:1::16|6448|AU|apnic |AARNET-AS-AP Australian Academic and Research Network AARNet, AU
+route-views.routeviews.org|3303|2001:918:0:5::1|146107|CH|ripencc|SWISSCOM Swisscom Switzerland Ltd, CH
+route-views.routeviews.org|101|2001:1860::223|140830|US|arin |WASH-NSF-AS, US
+route-views.routeviews.org|20912|2001:40D0::126|144790|IT|ripencc|ASN-PANSERVICE, IT
+route-views.routeviews.org|24441|2404:CC00:1::1|137072|KH|apnic |CITYLINK-AS-KH CityLink Corporation, LTD, KH
+route-views.routeviews.org|701|2600:803::15|139514|US|arin |UUNET, US
+route-views.routeviews.org|53767|2605:9D00::2|4|US|arin |ICASTCENTER, US
+route-views.routeviews.org|49788|2A02:D140:1::60|144557|NO|ripencc|NEXTHOP, NO
+route-views.saopaulo.routeviews.org|28571|187.16.216.20|899303|BR|lacnic |UNIVERSIDADE DE SAO PAULO, BR
+route-views.saopaulo.routeviews.org|14026|187.16.216.56|2|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|28589|187.16.216.228|17|BR|lacnic |Convex Internet Solutions, BR
+route-views.saopaulo.routeviews.org|28329|187.16.216.232|887286|BR|lacnic |G8 NETWORKS LTDA, BR
+route-views.saopaulo.routeviews.org|26162|187.16.216.254|170743|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|28329|187.16.217.27|2896|BR|lacnic |G8 NETWORKS LTDA, BR
+route-views.saopaulo.routeviews.org|53013|187.16.217.113|876380|BR|lacnic |W I X NET DO BRASIL LTDA - ME, BR
+route-views.saopaulo.routeviews.org|263047|187.16.217.197|36889|BR|lacnic |Speednet Provedor de Acesso a Internet Ltda, BR
+route-views.saopaulo.routeviews.org|52888|187.16.218.21|5|BR|lacnic |UNIVERSIDADE FEDERAL DE SAO CARLOS, BR
+route-views.saopaulo.routeviews.org|53237|187.16.218.52|197|BR|lacnic |TELECOMUNICACOES BRASILEIRAS S. A. - TELEBRAS, BR
+route-views.saopaulo.routeviews.org|53013|187.16.218.235|873117|BR|lacnic |W I X NET DO BRASIL LTDA - ME, BR
+route-views.saopaulo.routeviews.org|52940|187.16.219.84|48|BR|lacnic |NEMESIS Provedor de Acesso as Redes de Comunicacao, BR
+route-views.saopaulo.routeviews.org|52863|187.16.219.162|894136|BR|lacnic |UPX TECHNOLOGIES, BR
+route-views.saopaulo.routeviews.org|28283|187.16.220.93|1028|BR|lacnic |Adylnet Telecom, BR
+route-views.saopaulo.routeviews.org|19551|187.16.220.160|616|US|arin |INCAPSULA, US
+route-views.saopaulo.routeviews.org|53240|187.16.220.232|0|BR|lacnic |Net Onze Provedor de Acesso a Internet Eireli, BR
+route-views.saopaulo.routeviews.org|262612|187.16.221.92|0|BR|lacnic |Piotr Piwowar, BR
+route-views.saopaulo.routeviews.org|262757|187.16.223.117|32|BR|lacnic |Insidesign Tecnologia Ltda EPP, BR
+route-views.saopaulo.routeviews.org|26162|187.16.223.253|167086|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|26162|187.16.223.254|167949|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|28571|2001:12f8::20|148021|BR|lacnic |UNIVERSIDADE DE SAO PAULO, BR
+route-views.saopaulo.routeviews.org|28589|2001:12f8::228|7|BR|lacnic |Convex Internet Solutions, BR
+route-views.saopaulo.routeviews.org|28329|2001:12f8::232|144305|BR|lacnic |G8 NETWORKS LTDA, BR
+route-views.saopaulo.routeviews.org|20121|2001:12f8::252|0|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|26162|2001:12f8::253|65634|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.saopaulo.routeviews.org|26162|2001:12f8::254|65609|BR|lacnic |Nucleo de Inf. e Coord. do Ponto BR - NIC., BR
+route-views.sfmix.routeviews.org|12276|206.197.187.1|0|US|arin |SFMIX-MGMT, US
+route-views.sfmix.routeviews.org|10310|206.197.187.9|275|US|arin |YAHOO-1, US
+route-views.sfmix.routeviews.org|10310|206.197.187.24|275|US|arin |YAHOO-1, US
+route-views.sfmix.routeviews.org|397715|206.197.187.30|1|US|arin |KPFA, US
+route-views.sfmix.routeviews.org|47787|206.197.187.81|876144|PT|ripencc|EDGOO EDGOO NETWORKS, PT
+route-views.sfmix.routeviews.org|397131|206.197.187.85|906463|CA|arin |EVERYTHINK-397131, CA
+route-views.sfmix.routeviews.org|49544|206.197.187.87|244|NL|ripencc|I3DNET, NL
+route-views.sfmix.routeviews.org|46997|206.197.187.100|17|US|arin |NATOLAB, US
+route-views.sfmix.routeviews.org|34927|206.197.187.106|903464|CH|ripencc|IFOG-GMBH, CH
+route-views.sfmix.routeviews.org|63055|206.197.187.253|108175|US|arin |SFMIX-RS, US
+route-views.sfmix.routeviews.org|63055|206.197.187.254|100169|US|arin |SFMIX-RS, US
+route-views.sfmix.routeviews.org|10310|2001:504:30::ba01:310:1|124|US|arin |YAHOO-1, US
+route-views.sfmix.routeviews.org|10310|2001:504:30::ba01:310:2|124|US|arin |YAHOO-1, US
+route-views.sfmix.routeviews.org|12276|2001:504:30::ba01:2276:1|0|US|arin |SFMIX-MGMT, US
+route-views.sfmix.routeviews.org|34927|2001:504:30::ba03:4927:1|0|CH|ripencc|IFOG-GMBH, CH
+route-views.sfmix.routeviews.org|46997|2001:504:30::ba04:6997:1|20|US|arin |NATOLAB, US
+route-views.sfmix.routeviews.org|47787|2001:504:30::ba04:7787:1|139150|PT|ripencc|EDGOO EDGOO NETWORKS, PT
+route-views.sfmix.routeviews.org|49544|2001:504:30::ba04:9544:1|68|NL|ripencc|I3DNET, NL
+route-views.sfmix.routeviews.org|63055|2001:504:30::ba06:3055:1|54683|US|arin |SFMIX-RS, US
+route-views.sfmix.routeviews.org|63055|2001:504:30::ba06:3055:2|2957|US|arin |SFMIX-RS, US
+route-views.sfmix.routeviews.org|397131|2001:504:30::ba39:7131:1|144465|CA|arin |EVERYTHINK-397131, CA
+route-views.sfmix.routeviews.org|397715|2001:504:30::ba39:7715:1|1|US|arin |KPFA, US
+route-views.sg.routeviews.org|132337|27.111.228.134|908308|SG|apnic |ANSPL-AS-AP ALPHA NETWORKS SOLUTION PTE. LTD., SG
+route-views.sg.routeviews.org|9268|27.111.230.65|888961|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views.sg.routeviews.org|137491|27.111.229.238|174|BD|apnic |PEEREX-NET-AS-AP PEEREX NETWORKS LTD.IIG, BD
+route-views.sg.routeviews.org|62955|27.111.228.162|23|US|arin |EBAYMTBB, US
+route-views.sg.routeviews.org|17639|27.111.229.71|390|PH|apnic |CONVERGE-AS Converge ICT Solutions Inc., PH
+route-views.sg.routeviews.org|38880|27.111.228.169|919095|AU|apnic |M21-AS-AP Micron21 Datacentre Pty Ltd, AU
+route-views.sg.routeviews.org|199524|27.111.228.222|889548|LU|ripencc|GCORE, LU
+route-views.sg.routeviews.org|137367|27.111.229.148|1129|ID|apnic |IFORTE-NAP-AS-ID PT iForte Solusi Infotek, ID
+route-views.sg.routeviews.org|58952|27.111.229.109|169431|MM|apnic |FRONTIIRCOLTD-MM Frontiir Co. Ltd, MM
+route-views.sg.routeviews.org|16552|27.111.229.252|884506|US|arin |TIGGEE, US
+route-views.sg.routeviews.org|4637|27.111.228.4|72052|HK|apnic |ASN-TELSTRA-GLOBAL Telstra Global, HK
+route-views.sg.routeviews.org|18106|27.111.228.6|909832|SG|apnic |VIEWQWEST-SG-AP Viewqwest Pte Ltd, SG
+route-views.sg.routeviews.org|58682|27.111.228.13|1088|BD|apnic |LEVEL3-BD Level3 Carrier Ltd., BD
+route-views.sg.routeviews.org|4844|27.111.228.26|9|SG|apnic |SUPERINTERNET-AS-AP SuperInternet ACCESS Pte Ltd, SG
+route-views.sg.routeviews.org|3491|27.111.228.43|876155|US|arin |BTN-ASN, US
+route-views.sg.routeviews.org|38182|27.111.228.61|216|MY|apnic |EXTREMEBB-AS-MY Extreme Broadband - Total Broadband Experience, MY
+route-views.sg.routeviews.org|7713|27.111.228.77|888580|ID|apnic |TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID
+route-views.sg.routeviews.org|6762|27.111.228.111|171428|IT|ripencc|SEABONE-NET TELECOM ITALIA SPARKLE S.p.A., IT
+route-views.sg.routeviews.org|9583|27.111.228.121|2965|IN|apnic |SIFY-AS-IN Sify Limited, IN
+route-views.sg.routeviews.org|24115|27.111.228.122|123620|SG|apnic |ASN-EQIX-MLPE Equinix, SG
+route-views.sg.routeviews.org|24115|27.111.228.123|122811|SG|apnic |ASN-EQIX-MLPE Equinix, SG
+route-views.sg.routeviews.org|7713|27.111.228.155|888579|ID|apnic |TELKOMNET-AS-AP PT Telekomunikasi Indonesia, ID
+route-views.sg.routeviews.org|24482|27.111.228.159|884573|SG|apnic |SGGS-AS-AP SG.GS, SG
+route-views.sg.routeviews.org|45494|27.111.228.161|6|NP|apnic |LAHAI-SG NREN ASN for Misc. Root Servers and Community, NP
+route-views.sg.routeviews.org|136168|27.111.228.170|304|MM|apnic |CAMPANA-AS-AP Campana MYTHIC Co. Ltd., MM
+route-views.sg.routeviews.org|59318|27.111.228.197|28501|KH|apnic |SINET-KH SINET Fiber One, Cambodias Fastest Broadband Service., KH
+route-views.sg.routeviews.org|14061|27.111.228.201|884696|US|arin |DIGITALOCEAN-ASN, US
+route-views.sg.routeviews.org|9902|27.111.228.211|177461|KH|apnic |NEOCOMISP-KH-AP NEOCOMISP LIMITED, IPTX Transit and Network Service Provider in Cambodia., KH
+route-views.sg.routeviews.org|4775|27.111.228.226|818|PH|apnic |GLOBE-TELECOM-AS Globe Telecoms, PH
+route-views.sg.routeviews.org|59605|27.111.228.227|501|BH|ripencc|ZAINGP-AS, BH
+route-views.sg.routeviews.org|134363|27.111.228.231|3|SG|apnic |EZIT-AS-AP EZIT Solutions Pte Ltd, SG
+route-views.sg.routeviews.org|58601|27.111.228.248|195|BD|apnic |AAMRA-ATL-BD Aamra technologies limited, BD
+route-views.sg.routeviews.org|63516|27.111.229.15|127|ID|apnic |TRANSIX-AS-NET Transhybrid Internet Xchange, ID
+route-views.sg.routeviews.org|8529|27.111.229.38|1373|OM|ripencc|OMANTEL-AS Sultanate of Oman, OM
+route-views.sg.routeviews.org|24516|27.111.229.111|888010|AU|apnic |VIRTUTEL-AS-AP Virtutel Pty Ltd, AU
+route-views.sg.routeviews.org|8220|27.111.229.123|874958|GB|ripencc|COLT COLT Technology Services Group Limited, GB
+route-views.sg.routeviews.org|58511|27.111.229.175|887238|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.sg.routeviews.org|17639|27.111.229.239|410|PH|apnic |CONVERGE-AS Converge ICT Solutions Inc., PH
+route-views.siex.routeviews.org|50839|185.1.206.1|10|IT|ripencc|SIEX-IXP Southern Internet Exchange - AS50839, IT
+route-views.siex.routeviews.org|212271|185.1.206.3|9|IT|ripencc|C1V-HOSTING-FIBER, IT
+route-views.siex.routeviews.org|50839|2001:7f8:112::1|76|IT|ripencc|SIEX-IXP Southern Internet Exchange - AS50839, IT
+route-views.siex.routeviews.org|212271|2001:7f8:112::3|76|IT|ripencc|C1V-HOSTING-FIBER, IT
+route-views.soxrs.routeviews.org|13004|185.1.27.1|158346|RS|ripencc|SOX, RS
+route-views.soxrs.routeviews.org|13004|185.1.27.5|158346|RS|ripencc|SOX, RS
+route-views.soxrs.routeviews.org|9009|185.1.27.77|13|GB|ripencc|M247, GB
+route-views.soxrs.routeviews.org|13004|2001:7f8:1e::1|58981|RS|ripencc|SOX, RS
+route-views.soxrs.routeviews.org|13004|2001:7f8:1e::5|58981|RS|ripencc|SOX, RS
+route-views.soxrs.routeviews.org|9009|2001:7f8:1e::77|4|GB|ripencc|M247, GB
+route-views.sydney.routeviews.org|63956|45.127.172.2|66260|AU|apnic |COLO-AS-AP Colocation Australia Pty Ltd, AU
+route-views.sydney.routeviews.org|4739|45.127.172.20|906015|AU|apnic |INTERNODE-AS Internode Pty Ltd, AU
+route-views.sydney.routeviews.org|9266|45.127.172.38|155485|HK|apnic |FIVEWAYS-HK Fiveways International Limited, HK
+route-views.sydney.routeviews.org|7575|45.127.172.46|894101|AU|apnic |AARNET-AS-AP Australian Academic and Research Network AARNet, AU
+route-views.sydney.routeviews.org|63920|45.127.172.49|558522|AU|apnic |VOSTRO-AS-AP VostroNet, AU
+route-views.sydney.routeviews.org|4826|45.127.172.74|904764|AU|apnic |VOCUS-BACKBONE-AS Vocus Connect International Backbone, AU
+route-views.sydney.routeviews.org|199524|45.127.172.78|886238|LU|ripencc|GCORE, LU
+route-views.sydney.routeviews.org|3491|45.127.172.80|878114|US|arin |BTN-ASN, US
+route-views.sydney.routeviews.org|58511|45.127.172.149|887238|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views.sydney.routeviews.org|24516|45.127.172.196|888011|AU|apnic |VIRTUTEL-AS-AP Virtutel Pty Ltd, AU
+route-views.sydney.routeviews.org|714|45.127.172.208|1025|US|arin |APPLE-ENGINEERING, US
+route-views.sydney.routeviews.org|38880|45.127.172.212|0|AU|apnic |M21-AS-AP Micron21 Datacentre Pty Ltd, AU
+route-views.sydney.routeviews.org|62955|45.127.172.221|22|US|arin |EBAYMTBB, US
+route-views.sydney.routeviews.org|62955|45.127.172.222|22|US|arin |EBAYMTBB, US
+route-views.sydney.routeviews.org|135895|45.127.173.40|910454|AU|apnic |CT-AS Centorrino Technologies Pty Ltd, AU
+route-views.sydney.routeviews.org|398465|45.127.173.76|905086|US|arin |RACKDOG-LLC, US
+route-views.telxatl.routeviews.org|19151|198.32.132.12|880315|US|arin |BBO-1, US
+route-views.telxatl.routeviews.org|4181|198.32.132.28|874474|US|arin |TDS-AS, US
+route-views.telxatl.routeviews.org|6939|198.32.132.75|902377|US|arin |HURRICANE, US
+route-views.telxatl.routeviews.org|53274|198.32.132.84|24|US|arin |SKYRUNNER-INC, US
+route-views.telxatl.routeviews.org|33132|198.32.132.88|464|US|arin |FIBERNET-DIRECT, US
+route-views.telxatl.routeviews.org|15008|198.32.132.106|7|US|arin |AISG, US
+route-views.telxatl.routeviews.org|16700|198.32.132.114|15|US|arin |ROSENET-1, US
+route-views.telxatl.routeviews.org|13760|198.32.132.129|878631|US|arin |UNITI-FIBER, US
+route-views.telxatl.routeviews.org|6082|198.32.132.152|876116|US|arin |IPIFONY-AS, US
+route-views.telxatl.routeviews.org|53828|198.32.132.155|876519|US|arin |NITEL, US
+route-views.telxatl.routeviews.org|26744|198.32.132.167|365|US|arin |PCL, US
+route-views.telxatl.routeviews.org|23367|198.32.132.201|167597|US|arin |AS-ADN, US
+route-views.telxatl.routeviews.org|199524|198.32.132.241|875237|LU|ripencc|GCORE, LU
+route-views.uaeix.routeviews.org|48237|185.1.8.3|1513|SA|ripencc|MOBILY-AS, SA
+route-views.uaeix.routeviews.org|42473|185.1.8.11|915938|AT|ripencc|AS-ANEXIA ANEXIA Internetdienstleistungs GmbH, AT
+route-views.uaeix.routeviews.org|4455|185.1.8.13|6|GB|ripencc|BSO, GB
+route-views.uaeix.routeviews.org|57187|185.1.8.17|105|AE|ripencc|DATAMENA-ASN, AE
+route-views.uaeix.routeviews.org|60924|185.1.8.23|913821|IE|ripencc|ORIXCOM, IE
+route-views.uaeix.routeviews.org|29357|185.1.8.29|298|KW|ripencc|WATANIYATELECOM-AS, KW
+route-views.uaeix.routeviews.org|62458|185.1.8.45|2|AE|ripencc|MBC-AS MBC FZ LLC, AE
+route-views.uaeix.routeviews.org|51375|185.1.8.53|0|BH|ripencc|VIVA, BH
+route-views.uaeix.routeviews.org|49544|185.1.8.59|17|NL|ripencc|I3DNET, NL
+route-views.uaeix.routeviews.org|21859|185.1.8.61|50|US|arin |ZEN-ECN, US
+route-views.uaeix.routeviews.org|60924|185.1.8.65|913821|IE|ripencc|ORIXCOM, IE
+route-views.uaeix.routeviews.org|21245|185.1.8.68|1|TR|ripencc|MEDIANOVA-CDN, TR
+route-views.uaeix.routeviews.org|35753|185.1.8.85|670|SA|ripencc|ITC ITC AS number, SA
+route-views.uaeix.routeviews.org|49832|185.1.8.103|0|AE|ripencc|AS-QBIC, AE
+route-views.uaeix.routeviews.org|4455|2001:7f8:73::1167:0:1|2|GB|ripencc|BSO, GB
+route-views.uaeix.routeviews.org|21245|2001:7f8:73::52fd:0:1|0|TR|ripencc|MEDIANOVA-CDN, TR
+route-views.uaeix.routeviews.org|21859|2001:7f8:73::5563:0:1|10|US|arin |ZEN-ECN, US
+route-views.uaeix.routeviews.org|29357|2001:7f8:73::72ad:0:1|11|KW|ripencc|WATANIYATELECOM-AS, KW
+route-views.uaeix.routeviews.org|35753|2001:7f8:73::8ba9:0:2|51|SA|ripencc|ITC ITC AS number, SA
+route-views.uaeix.routeviews.org|48237|2001:7f8:73::8beb:0:1|115|SA|ripencc|MOBILY-AS, SA
+route-views.uaeix.routeviews.org|42473|2001:7f8:73::a5e9:0:1|146704|AT|ripencc|AS-ANEXIA ANEXIA Internetdienstleistungs GmbH, AT
+route-views.uaeix.routeviews.org|49544|2001:7f8:73::c188:0:1|13|NL|ripencc|I3DNET, NL
+route-views.uaeix.routeviews.org|49832|2001:7f8:73::c2a8:0:3|0|AE|ripencc|AS-QBIC, AE
+route-views.uaeix.routeviews.org|57187|2001:7f8:73::df63:0:2|2|AE|ripencc|DATAMENA-ASN, AE
+route-views.uaeix.routeviews.org|60924|2001:7f8:73::edfc:0:1|145384|IE|ripencc|ORIXCOM, IE
+route-views.uaeix.routeviews.org|60924|2001:7f8:73::edfc:0:2|145384|IE|ripencc|ORIXCOM, IE
+route-views.uaeix.routeviews.org|62458|2001:7f8:73::f3fa:0:1|0|AE|ripencc|MBC-AS MBC FZ LLC, AE
+route-views.wide.routeviews.org|4777|202.249.2.20|4|JP|apnic |APNIC-NSPIXP2-AS Asia Pacific Network Information Centre, JP
+route-views.wide.routeviews.org|2500|202.249.2.83|741|JP|apnic |WIDE-BB WIDE Project, JP
+route-views.wide.routeviews.org|7500|202.249.2.86|909694|JP|apnic |M-ROOT-DNS WIDE Project, JP
+route-views.wide.routeviews.org|2497|202.249.2.169|888124|JP|apnic |IIJ Internet Initiative Japan Inc., JP
+route-views2.routeviews.org|7018|12.0.1.63|873953|US|arin |ATT-INTERNET4, US
+route-views2.routeviews.org|57866|37.139.139.17|875291|NL|ripencc|FUSIX-AS, NL
+route-views2.routeviews.org|22652|45.61.0.85|878511|CA|arin |FIBRENOIRE-INTERNET, CA
+route-views2.routeviews.org|1299|62.115.128.137|0|SE|ripencc|TWELVE99 Arelion, fka Telia Carrier, SE
+route-views2.routeviews.org|6939|64.71.137.241|903067|US|arin |HURRICANE, US
+route-views2.routeviews.org|8492|85.114.0.217|894388|RU|ripencc|OBIT-AS OBIT Ltd., RU
+route-views2.routeviews.org|57463|87.121.64.4|399267|BG|ripencc|NETIX, BG
+route-views2.routeviews.org|3257|89.149.178.10|874252|US|ripencc|GTT-BACKBONE GTT, US
+route-views2.routeviews.org|49788|91.218.184.60|878092|NO|ripencc|NEXTHOP, NO
+route-views2.routeviews.org|31019|91.228.151.1|885556|NL|ripencc|MEANIE Meanie Heavy Industries, NL
+route-views2.routeviews.org|34224|94.156.252.18|880494|BG|ripencc|NETERRA-AS, BG
+route-views2.routeviews.org|11686|96.4.0.55|900448|US|arin |ENA, US
+route-views2.routeviews.org|2914|129.250.1.71|874437|US|arin |NTT-LTD-2914, US
+route-views2.routeviews.org|701|137.39.3.55|874959|US|arin |UUNET, US
+route-views2.routeviews.org|2152|137.164.16.84|876797|US|arin |CSUNET-NW, US
+route-views2.routeviews.org|20130|140.192.8.16|905294|US|arin |DEPAUL, US
+route-views2.routeviews.org|1239|144.228.241.130|55430|US|arin |SPRINTLINK, US
+route-views2.routeviews.org|3130|147.28.7.1|874882|EE|ripencc|RGNET-SEA RGnet Seattle Westin, EE
+route-views2.routeviews.org|3130|147.28.7.2|874883|EE|ripencc|RGNET-SEA RGnet Seattle Westin, EE
+route-views2.routeviews.org|53767|162.251.163.2|872246|US|arin |ICASTCENTER, US
+route-views2.routeviews.org|11537|163.253.3.14|22126|US|arin |INTERNET2-RESEARCH-EDU, US
+route-views2.routeviews.org|3741|168.209.255.56|880022|ZA|afrinic|IS, ZA
+route-views2.routeviews.org|5413|194.153.0.253|876371|GB|ripencc|AS5413, GB
+route-views2.routeviews.org|1403|198.58.198.252|881176|CA|arin |EBOX, CA
+route-views2.routeviews.org|293|198.129.33.85|905060|US|arin |ESNET, US
+route-views2.routeviews.org|18106|202.73.40.45|909839|SG|apnic |VIEWQWEST-SG-AP Viewqwest Pte Ltd, SG
+route-views2.routeviews.org|24441|202.93.8.242|4242|KH|apnic |CITYLINK-AS-KH CityLink Corporation, LTD, KH
+route-views2.routeviews.org|2497|202.232.0.3|888411|JP|apnic |IIJ Internet Initiative Japan Inc., JP
+route-views2.routeviews.org|1221|203.62.252.83|881757|AU|apnic |ASN-TELSTRA Telstra Corporation Ltd, AU
+route-views2.routeviews.org|7660|203.181.248.168|719036|JP|apnic |APAN-JP Asia Pacific Advanced Network - Japan, JP
+route-views2.routeviews.org|23673|203.189.128.233|921507|KH|apnic |ONLINE-AS Cogetel Online, Cambodia, ISP, KH
+route-views2.routeviews.org|3561|206.24.210.80|872917|US|arin |CENTURYLINK-LEGACY-SAVVIS, US
+route-views2.routeviews.org|3549|208.51.134.246|873860|US|arin |LVLT-3549, US
+route-views2.routeviews.org|3549|208.51.134.255|874536|US|arin |LVLT-3549, US
+route-views2.routeviews.org|20912|212.66.96.126|878088|IT|ripencc|ASN-PANSERVICE, IT
+route-views2.routeviews.org|13030|213.144.128.203|878177|CH|ripencc|INIT7, CH
+route-views2.routeviews.org|3303|217.192.89.50|901665|CH|ripencc|SWISSCOM Swisscom Switzerland Ltd, CH
+route-views2.saopaulo.routeviews.org|28352|187.16.209.23|74|BR|lacnic |NETSPEED LTDA, BR
+route-views2.saopaulo.routeviews.org|266925|187.16.209.75|3139|BR|lacnic |UPIX NETWORKS, BR
+route-views2.saopaulo.routeviews.org|28352|187.16.209.149|40|BR|lacnic |NETSPEED LTDA, BR
+route-views2.saopaulo.routeviews.org|61595|187.16.210.50|888993|BR|lacnic |TELIC TECHNOLOGIES, BR
+route-views2.saopaulo.routeviews.org|52814|187.16.210.177|900021|BR|lacnic |INTERNET PLAY LTDA, BR
+route-views2.saopaulo.routeviews.org|264311|187.16.212.147|7|BR|lacnic |Plug Supernet Telecon Servicos de Informatica Ltda, BR
+route-views2.saopaulo.routeviews.org|268560|187.16.213.13|6|BR|lacnic |VIPTELECOM INTERNET BANDA LARGA EIRELI - ME, BR
+route-views2.saopaulo.routeviews.org|52694|187.16.216.13|837410|BR|lacnic |NEXSUL TELECOM LTDA, BR
+route-views2.saopaulo.routeviews.org|266437|187.16.216.58|888755|BR|lacnic |Rodrigo Fernandes Miniello - ME, BR
+route-views2.saopaulo.routeviews.org|13786|187.16.217.161|163126|US|arin |SEABRAS-1, US
+route-views2.saopaulo.routeviews.org|7195|187.16.217.238|8247|CO|lacnic |EDGEUNO SAS, CO
+route-views2.saopaulo.routeviews.org|267056|187.16.218.12|66|BR|lacnic |EVEREST RIDGE CONSULTORIA EM REDES DE COM LTDA, BR
+route-views2.saopaulo.routeviews.org|267279|187.16.218.47|4|BR|lacnic |RIVALDO VITURINO NUNES BORGES - ME, BR
+route-views2.saopaulo.routeviews.org|268207|187.16.218.81|8|BR|lacnic |RVT SERVICOS DE TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|268976|187.16.218.138|900179|BR|lacnic |Weclix Telecom SA, BR
+route-views2.saopaulo.routeviews.org|263009|187.16.218.226|408281|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views2.saopaulo.routeviews.org|61832|187.16.219.20|895096|BR|lacnic |Fortel Fortaleza Telecomunicacoes Ltda, BR
+route-views2.saopaulo.routeviews.org|16552|187.16.219.29|892939|US|arin |TIGGEE, US
+route-views2.saopaulo.routeviews.org|28186|187.16.219.51|898933|BR|lacnic |ITS TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|268551|187.16.219.76|3|BR|lacnic |DMC TELECOM, BR
+route-views2.saopaulo.routeviews.org|263444|187.16.219.181|170590|BR|lacnic |Open X Tecnologia Ltda, BR
+route-views2.saopaulo.routeviews.org|263541|187.16.219.247|896004|BR|lacnic |IMF NETWORK DATA LTDA - ME, BR
+route-views2.saopaulo.routeviews.org|267613|187.16.220.80|902129|BR|lacnic |ELETRONET S.A., BR
+route-views2.saopaulo.routeviews.org|57695|187.16.220.159|888581|US|ripencc|MISAKA Misaka Network, Inc., US
+route-views2.saopaulo.routeviews.org|52873|187.16.220.216|889294|BR|lacnic |Softdados Telecomunicacoes, BR
+route-views2.saopaulo.routeviews.org|49544|187.16.220.229|8|NL|ripencc|I3DNET, NL
+route-views2.saopaulo.routeviews.org|265187|187.16.221.155|11902|BR|lacnic |STEEL WEB PROVEDORES DE ACESSO LTDA, BR
+route-views2.saopaulo.routeviews.org|37468|187.16.221.193|37146|AO|afrinic|ANGOLA-CABLES, AO
+route-views2.saopaulo.routeviews.org|264409|187.16.221.229|247380|BR|lacnic |GRUPO YAX, BR
+route-views2.saopaulo.routeviews.org|199524|187.16.222.16|888630|LU|ripencc|GCORE, LU
+route-views2.saopaulo.routeviews.org|263237|187.16.222.45|1385|CL|lacnic |PowerHost Telecom SPA, CL
+route-views2.saopaulo.routeviews.org|265950|187.16.222.78|11|BR|lacnic |HLP MOBILE AND WORLDWIDE TRACKING, BR
+route-views2.saopaulo.routeviews.org|262507|187.16.222.105|7|BR|lacnic |Global Osi Brasil Telecomunicacoes e Conectividade, BR
+route-views2.saopaulo.routeviews.org|264479|187.16.222.156|897071|BR|lacnic |Turbozone Internet, BR
+route-views2.saopaulo.routeviews.org|262791|187.16.222.168|170706|BR|lacnic |EMI NET TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|263009|187.16.222.221|877697|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views2.saopaulo.routeviews.org|199524|187.16.222.229|888630|LU|ripencc|GCORE, LU
+route-views2.saopaulo.routeviews.org|266413|187.16.223.174|3|BR|lacnic |VIVA TECNOLOGIA TELECOM, BR
+route-views2.saopaulo.routeviews.org|52694|2001:12f8::13|141861|BR|lacnic |NEXSUL TELECOM LTDA, BR
+route-views2.saopaulo.routeviews.org|266437|2001:12f8::58|143987|BR|lacnic |Rodrigo Fernandes Miniello - ME, BR
+route-views2.saopaulo.routeviews.org|28352|2001:12f8::209:23|12|BR|lacnic |NETSPEED LTDA, BR
+route-views2.saopaulo.routeviews.org|266925|2001:12f8::209:75|0|BR|lacnic |UPIX NETWORKS, BR
+route-views2.saopaulo.routeviews.org|28352|2001:12f8::209:149|11|BR|lacnic |NETSPEED LTDA, BR
+route-views2.saopaulo.routeviews.org|61595|2001:12f8::210:50|145477|BR|lacnic |TELIC TECHNOLOGIES, BR
+route-views2.saopaulo.routeviews.org|52814|2001:12f8::210:177|147723|BR|lacnic |INTERNET PLAY LTDA, BR
+route-views2.saopaulo.routeviews.org|264311|2001:12f8::212:147|7|BR|lacnic |Plug Supernet Telecon Servicos de Informatica Ltda, BR
+route-views2.saopaulo.routeviews.org|268560|2001:12f8::213:13|5|BR|lacnic |VIPTELECOM INTERNET BANDA LARGA EIRELI - ME, BR
+route-views2.saopaulo.routeviews.org|13786|2001:12f8::217:161|34057|US|arin |SEABRAS-1, US
+route-views2.saopaulo.routeviews.org|7195|2001:12f8::217:238|2726|CO|lacnic |EDGEUNO SAS, CO
+route-views2.saopaulo.routeviews.org|267056|2001:12f8::218:12|48|BR|lacnic |EVEREST RIDGE CONSULTORIA EM REDES DE COM LTDA, BR
+route-views2.saopaulo.routeviews.org|267279|2001:12f8::218:47|1|BR|lacnic |RIVALDO VITURINO NUNES BORGES - ME, BR
+route-views2.saopaulo.routeviews.org|268207|2001:12f8::218:81|2|BR|lacnic |RVT SERVICOS DE TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|268976|2001:12f8::218:138|145826|BR|lacnic |Weclix Telecom SA, BR
+route-views2.saopaulo.routeviews.org|263009|2001:12f8::218:226|130987|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views2.saopaulo.routeviews.org|61832|2001:12f8::219:20|1155|BR|lacnic |Fortel Fortaleza Telecomunicacoes Ltda, BR
+route-views2.saopaulo.routeviews.org|16552|2001:12f8::219:29|144838|US|arin |TIGGEE, US
+route-views2.saopaulo.routeviews.org|28186|2001:12f8::219:51|150788|BR|lacnic |ITS TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|268551|2001:12f8::219:76|1|BR|lacnic |DMC TELECOM, BR
+route-views2.saopaulo.routeviews.org|263541|2001:12f8::219:247|144721|BR|lacnic |IMF NETWORK DATA LTDA - ME, BR
+route-views2.saopaulo.routeviews.org|267613|2001:12f8::220:80|146712|BR|lacnic |ELETRONET S.A., BR
+route-views2.saopaulo.routeviews.org|57695|2001:12f8::220:159|61|US|ripencc|MISAKA Misaka Network, Inc., US
+route-views2.saopaulo.routeviews.org|52873|2001:12f8::220:216|141633|BR|lacnic |Softdados Telecomunicacoes, BR
+route-views2.saopaulo.routeviews.org|49544|2001:12f8::220:229|9|NL|ripencc|I3DNET, NL
+route-views2.saopaulo.routeviews.org|265187|2001:12f8::221:155|4190|BR|lacnic |STEEL WEB PROVEDORES DE ACESSO LTDA, BR
+route-views2.saopaulo.routeviews.org|37468|2001:12f8::221:193|7206|AO|afrinic|ANGOLA-CABLES, AO
+route-views2.saopaulo.routeviews.org|264409|2001:12f8::221:229|77940|BR|lacnic |GRUPO YAX, BR
+route-views2.saopaulo.routeviews.org|199524|2001:12f8::222:16|143631|LU|ripencc|GCORE, LU
+route-views2.saopaulo.routeviews.org|263237|2001:12f8::222:45|19|CL|lacnic |PowerHost Telecom SPA, CL
+route-views2.saopaulo.routeviews.org|262507|2001:12f8::222:105|1|BR|lacnic |Global Osi Brasil Telecomunicacoes e Conectividade, BR
+route-views2.saopaulo.routeviews.org|264479|2001:12f8::222:156|74625|BR|lacnic |Turbozone Internet, BR
+route-views2.saopaulo.routeviews.org|262791|2001:12f8::222:168|65583|BR|lacnic |EMI NET TELECOMUNICACOES LTDA, BR
+route-views2.saopaulo.routeviews.org|263009|2001:12f8::222:221|142402|BR|lacnic |FORTE TELECOM LTDA., BR
+route-views2.saopaulo.routeviews.org|199524|2001:12f8::222:229|143631|LU|ripencc|GCORE, LU
+route-views2.saopaulo.routeviews.org|266413|2001:12f8::223:174|15|BR|lacnic |VIVA TECNOLOGIA TELECOM, BR
+route-views3.routeviews.org|202365|5.255.90.109|890011|TR|ripencc|CHRONOS, TR
+route-views3.routeviews.org|54574|38.19.140.162|886154|US|arin |DMIT, US
+route-views3.routeviews.org|63927|43.226.4.1|876677|HK|apnic |RISE-HK RISE, HK
+route-views3.routeviews.org|207740|46.148.123.113|0|EG|ripencc|AMIRGT-AS, EG
+route-views3.routeviews.org|6939|64.71.137.241|903067|US|arin |HURRICANE, US
+route-views3.routeviews.org|23367|64.250.124.15|1|US|arin |AS-ADN, US
+route-views3.routeviews.org|19653|67.219.192.5|885593|US|arin |CTSTELECOM, US
+route-views3.routeviews.org|40387|72.36.126.8|906833|US|arin |UI-ICCN, US
+route-views3.routeviews.org|5650|74.40.7.35|874610|US|arin |FRONTIER-FRTR, US
+route-views3.routeviews.org|3280|77.83.243.7|879935|RO|ripencc|LAYERBRIDGE-AS, RO
+route-views3.routeviews.org|39120|89.21.210.85|884437|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views3.routeviews.org|39120|89.21.210.86|877239|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views3.routeviews.org|3257|89.149.178.10|874254|US|ripencc|GTT-BACKBONE GTT, US
+route-views3.routeviews.org|39120|94.101.60.146|883769|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views3.routeviews.org|14315|104.251.122.1|283092|US|arin |1GSERVERS, US
+route-views3.routeviews.org|54574|154.18.7.114|886666|US|arin |DMIT, US
+route-views3.routeviews.org|46450|158.106.197.135|874677|US|arin |PILOT, US
+route-views3.routeviews.org|55222|162.211.99.255|903752|CA|arin |9219-1568QUEBEC-NET7777, CA
+route-views3.routeviews.org|11537|163.253.3.22|22126|US|arin |INTERNET2-RESEARCH-EDU, US
+route-views3.routeviews.org|38136|172.83.155.50|880898|HK|apnic |AKARI-NETWORKS-AS-AP Akari Networks, HK
+route-views3.routeviews.org|14840|186.211.128.32|892143|BR|lacnic |BR Digital, BR
+route-views3.routeviews.org|61568|190.15.124.18|896972|BR|lacnic |ALOO TELECOM - FSF TECNOLOGIA SA, BR
+route-views3.routeviews.org|22388|192.203.115.1|18690|US|arin |TRANSPAC, US
+route-views3.routeviews.org|202365|194.50.19.4|908061|TR|ripencc|CHRONOS, TR
+route-views3.routeviews.org|3292|195.215.109.247|875003|DK|ripencc|TDC TDC AS, DK
+route-views3.routeviews.org|3216|195.239.77.236|881571|RU|ripencc|SOVAM-AS, RU
+route-views3.routeviews.org|3216|195.239.252.124|882429|RU|ripencc|SOVAM-AS, RU
+route-views3.routeviews.org|396390|198.71.45.193|18045|US|arin |INDIANA-UNIVERSITY-NEAAR, US
+route-views3.routeviews.org|141712|199.247.15.72|0|HK|apnic |LUYS-AS-AP luYs, Inc., HK
+route-views3.routeviews.org|263237|200.73.119.254|14|CL|lacnic |PowerHost Telecom SPA, CL
+route-views3.routeviews.org|38001|202.150.221.33|887617|SG|apnic |NEWMEDIAEXPRESS-AS-AP NewMedia Express Pte Ltd, SG
+route-views3.routeviews.org|9268|203.62.187.102|888959|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views3.routeviews.org|9268|203.62.187.103|888959|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views3.routeviews.org|209|205.171.3.54|872995|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views3.routeviews.org|209|205.171.8.123|872944|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views3.routeviews.org|209|205.171.200.245|872944|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views3.routeviews.org|3561|206.24.210.80|872920|US|arin |CENTURYLINK-LEGACY-SAVVIS, US
+route-views3.routeviews.org|23367|206.198.182.15|874976|US|arin |AS-ADN, US
+route-views3.routeviews.org|5645|206.248.155.130|743331|CA|arin |TEKSAVVY, CA
+route-views3.routeviews.org|40630|208.94.118.10|903480|US|arin |GRIDFURY-AS, US
+route-views3.routeviews.org|45352|210.5.41.225|898541|MY|apnic |IPSERVERONE-AS-AP IP ServerOne Solutions Sdn Bhd, MY
+route-views3.routeviews.org|396390|2001:468:2900::2|6382|US|arin |INDIANA-UNIVERSITY-NEAAR, US
+route-views3.routeviews.org|54574|2001:550:2:67::42:2|140355|US|arin |DMIT, US
+route-views3.routeviews.org|206064|2001:678:cec:f000:e808:7b96:311d:e4bc|143756|GB|ripencc|ALPINE-NORTH-NETWORK, GB
+route-views3.routeviews.org|63927|2401:da80::1|40486|HK|apnic |RISE-HK RISE, HK
+route-views3.routeviews.org|9268|2402:c00::102|142379|AU|apnic |OVERTHEWIRE-AS-AP Over The Wire Pty Ltd, AU
+route-views3.routeviews.org|54574|2402:4480:2:4::2e:2|145266|US|arin |DMIT, US
+route-views3.routeviews.org|139317|2406:840:10::1|307041|CN|apnic |ZX-AS-AP Ningbo Dahuamao Information Technology Co Ltd, CN
+route-views3.routeviews.org|38001|2406:f400:8:35::1|145414|SG|apnic |NEWMEDIAEXPRESS-AS-AP NewMedia Express Pte Ltd, SG
+route-views3.routeviews.org|141237|2602:fed2:fc0:e4::1|11745|HK|apnic |MOECAST-AS-HK Moecast Network, HK
+route-views3.routeviews.org|38173|2602:feda:be0::ffff|143625|AU|apnic |QINLONG-AS-AP Qinlong Networks, AU
+route-views3.routeviews.org|141237|2602:feda:ce0::8|11687|HK|apnic |MOECAST-AS-HK Moecast Network, HK
+route-views3.routeviews.org|38136|2604:9cc0:1:c::2|143675|HK|apnic |AKARI-NETWORKS-AS-AP Akari Networks, HK
+route-views3.routeviews.org|23367|2605:1080:2:f00::15|143890|US|arin |AS-ADN, US
+route-views3.routeviews.org|19653|2605:8200::5|146538|US|arin |CTSTELECOM, US
+route-views3.routeviews.org|14315|2605:8340:0:8::1|53320|US|arin |1GSERVERS, US
+route-views3.routeviews.org|46450|2606:3580:fc00:102::1|142373|US|arin |PILOT, US
+route-views3.routeviews.org|5645|2607:f2c0:1::7|89888|CA|arin |TEKSAVVY, CA
+route-views3.routeviews.org|40630|2607:ff18:1::a|143812|US|arin |GRIDFURY-AS, US
+route-views3.routeviews.org|22388|2620:f5:8000:a001::1|6455|US|arin |TRANSPAC, US
+route-views3.routeviews.org|14840|2804:8:4000:ffff::32|144043|BR|lacnic |BR Digital, BR
+route-views3.routeviews.org|202365|2a00:1ca8:2a::e0|145544|TR|ripencc|CHRONOS, TR
+route-views3.routeviews.org|39120|2a01:9a80:0:3::2|146686|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views3.routeviews.org|3280|2a0b:b86::f|143605|RO|ripencc|LAYERBRIDGE-AS, RO
+route-views3.routeviews.org|141694|2a0c:b641:24f:fffe::2|146316|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views3.routeviews.org|141694|2a0c:b641:24f:fffe::3|146317|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views4.routeviews.org|141011|5.189.255.107|323526|HK|apnic |HUIZE-AS-CN HUIZE-NET, HK
+route-views4.routeviews.org|56665|31.204.91.150|892474|LU|ripencc|TANGO-TELINDUS, LU
+route-views4.routeviews.org|63956|45.112.244.1|883026|AU|apnic |COLO-AS-AP Colocation Australia Pty Ltd, AU
+route-views4.routeviews.org|1299|62.115.128.183|842615|SE|ripencc|TWELVE99 Arelion, fka Telia Carrier, SE
+route-views4.routeviews.org|39120|89.21.210.87|875428|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views4.routeviews.org|39120|94.101.60.147|883638|IT|ripencc|CONVERGENZE-AS ISP services in Italy, IT
+route-views4.routeviews.org|58682|103.15.40.17|32305|BD|apnic |LEVEL3-BD Level3 Carrier Ltd., BD
+route-views4.routeviews.org|63956|103.52.116.4|883619|AU|apnic |COLO-AS-AP Colocation Australia Pty Ltd, AU
+route-views4.routeviews.org|133950|103.96.117.253|910163|NZ|apnic |HOOPLAHOSTING-AS-AP Hoopla Hosting Limited, NZ
+route-views4.routeviews.org|58511|103.247.3.36|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views4.routeviews.org|58511|103.247.3.143|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views4.routeviews.org|34288|109.233.180.32|898572|CH|ripencc|AS34288 EDU-ZG-CH - Public Schools in the Canton of Zug, CH
+route-views4.routeviews.org|45437|114.141.109.44|903834|AU|apnic |RWTS-AS-AP Real World - The Core, AU
+route-views4.routeviews.org|38726|118.107.117.252|922357|VN|apnic |VTCDIGICOM-AS-VN VTC DIGICOM, VN
+route-views4.routeviews.org|38726|119.18.185.44|892791|VN|apnic |VTCDIGICOM-AS-VN VTC DIGICOM, VN
+route-views4.routeviews.org|38883|119.63.216.82|905926|AU|apnic |FIRENET-AS-AP FireNet Pty Ltd, AU
+route-views4.routeviews.org|2914|129.250.1.248|874441|US|arin |NTT-LTD-2914, US
+route-views4.routeviews.org|1351|132.198.255.254|914706|US|arin |UVM-EDU-AS, US
+route-views4.routeviews.org|2518|133.205.1.142|878210|JP|apnic |BIGLOBE BIGLOBE Inc., JP
+route-views4.routeviews.org|19782|149.165.255.64|25910|US|arin |INDIANAGIGAPOP, US
+route-views4.routeviews.org|19782|149.165.255.65|25910|US|arin |INDIANAGIGAPOP, US
+route-views4.routeviews.org|32653|154.72.103.192|177978|ZA|afrinic|ENETWORKS, ZA
+route-views4.routeviews.org|59715|185.5.200.255|903725|IT|ripencc|SBTAP-AS, IT
+route-views4.routeviews.org|204028|185.118.196.1|891306|DE|ripencc|DOLPHINIT, DE
+route-views4.routeviews.org|14041|192.43.217.142|874549|US|arin |AS14041, US
+route-views4.routeviews.org|14041|192.43.217.143|874549|US|arin |AS14041, US
+route-views4.routeviews.org|30950|193.28.236.32|874393|NO|ripencc|EVINY-AS30950 Norway, NO
+route-views4.routeviews.org|3267|194.85.40.15|883021|RU|ripencc|RUNNET, RU
+route-views4.routeviews.org|19754|198.98.84.183|876401|US|arin |FNL-33-19754, US
+route-views4.routeviews.org|36236|208.111.38.185|909079|US|arin |NETACTUATE, US
+route-views4.routeviews.org|48292|213.238.163.7|195514|TR|ripencc|INTIBU intibu.com, TR
+route-views4.routeviews.org|2518|2001:260:300:1::1:30|145109|JP|apnic |BIGLOBE BIGLOBE Inc., JP
+route-views4.routeviews.org|7575|2001:388:1::16|6447|AU|apnic |AARNET-AS-AP Australian Academic and Research Network AARNet, AU
+route-views4.routeviews.org|2914|2001:418:0:1000::f003|134782|US|arin |NTT-LTD-2914, US
+route-views4.routeviews.org|11537|2001:468:2::1|7244|US|arin |INTERNET2-RESEARCH-EDU, US
+route-views4.routeviews.org|30950|2001:67c:324::32|139310|NO|ripencc|EVINY-AS30950 Norway, NO
+route-views4.routeviews.org|34288|2001:4b27:ffff::32|146605|CH|ripencc|AS34288 EDU-ZG-CH - Public Schools in the Canton of Zug, CH
+route-views4.routeviews.org|38726|2400:bc80:9000::1|141867|VN|apnic |VTCDIGICOM-AS-VN VTC DIGICOM, VN
+route-views4.routeviews.org|63956|2402:1b80:1000::1|141556|AU|apnic |COLO-AS-AP Colocation Australia Pty Ltd, AU
+route-views4.routeviews.org|38883|2402:7400:0:c::18|144797|AU|apnic |FIRENET-AS-AP FireNet Pty Ltd, AU
+route-views4.routeviews.org|58682|2404:c900:1::17|795|BD|apnic |LEVEL3-BD Level3 Carrier Ltd., BD
+route-views4.routeviews.org|45437|2406:a800:ffff::1|144773|AU|apnic |RWTS-AS-AP Real World - The Core, AU
+route-views4.routeviews.org|141011|2602:feda:ab2::1|153027|HK|apnic |HUIZE-AS-CN HUIZE-NET, HK
+route-views4.routeviews.org|19754|2607:b580::15|115863|US|arin |FNL-33-19754, US
+route-views4.routeviews.org|36236|2607:f740:0:7::f79|148590|US|arin |NETACTUATE, US
+route-views4.routeviews.org|1351|2620:104:e000:1000::2|144427|US|arin |UVM-EDU-AS, US
+route-views4.routeviews.org|56665|2a00:4180:1:100:31:204:89:250|145265|LU|ripencc|TANGO-TELINDUS, LU
+route-views4.routeviews.org|59715|2a02:cdc5:9715:0:185:5:200:255|144253|IT|ripencc|SBTAP-AS, IT
+route-views5.routeviews.org|40864|23.159.240.61|883830|CA|arin |TARGO, CA
+route-views5.routeviews.org|32167|66.118.229.23|903049|US|arin |LSHIY, US
+route-views5.routeviews.org|211398|87.239.48.250|911148|BE|ripencc|CRAZYGROUP-AS, BE
+route-views5.routeviews.org|41666|91.216.79.0|909307|FI|ripencc|PYRO-AS Institute for Pyrotechnical Cleaning, FI
+route-views5.routeviews.org|51930|103.152.112.48|98904|GB|ripencc|Lambda Internet Exchange, GB
+route-views5.routeviews.org|58511|103.247.3.36|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views5.routeviews.org|58511|103.247.3.142|887237|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views5.routeviews.org|54574|154.18.28.226|888488|US|arin |DMIT, US
+route-views5.routeviews.org|33185|170.39.196.252|881316|CA|arin |HIVE-DATA-CENTER, CA
+route-views5.routeviews.org|399114|170.39.226.197|5|US|arin |ZESTY-CABLE, US
+route-views5.routeviews.org|207934|185.156.96.227|878043|DK|ripencc|WNB-AS, DK
+route-views5.routeviews.org|11537|2001:468:0:2::14|7293|US|arin |INTERNET2-RESEARCH-EDU, US
+route-views5.routeviews.org|211398|2001:678:f30:ffd0::|146336|BE|ripencc|CRAZYGROUP-AS, BE
+route-views5.routeviews.org|41666|2001:67c:8e4::|145822|FI|ripencc|PYRO-AS Institute for Pyrotechnical Cleaning, FI
+route-views5.routeviews.org|58511|2400:8280::24|141570|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views5.routeviews.org|58511|2400:8280::8e|141569|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views5.routeviews.org|54574|2402:4480:2::5a:2|150785|US|arin |DMIT, US
+route-views5.routeviews.org|33185|2602:fd23:101::100|143661|CA|arin |HIVE-DATA-CENTER, CA
+route-views5.routeviews.org|51930|2602:feda:30:ae86:f44e:a5ff:feb1:fac4|52754|GB|ripencc|Lambda Internet Exchange, GB
+route-views5.routeviews.org|32167|2606:82c0:1:e005::1|141858|US|arin |LSHIY, US
+route-views5.routeviews.org|207934|2a03:300:2::3|140112|DK|ripencc|WNB-AS, DK
+route-views5.routeviews.org|142289|2a0e:46c4:2c11::1|146153|NL|apnic |ROXONIC-AS-AP Roxonic Systems, NL
+route-views5.routeviews.org|399114|2a0e:6902:4002:2c:5054:ff:fed9:841a|6|US|arin |ZESTY-CABLE, US
+route-views6.routeviews.org|7660|2001:200:901::5|40346|JP|apnic |APAN-JP Asia Pacific Advanced Network - Japan, JP
+route-views6.routeviews.org|2497|2001:240:100:ff::2497:2|143341|JP|apnic |IIJ Internet Initiative Japan Inc., JP
+route-views6.routeviews.org|2914|2001:418:0:1000::f000|134702|US|arin |NTT-LTD-2914, US
+route-views6.routeviews.org|209|2001:428::205:171:8:75|135952|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views6.routeviews.org|209|2001:428::205:171:8:123|135952|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views6.routeviews.org|209|2001:428::205:171:200:139|135952|US|arin |CENTURYLINK-US-LEGACY-QWEST, US
+route-views6.routeviews.org|6939|2001:470:0:1a::1|141873|US|arin |HURRICANE, US
+route-views6.routeviews.org|3257|2001:668:0:4::2|138800|US|ripencc|GTT-BACKBONE GTT, US
+route-views6.routeviews.org|206064|2001:678:cec:f000:e808:7b96:311d:e4bc|143752|GB|ripencc|ALPINE-NORTH-NETWORK, GB
+route-views6.routeviews.org|31019|2001:67c:22dc:def1::1|144489|NL|ripencc|MEANIE Meanie Heavy Industries, NL
+route-views6.routeviews.org|18106|2001:d98::19|144570|SG|apnic |VIEWQWEST-SG-AP Viewqwest Pte Ltd, SG
+route-views6.routeviews.org|7018|2001:1890:111d:1::63|138752|US|arin |ATT-INTERNET4, US
+route-views6.routeviews.org|20912|2001:40d0::126|144781|IT|ripencc|ASN-PANSERVICE, IT
+route-views6.routeviews.org|58511|2400:8280::24|141577|AU|apnic |ANYCAST-GLOBAL-BACKBONE Anycast Global Backbone, AU
+route-views6.routeviews.org|23673|2402:c100::104|147434|KH|apnic |ONLINE-AS Cogetel Online, Cambodia, ISP, KH
+route-views6.routeviews.org|24441|2404:cc00:1::1|137046|KH|apnic |CITYLINK-AS-KH CityLink Corporation, LTD, KH
+route-views6.routeviews.org|140731|2406:840:eb83::1|144019|CN|apnic |TOHU-OP-AP TOHU Public Internet, CN
+route-views6.routeviews.org|140731|2406:840:eb89::1|143931|CN|apnic |TOHU-OP-AP TOHU Public Internet, CN
+route-views6.routeviews.org|1239|2600:0:1:1239:144:228:241:130|10938|US|arin |SPRINTLINK, US
+route-views6.routeviews.org|701|2600:803::15|139516|US|arin |UUNET, US
+route-views6.routeviews.org|53767|2605:9d00::2|4|US|arin |ICASTCENTER, US
+route-views6.routeviews.org|1403|2606:6d00:eb0::252|138884|CA|arin |EBOX, CA
+route-views6.routeviews.org|22652|2607:fad8::1:9|139428|CA|arin |FIBRENOIRE-INTERNET, CA
+route-views6.routeviews.org|57463|2a00:1728::1f:4|142524|BG|ripencc|NETIX, BG
+route-views6.routeviews.org|57866|2a00:a7c0:e20a::17|139418|NL|ripencc|FUSIX-AS, NL
+route-views6.routeviews.org|49788|2a02:d140:1::60|144555|NO|ripencc|NEXTHOP, NO
+route-views6.routeviews.org|141694|2a0c:b641:24f:fffe::4|146309|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views6.routeviews.org|141694|2a0c:b641:24f:fffe::5|146309|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views6.routeviews.org|141694|2a0c:b641:24f:fffe::6|146308|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views6.routeviews.org|141694|2a0c:b641:24f:fffe::7|146311|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
+route-views6.routeviews.org|141694|2a0c:b641:24f:fffe::8|146312|CN|apnic |OTAKUJAPAN-AS Otaku Limited, CN
