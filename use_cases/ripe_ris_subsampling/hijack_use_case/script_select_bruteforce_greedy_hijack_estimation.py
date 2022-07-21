@@ -20,7 +20,7 @@ FNAME_SORTED_BIAS  = './data/sorted_bias_bruteforce_greedy_PartialBias_hijack_{}
 
 
 df = pd.read_csv(HIJACK_SIMS)
-df = df.fillna(0.5)
+df = df.fillna(0)
 df['actual_impact'] = df['-1.4'] / df['-1.2']
 df['estimated_impact'] = df['-1.6'] / df['-1.5']
 df = df[df['actual_impact']<=1]
@@ -46,8 +46,45 @@ def bruteforce_greedy(monitors):
 	ordered_list.append(list(current_set)[0])
 	return ordered_list
 
-ordered_list = bruteforce_greedy(df.columns[0:-2])
+# ordered_list = bruteforce_greedy(df.columns[0:-2])
 
+with open(FNAME_SORTED_LIST.format('RC'), 'r' ) as f:
+	ordered_list = json.load(f)
+
+
+# first reverse the list
+sorted_list = ordered_list.copy()
+sorted_list.reverse()
+# loc the monitors of sorted list in the initial df first
+
+def to_nan(df, column):
+  
+  df.loc[df[column]<0,column]=np.nan
+  df.loc[df[column]>1,column]=np.nan
+
+def calculate_set_error1(nb):
+	rand_sel_df = df.loc[:, [str(x) for x in sorted_list]]
+	# then take the first :nb of those monitors (list is reversed)
+	rand_sel_df = rand_sel_df.iloc[:, :nb]
+	# print(list(rand_sel_df))
+	# print(rand_sel_df)
+	rand_sel_df['#monitors-col6'] = rand_sel_df.count(axis=1)
+	rand_sel_df['hijack-col7'] = (rand_sel_df == 1).sum(axis=1)
+	rand_sel_df['actual_impact'] = df['actual_impact']
+	rand_sel_df['estimated_impact'] = rand_sel_df['hijack-col7'] / rand_sel_df['#monitors-col6']
+	to_nan(rand_sel_df, 'actual_impact')
+	to_nan(rand_sel_df, 'estimated_impact')
+	rand_sel_df['error'] = np.abs(rand_sel_df['estimated_impact']-rand_sel_df['actual_impact'])
+
+	return (rand_sel_df['error']**2).mean(0)**0.5
+
+for i in range(len(ordered_list)):
+	print('{}: {}\t {}'.format(i,
+							round(calculate_set_error(ordered_list[-(i+1):]),3),
+							round(calculate_set_error1(i+1),3))
+							)
+
+exit()
 k = 'RC'
 with open(FNAME_SORTED_LIST.format(k),'w') as f:
 	json.dump(ordered_list,f)
