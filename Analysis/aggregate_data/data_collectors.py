@@ -469,16 +469,16 @@ def cti_create_top_df(dfs):
 
 def print_wrapper(i, I, dset, func):
     def wrapper(*args, **kwargs):
-        # try:
-        print('#{}/{} Collecting dataset: {}'.format(i,I,dset))
-        if os.path.exists(kwargs['save_filename']):
-            print('\t WARNING: dataset already exists; collection skipped')
-            print('\t existng dile: '+kwargs['save_filename'])
-        else:
-            t0 = time.time()
-            func(*args, **kwargs)
-            print('\t saved data in: '+kwargs['save_filename'])
-            print('\t total time : {}sec.'.format(round(time.time()-t0,2)))
+        try:
+            print('#{}/{} Collecting dataset: {}'.format(i,I,dset))
+            if os.path.exists(kwargs['save_filename']):
+                print('\t WARNING: dataset already exists; collection skipped')
+                print('\t existng dile: '+kwargs['save_filename'])
+            else:
+                t0 = time.time()
+                func(*args, **kwargs)
+                print('\t saved data in: '+kwargs['save_filename'])
+                print('\t total time : {}sec.'.format(round(time.time()-t0,2)))
         except Exception as e:
             print('ERROR: Failed to execute !!!',e)
     return wrapper

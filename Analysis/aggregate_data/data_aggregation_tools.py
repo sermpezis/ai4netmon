@@ -5,6 +5,7 @@ import pycountry_convert as pc
 from ai4netmon.Analysis.aggregate_data import data_collectors as dc
 from ai4netmon.Analysis.aggregate_data import graph_methods as gm
 from collections import defaultdict
+import urllib.request
 
 
 FILES_LOCATION = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/misc/'
@@ -22,22 +23,7 @@ ORIGIN_PATH = FILES_LOCATION + 'CTI_origin.csv'
 TOP_PATH = FILES_LOCATION + 'CTI_top.csv'
 
 FILES_LOCATION_AGGREGATE = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/'
-AGGREGATE_DATA_FNAME = 'asn_aggregate_data.csv'
-
-# PATH_AS_RANK = FILES_LOCATION+'ASrank.csv'
-# PATH_PERSONAL = FILES_LOCATION+'bgptools_perso_20220718.txt'
-# PATH_PEERINGDB = FILES_LOCATION+'peeringdb_2_dump_2021_07_01.json'
-# AS_HEGEMONY_PATH = FILES_LOCATION+'AS_hegemony.csv'
-# ALL_ATLAS_PROBES = FILES_LOCATION+'RIPE_Atlas_probes_20220718.json'
-# ALL_RIS_PEERS = FILES_LOCATION+'RIPE_RIS_collectors_20220718.json'
-# ROUTEVIEWS_PEERS = FILES_LOCATION+'RouteViews_20220402.txt'
-# AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships_20210701.as-rel2.txt'
-# ASDB_PATH = 'https://asdb.stanford.edu/data/ases.csv'
-# ORIGIN_PATH = FILES_LOCATION + 'origins.csv'
-# TOP_PATH = FILES_LOCATION + 'top.csv'
-
-# AGGREGATE_DATA_FNAME = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data_20220416.csv'
-
+AGGREGATE_DATA_FNAME = FILES_LOCATION_AGGREGATE+'asn_aggregate_data.csv'
 
 ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2']
 
@@ -110,9 +96,13 @@ def create_df_from_RIPE_RIS():
     """
     Collects the list of RIPE RIS peers, and returns a dataframe with the v4 and v6 RIS peers ASNs.
     :return: A dataframe with index the ASN
-    """
-    with open(ALL_RIS_PEERS, 'r') as f:
-        ris_dict = json.load(f)
+    """    
+    if FILES_LOCATION.startswith('http'):
+        with urllib.request.urlopen(ALL_RIS_PEERS) as url:
+            ris_dict = json.loads(url.read().decode())
+    else:
+        with open(ALL_RIS_PEERS, 'r') as f:
+            ris_dict = json.load(f)
     unique_asns = set()
     unique_asns_v4 = set()
     unique_asns_v6 = set()
@@ -135,8 +125,13 @@ def create_df_from_Atlas_probes():
     Loads the list of RIPE Atlas probes, and returns a dataframe with the number of v4 and v6 probes per ASN (only for ASNs that have at least one probe).
     :return: A dataframe with index the ASN
     """
-    with open(ALL_ATLAS_PROBES, 'r') as f:
-        probes = json.load(f)
+    if FILES_LOCATION.startswith('http'):
+        with urllib.request.urlopen(ALL_ATLAS_PROBES) as url:
+            probes = json.loads(url.read().decode())
+    else:
+        with open(ALL_ATLAS_PROBES, 'r') as f:
+            probes = json.load(f)
+    
     data = defaultdict(lambda : {'nb_atlas_probes_v4':0, 'nb_atlas_probes_v6':0, 'nb_atlas_anchors':0})
     for prb in probes:
         if prb['status']['name'] == 'Connected':
@@ -247,12 +242,13 @@ def create_dataframe_from_asdb(way):
     """
     data = pd.read_csv(ASDB_PATH)
     data = data[['ASN', 'Category 1 - Layer 1', 'Category 1 - Layer 2']]
-    data['ASN'] = data['ASN'].str.split('AS', n=1).str.get(-1)
+    # data['ASN'] = data['ASN'].str.split('AS', n=1).str.get(-1)
+    data['ASN'] = data['ASN'].apply(lambda x: int(x.split('AS')[-1]))
     if way == 1:
         # way 1 - merge the two categorical columns into one column that is now a tuple
         data = data.drop(['Category 1 - Layer 2'], axis=1)
         data = data.rename(columns={'ASN': 'asn'})
-        data = data.rename(columns={'Category 1 - Layer 1': 'asdb_Category 1 - Layer 1'})
+        data = data.rename(columns={'Category 1 - Layer 1': 'ASDB_C1L1'})
         data = data.set_index('asn')
         return data
     else:
@@ -261,7 +257,7 @@ def create_dataframe_from_asdb(way):
         data = data.drop(['Category 1 - Layer 1', 'Category 1 - Layer 2'], axis=1)
 
         data = data.rename(columns={'ASN': 'asn'})
-        data = data.rename(columns={"Categroy1 - Layer 1 and 2": "asdb_Categroy1 - Layer 1 and 2"})
+        data = data.rename(columns={"Categroy1 - Layer 1 and 2": "ASDB_C1L2"})
 
         data = data.set_index('asn')
         return data
@@ -271,7 +267,7 @@ def create_df_from_cti_top():
 
     data = pd.read_csv(TOP_PATH)
     data = data.rename(columns={'ASN': 'asn'})
-    data = data.rename(columns={'prefix': 'top_prefix'})
+    data = data.rename(columns={'prefix': 'cti_top'})
     data = data.set_index('asn')
     data = data.drop(['Unnamed: 0'], axis=1)
     return data
@@ -281,7 +277,7 @@ def create_df_from_cti_origins():
 
     data = pd.read_csv(ORIGIN_PATH)
     data = data.rename(columns={'ASN': 'asn'})
-    data = data.rename(columns={'%country': 'origins_%country'})
+    data = data.rename(columns={'%country': 'cti_origin'})
     data = data.set_index('asn')
     data = data.drop(['Unnamed: 0'], axis=1)
     return data
