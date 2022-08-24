@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from scipy.stats import kstest
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
 def kl_divergence(p,q,alpha=0):
 	'''
@@ -280,3 +281,67 @@ def get_features_dict_for_visualizations():
 	    'is_personal_AS': 'Personal ASN', 
 	}
 	return features_dict
+
+
+
+def get_bias_of_monitor_set(df=None, imp='Custom set', monitor_list=None, params=None):
+	'''
+	Returns a dataframe with the bias values of the given set of monitors (or the given Internet Measurement Platform, IMP).
+
+	:param	df:				(pandas.dataframe) dataframe with the data for all networks (each row); if None is given, loads the latest df. 
+	:param	imp:			(str) the name of the Internet Measurement Platform whose bias is needed (valid options 
+								for IMPs are ['RIPE RIS', 'RouteViews', 'RIPE Atlas', 'RIPE RIS & RouteViews']); if a different
+								value is given, calculate the bias of the set of monitors in monitor_list
+	:param	monitor_list: 	(str or list) list of ASNs whose bias is needed (only in case it is different than any of the existing IMPs)
+	:param 	params:			(dict) parameters for the bias calculation; 
+								default is {'method':'kl_divergence', 'bins':10, 'alpha':0.01}
+
+	:return:	(pandas.dataframe) a dataframe with index the bias dimensions, and with 1 column with the given set of monitors. 
+					Values are the bias scores along each dimension.
+	'''
+
+	if df is None:
+		df = dat.load_aggregated_dataframe(preprocess=True)
+
+	if imp == 'RIPE RIS':
+		df_mon = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0), :]
+	elif imp == 'RouteViews':
+		df_mon = df.loc[df['is_routeviews_peer']>0, :]
+	elif imp == 'RIPE Atlas':
+		df_mon = df.loc[(df['nb_atlas_probes_v4']>0) | (df['nb_atlas_probes_v6']>0), :]
+	elif imp == 'RIPE RIS & RouteViews':
+		df_mon = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0) | (df['is_routeviews_peer']>0), :]
+	else:
+		if monitor_list is None:
+			raise ValueError('Either a valid IMP name is needed or a non-empty monitor_list')
+		else:
+			df_mon = df.loc[[i for i in monitor_list if i in df.index], :]
+
+	
+	FEATURE_NAMES_DICT = get_features_dict_for_visualizations()
+	FEATURES = list(FEATURE_NAMES_DICT.keys())
+
+	if params is None:
+		params = {'method':'kl_divergence', 'bins':10, 'alpha':0.01}
+
+	bias_df = bias_score_dataframe(df[FEATURES], {imp: df_mon[FEATURES]}, **params)
+
+	return bias_df
+
+
+def get_bias_of_all_imps(df=None, params=None):
+	'''
+	Returns a dataframe with the bias values for all IMPs
+	:param	df:				(pandas.dataframe) dataframe with the data for all networks (each row) 
+	:param 	params:			(dict) parameters for the bias calculation; 
+								default is {'method':'kl_divergence', 'bins':10, 'alpha':0.01}
+
+	:return:	(pandas.dataframe) a dataframe with index the bias dimensions, and with columns the different IMPs
+	'''
+
+	DEFAULT_IMP_OPTIONS = ['RIPE RIS', 'RouteViews', 'RIPE Atlas', 'RIPE RIS & RouteViews']
+	bias_df = pd.DataFrame()
+	for imp in DEFAULT_IMP_OPTIONS:
+		bias_df = pd.concat([bias_df, get_bias_of_monitor_set(df=df, imp=imp, params=params)], axis=1)
+
+	return bias_df
