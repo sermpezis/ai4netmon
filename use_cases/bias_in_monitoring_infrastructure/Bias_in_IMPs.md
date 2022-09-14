@@ -62,7 +62,7 @@ It can be easily loaded in python as follows:
 ```python
 import pandas as pd
 URL = "https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data.csv"
-df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
+df = pd.read_csv(URL, header=0, index_col=0)
 ```
 
 ## Bias metrics
