@@ -40,6 +40,19 @@ Below, the plot shows the average RMSE over 10 runs (y-axis) vs. the number of m
 
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avgRMSEvsRandom.png)
 
+### Problem characterization
+
+In the first step of our approach mentionted before, the correlation between network characteristics of monitors (hijacker AS and legitimate AS) and error for every monitor is worth to be explored. 
+We considered only topology and network size features of our [aggregated dataframe](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/asn_aggregate_data.csv).
+So, combining the *basic* dataframe of hijack analysis and the *aggregated* one, we compile a new dataframe which contains the columns:
+
+* ASN
+* error
+* features
+
+while in the rows, first we have all the legitimate ASNs and then all the hijacker ASNs.
+
+After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. 
 
 
 
