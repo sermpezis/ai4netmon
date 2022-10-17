@@ -9,7 +9,7 @@ There are also some scripts, that use other ways of subsampling, such as greedy 
 
 In a hijack event, two ASes (the legitimate AS and the hijacker AS) announce the same prefix and the rest of ASes route their traffic either to the legitimate or the hijacker AS. The impact of the AS is defined as the fraction of ASes that route their traffic to the hijacker AS. For example, if we have in total 1000 ASes, and 300 of them route to the hijacker, then the _actual_ hijack impact in 30%. The _estimated_ hijack impact is the corresponding percentage we can calculate from what the monitors see. In the previous example, if there are 50 monitors (e.g., RIPE RIS peers) and 25 of them route traffic to the hijacker AS, then the _estimated_ hijack impact is 50%. The difference between the actual and the esimated hijack impact is the error (in our example, the error is |30%-50%| = 20%).
 
-The dataframe is loaded from **`./data/impact__CAIDA20190801_sims2000_hijackType0_per_monitor_onlyRC_NEW_with_mon_ASNs.csv`** file and it is used for calculation of the actual and estimated hijack impacts. It contains simulation results, where each simulation is a hijack event. The columns are:
+The *basic* dataframe is loaded from **`./data/impact__CAIDA20190801_sims2000_hijackType0_per_monitor_onlyRC_NEW_with_mon_ASNs.csv`** file and it is used for calculation of the actual and estimated hijack impacts. It contains simulation results, where each simulation is a hijack event. The columns are:
 
 - column 1:  ASN of the legitimate AS
 - column 2:  ASN of the hijacker AS
@@ -26,7 +26,7 @@ After calculating the impacts, all actual or estimated impact <0 or >1 are set t
 
 ### Goals and motivation
 
-As said, the goal of the hijack impact estimation analysis is to improve the estimation error, by selecting good sets of monitors to estimate the error. A way that has been tested, to achieve this improvement, is by using supervised learning ([paper](https://arxiv.org/abs/2105.02346)), training an linear regression model on a set of previous observations. However, we need to try unsupervised ways of subsampling, as they are more generic for other use cases (where there is no groundtruth data), but also can provide useful insights for deploying new monitors.  
+As said, the goal of the hijack impact estimation analysis is to improve the estimation error, by selecting good sets of monitors to estimate the error. A way that has been tested, to achieve this improvement, is by using supervised learning ([paper](https://arxiv.org/abs/2105.02346)), training an linear regression model on a set of previous observations. While the method mentioned proved to be optimal, we need to try unsupervised ways of subsampling, as they are more generic for other use cases (where there is no groundtruth data), but also can provide useful insights for deploying new monitors.  
 
 The unsupervised approach contains the following steps:
 
@@ -34,7 +34,11 @@ The unsupervised approach contains the following steps:
 * Select subsets of monitors using clustering algorithms
 * Select subsets of monitors based on their [bias](https://github.com/sermpezis/ai4netmon/tree/main/use_cases/bias_in_monitoring_infrastructure).
 
+A method followed was to select randomly X monitors (i.e., columns) from the *basic* dataframe and calculate the estimated impact from the values of these columns. Then, calculate the error from the actual impact. Plot RMSE(errors) vs X. For X = 10, 20, 30, 40, 50, 100, 150, 200, max number of monitors=300.
 
+Below, the plot shows the average RMSE over 10 runs (y-axis) vs. the number of monitors (x-axis). We ran the method 10 times, because of the randomness in the selection of monitors.
+
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avgRMSEvsRandom.png)
 
 
 
