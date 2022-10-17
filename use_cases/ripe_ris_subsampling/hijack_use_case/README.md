@@ -30,6 +30,10 @@ As said, the goal of the hijack impact estimation analysis is to improve the est
 The unsupervised approach contains the following steps:
 
 * Check if there is correlation between monitors or network characteristics and errors. Also, check if correlations between important monitors (based on LRE weights) and errors. 
+* Select subsets of monitors using clustering algorithms
+* Select subsets of monitors based on their [bias](https://github.com/sermpezis/ai4netmon/tree/main/use_cases/bias_in_monitoring_infrastructure).
+
+
 
 
 
