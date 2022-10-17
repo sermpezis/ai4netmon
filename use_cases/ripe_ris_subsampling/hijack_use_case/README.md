@@ -34,7 +34,7 @@ The unsupervised approach contains the following steps:
 * Select subsets of monitors using clustering algorithms
 * Select subsets of monitors based on their [bias](https://github.com/sermpezis/ai4netmon/tree/main/use_cases/bias_in_monitoring_infrastructure).
 
-A method followed was to select randomly X monitors (i.e., columns) from the *basic* dataframe and calculate the estimated impact from the values of these columns. Then, calculate the error from the actual impact. Plot RMSE(errors) vs X. For X = 10, 20, 30, 40, 50, 100, 150, 200, max number of monitors=300.
+A method followed to be compared with the unsupervised approaches, was to select randomly X monitors (i.e., columns) from the *basic* dataframe and calculate the estimated impact from the values of these columns. Then, calculate the error from the actual impact. Plot RMSE(errors) vs X. For X = 10, 20, 30, 40, 50, 100, 150, 200, max number of monitors=300.
 
 Below, the plot shows the average RMSE over 10 runs (y-axis) vs. the number of monitors (x-axis). We ran the method 10 times, because of the randomness in the selection of monitors.
 
