@@ -25,7 +25,7 @@ After calculating the impacts, all actual or estimated impact <0 or >1 are set t
 
 ### Goals and motivation
 
-As said, the goal of the hijack impact estimation analysis is to improve the estimation error, by selecting good sets of monitors to estimate the error. A way that has been tested, to achieve this improvement, is by using supervised learning [paper](https://arxiv.org/abs/2105.02346), training an linear regression model on a set of previous observations. However, we need to try unsupervised ways of subsampling, as they are more generic for other use cases (where there is no groundtruth data), but also can provide useful insights for deploying new monitors.  
+As said, the goal of the hijack impact estimation analysis is to improve the estimation error, by selecting good sets of monitors to estimate the error. A way that has been tested, to achieve this improvement, is by using supervised learning ([paper](https://arxiv.org/abs/2105.02346)), training an linear regression model on a set of previous observations. However, we need to try unsupervised ways of subsampling, as they are more generic for other use cases (where there is no groundtruth data), but also can provide useful insights for deploying new monitors.  
 
 The unsupervised approach contains the following steps:
 
