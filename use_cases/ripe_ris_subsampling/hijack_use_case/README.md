@@ -64,6 +64,14 @@ RC All Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23
 RA50 Correlations w weights | 0.32 | 0.34 | 0.21 | 0.35 | 0.041 | -0.065 | 0.33 | 0.078 | 0.16 | 0.59 | 0.23 | 0.2 | 0.46 | 0.33 
 RA All Correlations w weights | 0.076 | 0.12 | 0.088 | 0.076 | -0.013 | -0.088 | 0.12 | 0.035 | 0.041 | 0.046 | 0.1 | 0.078 | 0.055 | 0.13 
 
+### Subsampling with clustering
+
+Regarding the clustering, we try to find optimal subsets of RC monitors. In the *basic* dataframe, there are 2000 hijack cases and 288 columns that correspond to monitors. The method we follow is to reverse the dataframe, and use the monitors as observations and use the columns as features. We try k-means to cluster the monitors based on the 2000 observations.
+
+K-means algorithm is used with various numbes of clusters (5, 10, 20, 100). To extract the subsets, we select X monitors by iteratively selecting one monitor per cluster, and so on. E.g., if we have 5 clusters and we want to select X=20 monitors, select 4 monitors from each cluster.
+
+After we have extracted the subsets, we select randomly X monitors and calculate the estimated impact and then the errors, in the same way we did with the *basic* dataframe. We calculate the RMSE for X = 10, 20, 30, 40, 50, 100, 150, 200, 288, and run the random selection for 50 times, to get the average RMSE.  Below, the plots of avg RMSE per 50 runs vs Number of monitors are shown, for every cluster.
+
 
 
 
