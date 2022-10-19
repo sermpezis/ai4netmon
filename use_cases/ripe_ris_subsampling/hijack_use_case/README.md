@@ -57,9 +57,9 @@ After the compilation, the pearson correlation is calculated between the network
 Following the same approach, we calculate the pearson correlation for network characteristics and Linear regression models weights of the monitors, presented in the paper mentioned before. The findings once again show that there is not correlation between the above aspects. A table of those correlations is showed below, first for 50 and then all RIPE RIS + Routeviews (RC) monitors, and secondly 50 and then all Ripe Atlas (RA) monitors.
 
 
-Attempt | #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 | #10 | #11 | 12 | 13 | 14
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |---
-Seconds | 301 | 283 | 290 | 286 | 289 | 285 | 287 | 287 | 272 | 276 | 269 | 1 | 2 | 3
+Features | AS rank numbers Asns| AS rank numbers prefixes | AS rank numbers addresses | AS hegemony | AS rank total | AS rank peers | AS rank costumers | AS rank provider | peeringDB ix count | peeringDB fac count | peeringDB info prefixes4 | peeringDB info prefixes6 | nb atlas probes v4 | nb atlas probes v6
+--- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- 
+Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
 
 
 
