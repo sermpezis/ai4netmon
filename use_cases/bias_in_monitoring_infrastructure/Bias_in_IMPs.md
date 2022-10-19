@@ -12,7 +12,7 @@
 - [Bias metrics](#bias-metrics): Definition of the metrics that are used to quantify bias, and the related methodology  
 - [Results](#results): Analysis and visualization results for the bias in IMPs
 - [Appendix](#appendix)
-    - [A](#a:-bias-calculation-options): Bias calculation options
+    - [A](#a-bias-calculation-options) : Bias calculation options
     - [B](#b): blah blah
 
 
@@ -45,7 +45,10 @@ Let’s first try to understand the notion and implications of bias through a ge
 **_Bias dimensions_**: In the above example (Table 1), assume that in our population 70% of people are from country A and 30% from country B, and in our sample the corresponding fractions are 80% and 20%. Therefore, _in a dataset there may be multiple dimensions of bias_ (here, gender and country bias). In our example, gender bias is higher than country bias; i.e., _the extent of bias can be different among different dimensions_. In section [Data](#data), we present the dataset we compiled, which contains data for each network (and IMPs) along different dimensions.
 
 
-**_Is bias a problem (for measurements)?_**: Let us consider that the goal of our survey focuses on the height of the population, i.e., we ask the survey participants what their height is, to calculate an average for the entire population. Then, probably we get biased results, since men, who are typically taller than women, are over-represented in our sample. Now, let us consider that our survey further focuses on the native language of individuals. For this second case, the gender-bias in our sample would not affect our findings. In contrast, the country-bias (e.g., see the right side of the Table 1) of our sample, may play a major role. In other words, _different bias dimensions (e.g., gender or country) may affect our measurements findings differently, depending on how they relates to the insights we want to gain_. In section **TBD** we demonstrate how a user can focus on only some dimensions of bias in our dataset and analysis. 
+**_Is bias a problem (for measurements)?_**: Let us consider that the goal of our survey focuses on the height of the population, i.e., we ask the survey participants what their height is, to calculate an average for the entire population. Then, probably we get biased results, since men, who are typically taller than women, are over-represented in our sample. Now, let us consider that our survey further focuses on the native language of individuals. For this second case, the gender-bias in our sample would not affect our findings. In contrast, the country-bias (e.g., see the right side of the Table 1) of our sample, may play a major role. In other words, _different bias dimensions (e.g., gender or country) may affect our measurements findings differently, depending on how they relates to the insights we want to gain_. 
+
+A user can focus on only some dimensions of bias, based on the use case under investigation. For this reason, in our dataset and analysis we calculate the bias values for every dimension individually; then the user can select if they will use all these values or some of them, and/or how to aggregate them (see more details in Sections [Bias metrics](#bias-metrics), [Results](#results)), and [Appendix A](#a-bias-calculation-options)). 
+
 
 **_Examples of bias in IMPs_**: Some examples of biases (of different dimensions) in IMPs are the following:
 - _location bias_: The percentage of all ASNs (population) that are located in Europe is around 30\%, whereas the percentage of RIPE Atlas probes (sample population) that are located in Europe is higher than 60\%. 
@@ -99,7 +102,7 @@ df = pd.read_csv(URL, header=0, index_col=0)    # "index_col=0" sets the ASN as 
 
 ## Bias metrics
 
-The bias (along a dimension/characteristic) is defined as a difference between two distributions: population vs. sample (see [Bias definition](#bias-definition)). For example, the population can be the entire set of ASes, a sample can be the ASes that peer with RIPE RIS, and the distributions can be the values of the number of peering links. In the dataframe, the aforementioned distributions could be retrieved as follows:
+The bias (along a dimension/characteristic) is defined as a difference between two distributions: population vs. sample (see [Bias definition](#bias-definition)). For example, the _population_ can be the entire set of ASes, a _sample_ can be the ASes that peer with RIPE RIS, and the _distributions_ can be the values of the number of peering links. In the dataframe, the aforementioned distributions could be retrieved as follows:
 ```python
 dimension = "AS_rank_total"     # the dataframe column corresponding to the total number of neighbors of an AS
 population_distribution = df[dimension].tolist()
