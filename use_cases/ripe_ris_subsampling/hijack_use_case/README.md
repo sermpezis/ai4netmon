@@ -59,10 +59,10 @@ Following the same approach, we calculate the pearson correlation for network ch
 
 Features | AS rank numbers Asns| AS rank numbers prefixes | AS rank numbers addresses | AS hegemony | AS rank total | AS rank peers | AS rank costumers | AS rank provider | peeringDB ix count | peeringDB fac count | peeringDB info prefixes4 | peeringDB info prefixes6 | nb atlas probes v4 | nb atlas probes v6
 --- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- 
-RC50 Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
+RC50 Correlations w weights | 0.16 | 0.22 | 0.22 | -0.033 | -0.25 | 0.42 | -0.0096 | 0.095 | -0.44 | -0.35 | 0.093 | 0.048 | 0.15 | 0.29 
 RC All Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
-
-
+RA50 Correlations w weights | 0.32 | 0.34 | 0.21 | 0.35 | 0.041 | -0.065 | 0.33 | 0.078 | 0.16 | 0.59 | 0.23 | 0.2 | 0.46 | 0.33 
+RA All Correlations w weights | 0.076 | 0.12 | 0.088 | 0.076 | -0.013 | -0.088 | 0.12 | 0.035 | 0.041 | 0.046 | 0.1 | 0.078 | 0.055 | 0.13 
 
 
 
