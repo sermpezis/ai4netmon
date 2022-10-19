@@ -52,7 +52,13 @@ So, combining the *basic* dataframe of hijack analysis and the *aggregated* one,
 
 while in the rows, first we have all the legitimate ASNs and then all the hijacker ASNs.
 
-After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. 
+After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. The heatmaps of correlation matrices can be checked in the [notebook](https://github.com/sermpezis/ai4netmon/blob/main/use_cases/ripe_ris_subsampling/hijack_use_case/hijack.ipynb). 
+
+Following the same approach, we calculate the pearson correlation for network characteristics and Linear regression models weights of the monitors, presented in the paper mentioned before. The findings once again show that there is not correlation between the above aspects. A table of those correlations is showed below, first for 50 and then all RIPE RIS + Routeviews (RC) monitors, and secondly 50 and then all Ripe Atlas (RA) monitors.
+
+
+
+
 
 
 
