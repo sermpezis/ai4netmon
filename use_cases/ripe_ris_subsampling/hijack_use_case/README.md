@@ -52,7 +52,18 @@ So, combining the *basic* dataframe of hijack analysis and the *aggregated* one,
 
 while in the rows, first we have all the legitimate ASNs and then all the hijacker ASNs.
 
-After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. 
+After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. The heatmaps of correlation matrices can be checked in the [notebook](https://github.com/sermpezis/ai4netmon/blob/main/use_cases/ripe_ris_subsampling/hijack_use_case/hijack.ipynb). 
+
+Following the same approach, we calculate the pearson correlation for network characteristics and Linear regression models weights of the monitors, presented in the paper mentioned before. The findings once again show that there is not correlation between the above aspects. A table of those correlations is showed below, first for 50 and then all RIPE RIS + Routeviews (RC) monitors, and secondly 50 and then all Ripe Atlas (RA) monitors.
+
+
+Features | AS rank numbers Asns| AS rank numbers prefixes | AS rank numbers addresses | AS hegemony | AS rank total | AS rank peers | AS rank costumers | AS rank provider | peeringDB ix count | peeringDB fac count | peeringDB info prefixes4 | peeringDB info prefixes6 | nb atlas probes v4 | nb atlas probes v6
+--- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- 
+RC50 Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
+RC All Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
+
+
+
 
 
 
