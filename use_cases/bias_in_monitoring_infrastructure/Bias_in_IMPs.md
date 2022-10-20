@@ -14,6 +14,7 @@
 - [Appendix](#appendix)
     - [A](#a-bias-calculation-options) : Bias calculation options
     - [B](#b): blah blah
+    - [C](#c-dataset-eda): Exploratory data analysis (EDA) of the dataset
 
 
 
@@ -89,7 +90,7 @@ The following image depicts the format of the dataset.
 
 ![Dataframe AI4NetMon](./figures/fig_ai4netmon_dataframe_example.png?raw=true)
 :-------------------------:
-Figure: Example of the compiled dataset
+**Figure 1**: Example of the compiled dataset
 
 The dataset is available at the Github repository of the AI4NetMon project as a .csv file: [link](https://github.com/sermpezis/ai4netmon/tree/main/data/aggregate_data). 
 
@@ -102,11 +103,11 @@ df = pd.read_csv(URL, header=0, index_col=0)    # "index_col=0" sets the ASN as 
 
 ## Bias metrics
 
-The bias (along a dimension/characteristic) is defined as a difference between two distributions: population vs. sample (see [Bias definition](#bias-definition)). For example, the _population_ can be the entire set of ASes, a _sample_ can be the ASes that peer with RIPE RIS, and the _distributions_ can be the values of the number of peering links. In the dataframe, the aforementioned distributions could be retrieved as follows:
+The bias (along a dimension/characteristic) is defined as a difference between two distributions: population vs. sample (see [Bias definition](#bias-definition)). For example, the _population_ can be the entire set of ASes, a _sample_ can be the ASes that peer with RIPE RIS (in IPv4), and the _distributions_ can be the values of the number of peering links. In the dataframe, the aforementioned distributions could be retrieved as follows:
 ```python
 dimension = "AS_rank_total"     # the dataframe column corresponding to the total number of neighbors of an AS
-population_distribution = df[dimension].tolist()
-sample_distribution = df.loc[df['is_ris_peer_v4']==1, dimension].tolist()
+population_distribution = df[dimension].dropna().tolist()
+sample_distribution = df.loc[df['is_ris_peer_v4']==1, dimension].dropna().tolist()
 ```
 
 **_Identify bias_**: To identify if there is a statistically significant difference between the two distributions, one can run a statistical test. There are several statistical tests that could be applied. We select to use the widely used Kolmogorov-Smirnov (or, KS-test), which is a nonparametric test that compares two distributions (two-sample KS-test). This can be done as (documentation of the method [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kstest.html)):
@@ -132,7 +133,12 @@ from ai4netmon.Analysis.bias import bias_utils as bu
 params={'data_type':'numerical', 'bins':10, 'alpha':0.01}
 BS = bu.bias_score(population_distribution, sample_distribution, method='kl_divergence', params=**params)
 ```
-We also provide examples of how to calculate the bias scores for all dimensions in the example scripts in [this folder](https://github.com/sermpezis/ai4netmon/tree/main/use_cases/bias_in_monitoring_infrastructure). For example, to calculate the bias score along all dimensions, one can simply do:
+
+The result of the above code (the `BS` variable; the bias score) is a single value, which is the KL-divergence. For example, at the time of writing this document the resuls is ```0.026```.
+
+
+
+We also provide examples of how to calculate the bias scores for all dimensions in the example scripts (`example_script_*.py`) in [this folder](https://github.com/sermpezis/ai4netmon/tree/main/use_cases/bias_in_monitoring_infrastructure). For example, to calculate the bias score of the set of IPv4 RIPE RIS peers along all dimensions, one can simply do:
 ```python
 from ai4netmon.Analysis.bias import bias_utils as bu
 population_df = df
@@ -142,8 +148,88 @@ params={'method':'kl_divergence', 'bins':10, 'alpha':0.01}
 bias_df = bu.get_bias_of_monitor_set(df=population_df, monitor_list=sample_IDs, params=params)
 ```
 
+The result of the above code is a dataframe as follows:
+```
+AS_rank_source  0.076378
+AS_rank_iso     0.225580
+AS_rank_continent   0.072400
+AS_rank_numberAsns  0.190840
+AS_rank_numberPrefixes  0.202917
+AS_rank_numberAddresses     0.265934
+AS_hegemony     0.168170
+AS_rank_total   0.541757
+AS_rank_peer    0.471208
+AS_rank_customer    0.157465
+AS_rank_provider    0.190659
+peeringDB_ix_count  0.181456
+peeringDB_fac_count     0.144553
+peeringDB_policy_general    0.013354
+peeringDB_info_type     0.136842
+peeringDB_info_ratio    0.097839
+peeringDB_info_traffic  0.044955
+peeringDB_info_scope    0.138789
+is_personal_AS  0.000000
+```
+
+
+
 
 For more options for calculating the bias score (e.g., different metrics or different populations) see [Appendix A](#a-bias-calculation-options)
+
+
+
+## Results
+
+
+In this section, we use our framework (dataset, bias metrics, code) to study the biases in the IMPs, by calculating and visualizing the bias scores along all dimensions.
+
+
+
+### IMPs: overall bias characterization
+
+> Is there bias? Definitely, yes!
+
+We applied the KS-test for all platforms and dimensions. In almost all cases, the KS-test rejected the null hypothesis that the IMPs vantage points follow the same distribution as the entire population of ASes. 
+
+
+**The bias radar plot:** The following figure shows a radar plot with bias scores for all dimensions. The colored lines (and their included area) correspond to the bias metric of a given IMP along a given dimension, e.g., the bias score for RIPE RIS (orange line) in the dimension “Location (country)” is 0.2. Larger bias scores (i.e., farther from the center) correspond to more bias,  e.g., in the dimension “Location (country)” RIPE RIS is more biased than RIPE Atlas (blue line). Values closer to the center indicate lower bias. 
+
+
+![Bias radar plot all IMP](../paper/figures/fig_radar_all.png?raw=true)
+:-------------------------:
+**Figure 2**: Radar plot depicting the bias score for RIPE Atlas, RIPE RIS, and RouteViews over the different dimensions.
+
+
+Some key observations, are:
+
+- While the bias of IMPs differs significantly by dimension, RIPE Atlas is substantially less biased than RIPE RIS and RouteViews along most dimensions.
+
+- RIPE RIS has a significant topological bias (e.g., number of total neighbors or peers) as most of its collectors are deployed IXPs, where ASes establish many (peering) connections. While RouteViews has also significant bias in this dimension, RIPE Atlas has substantially lower bias. 
+
+- RouteViews and RIPE RIS are also quite biased in terms of network size (see “Customer cone” dimensions), which is due to the fact that many large ISPs provide feeds to the route collectors. While having feeds from large ISPs may be desired in terms of visibility or coverage, users should be aware of it since it may lead to biased measurements.
+- In most IXP-related and network type dimensions (that correspond to data mainly from PeeringDB), all platforms have relatively low bias; with an exception of RIPE RIS and RouteViews that are biased in terms of number of IXPs/facilities the monitors are connected to.
+- There are small differences between RIPE RIS and RouteViews. RIPE RIS is more biased in terms of topology (number of neighbors, total and peers), whereas RouteViews is more biased in terms of network sizes (“Customer cone” and “AS hegemony” dimensions). In most IXP-related dimensions, both platforms have similar biases.
+    
+
+### Bias characterization: a more detailed view
+
+Beyond the above basic analysis, in the following we present three plots that help to deepen our understanding of different IMP aspects. 
+
+
+![](../paper/figures/fig_radar_only_RCs.png?raw=true)|![](../paper/figures/fig_radar_only_RCs_full_feeders.png?raw=true)|![](../paper/figures/fig_radar_Atlas_v4_v6.png?raw=true)
+:---:|:---:|:---:
+Combinign RIS & RouteViews | Full vs. all feeds |IPv4 vs IPv6 Atlas probes
+
+**_Combining RIS and RouteViews_**: Using data from both RIPE RIS and RouteViews is common; hence, we analyze the combined bias. When considering vantage points from both projects, the bias slightly decreases in most dimensions. Interestingly, there are some exceptions, e.g., number of neighbors (total and peers), where it would be preferable (in terms of bias) to use only feeds from RouteViews.
+
+**_Full vs. all feeds_**: Only around 300 peers of RIPE RIS and RouteViews provide feeds for the entire routing table ("full feeds"). We compare the bias of only feed peers with that of the entire platform separately for RIPE RIS and RouteViews. For RIPE RIS the increase in bias is small, whereas for RouteViews the set of full feeds is significantly more biased. In fact, while RIPE RIS is on average more biased than RouteViews, the opposite becomes true when considering only full feeds.
+
+
+**_IPv4 vs IPv6 vantage points_**: We compare the set of ASes hosting IPv4, IPv6, and any RIPE Atlas probes. The set of networks hosting IPv6 probes is slightly more biased than networks hosting IPv4 probes in most dimensions. 
+
+
+
+
 
 
 ## Appendix
@@ -152,13 +238,75 @@ For more options for calculating the bias score (e.g., different metrics or diff
 
 **Steps**
 - [Optional] Select population; by default it can be the entire population, however, any custom population can be used as reference (see examples below). The selection of the population can be easily done by using the properties of the dataframe. Some examples can be:
-    -`df_population = df` (the entire population of ASes)
-    -`df_population = df[df["RIR region"]=="RIPE"]` (only ASes in the RIPE region)\
-    -`df_population = df[df["Network type"]=="CDN"]` (only ASes that are registered as CDNs in the PeeringDB)
-    -`df_population = df[df["Network type"]=="CDN"]` (only ASes that are registered as CDNs in the PeeringDB)
-    -`df_population = df.loc[my_custom_list_of_ASNs, :]` (only ASes that belong to a custom list, e.g., `my_custom_list_of_ASNs = [174,1299,2497,...]`)
+    - `df_population = df` (the entire population of ASes)
+    - `df_population = df[df["RIR region"]=="RIPE"]` (only ASes in the RIPE region)\
+    - `df_population = df[df["Network type"]=="CDN"]` (only ASes that are registered as CDNs in the PeeringDB)
+    - `df_population = df[df["Network type"]=="CDN"]` (only ASes that are registered as CDNs in the PeeringDB)
+    - `df_population = df.loc[my_custom_list_of_ASNs, :]` (only ASes that belong to a custom list, e.g., `my_custom_list_of_ASNs = [174,1299,2497,...]`)
 - Select set of interest
-    -`df_sample = df.loc[df["is_ris_peer_v4"]==1,:]` (RIPE RIS peers - only IPv4)
-    -`df_sample = df.loc[df["is_ris_peer_v4"]==1 | df["is_ris_peer_v6"]==1, :]` (all RIPE RIS peers)
-    -`df_sample = df.loc[df["is_routeviews_peer"]==1, :]` (all RouteViews peers)
-    -`df_sample = df.loc[df["nb_atlas_probes_v4"]>1 | df["nb_atlas_probes_v6"]>1]` (all ASes with at least one IPv4/IPv6 RIPE Atlas probe)
+    - `df_sample = df.loc[df["is_ris_peer_v4"]==1,:]` (RIPE RIS peers - only IPv4)
+    - `df_sample = df.loc[df["is_ris_peer_v4"]==1 | df["is_ris_peer_v6"]==1, :]` (all RIPE RIS peers)
+    - `df_sample = df.loc[df["is_routeviews_peer"]==1, :]` (all RouteViews peers)
+    - `df_sample = df.loc[df["nb_atlas_probes_v4"]>1 | df["nb_atlas_probes_v6"]>1]` (all ASes with at least one IPv4/IPv6 RIPE Atlas probe)
+
+
+
+### C: Dataset EDA
+
+To explore the data, some following commands are the following:
+
+- Print the all the features (columns) of the dataset and their respective data types (numerical, categorical, etc.)
+```python
+df.dtypes
+```
+
+- Print the number of non-nan values (`count`) and range (min/max), percentiles, mean, and standard deviation of the values for the numerical columns.
+```python
+df.describe()
+```
+
+- To further facilitate the EDA, we provide a method that visualizes the distributions for all features (generates CDF plots for numerical features, e.g., number of neighbors, and histograms for categorical features, e.g., type of network), which can be called as simple as follows:
+```python
+from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
+gdp.plot_all(network_sets, FILENAME, save_json=False, show_plot=False)
+
+```
+Check this [example script](https://github.com/sermpezis/ai4netmon/blob/main/use_cases/bias_in_monitoring_infrastructure/example_script_calculate_bias.py) for how to define the `network_sets` (i.e., dataframes of the sets to be visualized) and `FILENAME` options (i.e., names of files to be saved)
+
+The above code will produce the following figures (you can click on any figure to zoom in:
+
+**Location related dimensions**
+
+&nbsp;|RIR region|Location (continent)|&nbsp;| &nbsp;
+:---:|:---:|:---:|:---:|:---:
+&nbsp; |![](./figures/Fig_Histogram_AS_rank_source.png?raw=true)| ![](./figures/Fig_Histogram_AS_rank_continent.png?raw=true)|&nbsp;|&nbsp;
+
+
+**Network size dimensions**
+
+Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
+:---:|:---:|:---:|:---:|:---:
+![](./figures/Fig_CDF_AS_rank_numberAsns.png?raw=true)|![](./figures/Fig_CDF_AS_rank_numberPrefixes.png?raw=true)|![](./figures/Fig_CDF_AS_rank_numberAddresses.png?raw=true)|![](./figures/Fig_CDF_AS_hegemony.png?raw=true)|&nbsp;
+
+
+**Topology related dimensions**
+
+#neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
+:---:|:---:|:---:|:---:|:---:
+![](./figures/Fig_CDF_AS_rank_total.png?raw=true)|![](./figures/Fig_CDF_AS_rank_peer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_customer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_provider.png?raw=true)|&nbsp;
+
+
+
+**IXP related dimensions**
+
+&nbsp;|#IXPs (PeeringDB)|#facilities (PeeringDB)|Peering policy (PeeringDB)|&nbsp;
+:---:|:---:|:---:|:---:|:---:
+&nbsp;|![](./figures/Fig_CDF_peeringDB_ix_count.png?raw=true)|![](./figures/Fig_CDF_peeringDB_fac_count.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_policy_general.png?raw=true)|&nbsp;
+
+
+**Network type dimensions**
+
+Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
+:---:|:---:|:---:|:---:|:---:
+![](./figures/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_ratio.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_traffic.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_scope.png?raw=true)|![](./figures/Fig_Histogram_is_personal_AS.png?raw=true)
+
