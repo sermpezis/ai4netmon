@@ -13,6 +13,8 @@
 - [Results](#results): Analysis and visualization results for the bias in IMPs
 	- [IMPs: overall bias characterization](#imps-overall-bias-characterization)
 	- [Bias characterization: a more detailed view](#bias-characterization-a-more-detailed-view)
+- [Visualization tools](#visualization-tools): Online tools, publicly available, for parametrizing and visualizing bias in IMPs
+- [API](#api): An open API that provides the bias scores for the IMPs
 - [Appendix](#appendix)
     - [A](#a-bias-calculation-options): Bias calculation options for generalization and parametrization of the methodology and results
     - [B](#b-dataset-eda): Exploratory data analysis (EDA) of the dataset
@@ -264,6 +266,23 @@ Combinign RIS & RouteViews | Full vs. all feeds |IPv4 vs IPv6 Atlas probes
 
 
 **_IPv4 vs IPv6 vantage points_**: We compare the set of ASes hosting IPv4, IPv6, and any RIPE Atlas probes. The set of networks hosting IPv6 probes is slightly more biased than networks hosting IPv4 probes in most dimensions. 
+
+
+
+
+## Visualization tools
+
+To make it easier for the users to access our results and data, we provide two online tools (i.e., [ObservableHQ](https://observablehq.com/) notebooks) that provide interactive visualizations of the radar plots depicting the bias scores of IMPs.
+
+- **Bias in IMPs**: (available at [https://observablehq.com/@pavlos/ai4netmon-bias](https://observablehq.com/@pavlos/ai4netmon-bias)) Visualizes the bias in the IMPs. The user can select which IMPs to visualize by selecting a checkbox, as well as, which bias dimensions to visualize.
+
+- **Bias in RIPE RIS per Route Collector**: (available at [https://observablehq.com/@pavlos/ai4netmon-bias-per-route-collector](https://observablehq.com/@pavlos/ai4netmon-bias-per-route-collector)) RIPE RIS consists of 23 route collectors (RRCs). Each RRC peers with several ASes, which feed it with BGP messages. Hence, each RRC can be seen as a set of vantage points (i.e., the set of its peers). Since RIPE RIS provides BGP dumps per RRC, users may select to use the data from a singe RRC. In this tool, we visualize the bias score for each RRC, and compare it with the overall bias of RIPE RIS (i.e., union of all RRCs). The user can select which RRCs to visualize by selecting a checkbox, as well as, which bias dimensions to visualize.
+
+
+
+## API 
+
+We also provide an open API, which provides the bias scores for different IMPs of custom sets of vantage points. The API can be accessed at [https://ai4netmon.csd.auth.gr/api/](https://ai4netmon.csd.auth.gr/api/). Detailed instructions about its use can be found in this [doc](./AI4NetMon_API.md)  
 
 
 
