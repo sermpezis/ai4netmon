@@ -142,7 +142,7 @@ RETURN S
 
 The following figures show the overall bias score (y-axis) for subsets of the IMPs selected by the _greedy_ algorithm (continuous lines) or the _sorting_ algorithm (dashed lines) for varying set sizes `k` (x-axis). The bias score values at the rightmost part of the curves correspond to the bias score of the entire set of vantage points `VP`. 
 
-![](../paper/figures/fig_bias_vs_sampling_naive_and_greedy_only_RC.png?raw=true)|![](..paper/figures/fig_bias_vs_sampling_naive_and_greedy_only_Atlas.png?raw=true)
+![](../ripe_ris_subsampling/figures/fig_bias_vs_sampling_naive_and_greedy_only_RC.png?raw=true)|![](..paper/ripe_ris_subsampling/fig_bias_vs_sampling_naive_and_greedy_only_Atlas.png?raw=true)
 :---:|:---:
 Subsampling vs. Bias score: RIPE RIS and RouteViews | Subsampling vs. Bias score: RIPE Atlas
 **Figure 4** | **Figure 5**
