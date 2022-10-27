@@ -202,7 +202,7 @@ We applied the KS-test for all platforms and dimensions. In almost all cases, th
 **The bias radar plot:** The following figure shows a radar plot with bias scores for all dimensions. The colored lines (and their included area) correspond to the bias metric of a given IMP along a given dimension, e.g., the bias score for RIPE RIS (orange line) in the dimension “Location (country)” is 0.2. Larger bias scores (i.e., farther from the center) correspond to more bias,  e.g., in the dimension “Location (country)” RIPE RIS is more biased than RIPE Atlas (blue line). Values closer to the center indicate lower bias. 
 
 
-![Bias radar plot all IMP](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all.png?raw=true)
+![Bias radar plot all IMP](../use_cases/paper/figures/fig_radar_all.png?raw=true)
 :-------------------------:
 **Figure 2**: Radar plot depicting the bias score for RIPE Atlas, RIPE RIS, and RouteViews over the different dimensions.
 
@@ -255,7 +255,7 @@ Some key observations, are:
 Beyond the above basic analysis, in the following we present three plots that help to deepen our understanding of different IMP aspects. 
 
 
-![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_only_RCs.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_only_RCs_full_feeders.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_Atlas_v4_v6.png?raw=true)
+![](../use_cases/paper/figures/fig_radar_only_RCs.png?raw=true)|![](../use_cases/paper/figures/fig_radar_only_RCs_full_feeders.png?raw=true)|![](../use_cases/paper/figures/fig_radar_Atlas_v4_v6.png?raw=true)
 :---:|:---:|:---:
 Combinign RIS & RouteViews | Full vs. all feeds |IPv4 vs IPv6 Atlas probes
 
@@ -366,7 +366,7 @@ where the `alpha` parameter is used for the smoothed version of KL-divergence, a
 
  In the following Figure we present the radar plot depicting the bias for the three bias metrics. While the actual values differ for different metrics, the qualitative findings (e.g., which infrastructure set is more biased) remain the same for the majority of dimensions.
 
-![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all_tv.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all_max.png?raw=true)
+![](../use_cases/paper/figures/fig_radar_all.png?raw=true)|![](../use_cases/paper/figures/fig_radar_all_tv.png?raw=true)|![](../use_cases/paper/figures/fig_radar_all_max.png?raw=true)
 :---:|:---:|:---:
 KL-divergence | Total variation (TV) | Max distance
 
