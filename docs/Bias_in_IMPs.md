@@ -95,7 +95,7 @@ A subset of characteristics that are included in the dataset and are more releva
 The following image depicts the format of the dataset.
 
 
-![Dataframe AI4NetMon](./figures/fig_ai4netmon_dataframe_example.png?raw=true)
+![Dataframe AI4NetMon](../use_cases/bias_in_monitoring_infrastructure/figures/fig_ai4netmon_dataframe_example.png?raw=true)
 :-------------------------:
 **Figure 1**: Example of the compiled dataset
 
@@ -202,7 +202,7 @@ We applied the KS-test for all platforms and dimensions. In almost all cases, th
 **The bias radar plot:** The following figure shows a radar plot with bias scores for all dimensions. The colored lines (and their included area) correspond to the bias metric of a given IMP along a given dimension, e.g., the bias score for RIPE RIS (orange line) in the dimension “Location (country)” is 0.2. Larger bias scores (i.e., farther from the center) correspond to more bias,  e.g., in the dimension “Location (country)” RIPE RIS is more biased than RIPE Atlas (blue line). Values closer to the center indicate lower bias. 
 
 
-![Bias radar plot all IMP](../paper/figures/fig_radar_all.png?raw=true)
+![Bias radar plot all IMP](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all.png?raw=true)
 :-------------------------:
 **Figure 2**: Radar plot depicting the bias score for RIPE Atlas, RIPE RIS, and RouteViews over the different dimensions.
 
@@ -255,7 +255,7 @@ Some key observations, are:
 Beyond the above basic analysis, in the following we present three plots that help to deepen our understanding of different IMP aspects. 
 
 
-![](../paper/figures/fig_radar_only_RCs.png?raw=true)|![](../paper/figures/fig_radar_only_RCs_full_feeders.png?raw=true)|![](../paper/figures/fig_radar_Atlas_v4_v6.png?raw=true)
+![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_only_RCs.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_only_RCs_full_feeders.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_Atlas_v4_v6.png?raw=true)
 :---:|:---:|:---:
 Combinign RIS & RouteViews | Full vs. all feeds |IPv4 vs IPv6 Atlas probes
 
@@ -366,7 +366,7 @@ where the `alpha` parameter is used for the smoothed version of KL-divergence, a
 
  In the following Figure we present the radar plot depicting the bias for the three bias metrics. While the actual values differ for different metrics, the qualitative findings (e.g., which infrastructure set is more biased) remain the same for the majority of dimensions.
 
-![](../paper/figures/fig_radar_all.png?raw=true)|![](../paper/figures/fig_radar_all_tv.png?raw=true)|![](../paper/figures/fig_radar_all_max.png?raw=true)
+![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all_tv.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/paper/figures/fig_radar_all_max.png?raw=true)
 :---:|:---:|:---:
 KL-divergence | Total variation (TV) | Max distance
 
@@ -402,21 +402,21 @@ The above code will produce the following figures (you can click on any figure t
 
 &nbsp;|RIR region|Location (continent)|&nbsp;| &nbsp;
 :---:|:---:|:---:|:---:|:---:
-&nbsp; |![](./figures/Fig_Histogram_AS_rank_source.png?raw=true)| ![](./figures/Fig_Histogram_AS_rank_continent.png?raw=true)|&nbsp;|&nbsp;
+&nbsp; |![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_AS_rank_source.png?raw=true)| ![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_AS_rank_continent.png?raw=true)|&nbsp;|&nbsp;
 
 
 **Network size dimensions**
 
 Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/Fig_CDF_AS_rank_numberAsns.png?raw=true)|![](./figures/Fig_CDF_AS_rank_numberPrefixes.png?raw=true)|![](./figures/Fig_CDF_AS_rank_numberAddresses.png?raw=true)|![](./figures/Fig_CDF_AS_hegemony.png?raw=true)|&nbsp;
+![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_numberAsns.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_numberPrefixes.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_numberAddresses.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_hegemony.png?raw=true)|&nbsp;
 
 
 **Topology related dimensions**
 
 #neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/Fig_CDF_AS_rank_total.png?raw=true)|![](./figures/Fig_CDF_AS_rank_peer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_customer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_provider.png?raw=true)|&nbsp;
+![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_total.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_peer.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_customer.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_AS_rank_provider.png?raw=true)|&nbsp;
 
 
 
@@ -424,12 +424,12 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 &nbsp;|#IXPs (PeeringDB)|#facilities (PeeringDB)|Peering policy (PeeringDB)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-&nbsp;|![](./figures/Fig_CDF_peeringDB_ix_count.png?raw=true)|![](./figures/Fig_CDF_peeringDB_fac_count.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_policy_general.png?raw=true)|&nbsp;
+&nbsp;|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_peeringDB_ix_count.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_CDF_peeringDB_fac_count.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_peeringDB_policy_general.png?raw=true)|&nbsp;
 
 
 **Network type dimensions**
 
 Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
 :---:|:---:|:---:|:---:|:---:
-![](./figures/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_ratio.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_traffic.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_scope.png?raw=true)|![](./figures/Fig_Histogram_is_personal_AS.png?raw=true)
+![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_peeringDB_info_ratio.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_peeringDB_info_traffic.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_peeringDB_info_scope.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_Histogram_is_personal_AS.png?raw=true)
 

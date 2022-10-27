@@ -59,7 +59,7 @@ We first present a preliminary analysis on how the bias score of an IMP changes 
 
 The following Figure shows the average bias for different sample sizes drawn randomly from either the entire population of ASes (`all`) or one of the three IMPs. Lines correspond to averages over 100 sampling iterations, and errorbars indicate 95% confidence intervals. For ease of comparison, dashed lines correspond to the bias values of using the entire infrastructure (i.e., all vantage points of the respective IMPs). 
 
-![Random subsampling](../paper/figures/Fig_bias_vs_sampling_TOTAL.png?raw=true)
+![Random subsampling](../use_cases/paper/figures/Fig_bias_vs_sampling_TOTAL.png?raw=true)
 :-------------------------:
 **Figure 1**: Bias vs. number of vantage points (random subsampling)
 
@@ -81,7 +81,7 @@ In the Figure 2 below, we present how the RIPE Atlas selection algorithm, "Atlas
 
 We observe that _when using the RIPE Atlas algorithm for selecting probes, "Atlas (platform)", then the bias is significantly higher compared to selecting randomly probes, "Atlas (random)"_. In fact, the bias is almost two times higher. This indicates that even with the existing infrastructure, RIPE Atlas users could decrease bias by 50% by not depending on the built-in probe selection process, but select random probes themselves.
 
-![](../paper/figures/Fig_bias_vs_sampling_real_Atlas_TOTAL.png?raw=true)|![](./figures/Fig_scatter_bias_vs_sampling_per_rrc.png?raw=true)
+![](../use_cases/paper/figures/Fig_bias_vs_sampling_real_Atlas_TOTAL.png?raw=true)|![](../use_cases/bias_in_monitoring_infrastructure/figures/Fig_scatter_bias_vs_sampling_per_rrc.png?raw=true)
 :---:|:---:
 Bias in automatic probe selection in RIPE Atlas | Bias vs. number of peers in RIPE RIS route collectors
 **Figure 2** | **Figure 3**
@@ -142,7 +142,7 @@ RETURN S
 
 The following figures show the overall bias score (y-axis) for subsets of the IMPs selected by the _greedy_ algorithm (continuous lines) or the _sorting_ algorithm (dashed lines) for varying set sizes `k` (x-axis). The bias score values at the rightmost part of the curves correspond to the bias score of the entire set of vantage points `VP`. 
 
-![](../ripe_ris_subsampling/figures/fig_bias_vs_sampling_naive_and_greedy_only_RC.png?raw=true)|![](../ripe_ris_subsampling/figures/fig_bias_vs_sampling_naive_and_greedy_only_Atlas.png?raw=true)
+![](../use_cases/ripe_ris_subsampling/figures/fig_bias_vs_sampling_naive_and_greedy_only_RC.png?raw=true)|![](../use_cases/ripe_ris_subsampling/figures/fig_bias_vs_sampling_naive_and_greedy_only_Atlas.png?raw=true)
 :---:|:---:
 Subsampling vs. Bias score: RIPE RIS and RouteViews | Subsampling vs. Bias score: RIPE Atlas
 **Figure 4** | **Figure 5**

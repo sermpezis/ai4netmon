@@ -1,14 +1,10 @@
 # ai4netmon
-Welcome to the "AI for Network Monitoring" (AI4NetMon) project: A collection of data-driven and ML/AI methods for designing efficient Internet monitoring strategies and measurement campaigns. For more information visit the  [project website](https://sermpezis.github.io/ai4netmon/).
+Welcome to the "AI for Network Monitoring" (AI4NetMon) project's github repository!
 
-**The project has just started. Code, tools, results are comming soon. Stay tuned!**
+For more information about the project visit the project website [https://ai4netmon.csd.auth.gr/](https://ai4netmon.csd.auth.gr/).
 
-
-### 
-
-* add to PYTHONPATH the parent directory of this folder; e.g., `export PYTHONPATH="${PYTHONPATH}:/parent/directory/of_ai4netmon/"
-* install requirements.txt; e.g.,
-	- create virtual environment; e.g., on Linux
-		- `python3 -m venv /path/to/new/virtual/environment`
-		- `source /path/to/new/virtual/environment/bin activate`
-	- install requirements `pip install -r requirements.txt`
+In this repository, you can find:
+- Detailed docs about the project, and its results, tools and code ([./docs](./docs/) folder). We highly recommend you to first read the docs. 
+- The source code for all methods of the project ([./Analysis](./Analysis/) folder)
+- Data produced and used by the methods ([./data](./data/) folder)
+- Use cases analyzed by the project and example scripts [./use_cases](./use_cases/) folder
