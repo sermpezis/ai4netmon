@@ -1,5 +1,5 @@
-from Analysis.aggregate_data import data_aggregation_tools as dat
-from Analysis.aggregate_data import graph_methods as gm
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
+from ai4netmon.Analysis.aggregate_data import graph_methods as gm
 import numpy as np
 import csv
 from dython.nominal import associations
