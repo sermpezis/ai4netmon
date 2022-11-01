@@ -92,7 +92,7 @@ Then, we calculated the bias for each set and checked if the bias decreases comp
  
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_bias.png)
 
-Some interesting findings can be obsereved in this plot. There are some bias dimensions, where the bias is similar in all four sets, meaning the greedy subsampling sets have almost same amount of bias as the random set. So, we can understand that in such dimensions, maybe bias is not important and does not have a negative effect on hijack use case.
+Some interesting findings can be obsereved in this plot. There are some bias dimensions, where the bias is similar in all four sets (e.g Personal ASN dimension), meaning the greedy subsampling sets have almost same amount of bias as the random set. So, we can understand that in such dimensions, maybe bias is not important and does not have a negative effect on hijack use case.
 For the clustering subsampling set, we observe that they are similar to the random in most cases. Also, very often they have opposite direction from the greedy sets.
 
 
