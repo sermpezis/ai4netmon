@@ -86,14 +86,14 @@ In the plot we can see the results of RMSE vs number of monitos for every subset
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmse_sorted.PNG)
 
 A first observation is that the bruteforce greedy subset, unlike the other ones, starts from the lowest error, which keeps falling until ~70 monitors, and then starts to increase with the number of monitors, although keeping at the lowest point from all the others.
+For the rest subsets, it is obvious that many overlaps exist in the error for different number of monitors, and we can also see that the random subsets is at a low point in comparasion with the other sets, at least for some particular numbers of monitors. Finally, the naive partial bias informed set, is the worst in terms of error, in most cases. 
 
-
- Then, we calculated the bias for each set and checked if the bias decreases compared to random sampling results of bias characterization.
+Then, we calculated the bias for each set and checked if the bias decreases compared to random sampling results of bias characterization.
  
- ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_bias.png)
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_bias.png)
 
- 
-
+Some interesting findings can be obsereved in this plot. There are some bias dimensions, where the bias is similar in all four sets, meaning the greedy subsampling sets have almost same amount of bias as the random set. So, we can understand that in such dimensions, maybe bias is not important and does not have a negative effect on hijack use case.
+For the clustering subsampling set, we observe that they are similar to the random in most cases. Also, very often they have opposite direction from the greedy sets.
 
 
 
