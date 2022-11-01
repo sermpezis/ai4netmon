@@ -38,7 +38,7 @@ A method followed to be compared with the unsupervised approaches, was to select
 
 Below, the plot shows the average RMSE over 10 runs (y-axis) vs. the number of monitors (x-axis). We ran the method 10 times, because of the randomness in the selection of monitors.
 
-![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avgRMSEvsRandom.png)
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_rmse_random.pdf)
 
 ### Problem characterization
 
@@ -72,7 +72,7 @@ K-means algorithm is used with various numbes of clusters (5, 10, 20, 100). To e
 
 After we have extracted the subsets, we select randomly X monitors and calculate the estimated impact and then the errors, in the same way we did with the *basic* dataframe. We calculate the RMSE for X = 10, 20, 30, 40, 50, 100, 150, 200, 288, and run the random selection for 50 times, to get the average RMSE.  Below, the plots of avg RMSE per 50 runs vs Number of monitors are shown, for every cluster.
 
-![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/clusters.png)
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_rmse_clusters.pdf)
 
 In the plot, we can see that for a small number of monitors, 10 clusters seem to have the lowest error, but as the number of monitos increases, for 150 and more, 100 clusters seem to give the best performance. In general, the other numbers of clusters have similar performance, while 5 clusters have the highest error.
 
@@ -83,11 +83,11 @@ Another approach is to select subsamples with bias subsampling algorithms.
 
 In the plot we can see the results of RMSE vs number of monitos for every subset.
 
-![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/subbias.png)
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_rmse_sorted.pdf)
 
  Then, we calculated the bias for each set and checked if the bias decreases compared to random sampling results of bias characterization.
  
- ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/biasplots.png)
+ ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_bias.pdf)
 
  
 
