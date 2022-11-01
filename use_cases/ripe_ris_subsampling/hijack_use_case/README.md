@@ -88,7 +88,7 @@ In the plot we can see the results of RMSE vs number of monitos for every subset
 A first observation is that the bruteforce greedy subset, unlike the other ones, starts from the lowest error, which keeps falling until ~70 monitors, and then starts to increase with the number of monitors, although keeping at the lowest point from all the others.
 For the rest subsets, it is obvious that many overlaps exist in the error for different number of monitors, and we can also see that the random subsets is at a low point in comparasion with the other sets, at least for some particular numbers of monitors. Finally, the naive partial bias informed set, is the worst in terms of error, in most cases. 
 
-Then, we calculated the bias for each set and checked if the bias decreases compared to random sampling results of bias characterization.
+Then, we calculated the bias for each set (among random, clustered in 10 clusters and greedy subsets) and checked if the bias decreases compared to random sampling results of bias characterization.
  
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/avg_bias.png)
 
