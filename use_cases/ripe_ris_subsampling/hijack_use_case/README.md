@@ -38,7 +38,7 @@ A method followed to be compared with the unsupervised approaches, was to select
 
 Below, the plot shows the average RMSE over 10 runs (y-axis) vs. the number of monitors (x-axis). We ran the method 10 times, because of the randomness in the selection of monitors.
 
-![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmses_random.PNG)
+![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmse_random.PNG)
 
 ### Problem characterization
 
