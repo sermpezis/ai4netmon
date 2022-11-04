@@ -74,7 +74,7 @@ After we have extracted the subsets, we select randomly X monitors and calculate
 
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmse_clusters.PNG)
 
-In the plot, we can see that for a small number of monitors, 10 clusters seem to have the lowest error, but as the number of monitos increases, for 150 and more, 100 clusters seem to give the best performance. In general, the other numbers of clusters have similar performance, while 5 clusters have the highest error.
+In the plot, we can see that for a small number of monitors, 10 clusters seem to have the lowest error, but as the number of monitos increases, for 150 and more, 100 clusters seem to give the best performance. In general, the other numbers of clusters have similar performance, while 5 clusters have the highest error. Altough, comparing with random selection, we see that all the clustering subsets achieve lower error than it. 
 
 ### Subsampling with bias subsampling algorithm
 
