@@ -9,20 +9,56 @@ import pandas as pd
 import json
 import csv
 from tqdm import tqdm
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs
 import re
 from collections import defaultdict
-from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
+from Analysis.aggregate_data import data_aggregation_tools as dat
 import wget
-
+import html
 
 
 URL_ORIGINS = 'https://github.com/CAIDA/mapkit-cti-code/tree/master/PAM-Paper-Results/CTI/origin'
 URL_TOP = 'https://github.com/CAIDA/mapkit-cti-code/tree/master/PAM-Paper-Results/CTI'
 PATH_ORIGINS = 'https://raw.githubusercontent.com/CAIDA/mapkit-cti-code/master/PAM-Paper-Results/CTI/origin/{}'
 PATH_TOP = 'https://raw.githubusercontent.com/CAIDA/mapkit-cti-code/master/PAM-Paper-Results/CTI/{}'
+BGP_TOOLS_URL = 'https://bgp.tools/credits'
 
 
+def get_bgptools_data(save_filename):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    r = requests.get(BGP_TOOLS_URL, headers=headers)
+    soup = bs(r.text, 'lxml')
+    saved = []
+    h2 = soup.find("h2", text="BGP Feeds:")
+    for table in h2.find_next_siblings("table"):
+        for row in table.select("tr"):
+            saved.append([td.get_text(strip=True) for td in row.select("td")])
+    if save_filename is not None:
+        path = '../../data/misc/'
+        df = pd.DataFrame(saved, columns=['unnamed', 'ASN', 'name', 'v4', 'v6', 'direct'])
+        df = df.iloc[1:, :]
+        df["ASN"] = df["ASN"].str.replace("AS", "")
+
+        all_asns = df['ASN']
+        v4 = df['ASN'].loc[df['v4'] == html.unescape('&#10004;')]
+        v6 = df['ASN'].loc[df['v6'] == html.unescape('&#10008;')]
+        all_asns.to_csv(path+'{}_simple_list.csv'.format(save_filename), index=False)
+        v4.to_csv(path+'{}_v4.csv'.format(save_filename), index=False)
+        v6.to_csv(path+'{}_v6.csv'.format(save_filename), index=False)
+
+        df_asns = df[['ASN', 'v4', 'v6']]
+
+        df_asns.loc[df["v4"] == html.unescape('&#10004;'), "v4"] = 1
+        df_asns.loc[df["v4"] == html.unescape('&#10008;'), "v4"] = 0
+
+        df_asns.loc[df["v6"] == html.unescape('&#10004;'), "v6"] = 1
+        df_asns.loc[df["v6"] == html.unescape('&#10008;'), "v6"] = 0
+        df_asns.rename(columns={"v4": "is_bgptools_peer_v4", "v6": "is_bgptools_peer_v6"}, inplace=True)
+        df_asns.to_csv(path+'{}.csv'.format(save_filename), index=False)
+
+    else:
+        return saved
 
 def get_ripe_ris_data(query_time=None):
     '''
