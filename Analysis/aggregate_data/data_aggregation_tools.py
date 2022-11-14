@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import json
 import pycountry_convert as pc
-from ai4netmon.Analysis.aggregate_data import data_collectors as dc
-from ai4netmon.Analysis.aggregate_data import graph_methods as gm
+from Analysis.aggregate_data import data_collectors as dc
+from Analysis.aggregate_data import graph_methods as gm
 from collections import defaultdict
 import urllib.request
 
@@ -21,11 +21,13 @@ AS_RELATIONSHIPS = FILES_LOCATION+'AS_relationships.txt'
 ASDB_PATH = FILES_LOCATION+'ASDB.csv'
 ORIGIN_PATH = FILES_LOCATION + 'CTI_origin.csv'
 TOP_PATH = FILES_LOCATION + 'CTI_top.csv'
+BGPTOOLS_PATH = FILES_LOCATION + 'bgptools.csv'
+
 
 FILES_LOCATION_AGGREGATE = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/aggregate_data/'
-AGGREGATE_DATA_FNAME = FILES_LOCATION_AGGREGATE+'asn_aggregate_data.csv'
+AGGREGATE_DATA_FNAME = FILES_LOCATION_AGGREGATE+'final.csv'
 
-ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2']
+ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2', 'bgptools']
 
 
 def cc2cont(country_code):
@@ -62,6 +64,12 @@ def get_continent(country_code):
         else:
             continent_name.append( cc2cont(cc) )
     return continent_name
+
+def create_df_from_bgtools():
+    df = pd.read_csv(BGPTOOLS_PATH)
+    df = df.set_index('ASN')
+    return df
+
 
 def create_df_from_AS_relationships():
     """
@@ -315,6 +323,8 @@ def create_df_from(dataset):
         data = create_dataframe_from_asdb(1)
     elif dataset == 'asdb_2':
         data = create_dataframe_from_asdb(2)
+    elif dataset == 'bgptools':
+        data = create_df_from_bgtools()
     else:
         raise Exception('Not defined dataset')
     return data
@@ -335,7 +345,8 @@ def create_dataframe_from_multiple_datasets(list_of_datasets=None):
         list_of_dataframes.append(create_df_from(i))
     final_df = pd.concat(list_of_dataframes, axis=1)
     final_df.index.name = 'ASN'
-    return final_df
+    final_df.to_csv('final.csv')
+    # return final_df
 
 
 def load_aggregated_dataframe(preprocess=False):
@@ -347,8 +358,11 @@ def load_aggregated_dataframe(preprocess=False):
     df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
     if preprocess:
         df['is_personal_AS'].fillna(0, inplace=True)
+        df['is_bgptools_peer_v4'].fillna(0, inplace=True)
+        df['is_bgptools_peer_v6'].fillna(0, inplace=True)
         df['is_in_peeringDB'].fillna(0, inplace=True)
         # pdb_columns = [c for c in df.columns if c.startswith('peeringDB')]
         # pdb_columns_categorical = [c for c in df.columns if c.startswith('peeringDB') and df[c].dtype=='O']
         # df.loc[df[pdb_columns].isna().all(axis=1), pdb_columns_categorical] = 'Not in PDB'
     return df
+
