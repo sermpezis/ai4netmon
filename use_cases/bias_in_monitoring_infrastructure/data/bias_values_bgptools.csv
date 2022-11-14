@@ -1,0 +1,20 @@
+,bgptools (all)
+AS_rank_source,0.10194060693491966
+AS_rank_iso,0.31052166638701706
+AS_rank_continent,0.08756364801030414
+AS_rank_numberAsns,0.05815235407001836
+AS_rank_numberPrefixes,0.0371731708603621
+AS_rank_numberAddresses,0.03150972512878881
+AS_hegemony,0.03255817069453803
+AS_rank_total,0.09491225410995834
+AS_rank_peer,0.08752409347379109
+AS_rank_customer,0.050495773941898095
+AS_rank_provider,0.047361088797533826
+peeringDB_ix_count,0.08022505202550764
+peeringDB_fac_count,0.03181576230364051
+peeringDB_policy_general,0.0010831175263917071
+peeringDB_info_type,0.09536915677521136
+peeringDB_info_ratio,0.03579442953690914
+peeringDB_info_traffic,0.07960840015715762
+peeringDB_info_scope,0.09302428031121958
+is_personal_AS,0.05924724156642166
