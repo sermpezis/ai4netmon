@@ -6,10 +6,13 @@ from matplotlib import pyplot as plt
 from ai4netmon.Analysis.bias import bias_utils as bu
 from ai4netmon.Analysis.bias import radar_chart
 from ai4netmon.Analysis.bias import generate_distribution_plots as gdp
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
+
 
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
+# AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
+AGGREGATE_DATA_FNAME = '../../data/aggregate_data/final.csv'
 FIG_RADAR_SAVENAME_FORMAT = './figures/fig_radar_{}.png'
 BIAS_CSV_FNAME = './data/bias_values_ris_atlas_rv.csv'
 FIG_RADAR_SAVENAME_FORMAT_NO_STUBS = './figures/fig_radar_{}__no_stubs.png'
@@ -24,8 +27,10 @@ FEATURES = list(FEATURE_NAMES_DICT.keys())
 
 
 ## load data
-df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
-df['is_personal_AS'].fillna(0, inplace=True)
+# df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
+# df['is_personal_AS'].fillna(0, inplace=True)
+df = dat.load_aggregated_dataframe(preprocess=True)
+
 if OMIT_STUBS:
     df = df[df['AS_rel_degree']>1]
     FIG_RADAR_SAVENAME_FORMAT = FIG_RADAR_SAVENAME_FORMAT_NO_STUBS
@@ -43,6 +48,7 @@ network_sets_dict['RIPE Atlas (all)'] = df.loc[(df['nb_atlas_probes_v4']>0) | (d
 network_sets_dict['RIPE Atlas (v4)'] = df.loc[df['nb_atlas_probes_v4']>0]
 network_sets_dict['RIPE Atlas (v6)'] = df.loc[df['nb_atlas_probes_v6']>0]
 network_sets_dict['RouteViews (all)'] = df.loc[df['is_routeviews_peer']>0]
+network_sets_dict['bgptools (all)'] = df.loc[(df['is_bgptools_peer_v4']>0) | (df['is_bgptools_peer_v6']>0)]
 network_sets_dict['RIPE RIS + RouteViews (all)'] = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0) | (df['is_routeviews_peer']>0)]
 
 
