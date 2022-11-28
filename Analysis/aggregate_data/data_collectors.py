@@ -376,7 +376,7 @@ def RouteViews_collector(save_filename):
     :param save_filename: (str) the file to be save the dataset
     :return: writes a txt file
     """
-    ROUTE_VIEWS_URL = "http://www.routeviews.org/peers/peering-status.html"
+        ROUTE_VIEWS_URL = "http://www.routeviews.org/peers/peering-status.html"
 
     today = date.today()
     data = requests.get(ROUTE_VIEWS_URL)
@@ -395,15 +395,23 @@ def RouteViews_collector(save_filename):
 
     with open(save_filename, 'r') as fin:
         data = fin.read()
-        data = data.replace("|", " ")
+        data = data.replace(" | ", "|")
         data = data.splitlines(True)
 
-    # for line in data:
-    #     print(' '.join(line.split()))
+    for line in data:
+        print(' '.join(line.split()))
 
     with open(save_filename, 'w') as fout:
+        fout.write("ROUTEVIEWS_COLLECTOR|AS_NUMBER|PEERING_ADDRESS|PREFIXES|CC|REGION|ASNAME" + "\n")
+        # fout.write(" ".join(line.split(" ", 1)))
         for line in data[5:]:
-            fout.write(' '.join(line.split()) + "\n")
+            # print(line)
+            # fout.write(' '.join(line.split()) + "\n")
+            line = ' '.join(line.split()) + "\n"
+            print(line)
+            line = line.replace(" ", "|", 3)
+            print(line)
+            fout.write(line)
 
 def ASDB_collector(save_filename):
     '''
@@ -441,7 +449,7 @@ def cti_list_of_filenames_for_top_and_origins(url):
     """
     result = requests.get(url)
 
-    soup = BeautifulSoup(result.text, 'html.parser')
+    soup = bs(result.text, 'html.parser')
     csvfiles = soup.find_all(title=re.compile("\.csv$"))
 
     filenames = []
