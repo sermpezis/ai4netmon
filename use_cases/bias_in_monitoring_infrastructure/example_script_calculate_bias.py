@@ -11,8 +11,7 @@ from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 
 
 ## datasets
-# AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
-AGGREGATE_DATA_FNAME = '../../data/aggregate_data/final.csv'
+AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20221128.csv'
 FIG_RADAR_SAVENAME_FORMAT = './figures/fig_radar_{}.png'
 BIAS_CSV_FNAME = './data/bias_values_ris_atlas_rv.csv'
 FIG_RADAR_SAVENAME_FORMAT_NO_STUBS = './figures/fig_radar_{}__no_stubs.png'
