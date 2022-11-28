@@ -376,7 +376,7 @@ def RouteViews_collector(save_filename):
     :param save_filename: (str) the file to be save the dataset
     :return: writes a txt file
     """
-        ROUTE_VIEWS_URL = "http://www.routeviews.org/peers/peering-status.html"
+    ROUTE_VIEWS_URL = "http://www.routeviews.org/peers/peering-status.html"
 
     today = date.today()
     data = requests.get(ROUTE_VIEWS_URL)
