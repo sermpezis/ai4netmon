@@ -12,7 +12,7 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup as bs
 import re
 from collections import defaultdict
-from Analysis.aggregate_data import data_aggregation_tools as dat
+from ai4netmon.Analysis.aggregate_data import data_aggregation_tools as dat
 import wget
 import html
 
