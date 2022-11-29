@@ -48,6 +48,8 @@ network_sets_dict['RIPE Atlas (v4)'] = df.loc[df['nb_atlas_probes_v4']>0]
 network_sets_dict['RIPE Atlas (v6)'] = df.loc[df['nb_atlas_probes_v6']>0]
 network_sets_dict['RouteViews (all)'] = df.loc[df['is_routeviews_peer']>0]
 network_sets_dict['bgptools (all)'] = df.loc[(df['is_bgptools_peer_v4']>0) | (df['is_bgptools_peer_v6']>0)]
+network_sets_dict['bgptools (v4)'] = df.loc[(df['is_bgptools_peer_v4']>0)]
+network_sets_dict['bgptools (v6)'] = df.loc[(df['is_bgptools_peer_v6']>0)]
 network_sets_dict['RIPE RIS + RouteViews (all)'] = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0) | (df['is_routeviews_peer']>0)]
 
 
@@ -66,7 +68,7 @@ bias_df_max = bu.bias_score_dataframe(df[FEATURES], network_sets_dict_for_bias, 
 
 # print biases & save to csv
 print('Bias per monitor set (columns) and per feature (rows)')
-print_df = bias_df[['RIPE RIS (all)','RIPE Atlas (all)', 'RouteViews (all)']].copy()
+print_df = bias_df[['RIPE RIS (all)','RIPE Atlas (all)', 'RouteViews (all)', 'RIPE RIS + RouteViews (all)', 'bgptools (all)']].copy()
 print_df.index = [n.replace('\n','') for n in FEATURE_NAMES_DICT.values()]
 print(print_df.round(2))
 print_df.round(4).to_csv(BIAS_CSV_FNAME, header=True, index=True)
@@ -90,6 +92,18 @@ plot_df = bias_df[['RIPE RIS (all)','RouteViews (all)']]
 radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('RIPE_RV'), varlabels=FEATURE_NAMES_DICT)
 plot_df = bias_df_tv[['RIPE RIS (all)','RouteViews (all)']]
 radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('RIPE_RV_tv'), varlabels=FEATURE_NAMES_DICT)
+# all bgptools, v4, v6
+plot_df = bias_df[['bgptools (all)', 'bgptools (v4)', 'bgptools (v6)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools'), varlabels=FEATURE_NAMES_DICT)
+# bgptools vs RouteViews
+plot_df = bias_df[['bgptools (all)','RouteViews (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RV'), varlabels=FEATURE_NAMES_DICT)
+# bgptools vs RipeRIS
+plot_df = bias_df[['bgptools (all)','RIPE RIS (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RIPERIS'), varlabels=FEATURE_NAMES_DICT)
+# bgptools vs RipeRIS+Routeviews
+plot_df = bias_df[['bgptools (all)', 'RIPE RIS + RouteViews (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RIPERIS_RV'), varlabels=FEATURE_NAMES_DICT)
 
 
 
@@ -97,5 +111,7 @@ radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', sav
 network_sets_dict_plots = {'All ASes': network_sets_dict['all'], 
                      'RIPE Atlas': network_sets_dict['RIPE Atlas (all)'], 
                      'RIPE RIS': network_sets_dict['RIPE RIS (all)'], 
-                     'RouteViews': network_sets_dict['RouteViews (all)']}
+                     'RouteViews': network_sets_dict['RouteViews (all)'],
+                    'RIPE RIS + RouteViews': network_sets_dict['RIPE RIS + RouteViews (all)'],
+                    'BGPtools': network_sets_dict['bgptools (all)']}
 gdp.plot_all(network_sets_dict_plots, SAVE_PLOTS_DISTRIBUTION_FNAME_FORMAT, save_json=False, show_plot=False)
