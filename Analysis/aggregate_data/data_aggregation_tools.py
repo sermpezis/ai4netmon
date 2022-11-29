@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import json
 import pycountry_convert as pc
-from Analysis.aggregate_data import data_collectors as dc
-from Analysis.aggregate_data import graph_methods as gm
+from ai4netmon.Analysis.aggregate_data import data_collectors as dc
+from ai4netmon.Analysis.aggregate_data import graph_methods as gm
 from collections import defaultdict
 import urllib.request
 
