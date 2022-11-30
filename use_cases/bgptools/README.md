@@ -45,7 +45,7 @@ Personal ASN	                             0.0065	           0.0022	             
 
 
 
-#### Results: Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
+#### Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
 
 bias - radar plot
 :-------------------------:
@@ -94,13 +94,13 @@ Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Sc
 ![](./figures/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_ratio.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_traffic.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_scope.png?raw=true)|![](./figures/Fig_Histogram_is_personal_AS.png?raw=true)
 
 
-#### Results: Bias in BGPtools detailed
+#### Bias in BGPtools detailed
 
 bias - radar plot
 :-------------------------:
 ![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
 
-#### Results: Bias between Ripe RIS v4,v6 and BGPtools v4,v6
+#### Bias between Ripe RIS v4,v6 and BGPtools v4,v6
 
 bias - radar plot      
 RIPE RIS v4 vs BGPtools v4 - bias            |  RIPE RIS v6 vs BGPtools v6 - bias  
