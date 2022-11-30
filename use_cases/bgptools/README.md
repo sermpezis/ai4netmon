@@ -1,7 +1,9 @@
 #### Table of Contents  
-- [Results: Bias in Interent monitoring](#results-bias-in-interent-monitoring-infrastructure)  
+- [Results: Overview - Table with bias values](#Overview-Table-with-bias-values)  
+- [Results: Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools](#ris_rv_ris+rv_bgp-bias)
 - [Results: Detailed distributions](#results-detailed-distributions)
-
+- [Results:  Bias in BGPtools detailed](#bgp-detailed-bias)
+- [Results:  Bias between Ripe RIS v4,v6 and BGPtools v4,v6](#risv4v6-bgpv4v6-bias)
 
 ## Results: Bias in Interent monitoring infrastructure including BGPtools
 The results below are generated with the script `example_script_calculate_bias.py`, which calculates the bias of monitoring infrastructure along different dimentions, and (i) prints the results in the terminal, (ii) saves them in a csv file (folder `./data`) and (ii) generates radar plots for visualizing the bias.
@@ -52,7 +54,7 @@ bias - radar plot
 
 #### Results: Detailed distributions
 
-Here, we present the detailed distributions per dimension (based on which the bias is calculated). The following figures depict the distributions of values for all ASes and for RIPE NCC monitors, along different dimensions. CDFs are used for numerical dimensions (e.g., number of neighbors), and histograms for categorical dimensions (e.g., type of network).
+Here, we present the detailed distributions per dimension (based on which the bias is calculated). The following figures depict the distributions of values for all ASes and for RIPE RIS, RouteViews and BGPtools monitors, along different dimensions. CDFs are used for numerical dimensions (e.g., number of neighbors), and histograms for categorical dimensions (e.g., type of network).
 
 You can click on a figure to zoom in. The results below are generated with the same script (``example_script_calculate_bias.py``). All images can be found in the `./figures/` folder.  
 
