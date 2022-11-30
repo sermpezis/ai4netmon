@@ -9,35 +9,27 @@ The results below are generated with the script `example_script_calculate_bias.p
 #### Overview - Table with bias values 
 The following table shows the bias of each set of monitors (columns) along different dimensions (rows)
 ```
-                                      RIPE RIS (all)    RIPE Atlas (all)  RouteViews (all)
+                                      RIPE RIS (all)  RouteViews (all)  RIPE RIS + RouteViews (all)	 bgptools (all)
 ### LOCATION INFO ###
-RIR region                            0.06              0.06              0.00
-Location (country)                    0.22              0.10              0.21
-Location (continent)                  0.06              0.06              0.01
-
-### NETWORK SIZE INFO ### 
-Customer cone (#ASNs)                 0.22              0.07              0.23
-Customer cone (#prefixes)             0.25              0.11              0.31
-Customer cone (#addresses)            0.28              0.23              0.28
-AS hegemony                           0.16              0.04              0.18
-
-### TOPOLOGY INFO ###
-#neighbors (total)                    0.57              0.12              0.44
-#neighbors (peers)                    0.55              0.07              0.44
-#neighbors (customers)                0.20              0.06              0.22
-#neighbors (providers)                0.18              0.06              0.16
-
-### IXP-RELATED INFO ###
-#IXPs (PeeringDB)                     0.25              0.03              0.23
-#facilities (PeeringDB)               0.20              0.03              0.18
-Peering policy (PeeringDB)            0.03              0.01              0.02
-
-### NETWORK TYPE INFO ###
-Network type (PeeringDB)              0.15              0.03              0.13
-Traffic ratio (PeeringDB)             0.12              0.02              0.09
-Traffic volume (PeeringDB)            0.08              0.02              0.13
-Scope (PeeringDB)                     0.16              0.04              0.17
-Personal ASN                          0.00              0.00              0.00
+RIR region 0.0727	0.0052	0.0310	0.1150
+Location (country)	0.1985	0.1807	0.1353	0.3477
+Location (continent)	0.0683	0.0081	0.0305	0.0995
+Customer cone (#ASNs)	0.1666	0.1913	0.1597	0.0542
+Customer cone (#prefixes)	0.1714	0.2264	0.1728	0.0355
+Customer cone (#addresses)	0.1884	0.2033	0.1793	0.0352
+6	AS hegemony	0.1515	0.2046	0.1509	0.0263
+7	#neighbors (total)	0.3870	0.3414	0.3614	0.0885
+8	#neighbors (peers)	0.3731	0.3287	0.3515	0.0839
+9	#neighbors (customers)	0.1482	0.1803	0.1445	0.0491
+10	#neighbors (providers)	0.1418	0.1443	0.1373	0.0364
+11	#IXPs (PeeringDB)	0.1812	0.1832	0.1644	0.1059
+12	#facilities (PeeringDB)	0.1338	0.1546	0.1259	0.0288
+13	Peering policy (PeeringDB)	0.0138	0.0197	0.0126	0.0011
+14	Network type (PeeringDB)	0.1160	0.1121	0.1096	0.1167
+15	Traffic ratio (PeeringDB)	0.0940	0.0880	0.0843	0.0404
+16	Traffic volume (PeeringDB)	0.0378	0.0774	0.0386	0.0706
+17	Scope (PeeringDB)	0.1343	0.1181	0.1054	0.1362
+18	Personal ASN	0.0065	0.0022	0.0053	0.10
 
 ```
 
