@@ -33,11 +33,11 @@ AS hegemony	                             0.1515	           0.2046	              
 Peering policy (PeeringDB)	             0.0138	           0.0197	              0.0126	                 0.0011
 
 ### NETWORK TYPE INFO ###
-Network type (PeeringDB)	             0.1160	          0.1121	              0.1096	                 0.1167
-Traffic ratio (PeeringDB)	             0.0940	          0.0880	              0.0843	                 0.0404
-Traffic volume (PeeringDB)	             0.0378	          0.0774	              0.0386	                 0.0706  
-Scope (PeeringDB)	                     0.1343	          0.1181	              0.1054	                 0.1362
-Personal ASN	                             0.0065	          0.0022	              0.0053	                 0.10
+Network type (PeeringDB)	             0.1160	           0.1121	              0.1096	                 0.1167
+Traffic ratio (PeeringDB)	             0.0940	           0.0880	              0.0843	                 0.0404
+Traffic volume (PeeringDB)	             0.0378	           0.0774	              0.0386	                 0.0706  
+Scope (PeeringDB)	                     0.1343	           0.1181	              0.1054	                 0.1362
+Personal ASN	                             0.0065	           0.0022	              0.0053	                 0.10
 
 ```
 
