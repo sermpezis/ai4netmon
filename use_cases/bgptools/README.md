@@ -9,15 +9,15 @@ The results below are generated with the script `example_script_calculate_bias.p
 #### Overview - Table with bias values 
 The following table shows the bias of each set of monitors (columns) along different dimensions (rows)
 ```
-                                      RIPE RIS (all)  RouteViews (all)  RIPE RIS + RouteViews (all)	 bgptools (all)
+                                      RIPE RIS (all)          RouteViews (all)        RIPE RIS + RouteViews (all)	      bgptools (all)
 ### LOCATION INFO ###
 RIR region                                   0.0727	           0.0052	               0.0310	                 0.1150
 Location (country)	                     0.1985	           0.1807	               0.1353	                 0.3477
 Location (continent)	                     0.0683	           0.0081	               0.0305	                 0.0995
 
 ### NETWORK SIZE INFO ### 
-Customer cone (#ASNs)	                      0.1666	           0.1913	               0.1597	                 0.0542
-Customer cone (#prefixes)	              0.1714	           0.2264	               0.1728	                 0.0355
+Customer cone (#ASNs)	                     0.1666	           0.1913	               0.1597	                 0.0542
+Customer cone (#prefixes)	             0.1714	           0.2264	               0.1728	                 0.0355
 Customer cone (#addresses)	             0.1884	           0.2033	               0.1793	                 0.0352
 AS hegemony	                             0.1515	           0.2046	               0.1509	                 0.0263
 
@@ -28,7 +28,7 @@ AS hegemony	                             0.1515	           0.2046	              
 #neighbors (providers)	                     0.1418	           0.1443	              0.1373	                 0.0364
  
 ### IXP-RELATED INFO ###
-#IXPs (PeeringDB)	                      0.1812	           0.1832	              0.1644	                 0.1059             
+#IXPs (PeeringDB)	                     0.1812	           0.1832	              0.1644	                 0.1059             
 #facilities (PeeringDB)	                     0.1338	           0.1546	              0.1259	                 0.0288
 Peering policy (PeeringDB)	             0.0138	           0.0197	              0.0126	                 0.0011
 
