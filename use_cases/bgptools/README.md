@@ -2,8 +2,8 @@
 - [Results: Overview - Table with bias values](#Overview-Table-with-bias-values)  
 - [Results: Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools](#ris_rv_ris+rv_bgp-bias)
 - [Results: Detailed distributions](#results-detailed-distributions)
-- [Results:  Bias in BGPtools detailed](#bgp-detailed-bias)
-- [Results:  Bias between Ripe RIS v4,v6 and BGPtools v4,v6](#risv4v6-bgpv4v6-bias)
+- [Results: Bias in BGPtools detailed](#bgp-detailed-bias)
+- [Results: Bias between Ripe RIS v4,v6 and BGPtools v4,v6](#risv4v6-bgpv4v6-bias)
 
 ## Results: Bias in Interent monitoring infrastructure including BGPtools
 The results below are generated with the script `example_script_calculate_bias.py`, which calculates the bias of monitoring infrastructure along different dimentions, and (i) prints the results in the terminal, (ii) saves them in a csv file (folder `./data`) and (ii) generates radar plots for visualizing the bias.
