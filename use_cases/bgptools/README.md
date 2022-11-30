@@ -43,49 +43,14 @@ Personal ASN                          0.00              0.00              0.00
 
 
 
-#### Overview - Bias in RIPE infrastructure
-A visual presentation of the bias is given below in the radar plot on the left (reminder: larger values, i.e., far from the center, corresponds to more bias); on the right, a more detailed version of the same plot, where the bias is depicted for IPv4 and IPv6 set of monitors
+#### Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
+
+bias - radar plot            
+:-------------------------:
+![Radar plot - bias](./figures/fig_radar_RIPERIS_RV_RIPERIS+RV_bgptools.png?raw=true) 
 
 
-RIPE - bias - radar plot             |  RIPE - bias - radar plot (detailed)
-:-------------------------:|:-------------------------:
-![Radar plot - bias](./figures/fig_radar_RIPE.png?raw=true)  |  ![Radar plot - bias detailed](./figures/fig_radar_RIPE_detailed.png?raw=true)
-
-
-
-Below the same plot with using as bias metrics the Total variation and Max variation distances
-
-RIPE - bias (Total Variation)             |  RIPE - bias (Max Variation)
-:-------------------------:|:-------------------------:
-![Radar plot - bias - tv](./figures/fig_radar_RIPE_tv.png?raw=true)  |  ![Radar plot - bias - max](./figures/fig_radar_RIPE_max.png?raw=true)
-
-
-
-#### Bias in RIPE RIS vs. RouteViews route collectors
-
-Below we compare the bias between RIPE RIS and RouteViews route collectors
-
-RIPE RIS vs RouteViews - bias (KL)             |  RIPE RIS vs RouteViews - bias (TV)
-:-------------------------:|:-------------------------:
-![Radar plot - bias - ripe rv](./figures/fig_radar_RIPE_RV.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/fig_radar_RIPE_RV_tv.png?raw=true)
-
-
-
-#### Bias in RIPE RIS special cases: (i) full feeders, (ii) extending infrastructure
-
-Below we first compare the bias in RIPE RIS when considering all monitors and only full-feeders. We see that _**full feeders are considerably _more biased**_. 
-
-Moreover, we present the expected bias of the RIPE RIS infrastructure if a number of N extra monitors are added as peers. We consider N = 10, 50, 100, 200 extra monitors, selected from an ordered list of ASNs that [we calculated]( https://github.com/sermpezis/ai4netmon/tree/dev/TEMP_pavlos/bias_sort_nonRIS_asns ) that would decrease most the bias (i.e., for N=50 we select the first 50 ASNs appearing in the list). The more monitors we add the less the bias (as expected), however, the figure allows to quantify the added gains.
-
-RIPE RIS: all vs full-feeders             |  Extending RIPE RIS with extra monitors
-:-------------------------:|:-------------------------:
-![Radar plot - bias - ripe rv](./figures/fig_radar_RIPE_full.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/fig_radar_RIPE_plus.png?raw=true)
-
-
-
-
-
-## Results: Detailed distributions
+#### Results: Detailed distributions
 
 Here, we present the detailed distributions per dimension (based on which the bias is calculated). The following figures depict the distributions of values for all ASes and for RIPE NCC monitors, along different dimensions. CDFs are used for numerical dimensions (e.g., number of neighbors), and histograms for categorical dimensions (e.g., type of network).
 
@@ -125,3 +90,17 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
 :---:|:---:|:---:|:---:|:---:
 ![](./figures/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_ratio.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_traffic.png?raw=true)|![](./figures/Fig_Histogram_peeringDB_info_scope.png?raw=true)|![](./figures/Fig_Histogram_is_personal_AS.png?raw=true)
+
+
+#### Bias in BGPtools detailed
+
+Below we compare the bias between BGPtools route collectors        
+:-------------------------:
+![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
+
+#### Bias in BGPtools detailed
+
+RIPE RIS v4 vs BGPtools v4 - bias            |  RIPE RIS v6 vs BGPtools v6 - bias  
+:-------------------------:|:-------------------------:
+![Radar plot - bias - ripe rv](./figures/fig_radar_bgptoolsv4_RIPERISv4.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/ffig_radar_bgptoolsv6_RIPERISv6.png?raw=true)
+
