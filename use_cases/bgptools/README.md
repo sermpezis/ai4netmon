@@ -45,7 +45,7 @@ Personal ASN	                             0.0065	           0.0022	             
 
 
 
-#### Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
+#### Results: Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
 
 bias - radar plot
 :-------------------------:
