@@ -11,25 +11,33 @@ The following table shows the bias of each set of monitors (columns) along diffe
 ```
                                       RIPE RIS (all)  RouteViews (all)  RIPE RIS + RouteViews (all)	 bgptools (all)
 ### LOCATION INFO ###
-RIR region 0.0727	0.0052	0.0310	0.1150
-Location (country)	0.1985	0.1807	0.1353	0.3477
-Location (continent)	0.0683	0.0081	0.0305	0.0995
-Customer cone (#ASNs)	0.1666	0.1913	0.1597	0.0542
-Customer cone (#prefixes)	0.1714	0.2264	0.1728	0.0355
-Customer cone (#addresses)	0.1884	0.2033	0.1793	0.0352
-6	AS hegemony	0.1515	0.2046	0.1509	0.0263
-7	#neighbors (total)	0.3870	0.3414	0.3614	0.0885
-8	#neighbors (peers)	0.3731	0.3287	0.3515	0.0839
-9	#neighbors (customers)	0.1482	0.1803	0.1445	0.0491
-10	#neighbors (providers)	0.1418	0.1443	0.1373	0.0364
-11	#IXPs (PeeringDB)	0.1812	0.1832	0.1644	0.1059
-12	#facilities (PeeringDB)	0.1338	0.1546	0.1259	0.0288
-13	Peering policy (PeeringDB)	0.0138	0.0197	0.0126	0.0011
-14	Network type (PeeringDB)	0.1160	0.1121	0.1096	0.1167
-15	Traffic ratio (PeeringDB)	0.0940	0.0880	0.0843	0.0404
-16	Traffic volume (PeeringDB)	0.0378	0.0774	0.0386	0.0706
-17	Scope (PeeringDB)	0.1343	0.1181	0.1054	0.1362
-18	Personal ASN	0.0065	0.0022	0.0053	0.10
+RIR region                              0.0727	          0.0052	              0.0310	                 0.1150
+Location (country)	                    0.1985	          0.1807	              0.1353	                 0.3477
+Location (continent)	                  0.0683	          0.0081	              0.0305	                 0.0995
+
+### NETWORK SIZE INFO ### 
+Customer cone (#ASNs)	                  0.1666	          0.1913	              0.1597	                 0.0542
+Customer cone (#prefixes)	              0.1714	          0.2264	              0.1728	                 0.0355
+Customer cone (#addresses)	            0.1884	          0.2033	              0.1793	                 0.0352
+AS hegemony	                            0.1515	          0.2046	              0.1509	                 0.0263
+
+### TOPOLOGY INFO ###
+#neighbors (total)	                    0.3870	          0.3414	              0.3614	                 0.0885
+#neighbors (peers)	                    0.3731	          0.3287	              0.3515	                 0.0839
+#neighbors (customers)	                0.1482	          0.1803	              0.1445                   0.0491
+#neighbors (providers)	                0.1418	          0.1443	              0.1373	                 0.0364
+
+### IXP-RELATED INFO ###
+#IXPs (PeeringDB)	                      0.1812	          0.1832	              0.1644	                 0.1059             
+#facilities (PeeringDB)	                0.1338	          0.1546	              0.1259	                 0.0288
+Peering policy (PeeringDB)	            0.0138	          0.0197	              0.0126	                 0.0011
+
+### NETWORK TYPE INFO ###
+Network type (PeeringDB)	              0.1160	          0.1121	              0.1096	                 0.1167
+Traffic ratio (PeeringDB)	              0.0940	          0.0880	              0.0843	                 0.0404
+Traffic volume (PeeringDB)	            0.0378	          0.0774	              0.0386	                 0.0706  
+Scope (PeeringDB)	                      0.1343	          0.1181	              0.1054	                 0.1362
+Personal ASN	                          0.0065	          0.0022	              0.0053	                 0.10
 
 ```
 
