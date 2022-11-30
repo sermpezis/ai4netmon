@@ -99,7 +99,7 @@ Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Sc
 bias - radar plot
 :-------------------------:
 ![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
-
+ 
 #### Bias between Ripe RIS v4,v6 and BGPtools v4,v6
 
 bias - radar plot      
