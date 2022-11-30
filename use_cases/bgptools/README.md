@@ -9,7 +9,7 @@ The results below are generated with the script `example_script_calculate_bias.p
 #### Overview - Table with bias values 
 The following table shows the bias of each set of monitors (columns) along different dimensions (rows)
 ```
-                                      RIPE RIS (all)          RouteViews (all)        RIPE RIS + RouteViews (all) bgptools (all)
+                                      RIPE RIS (all)          RouteViews (all)        RIPE RIS + RouteViews (all)   bgptools (all)
 ### LOCATION INFO ###
 RIR region                                   0.0727	           0.0052	               0.0310	                 0.1150
 Location (country)	                     0.1985	           0.1807	               0.1353	                 0.3477
