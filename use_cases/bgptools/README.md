@@ -11,15 +11,15 @@ The following table shows the bias of each set of monitors (columns) along diffe
 ```
                                       RIPE RIS (all)          RouteViews (all)        RIPE RIS + RouteViews (all)   bgptools (all)
 ### LOCATION INFO ###
-RIR region                                   0.0727	           0.0052	               0.0310	                 0.1150
-Location (country)	                     0.1985	           0.1807	               0.1353	                 0.3477
-Location (continent)	                     0.0683	           0.0081	               0.0305	                 0.0995
+RIR region                                   0.0727	           0.0052	              0.0310	                 0.1150
+Location (country)	                     0.1985	           0.1807	              0.1353	                 0.3477
+Location (continent)	                     0.0683	           0.0081	              0.0305	                 0.0995
 
 ### NETWORK SIZE INFO ### 
-Customer cone (#ASNs)	                     0.1666	           0.1913	               0.1597	                 0.0542
-Customer cone (#prefixes)	             0.1714	           0.2264	               0.1728	                 0.0355
-Customer cone (#addresses)	             0.1884	           0.2033	               0.1793	                 0.0352
-AS hegemony	                             0.1515	           0.2046	               0.1509	                 0.0263
+Customer cone (#ASNs)	                     0.1666	           0.1913	              0.1597	                 0.0542
+Customer cone (#prefixes)	             0.1714	           0.2264	              0.1728	                 0.0355
+Customer cone (#addresses)	             0.1884	           0.2033	              0.1793	                 0.0352
+AS hegemony	                             0.1515	           0.2046	              0.1509	                 0.0263
 
 ### TOPOLOGY INFO ###
 #neighbors (total)	                     0.3870	           0.3414	              0.3614	                 0.0885
