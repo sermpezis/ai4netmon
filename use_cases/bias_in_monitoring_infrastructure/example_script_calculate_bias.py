@@ -95,15 +95,14 @@ radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', sav
 # all bgptools, v4, v6
 plot_df = bias_df[['bgptools (all)', 'bgptools (v4)', 'bgptools (v6)']]
 radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools'), varlabels=FEATURE_NAMES_DICT)
-# bgptools vs RouteViews
-plot_df = bias_df[['bgptools (all)','RouteViews (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RV'), varlabels=FEATURE_NAMES_DICT)
-# bgptools vs RipeRIS
-plot_df = bias_df[['bgptools (all)','RIPE RIS (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RIPERIS'), varlabels=FEATURE_NAMES_DICT)
-# bgptools vs RipeRIS+Routeviews
-plot_df = bias_df[['bgptools (all)', 'RIPE RIS + RouteViews (all)']]
-radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptools_RIPERIS_RV'), varlabels=FEATURE_NAMES_DICT)
+# bgptools v4 vs RipeRIS v4
+plot_df = bias_df[['bgptools (v4)','RIPE RIS (v4)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptoolsv4_RIPERISv4'), varlabels=FEATURE_NAMES_DICT)
+plot_df = bias_df[['bgptools (v6)','RIPE RIS (v6)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('bgptoolsv6_RIPERISv6'), varlabels=FEATURE_NAMES_DICT)
+# bgptools vs RipeRIS+Routeviews vs RipeRIS vs Routeviews
+plot_df = bias_df[['RIPE RIS (all)', 'RouteViews (all)', 'RIPE RIS + RouteViews (all)', 'bgptools (all)']]
+radar_chart.plot_radar_from_dataframe(plot_df, colors=None, frame='polygon', save_filename=FIG_RADAR_SAVENAME_FORMAT.format('RIPERIS_RV_RIPERIS+RV_bgptools'), varlabels=FEATURE_NAMES_DICT)
 
 
 
