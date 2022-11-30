@@ -45,9 +45,9 @@ Personal ASN                          0.00              0.00              0.00
 
 #### Bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools
 
-bias - radar plot            
+Below we compare the bias between RIPE RIS & Routeviews & RIPE RIS + Routeviews & BGPtools       
 :-------------------------:
-![Radar plot - bias](./figures/fig_radar_RIPERIS_RV_RIPERIS+RV_bgptools.png?raw=true) 
+![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/fig_radar_RIPERIS_RV_RIPERIS+RV_bgptools.png?raw=true) 
 
 
 #### Results: Detailed distributions
@@ -98,9 +98,10 @@ Below we compare the bias between BGPtools route collectors
 :-------------------------:
 ![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
 
-#### Bias in BGPtools detailed
+#### Bias between Ripe RIS v4,v6 and BGPtools v4,v6
 
+Below we compare the bias between BGPtools route collectors        
 RIPE RIS v4 vs BGPtools v4 - bias            |  RIPE RIS v6 vs BGPtools v6 - bias  
 :-------------------------:|:-------------------------:
-![Radar plot - bias - ripe rv](./figures/fig_radar_bgptoolsv4_RIPERISv4.png?raw=true)  |  ![Radar plot - bias - ripe rv tv](./figures/ffig_radar_bgptoolsv6_RIPERISv6.png?raw=true)
+![Radar plot - bias - bgptoolsv4_RIPERISv4](./figures/fig_radar_bgptoolsv4_RIPERISv4.png?raw=true)  |  ![Radar plot - bias - bgptoolsv6_RIPERISv6](./figures/fig_radar_bgptoolsv6_RIPERISv6.png?raw=true)
 
