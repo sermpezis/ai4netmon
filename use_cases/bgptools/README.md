@@ -51,6 +51,8 @@ bias - radar plot
 :-------------------------:
 ![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/fig_radar_RIPERIS_RV_RIPERIS+RV_bgptools.png?raw=true) 
 
+In this radar plot that compares RIPE RIS, RouteViews, RIPE RIS+RouteViews and bgptools, the first three suffer from bias in topology info dimension, especially #neighbours total and peers, while bgptools in this dimension have significantly less bias. The same happens in #IXPs (PeeringDB) dimension, however the bias is smaller proportionaly. 
+On the other hand, bgptools suffer from bias in Location (country) dimension, more than all the other monitors. Then RIPE RIS monitors follow and after come the Routeviews ones. Also, we observe most bias in bgptools in Scope (PeeringDB) and finally Network type (PeeringDB), which all belong to Network type info dimension group. 
 
 #### Results: Detailed distributions
 
