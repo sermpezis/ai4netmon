@@ -31,7 +31,7 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 #neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/broken_lists/Fig_CDF_AS_rank_total_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_peer_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_customer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_provider_broken_lists.png?raw=true)|&nbsp;
+![](./figures/broken_lists/Fig_CDF_AS_rank_total_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_peer_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_customer_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_provider_broken_lists.png?raw=true)|&nbsp;
 
 
 
