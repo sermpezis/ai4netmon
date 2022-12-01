@@ -35,7 +35,7 @@ Lists of monitors  [./data/metis_lists_ip_hops.json](./data/metis_lists_ip_hops.
 
 Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberAsns_metis_iphops_lists.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberPrefixes_metis_iphops_lists.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberAddresses.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_hegemony_metis_iphops_lists.png?raw=true)|&nbsp;
+![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberAsns_metis_iphops_lists.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberPrefixes_metis_iphops_lists.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_rank_numberAddresses_metis_iphops_lists.png?raw=true)|![](./figures/METIS_iphops/Fig_CDF_AS_hegemony_metis_iphops_lists.png?raw=true)|&nbsp;
 
 
 **Topology related dimensions**
