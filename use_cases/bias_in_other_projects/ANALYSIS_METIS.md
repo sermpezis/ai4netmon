@@ -10,7 +10,7 @@ In total the radar plot will have 5+2 lines, and the distribution plots 5+2 sets
 Lists of monitors  [./data/metis_lists_rtt.json](./data/metis_lists_rtt.json)
 
 ## Radar Plot
-:-------------------------:
+
 ![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/METIS_rtt/fig_radar_all_metis_Atlas_rtt.png?raw=true) 
 
 ## Detailed distributions
@@ -48,7 +48,7 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
 :---:|:---:|:---:|:---:|:---:
-![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_type_metis_rtt.png?raw=true)|![](./figuresMETIS_rtt//Fig_Histogram_peeringDB_info_ratio_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_traffic_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_scope_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_is_personal_AS_metis_rtt.png?raw=true)
+![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_type_metis_rtt.png?raw=true)|![](./figuresMETIS_rtt/Fig_Histogram_peeringDB_info_ratio_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_traffic_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_scope_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_is_personal_AS_metis_rtt.png?raw=true)
 
 
 
