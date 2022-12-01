@@ -10,8 +10,46 @@ In total the radar plot will have 5+2 lines, and the distribution plots 5+2 sets
 Lists of monitors  [./data/metis_lists_rtt.json](./data/metis_lists_rtt.json)
 
 ## Radar Plot
+:-------------------------:
+![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/METIS_rtt/fig_radar_all_metis_Atlas_rtt.png?raw=true) 
 
 ## Detailed distributions
+
+**Location related dimensions**
+
+&nbsp;|RIR region|Location (continent)|&nbsp;| &nbsp;
+:---:|:---:|:---:|:---:|:---:
+&nbsp; |![](./figures/METIS_rtt/Fig_Histogram_AS_rank_source_metis_rtt.png?raw=true)| ![](./figures/METIS_rtt/Fig_Histogram_AS_rank_continent_metis_rtt.png?raw=true)|&nbsp;|&nbsp;
+
+
+**Network size dimensions**
+
+Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
+:---:|:---:|:---:|:---:|:---:
+![](./figures/METIS_rtt/Fig_CDF_AS_rank_numberAsns_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_rank_numberPrefixes_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_rank_numberAddresses_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_hegemony_metis_rtt.png?raw=true)|&nbsp;
+
+
+**Topology related dimensions**
+
+#neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
+:---:|:---:|:---:|:---:|:---:
+![](./figures/METIS_rtt/Fig_CDF_AS_rank_total_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_rank_peer_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_rank_customer_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_AS_rank_provider_metis_rtt.png?raw=true)|&nbsp;
+
+
+
+**IXP related dimensions**
+
+&nbsp;|#IXPs (PeeringDB)|#facilities (PeeringDB)|Peering policy (PeeringDB)|&nbsp;
+:---:|:---:|:---:|:---:|:---:
+&nbsp;|![](./figures/METIS_rtt/Fig_CDF_peeringDB_ix_count_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_CDF_peeringDB_fac_count_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_policy_general_metis_rtt.png?raw=true)|&nbsp;
+
+
+**Network type dimensions**
+
+Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
+:---:|:---:|:---:|:---:|:---:
+![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_type_metis_rtt.png?raw=true)|![](./figuresMETIS_rtt//Fig_Histogram_peeringDB_info_ratio_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_traffic_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_peeringDB_info_scope_metis_rtt.png?raw=true)|![](./figures/METIS_rtt/Fig_Histogram_is_personal_AS_metis_rtt.png?raw=true)
+
 
 
 # IP HOPS metric
