@@ -29,7 +29,7 @@ Lists of monitors  [./data/metis_lists_as_path_length.json](./data/metis_lists_a
 
 ## Radar Plot
 :-------------------------:
-![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/METIS_as_paths_lengths/fig_radar_all_metis_Atlas_ASpathlen_.png?raw=true) 
+![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/METIS_as_paths_lengths/fig_radar_all_metis_Atla_ASpathlen.png?raw=true) 
 ## Detailed distributions
 
 **Location related dimensions**
@@ -50,7 +50,7 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 #neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_total.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_peer_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_customer.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_provider_metis_aspathlen.png?raw=true)|&nbsp;
+![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_total_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_peer_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_customer_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_CDF_AS_rank_provider_metis_aspathlen.png?raw=true)|&nbsp;
 
 
 
