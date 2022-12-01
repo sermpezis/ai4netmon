@@ -24,7 +24,7 @@ bias - radar plot
 
 Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/broken_lists/Fig_CDF_AS_rank_numberAsns_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_numberPrefixes_broken_lists.png?raw=true)|![](./figures/broken_lists_Fig_CDF_AS_rank_numberAddresses_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_hegemony_broken_lists.png?raw=true)|&nbsp;
+![](./figures/broken_lists/Fig_CDF_AS_rank_numberAsns_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_numberPrefixes_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_rank_numberAddresses_broken_lists.png?raw=true)|![](./figures/broken_lists/Fig_CDF_AS_hegemony_broken_lists.png?raw=true)|&nbsp;
 
 
 **Topology related dimensions**
