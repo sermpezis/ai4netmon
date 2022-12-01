@@ -29,7 +29,8 @@ Lists of monitors  [./data/metis_lists_as_path_length.json](./data/metis_lists_a
 
 ## Radar Plot
 :-------------------------:
-![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/METIS_as_paths_lengths/fig_radar_all_metis_Atla_ASpathlen.png?raw=true) 
+![Radar plot](./figures/METIS_as_paths_lengths/fig_radar_all_metis_Atlas_ASpathlen.png?raw=true) 
+
 ## Detailed distributions
 
 **Location related dimensions**
@@ -65,4 +66,4 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
 :---:|:---:|:---:|:---:|:---:
-![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_type.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_ratio_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_traffic_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_scope_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_is_personal_AS_metis_aspathlen.png?raw=true)
+![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_type_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_ratio_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_traffic_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_peeringDB_info_scope_metis_aspathlen.png?raw=true)|![](./figures/METIS_as_paths_lengths/Fig_Histogram_is_personal_AS_metis_aspathlen.png?raw=true)
