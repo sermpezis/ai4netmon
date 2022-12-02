@@ -101,11 +101,21 @@ Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Sc
 bias - radar plot
 :-------------------------:
 ![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
- 
+
+In this radar plot, all bgptools monitors, only the IPv4, and only the IPv6 are compared in terms of bias in the different dimensions. It is obvserved that the Location (country) dimension has a lot of bias in all three cases, with the IPv4 having the most. Then, we can see bias in IPv6 from RIR region, Personal ASN, to Scope DB, all in similar amount, with Scope DB including the IPv4 monitors too. Again, there is bias for all three cases in Network type (PeeringDB), in similar amount, in #IXPs (PeeringDB), with IPv4 monitors having the most, and the same goes between total number of neighbors and number of neighbours peers. Finally in all Customer cone dimension group we spot bias only in IPv4 monitors.
+
 #### Bias between Ripe RIS v4,v6 and BGPtools v4,v6
 
 bias - radar plot      
 RIPE RIS v4 vs BGPtools v4 - bias            |  RIPE RIS v6 vs BGPtools v6 - bias  
 :-------------------------:|:-------------------------:
 ![Radar plot - bias - bgptoolsv4_RIPERISv4](./figures/fig_radar_bgptoolsv4_RIPERISv4.png?raw=true)  |  ![Radar plot - bias - bgptoolsv6_RIPERISv6](./figures/fig_radar_bgptoolsv6_RIPERISv6.png?raw=true)
+
+In the plots above, bgptools IPv4 monitors are compared to RIPE RIS IPv4 monitors, and bgptools IPv6 to RIPE RIS IPv6 ones.
+
+In the figure for IPv4 monitors, we spot bias in the dimensions mentioned/seen in the last radar plot about all bgptools, having a lot of bias in Location (country), then Scope, Network type, #IXPs, between total number of neighbors and number of neighbours peers and a little in Customer cone. 
+On the other hand, RIPE RIS monitors have much less bias in Location (country), the same amount in Scope, and Network type, and some in traffic ratio too. Then, there is bias between all IXP related, Topology related, and Customer cone bias groups, with the most bias spotted in (again) in total number of neighbors and number of neighbours peers, but the amount is much bigger.
+
+In the figure for IPv6 monitors, the observations are very similar to IPv4, with less bias in Location for bgptools, more in RIR region and Personal ASN.  
+
 
