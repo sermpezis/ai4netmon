@@ -81,7 +81,6 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 ![](./figures/Fig_CDF_AS_rank_total.png?raw=true)|![](./figures/Fig_CDF_AS_rank_peer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_customer.png?raw=true)|![](./figures/Fig_CDF_AS_rank_provider.png?raw=true)|&nbsp;
 
 
-
 **IXP related dimensions**
 
 &nbsp;|#IXPs (PeeringDB)|#facilities (PeeringDB)|Peering policy (PeeringDB)|&nbsp;
@@ -102,12 +101,12 @@ bias - radar plot
 :-------------------------:
 ![Radar plot - bias](./figures/fig_radar_bgptools.png?raw=true) 
 
-In this radar plot, all bgptools monitors, only the IPv4, and only the IPv6 are compared in terms of bias in the different dimensions. It is obvserved that the Location (country) dimension has a lot of bias in all three cases, with the IPv4 having the most. Then, we can see bias in IPv6 from RIR region, Personal ASN, to Scope DB, all in similar amount, with Scope DB including the IPv4 monitors too. Again, there is bias for all three cases in Network type (PeeringDB), in similar amount, in #IXPs (PeeringDB), with IPv4 monitors having the most, and the same goes between total number of neighbors and number of neighbours peers. Finally in all Customer cone dimension group we spot bias only in IPv4 monitors.
+In this radar plot, all bgptools monitors, only the IPv4, and only the IPv6 are compared in terms of bias in the different dimensions. It is obvserved that the Location (country) dimension has a lot of bias in all three cases, with the IPv4 monitors having the most. Then, we can see bias in IPv6 from RIR region, Personal ASN, to Scope DB, all in similar amount, with Scope DB including the IPv4 monitors too. Again, there is bias for all three cases in Network type (PeeringDB), in similar amount, in #IXPs (PeeringDB), with IPv4 monitors having the most, and the same goes between total number of neighbors and number of neighbours peers. Finally in all Customer cone dimension group we spot bias only in IPv4 monitors.
 
-#### Bias between Ripe RIS v4,v6 and BGPtools v4,v6
+#### Bias between Ripe RIS IPv4,IPv6 and BGPtools IPv4, IPv6
 
 bias - radar plot      
-RIPE RIS v4 vs BGPtools v4 - bias            |  RIPE RIS v6 vs BGPtools v6 - bias  
+RIPE RIS IPv4 vs BGPtools IPv4 - bias            |  RIPE RIS IPv6 vs BGPtools IPv6 - bias  
 :-------------------------:|:-------------------------:
 ![Radar plot - bias - bgptoolsv4_RIPERISv4](./figures/fig_radar_bgptoolsv4_RIPERISv4.png?raw=true)  |  ![Radar plot - bias - bgptoolsv6_RIPERISv6](./figures/fig_radar_bgptoolsv6_RIPERISv6.png?raw=true)
 
