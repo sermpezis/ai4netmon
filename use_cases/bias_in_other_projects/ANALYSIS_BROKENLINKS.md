@@ -1,10 +1,16 @@
-Below we present a bias analysis (radar plot & detailed distributions) for the sets of monitors:
+We present an analysis of the characteristics of the networks that are "responsible", "true", "wrong", and "origin" in the list of broken links dataset.
 
-- Networks where differences appear. In the file [./data/broken_links_lists.json](./data/broken_links_lists.json) there are 4 lists of monitors ('responsible', 'true', 'wrong', 'origin').
+- Source data: In the file [./data/broken_links_lists.json](./data/broken_links_lists.json) there are 4 lists of monitors ('responsible', 'true', 'wrong', 'origin'), extracted from the initial file of broken links.
 
-- Compare them with the entire set of ASes. 
 
-In total the radar plot will have 4+1 lines, and the distribution plots 4+1 sets of bars.
+In particular, we compare each of the above sets with the entire set of ASes, and calculate their (i) bias (see radar plot below) and (ii) detailed distibutions (see CDFs and Histograms below).
+
+**Bias (radar plot)**: Easily depicts which set is more different than the entire set of ASes, and at which dimension. A set that is very different that the entire set of ASes at a dimension X (e.g., Network type) has a value that is far from the center in the radar plot. The farther the more different. The plot can be used for getting quick insights before delving into details in the distribution plots.
+
+**Detailed distribution plots**: Depict the distribution of the characteristics of the different sets, and the distribution of the entire population of ASes. For variables that take continuous values (e.g., connected to number of IXPs, or number of ASes in the customer cone) we use CDF plots, and for categorical variables (e.g., network type, or continent) we use histograms. These plots can be used to get insights for what types of networks are typically in a set (e.g., there are many NSPs in the "true" networks).
+- In the CDFs: (i) The farther a curve is from the "All ASes" curve, the more the set differs from the entire population. (ii) Curves that are more at the right, denote a distribution of higher values (e.g., in the #IXPs, a curve A on the right of a curve B, denotes that the networks in the set A tend to be connected to more IXPs than the networks in the set B)
+- In the Histogram plots, the more different the height of a bar is from the bar of the "All ASes", the more different the set is from the entire population.
+- Clicking at a plot, opens the plot in a different page (larger size)
 
 ## Radar Plot
 bias - radar plot
