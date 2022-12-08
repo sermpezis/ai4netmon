@@ -5,6 +5,7 @@ Below we present a bias analysis (radar plot & detailed distributions) for the s
 - Compare Periscope bgp with (i) RIPE RIS and (ii) RouteViews
 - Compare Periscope tracerout and ping with  (i) RIPE Atlas
 
+# Periscope bgp - Ripe RIS, RouteViews
 
 ## Radar Plot
 
@@ -46,7 +47,7 @@ Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Sc
 :---:|:---:|:---:|:---:|:---:
 ![](./figures/periscope/Fig_Histogram_peeringDB_info_type_periscope_ris_rv_lists.png?raw=true)|![](./figures/periscope/Fig_Histogram_peeringDB_info_ratio_periscope_ris_rv_lists.png?raw=true)|![](./figures/periscope/Fig_Histogram_peeringDB_info_traffic_periscope_ris_rv_lists.png?raw=true)|![](./figures/periscope/Fig_Histogram_peeringDB_info_scope_periscope_ris_rv_lists.png?raw=true)|![](./figures/periscope/Fig_Histogram_is_personal_AS_periscope_ris_rv_lists.png?raw=true)
 
-
+# Periscope traceroutes, ping - Ripe Atlas 
 
 ## Radar Plot
 
