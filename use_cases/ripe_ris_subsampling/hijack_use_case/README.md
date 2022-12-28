@@ -7,7 +7,15 @@ There are also some scripts, that use other ways of subsampling, such as greedy 
 
 ### Definitions and data
 
-In a hijack event, two ASes (the legitimate AS and the hijacker AS) announce the same prefix and the rest of ASes route their traffic either to the legitimate or the hijacker AS. The impact of the AS is defined as the fraction of ASes that route their traffic to the hijacker AS. For example, if we have in total 1000 ASes, and 300 of them route to the hijacker, then the _actual_ hijack impact in 30%. The _estimated_ hijack impact is the corresponding percentage we can calculate from what the monitors see. In the previous example, if there are 50 monitors (e.g., RIPE RIS peers) and 25 of them route traffic to the hijacker AS, then the _estimated_ hijack impact is 50%. The difference between the actual and the esimated hijack impact is the error (in our example, the error is |30%-50%| = 20%).
+In a hijack event, two ASes (the legitimate AS and the hijacker AS) announce the same prefix and the rest of ASes route their traffic either to the legitimate or the hijacker AS. The impact of the AS is defined as the fraction of ASes that route their traffic to the hijacker AS. For example, if we have in total 1000 ASes, and 300 of them route to the hijacker, then the _actual_ hijack impact in 30%. The _estimated_ hijack impact is the corresponding percentage we can calculate from what the monitors see. In the previous example, if there are 50 monitors (e.g., RIPE RIS peers) and 25 of them route traffic to the hijacker AS, then the _estimated_ hijack impact is 50%. The difference between the actual and the estimated hijack impact is the error (in our example, the error is |30%-50%| = 20%). As is shown in [previous work](https://arxiv.org/abs/2105.02346) there is a significant error in the estimated impact, which is mainly due to the biased locations of the monitors. Hence, there is a need to more accurately estimate the impact based on the monitor observations (i.e., to eliminate the bias by designing a methodology that is based on the biased measurements and provides unbiased estimations).
+
+We use a dataset that is made publicly available ([github link](https://github.com/sermpezis/bgp-estimation)) from the paper
+
+```
+Pavlos Sermpezis, Vasileios Kotronis, Konstantinos Arakadakis, Athena Vakali, "Estimating the Impact of BGP Prefix Hijacking", IFIP Networking conference 2021
+```
+
+The dataset contains a set of approx. 2000 simulation runs of BGP prefix hijacks taking place over the AS-graph under the Gao-Rexford / valley-free routing model, where in each run there exists a legitimate AS that originates a prefix and then a hijacker AS starts originating the same prefix as well. For each simulation run, the dataset contains the impact of the hijack (counted in number of ASes routing to the hijacker/legitimate ASes), and the observations of the __monitors__ (i.e., peering ASes of the route collector projects of RIPE RIS and RouteViews). 
 
 The *basic* dataframe is loaded from **`./data/impact__CAIDA20190801_sims2000_hijackType0_per_monitor_onlyRC_NEW_with_mon_ASNs.csv`** file and it is used for calculation of the actual and estimated hijack impacts. It contains simulation results, where each simulation is a hijack event. The columns are:
 
@@ -22,7 +30,7 @@ The *basic* dataframe is loaded from **`./data/impact__CAIDA20190801_sims2000_hi
 
 So, using the columns of the dataframe, the _actual_ hijack impact is calculated by column5/column3, while the _estimated_ hijack impact by column7/column6.
 
-After calculating the impacts, all actual or estimated impact <0 or >1 are set to NaN. Then, the error (as mentioned above) is calculated.
+After calculating the impacts, all actual or estimated impact <0 or >1 (due to outlier simulation scenarios, e.g., hijacker or victim ASes with no global connectivity) are set to NaN. Then, the error is calculated as described above.
 
 ### Goals and motivation
 
@@ -52,14 +60,14 @@ So, combining the *basic* dataframe of hijack analysis and the *aggregated* one,
 
 while in the rows, first we have all the legitimate ASNs and then all the hijacker ASNs.
 
-After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that coulb help in selecting monitors. The heatmaps of correlation matrices can be checked in the [notebook](https://github.com/sermpezis/ai4netmon/blob/main/use_cases/ripe_ris_subsampling/hijack_use_case/hijack.ipynb). 
+After the compilation, the pearson correlation is calculated between the network features and the errors. Although, we did not discover any, neither strong or weak, correlation between them, as well as no insights that could help in selecting monitors. The heatmaps of correlation matrices can be checked in the [notebook](https://github.com/sermpezis/ai4netmon/blob/main/use_cases/ripe_ris_subsampling/hijack_use_case/hijack.ipynb). 
 
 Following the same approach, we calculate the pearson correlation for network characteristics and Linear regression models weights of the monitors, presented in the paper mentioned before. The findings once again show that there is not correlation between the above aspects. A table of those correlations is showed below, first for 50 and then all RIPE RIS + Routeviews (RC) monitors, and secondly 50 and then all Ripe Atlas (RA) monitors.
 
 
 Features | AS rank numbers Asns| AS rank numbers prefixes | AS rank numbers addresses | AS hegemony | AS rank total | AS rank peers | AS rank costumers | AS rank provider | peeringDB ix count | peeringDB fac count | peeringDB info prefixes4 | peeringDB info prefixes6 | nb atlas probes v4 | nb atlas probes v6
 --- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- 
-RC50 Correlations w weights | 0.16 | 0.22 | 0.22 | -0.033 | -0.25 | 0.42 | -0.0096 | 0.095 | -0.44 | -0.35 | 0.093 | 0.048 | 0.15 | 0.29 
+RC50 Correlations w weights | 0.16 | 0.22 | 0.22 | -0.033 | -0.25 | -0.42 | -0.0096 | 0.095 | -0.44 | -0.35 | 0.093 | 0.048 | 0.15 | 0.29 
 RC All Correlations w weights | 0.19 | 0.2 | 0.19 | 0.13 | -0.075 | -0.17 | 0.23 | 0.0055 | -0.04 | 0.061 | 0.11 | 0.07 | 0.16 | 0.12 
 RA50 Correlations w weights | 0.32 | 0.34 | 0.21 | 0.35 | 0.041 | -0.065 | 0.33 | 0.078 | 0.16 | 0.59 | 0.23 | 0.2 | 0.46 | 0.33 
 RA All Correlations w weights | 0.076 | 0.12 | 0.088 | 0.076 | -0.013 | -0.088 | 0.12 | 0.035 | 0.041 | 0.046 | 0.1 | 0.078 | 0.055 | 0.13 
@@ -74,19 +82,20 @@ After we have extracted the subsets, we select randomly X monitors and calculate
 
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmse_clusters.PNG)
 
-In the plot, we can see that for a small number of monitors, 10 clusters seem to have the lowest error, but as the number of monitos increases, for 150 and more, 100 clusters seem to give the best performance. In general, the other numbers of clusters have similar performance, while 5 clusters have the highest error. Altough, comparing with random selection, we see that all the clustering subsets achieve lower error than it. 
+In the plot, we can see that for a small number of monitors, 10 clusters seem to have the lowest error, but as the number of monitos increases, for 150 and more, 100 clusters seem to give the best performance. In general, the other numbers of clusters have similar performance, while 5 clusters have the highest error. Although, comparing with random selection, we see that all the clustering subsets achieve lower error than it. 
 
 ### Subsampling with bias subsampling algorithm
 
-Another approach is to select subsamples with bias subsampling algorithms. 
-[]
+Another approach is to select subsamples with bias [subsampling algorithms](https://github.com/sermpezis/ai4netmon/blob/main/docs/Subsampling_IMPs.md).
 
-In the plot we can see the results of RMSE vs number of monitos for every subset.
+In the plot we can see the results of RMSE vs number of monitors for every subset.
 
 ![alt text](https://raw.githubusercontent.com/sermpezis/ai4netmon/main/use_cases/ripe_ris_subsampling/hijack_use_case/images/rmse_sorted.PNG)
 
+As a comparison we report also the results for a `bruteforce greedy` algorithm, which selects "optimal" sets of monitors having a-posteriori information: the algorithms greedily removes from the entire set of monitors the monitors that are responsible for the largest errors, i.e., at first it removes the monitor which if removed from the N monitors reduces most the error (of the resulting N-1 monitors), then it removes from the set of N-1 monitors the monitor that if removed reduces most the error of the N-2 monitors, and so on. This algorithm is "ideal" and cannot be implemented in practice, since it is based on results that are not known in advance. However, we use it for comparison, i.e., indicating an "ideal" scenario.
+
 A first observation is that the bruteforce greedy subset, unlike the other ones, starts from the lowest error, which keeps falling until ~70 monitors, and then starts to increase with the number of monitors, although keeping at the lowest point from all the others.
-For the rest subsets, it is obvious that many overlaps exist in the error for different number of monitors, and we can also see that the random subsets is at a low point in comparasion with the other sets, at least for some particular numbers of monitors. Finally, the naive partial bias informed set, is the worst in terms of error, in most cases. 
+For the rest subsets, it is obvious that many overlaps exist in the error for different number of monitors, and we can also see that the random subsets is at a low point in comparison with the other sets, at least for some particular numbers of monitors. Finally, the naive partial bias informed set, is the worst in terms of error, in most cases. 
 
 Then, we calculated the bias for each set (among random, clustered in 10 clusters and greedy subsets) and checked if the bias decreases compared to random sampling results of bias characterization.
  
