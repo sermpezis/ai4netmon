@@ -47,8 +47,7 @@ Example output:
     "peeringDB_info_ratio": "0.0951",
     "peeringDB_info_traffic": "0.0421",
     "peeringDB_info_scope": "0.1401",
-    "is_personal_AS": "0.0057",
-    "list_name": "RIS"
+    "is_personal_AS": "0.0057"
 }
 ````
 
@@ -59,7 +58,7 @@ Example request:
 Example output:
 ```yaml
 {
-    "bias_per_dimension": {
+    "bias": {
         "RIR region": 0.12376846135988594,
         "Location (country)": 0.6574981157148462,
         "Location (continent)": 0.1475609152716093,
@@ -79,8 +78,8 @@ Example output:
         "Traffic volume (PeeringDB)": 0.7413179710952622,
         "Scope (PeeringDB)": 0.8645364212170968,
         "Personal ASN": 0.005261960347474111
-    }
-}
+    }, ,"#ASNs found":5,"#ASNs not found":0
+ }
 ````
 
   
