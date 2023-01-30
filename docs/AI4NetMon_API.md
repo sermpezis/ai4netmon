@@ -1,6 +1,6 @@
 # The AI4NetMon API
 
-We also provide an open API, which provides the bias scores for different IMPs of custom sets of vantage points. The API can be accessed at [https://ai4netmon.csd.auth.gr/api/](https://ai4netmon.csd.auth.gr/api/), and at this moment it provides the following endpoints (the API  is expected to be updaated with extra functionality) 
+We also provide an open API, which provides the bias scores for different IMPs of custom sets of vantage points. The API can be accessed at [https://ai4netmon.csd.auth.gr/api/](https://ai4netmon.csd.auth.gr/api/), and at this moment it provides the following endpoints (the API  is expected to be updated with extra functionality) 
 - `/bias/{IMP}`
 - `/asn/{ASN}`
 whose use and functionality is described below.
@@ -29,25 +29,25 @@ Example request:
 Example output:
 ```yaml
 {
-    "AS_rank_source": "0.0744",
-    "AS_rank_iso": "0.2193",
-    "AS_rank_continent": "0.0709",
-    "AS_rank_numberAsns": "0.1805",
-    "AS_rank_numberPrefixes": "0.1857",
-    "AS_rank_numberAddresses": "0.2258",
-    "AS_hegemony": "0.1666",
-    "AS_rank_total": "0.46",
-    "AS_rank_peer": "0.4178",
-    "AS_rank_customer": "0.1494",
-    "AS_rank_provider": "0.1686",
-    "peeringDB_ix_count": "0.1822",
-    "peeringDB_fac_count": "0.1362",
-    "peeringDB_policy_general": "0.0131",
-    "peeringDB_info_type": "0.135",
-    "peeringDB_info_ratio": "0.0951",
-    "peeringDB_info_traffic": "0.0421",
-    "peeringDB_info_scope": "0.1401",
-    "is_personal_AS": "0.0057"
+    "RIR region": "0.0744",
+    "Location (country)": "0.2193",
+    "Location (continent)": "0.0709",
+    "Customer cone (#ASNs)": "0.1805",
+    "Customer cone (#prefixes)": "0.1857",
+    "Customer cone (#addresses)": "0.2258",
+    "AS hegemony": "0.1666",
+    "#neighbors (total)": "0.46",
+    "#neighbors (peers)": "0.4178",
+    "#neighbors (customers)": "0.1494",
+    "#neighbors (providers)": "0.1686",
+    "#IXPs (PeeringDB)": "0.1822",
+    "#facilities (PeeringDB)": "0.1362",
+    "Peering policy (PeeringDB)": "0.0131",
+    "Network type (PeeringDB)": "0.135",
+    "Traffic ratio (PeeringDB)": "0.0951",
+    "Traffic volume (PeeringDB)": "0.0421",
+    "Scope (PeeringDB)": "0.1401",
+    "Personal ASN": "0.0057"
 }
 ````
 
