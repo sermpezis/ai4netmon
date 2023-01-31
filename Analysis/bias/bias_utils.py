@@ -134,9 +134,6 @@ def bias_score(target_data, sample_data, method='kl_divergence', **params):
 	return bias_score 
 
 
-
-
-
 def get_feature_type(feature, all_features=False):
 	'''
 	:param 	feature: 		(str) name of the feature (in case all_features=False) or name of feature category (in case all_features=True)
@@ -149,10 +146,10 @@ def get_feature_type(feature, all_features=False):
 	# binary features are included in categorical features
 	FEATURE_TYPES['categorical'] =  ['AS_rank_source', 'AS_rank_iso', 'AS_rank_continent', 'is_personal_AS', 'peeringDB_info_ratio', 
 	'peeringDB_info_traffic', 'peeringDB_info_scope', 'peeringDB_info_type', 'peeringDB_policy_general', 'is_ris_peer_v4', 
-	'is_ris_peer_v6', 'is_routeviews_peer','is_in_peeringDB']
+	'is_ris_peer_v6', 'is_routeviews_peer','is_in_peeringDB','ASDB_C1L1','ASDB_C1L2']
 	FEATURE_TYPES['numerical'] =  ['AS_rank_numberAsns', 'AS_rank_numberPrefixes', 'AS_rank_numberAddresses', 'AS_rank_total',
 	'AS_rank_customer', 'AS_rank_peer', 'AS_rank_provider', 'peeringDB_ix_count', 'peeringDB_fac_count', 'AS_hegemony', 
-	'peeringDB_info_prefixes4', 'peeringDB_info_prefixes6', 'nb_atlas_probes_v4', 'nb_atlas_probes_v6']
+	'peeringDB_info_prefixes4', 'peeringDB_info_prefixes6', 'nb_atlas_probes_v4', 'nb_atlas_probes_v6','AS_rel_degree','cti_top','cti_origin']
 	FEATURE_TYPES['ordinal'] = ['AS_rank_rank']
 	FEATURE_TYPES['other'] = ['AS_rank_longitude', 'AS_rank_latitude', 'peeringDB_created']
 
@@ -263,6 +260,8 @@ def get_features_dict_for_visualizations():
 	    'AS_rank_numberPrefixes': 'Customer cone\n (#prefixes)',
 	    'AS_rank_numberAddresses': 'Customer cone\n (#addresses)',
 	    'AS_hegemony': 'AS hegemony',
+		'cti_origin': 'CTI origin',
+		'cti_top': 'CTI top',
 	    # Topology info
 	    'AS_rank_total': '#neighbors\n (total)',
 	    'AS_rank_peer': '#neighbors\n (peers)', 
@@ -278,7 +277,10 @@ def get_features_dict_for_visualizations():
 	    'peeringDB_info_ratio': 'Traffic ratio\n (PeeringDB)',
 	    'peeringDB_info_traffic': 'Traffic volume\n (PeeringDB)', 
 	    'peeringDB_info_scope': 'Scope\n (PeeringDB)',
-	    'is_personal_AS': 'Personal ASN', 
+	    'is_personal_AS': 'Personal ASN',
+		'ASDB_C1L1': 'ASDB C1L1',
+		'ASDB_C1L2': 'ASDB C1L2'
+		# check new additions
 	}
 	return features_dict
 
