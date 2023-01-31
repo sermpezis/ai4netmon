@@ -8,7 +8,7 @@
 
 &nbsp;|RIR region|Location (continent)|&nbsp;| &nbsp;
 :---:|:---:|:---:|:---:|:---:
-&nbsp; |![](./figures/MVP_lists/Fig_Histogram_AS_rank_source_mvp_lists.png?raw=true)| ![](./figures/MVP_lists/Fig_Histogram_AS_rank_continent_mvp_lists.png?raw=true)|&nbsp;|&nbsp;
+&nbsp; |![](./figures/MANRS/Fig_Histogram_AS_rank_source_manrs_all_lists.png?raw=true)| ![](./figures/MANRS/Fig_Histogram_AS_rank_continent_manrs_all_lists.png?raw=true)|&nbsp;|&nbsp;
 
 
 **Network size dimensions**
