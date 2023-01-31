@@ -15,14 +15,14 @@
 
 Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) | AS hegemony | &nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/MVP_lists/Fig_CDF_AS_rank_numberAsns_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_rank_numberPrefixes_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_rank_numberAddresses_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_hegemony_mvp_lists.png?raw=true)|&nbsp;
+![](./figures/MANRS/Fig_CDF_AS_rank_numberAsns_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_rank_numberPrefixes_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_rank_numberAddresses_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_hegemony_manrs_all.png?raw=true)|&nbsp;
 
 
 **Topology related dimensions**
 
 #neighbors (total)|#neighbors (peers)|#neighbors (customers)|#neighbors (providers)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-![](./figures/MVP_lists/Fig_CDF_AS_rank_total_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_rank_peer_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_rank_customer_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_AS_rank_provider_mvp_lists.png?raw=true)|&nbsp;
+![](./figures/MANRS/Fig_CDF_AS_rank_total_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_rank_peer_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_rank_customer_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_AS_rank_provider_manrs_all.png?raw=true)|&nbsp;
 
 
 
@@ -30,11 +30,11 @@ Customer cone (#ASNs) | Customer cone (#prefixes) | Customer cone (#addresses) |
 
 &nbsp;|#IXPs (PeeringDB)|#facilities (PeeringDB)|Peering policy (PeeringDB)|&nbsp;
 :---:|:---:|:---:|:---:|:---:
-&nbsp;|![](./figures/MVP_lists/Fig_CDF_peeringDB_ix_count_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_CDF_peeringDB_fac_count_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_Histogram_peeringDB_policy_general_mvp_lists.png?raw=true)|&nbsp;
+&nbsp;|![](./figures/MANRS/Fig_CDF_peeringDB_ix_count_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_CDF_peeringDB_fac_count_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_Histogram_peeringDB_policy_general_manrs_all.png?raw=true)|&nbsp;
 
 
 **Network type dimensions**
 
 Network type (PeeringDB)|Traffic ratio (PeeringDB)|Traffic volume (PeeringDB)|Scope (PeeringDB)|Personal ASN
 :---:|:---:|:---:|:---:|:---:
-![](./figures/MVP_lists/Fig_Histogram_peeringDB_info_type_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_Histogram_peeringDB_info_ratio_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_Histogram_peeringDB_info_traffic_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_Histogram_peeringDB_info_scope_mvp_lists.png?raw=true)|![](./figures/MVP_lists/Fig_Histogram_is_personal_AS_mvp_lists.png?raw=true)
+![](./figures/MANRS/Fig_Histogram_peeringDB_info_type_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_Histogram_peeringDB_info_ratio_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_Histogram_peeringDB_info_traffic_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_Histogram_peeringDB_info_scope_manrs_all.png?raw=true)|![](./figures/MANRS/Fig_Histogram_is_personal_AS_manrs_all.png?raw=true)
