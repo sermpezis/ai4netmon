@@ -1,6 +1,6 @@
 ## Radar Plot
 
-![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/MANRS/fig_radar_all_manrs_all.png?raw=true) 
+![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/MANRS/fig_radar_MANRS all.png?raw=true) 
 
 ## Detailed distributions
 
@@ -8,7 +8,7 @@
 
 &nbsp;|RIR region|Location (continent)|&nbsp;| &nbsp;
 :---:|:---:|:---:|:---:|:---:
-&nbsp; |![](./figures/MANRS/Fig_Histogram_AS_rank_source_manrs_all_lists.png?raw=true)| ![](./figures/MANRS/Fig_Histogram_AS_rank_continent_manrs_all_lists.png?raw=true)|&nbsp;|&nbsp;
+&nbsp; |![](./figures/MANRS/Fig_Histogram_AS_rank_source_manrs_all.png?raw=true)| ![](./figures/MANRS/Fig_Histogram_AS_rank_continent_manrs_all.png?raw=true)|&nbsp;|&nbsp;
 
 
 **Network size dimensions**
