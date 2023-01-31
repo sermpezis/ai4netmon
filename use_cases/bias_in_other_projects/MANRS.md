@@ -1,6 +1,6 @@
 ## Radar Plot
 
-![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/MANRS/fig_radar_MANRS all.png?raw=true) 
+![Radar plot - ris_rv_ris+rv_bgp_bias](./figures/MANRS/fig_radar_manrs_all.png?raw=true) 
 
 ## Detailed distributions
 
