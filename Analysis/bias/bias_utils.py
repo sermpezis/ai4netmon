@@ -203,25 +203,30 @@ def bias_score_dataframe(target_df, sample_df_dict, preprocess=True, **params):
 
 
 
-def subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES):
+def subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES, bias_weights=None):
 	network_sets_dict_for_bias = dict()
 	for ASN in set_of_monitors:
 		network_sets_dict_for_bias[str(ASN)] = df.loc[list(set(set_of_monitors)-set([ASN]))][FEATURES]
 	bias_df = bias_score_dataframe(df[FEATURES], network_sets_dict_for_bias, **bias_params)
-	bias_diff = bias_df.sum(axis=0)
+	if bias_weights is None:
+		bias_diff = bias_df.sum(axis=0)
+	else:
+		### @Sofia: change the following code so that instead of a sum, to calculate a weighted sum based on the weights given bias_weights
+		bias_diff = bias_df.sum(axis=0)
+		### @ Sofia end-of-changes
 	return bias_diff.sort_values().index.tolist()
 
-def subsampling_greedy(df, set_of_monitors, bias_params, FEATURES):
+def subsampling_greedy(df, set_of_monitors, bias_params, FEATURES, bias_weights=None):
 	current_set = set(set_of_monitors)
 	ordered_list = []
 	while len(current_set)>0:
-		ASN = subsampling_naive_sorting(df, current_set, bias_params, FEATURES)[0]
+		ASN = subsampling_naive_sorting(df, current_set, bias_params, FEATURES, bias_weights)[0]
 		ordered_list.append(ASN)
 		current_set.remove(ASN)
 	return ordered_list
 
 
-def subsampling(method, df, set_of_monitors, bias_params, FEATURES):
+def subsampling(method, df, set_of_monitors, bias_params, FEATURES, bias_weights=None):
 	'''
 	Method to return an ordered list of the monitors in the set_of_monitors in a way that they decrease the bias 
 	if they are removed (remove first the first monitors).
@@ -231,13 +236,14 @@ def subsampling(method, df, set_of_monitors, bias_params, FEATURES):
 	:param 	set_of_monitors:(set) set of monitors (i.e. indexes of dataframe), from which we want to subsample
 	:param 	bias_params:	(dict) parameters for the bias calculation
 	:param 	FEATURES:		(list) list of features (i.e., columns of the dataframe) to be taken into account in the bias calculation
+	:param	bias_weights:	(dict) parameters for the weight of each bias dimension, in the format {'bias dimensions': weight (float)}; default is None which gives to each bias dimension a weight of 1
 
 	:return: 	(list) ordered list with monitors; the first monitor in the list is the first monitor to be removed
 	'''
 	if method == 'sorting':
-		return subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES)
+		return subsampling_naive_sorting(df, set_of_monitors, bias_params, FEATURES, bias_weights)
 	elif method == 'greedy':
-		return subsampling_greedy(df, set_of_monitors, bias_params, FEATURES)
+		return subsampling_greedy(df, set_of_monitors, bias_params, FEATURES, bias_weights)
 	else:
 		raise TypeError
 
