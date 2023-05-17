@@ -93,7 +93,7 @@ Example output:
  }
 ````
 Example request:
-[https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=3&v4=false&v6=true](https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=3&v4=false&v6=true)
+[https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&v4=false&v6=true](https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&v4=false&v6=true)
 
 Example output:
 ```yaml
