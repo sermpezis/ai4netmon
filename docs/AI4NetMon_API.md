@@ -65,7 +65,7 @@ Example output:
 
 
 Example request:
-[https://ai4netmon.csd.auth.gr/api/bias/?asn=174&asn=1299&asn=2497&asn=3320&asn=3333](https://ai4netmon.csd.auth.gr/api/bias/?asn=174&asn=1299&asn=2497&asn=3320&asn=3333)
+[https://ai4netmon.csd.auth.gr/api/bias/asn/?asn=174&asn=1299&asn=2497&asn=3320&asn=3333](https://ai4netmon.csd.auth.gr/api/bias/?asn=174&asn=1299&asn=2497&asn=3320&asn=3333)
 
 Example output:
 ```yaml
