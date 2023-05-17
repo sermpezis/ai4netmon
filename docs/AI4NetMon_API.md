@@ -98,34 +98,33 @@ Example request:
 Example output:
 ```yaml
 {
-      "bias": {
-        "RIR region": 0.5799627667076053,
-        "Location (country)": 0.9726752156473064,
-        "Location (continent)": 0.618554898834941,
-        "Customer cone (#ASNs)": 0.929189036141135,
-        "Customer cone (#prefixes)": 0.8932468728505935,
-        "Customer cone (#addresses)": 0.9734242091991357,
-        "AS hegemony": 0.9846431088746982,
-        "Country influence (CTI origin)": 0.9614155629619617,
-        "Country influence (CTI top)": 0.7324612892396218,
-        "#neighbors (total)": 0.9747092620088461,
-        "#neighbors (peers)": 0.9811585658359434,
-        "#neighbors (customers)": 0.9545233087316963,
-        "#neighbors (providers)": 0.8443285140440955,
-        "#IXPs (PeeringDB)": 0.1760430595659005,
-        "#facilities (PeeringDB)": 0.20043584893005417,
-        "Peering policy (PeeringDB)": 0.8010782139760931,
-        "Network type (PeeringDB)": 0.5253646670109279,
-        "Traffic ratio (PeeringDB)": 0.617804217453592,
-        "Traffic volume (PeeringDB)": 0.8067404058999731,
-        "Scope (PeeringDB)": 0.5423224722152219,
-        "Personal ASN": 0.005261960347474111,
-        "ASDB C1L1": 0.40127916969426436,
-        "ASDB C1L2": 0.41189629167264524
-      },
-      "#probes found": 2,
-      "#probes not found": 2,
-      "Not found probes": [1, 20]
+	"bias": {
+		"RIR region": 0.5799627667076053,
+		"Location (country)": 0.9726752156473064,
+		"Location (continent)": 0.618554898834941,
+		"Customer cone (#ASNs)": 0.929189036141135,
+		"Customer cone (#prefixes)": 0.8932468728505935,
+		"Customer cone (#addresses)": 0.9303776372575681,
+		"AS hegemony": 0.8574547268071845,
+		"Country influence (CTI origin)": 0.9850386963432702,
+		"Country influence (CTI top)": 0.7324612892396218,
+		"#neighbors (total)": 0.89438715249718,
+		"#neighbors (peers)": 0.9562133080281086,
+		"#neighbors (customers)": 0.9545233087316963,
+		"#neighbors (providers)": 0.2681995548982281,
+		"#IXPs (PeeringDB)": 0.836503458814173,
+		"#facilities (PeeringDB)": 0.13411028064926886,
+		"Peering policy (PeeringDB)": 0.8030375557846399,
+		"Network type (PeeringDB)": 0.4346010247706674,
+		"Traffic ratio (PeeringDB)": 0.6370607875853345,
+		"Traffic volume (PeeringDB)": 0.8331343218396643,
+		"Scope (PeeringDB)": 0.6628866399561242,
+		"Personal ASN": 0.005261960347474111,
+		"ASDB C1L1": 0.40127916969426436,
+		"ASDB C1L2": 0.41189629167264524
+	},
+	"#probes found": 2,
+	"#probes not found": 0
 }
 
 ````
