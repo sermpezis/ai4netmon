@@ -1,5 +1,3 @@
-# api-draft
-
 # The AI4NetMon API
 
 We also provide an open API, which provides the bias scores for different IMPs of custom sets of vantage points. The API can be accessed at [https://ai4netmon.csd.auth.gr/api/](https://ai4netmon.csd.auth.gr/api/), and at this moment it provides the following endpoints (the API  is expected to be updated with extra functionality) 
