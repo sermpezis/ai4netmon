@@ -93,36 +93,35 @@ Example output:
  }
 ````
 Example request:
-[https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false]
-(https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false)
+[https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false](https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false)
 
 Example output:
 ```yaml
 {
-	"bias": {
-		"RIR region": 0.5799627667076053,
-		"Location (country)": 0.9726752156473064,
-		"Location (continent)": 0.618554898834941,
-		"Customer cone (#ASNs)": 0.929189036141135,
-		"Customer cone (#prefixes)": 0.8932468728505935,
-		"Customer cone (#addresses)": 0.9734242091991357,
-		"AS hegemony": 0.9846431088746982,
-		"Country influence (CTI origin)": 0.9614155629619617,
-		"Country influence (CTI top)": 0.7324612892396218,
-		"#neighbors (total)": 0.9747092620088461,
-		"#neighbors (peers)": 0.9811585658359434,
-		"#neighbors (customers)": 0.9545233087316963,
-		"#neighbors (providers)": 0.8443285140440955,
-		"#IXPs (PeeringDB)": 0.1760430595659005,
-		"#facilities (PeeringDB)": 0.20043584893005417,
-		"Peering policy (PeeringDB)": 0.8010782139760931,
-		"Network type (PeeringDB)": 0.5253646670109279,
-		"Traffic ratio (PeeringDB)": 0.617804217453592,
-		"Traffic volume (PeeringDB)": 0.8067404058999731,
-		"Scope (PeeringDB)": 0.5423224722152219,
-		"Personal ASN": 0.005261960347474111,
-		"ASDB C1L1": 0.40127916969426436,
-		"ASDB C1L2": 0.41189629167264524
+    "bias": {
+	"RIR region": 0.5799627667076053,
+	"Location (country)": 0.9726752156473064,
+	"Location (continent)": 0.618554898834941,
+	"Customer cone (#ASNs)": 0.929189036141135,
+	"Customer cone (#prefixes)": 0.8932468728505935,
+	"Customer cone (#addresses)": 0.9734242091991357,
+	"AS hegemony": 0.9846431088746982,
+	"Country influence (CTI origin)": 0.9614155629619617,
+	"Country influence (CTI top)": 0.7324612892396218,
+	"#neighbors (total)": 0.9747092620088461,
+	"#neighbors (peers)": 0.9811585658359434,
+	"#neighbors (customers)": 0.9545233087316963,
+	"#neighbors (providers)": 0.8443285140440955,
+	"#IXPs (PeeringDB)": 0.1760430595659005,
+	"#facilities (PeeringDB)": 0.20043584893005417,
+	"Peering policy (PeeringDB)": 0.8010782139760931,
+	"Network type (PeeringDB)": 0.5253646670109279,
+	"Traffic ratio (PeeringDB)": 0.617804217453592,
+	"Traffic volume (PeeringDB)": 0.8067404058999731,
+	"Scope (PeeringDB)": 0.5423224722152219,
+	"Personal ASN": 0.005261960347474111,
+	"ASDB C1L1": 0.40127916969426436,
+	"ASDB C1L2": 0.41189629167264524
 	},
 	"#probes found": 2,
 	"#probes not found": 2,
