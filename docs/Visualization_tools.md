@@ -89,11 +89,11 @@ We may want to exclude some ASes (e.g., edge ASes, small ASes, not connected in 
 There are also some **optional** selections for the user to make, which are described below:
 
 - *Select the way you calculate the bias score*
-For each group of dimensions, select the weight (a value from 0 to 1). The TOTAL bias difference score is calculated as
+   For each group of dimensions, select the weight (a value from 0 to 1). The TOTAL bias difference score is calculated as
 
-TOTAL bias = weight_location * location_bias + weight_net_size * net_size_bias + ...
+   TOTAL bias = weight_location * location_bias + weight_net_size * net_size_bias + ...
 
-By default we take into account all dimensions with the same weight (equal to 1). If you want to neglect a dimension, assign its weight to 0.
+   By default we take into account all dimensions with the same weight (equal to 1). If you want to neglect a dimension, assign its weight to 0.
 
 - *Filtering options*
 Below you can select different options to filter out some ASes from the table, by selecting those that
