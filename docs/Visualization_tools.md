@@ -77,7 +77,7 @@ The detailed recommendation table shows for the ASNs that do not host any RIPE A
 - Network characteristics: Some characteristics of the ASNs, e.g., size, customer cone, neighbors, network type, peering policies, connectivity to IXPs, etc.
 The table is by default sorted by the TOTAL bias difference score, with first appearing the ASNs with the smaller bias difference scores (i.e. those that would be most preferred). You can sort the table by other columns and by ascending/descending order by clicking on the headers.
 
-![Example Image](figures/detailedtableatlas.png)
+![Example Image](figures/detailed-tableatlas.png)
 
 **Filtering and bias calculation options**
 We provide a number of filtering and modifications options that enable to adapt the recommendations based on specific needs, constraints, etc. For example, we may want to take into account only location bias or we may want to consider only ASNs with a PeeringDB record. Using these options, the recommendations data table is updated automatically.
@@ -105,9 +105,25 @@ belong to a given RIR region or a country (or select by AS number)
 
 Below are the two screenshots that correspond to each option:
 
-| Way of bias calculation        | Filtering options        |
+| Bias calculation options        | Filtering options        |
 | -------------- | -------------- |
 | ![Image 1](figures/sel1atlas.png) | ![Image 2](figures/sel2atlas.png) |
+
+### Extending RIPE RIS in an unbiased way
+
+Finally, there are some very similar visualizations to RIPE Atlas extending that we describe above, this time about RIPE RIS extending. Although, apart from the recommendations table, and the filtering and bias calculation options, there is one more, very interesting visualization:
+
+- *Bias difference vs. Improvement scores*
+
+The following plot shows what is the trade-off by adding an AS to RIPE RIS:
+
+Each dot corresponds to an AS. Hovering over a dot shows the ASN of the corresponding AS and its country.
+The x-axis shows the value of the total bias difference when adding this AS to the existing set of RIPE RIS peers. The less the bias (left part of x-axis), the better.
+The y-axis shows the "improvement score" by adding an AS. The higher the improvement, the better. Note that the y-axis is in logarithmic scale.
+Optimally, we would like to add ASes that decrease a lot the bias (i.e., low values in x-axis) and bring a lot of improvement (i.e., high values in y-axis)
+
+![Example Image](figures/risdiff.png)
+
 
 
 
