@@ -122,8 +122,7 @@ Example output:
 	"Personal ASN": 0.005261960347474111,
 	"ASDB C1L1": 0.40127916969426436,
 	"ASDB C1L2": 0.41189629167264524
-     }, "#probes found": 2, "#probes not found": 2,
-	"Not found probes": [1,20]
+     },
 }
 ````
   
