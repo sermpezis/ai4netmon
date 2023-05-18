@@ -88,22 +88,22 @@ We may want to exclude some ASes (e.g., edge ASes, small ASes, not connected in 
 
 There are also some **optional** selections for the user to make, which are described below:
 
-- *Select the way you calculate the bias score*
+-*Select the way you calculate the bias score*
    For each group of dimensions, select the weight (a value from 0 to 1). The TOTAL bias difference score is calculated as
 
    TOTAL bias = weight_location * location_bias + weight_net_size * net_size_bias + ...
 
    By default we take into account all dimensions with the same weight (equal to 1). If you want to neglect a dimension, assign its weight to 0.
 
-- *Filtering options*
-Below you can select different options to filter out some ASes from the table, by selecting those that
+-*Filtering options*
+   Below you can select different options to filter out some ASes from the table, by selecting those that
 
-have a characteristic with larger/smaller value than a threshold; by default this filter is not activated ("None"). The characteristics are
-#neighbors, or #ASNs/#prefixes in customer cone
-have a specific characteristic (e.g., are in PeeringDB); filter out them by selecting the respective checkbox
-belong to a given RIR region or a country (or select by AS number)
+   have a characteristic with larger/smaller value than a threshold; by default this filter is not activated ("None"). The characteristics are
+   #neighbors, or #ASNs/#prefixes in customer cone
+   have a specific characteristic (e.g., are in PeeringDB); filter out them by selecting the respective checkbox
+   belong to a given RIR region or a country (or select by AS number)
 
-Below are the two screenshots that correspond to each option:
+   Below are the two screenshots that correspond to each option:
 
 | Bias calculation options        | Filtering options        |
 | -------------- | -------------- |
