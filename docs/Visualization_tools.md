@@ -6,7 +6,7 @@
 
 ## Introduction <a name="introduction"></a>
 
-There are 2 basic visualization tools for the AI4NetMon project, in Observable notebooks, that the public can use in order to get various insights of collected data in IMPs, their bias, and various interesting insights of them.
+There are 2 basic visualization tools for the AI4NetMon project, in Observable notebooks, that the public can use in order to get various insights of IMPs data, bias in them and extending of such platforms in an unbiased way.
 
 ## Tool 1: Bias in Internet Measurement Platforms <a name="chapter-1-bias-in-internet-measurement-platforms"></a>
 
