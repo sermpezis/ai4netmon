@@ -2,13 +2,15 @@
 
 - [Introduction](#introduction)
 - [Tool 1: Bias in Internet Measurement Platforms](#chapter-1-bias-in-internet-measurement-platforms)
-- [Tool 2: Extending](#chapter-2-radar-plot-visualization)
+- [Tool 2: Extending Monitoring Infrastructure in an unbiased way](#chapter-2-extending)
 
 ## Introduction <a name="introduction"></a>
 
 There are 5 visualization tools for the AI4NetMon project, in Observable notebooks, that the public can use in order to get various insights of collected data in IMPs, as well as in custom sets of ASNs. 
 
 ## Tool 1: Bias in Internet Measurement Platforms <a name="chapter-1-bias-in-internet-measurement-platforms"></a>
+
+### Bias in IMPs and custom lists of ASNs
 
 Provide detailed information about the bias present in Internet measurement platforms and the importance of addressing it.
 This notebook visualizes the bias in Internet measurement platforms, based on the analyses of the AI4NetMon project, using radar plots. For an introduction on the bias of Internet measurement platforms see the [RIPE Labs article](https://labs.ripe.net/author/pavlos_sermpezis/bias-in-internet-measurement-infrastructure/).
@@ -58,6 +60,54 @@ Furthermore, the following figure, presents again the bias values per group of d
 
 ![Example Image](figures/mvplines.png)
 
+## Tool 2: Extending Monitoring Infrastructure in an unbiased way <a name="#chapter-2-extending"></a>
+
+### Extending RIPE Atlas in an unbiased way
+
+This notebook provides recommendations for extending the RIPE Atlas infrastructure (i.e., selecting ASes to deploy RIPE Atlas probes) in an "unbiased way", based on the results and analyses of the AI4NetMon project.
+
+The recommendations are provided as follows: For every AS that does not host any RIPE Atlas probe, we calculate what would be the difference in bias if we deploy at least one probe in it. Hence, we calculate a bias difference score. Adding an AS can decrease or increase bias. We would prefer to decrease the bias, thus, we would prefer to add (if possible) the ASes that have the most negative bias difference score. Below, the top-5 recommendations table appears, but there is also a more detailed table that is described after the screenshot.
+
+![Example Image](figures/top5atlas.png)
+
+The detailed recommendation table shows for the ASNs that do not host any RIPE Atlas probe the following data:
+
+- Bias difference score: That is the difference in bias they can bring if added to the RIPE Atlas infrastructure (i.e., deploy at least on probe). Negative values mean that the bias is decreased, and positive values that the bias is increased. The smaller the value the more the bias is decreased (e.g., -1% is better than -0.5%).
+
+- Network characteristics: Some characteristics of the ASNs, e.g., size, customer cone, neighbors, network type, peering policies, connectivity to IXPs, etc.
+The table is by default sorted by the TOTAL bias difference score, with first appearing the ASNs with the smaller bias difference scores (i.e. those that would be most preferred). You can sort the table by other columns and by ascending/descending order by clicking on the headers.
+
+![Example Image](figures/detailedtableatlas.png)
+
+**Filtering and bias calculation options**
+We provide a number of filtering and modifications options that enable to adapt the recommendations based on specific needs, constraints, etc. For example, we may want to take into account only location bias or we may want to consider only ASNs with a PeeringDB record. Using these options, the recommendations data table is updated automatically.
+
+The bias (score) is calculated based on many different characteristics (location, network size/type, connectivity, etc.). We may not want to take into account all these dimensions, or we may want to put more weight on some of them. To this end, we provide below the option for the user to select a weight (from 0 to 1) for each group of dimensions. The TOTAL bias difference score is calculated as the weighted sum of the bias difference scores per dimension group.
+
+We may want to exclude some ASes (e.g., edge ASes, small ASes, not connected in IXPs) for feasibility, policy, regulations, or other reasons. To this end, we provide below different filtering options (i.e., to filter out some ASes with certain characteristics).
+
+There are also some **optional** selections for the user to make, which are described below:
+
+- *Select the way you calculate the bias score*
+For each group of dimensions, select the weight (a value from 0 to 1). The TOTAL bias difference score is calculated as
+
+TOTAL bias = weight_location * location_bias + weight_net_size * net_size_bias + ...
+
+By default we take into account all dimensions with the same weight (equal to 1). If you want to neglect a dimension, assign its weight to 0.
+
+- *Filtering options*
+Below you can select different options to filter out some ASes from the table, by selecting those that
+
+have a characteristic with larger/smaller value than a threshold; by default this filter is not activated ("None"). The characteristics are
+#neighbors, or #ASNs/#prefixes in customer cone
+have a specific characteristic (e.g., are in PeeringDB); filter out them by selecting the respective checkbox
+belong to a given RIR region or a country (or select by AS number)
+
+Below are the two screenshots that correspond to each option:
+
+| Way of bias calculation        | Filtering options        |
+| -------------- | -------------- |
+| ![Image 1](figures/sel1atlas.png) | ![Image 2](figures/sel2atlas.png) |
 
 
 
