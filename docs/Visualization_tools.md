@@ -6,7 +6,12 @@
 
 ## Introduction <a name="introduction"></a>
 
-There are 2 basic visualization tools for the AI4NetMon project, in Observable notebooks, that the public can use in order to get various insights of IMPs data, bias in them and extending of such platforms in an unbiased way.
+There are 2 basic visualization tools for the AI4NetMon project, in different Observable notebooks, that the public can use in order to get various insights of IMPs data, bias in them and extending of such platforms in an unbiased way. In fact, there are 5 notebooks uploaded:
+- [Bias in Internet Measurement Platforms](https://observablehq.com/@pavlos/ai4netmon-bias?collection=@pavlos/ai4netmon)
+- [Bias in RIPE RIS per Route Collector](https://observablehq.com/@pavlos/ai4netmon-bias-per-route-collector?collection=@pavlos/ai4netmon)
+- [Bias vs. volume of information](https://observablehq.com/@pavlos/bias-mvp?collection=@pavlos/ai4netmon)
+- [Extending RIPE Atlas in an unbiased way](https://observablehq.com/@pavlos/ai4netmon-ripe-atlas-extension?collection=@pavlos/ai4netmon)
+- [Extending RIPE RIS in an unbiased way](https://observablehq.com/@pavlos/ai4netmon-ripe-ris-extension?collection=@pavlos/ai4netmon)
 
 ## Tool 1: Bias in Internet Measurement Platforms <a name="chapter-1-bias-in-internet-measurement-platforms"></a>
 
