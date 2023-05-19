@@ -13,6 +13,8 @@ There are 2 basic visualization tools for the AI4NetMon project, in different Ob
 - [Extending RIPE Atlas in an unbiased way](https://observablehq.com/@pavlos/ai4netmon-ripe-atlas-extension?collection=@pavlos/ai4netmon)
 - [Extending RIPE RIS in an unbiased way](https://observablehq.com/@pavlos/ai4netmon-ripe-ris-extension?collection=@pavlos/ai4netmon)
 
+Each and every one of the notebooks are described below, grouped in 2 categories, bias and extension of infrastructure.
+
 ## Tool 1: Bias in Internet Measurement Platforms <a name="chapter-1-bias-in-internet-measurement-platforms"></a>
 
 ### Bias in IMPs and custom lists of ASNs
