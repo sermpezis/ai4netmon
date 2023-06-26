@@ -335,7 +335,7 @@ Example output:
 It takes as input either (i) the name of an IMP or (ii) a list of ASNs and returns the distribution of All ASes and the distribution per feature, for the given IMP or ASN set.
 
 Example request:
-[https://ai4netmon.csd.auth.gr/api/distributions/RIPE%20Atlas](https://ai4netmon.csd.auth.gr/api/distributions/Atlas)
+[https://ai4netmon.csd.auth.gr/api/distributions/Atlas](https://ai4netmon.csd.auth.gr/api/distributions/Atlas)
 
 Options for `IMP` parameter are:
 - `RIPE Atlas`
