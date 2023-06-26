@@ -7,13 +7,19 @@ We also provide an open API, which provides the bias scores for different IMPs o
 - `/bias/random/{nb}`
 
 - `/bias/cause/numerical`
+- `/bias/cause/numerical/asn`
+- `/bias/cause/numerical/probe`
 - `/bias/cause/categorical`
+- `/bias/cause/categorical/asn`
+- `/bias/cause/categorical/probe`
 
 - `/asn/{ASN}`
 - `/probe/{probe}`
 - `/rrc/{rrc}`
 
-- `/distributions/custom`
+- `/distributions/custom/asn`
+- `/distributions/custom/probe`
+
 - `/distributions/{imp}`
 
 whose use and functionality is described below.
