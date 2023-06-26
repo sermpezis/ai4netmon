@@ -99,7 +99,7 @@ Example output:
  }
 ````
 Example request:
-[https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false](https://ai4netmon.csd.auth.gr/api/bias/probe?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false)
+[https://ai4netmon.csd.auth.gr/api/bias/probe/?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false](https://ai4netmon.csd.auth.gr/api/bias/probe/?probe=1&probe=2&probe=5&probe=20&v4=true&v6=false)
 
 Example output:
 ```yaml
@@ -242,7 +242,7 @@ Example output:
 It takes the rrc (string, e.g., `rrc10`) as parameter and returns all the attributes of the corresponding ASes. Also, there are two parameters for choosing if the returning ASes are IPv4 or IPv6, or both. (for a detailed list, refer to the [doc](./Bias_in_IMPs.md) descrining our dataset)
 
 Example request:
-[https://ai4netmon.csd.auth.gr/api/probe/5?v4=true&v6=true](https://ai4netmon.csd.auth.gr/api/probe/5?v4=true&v6=true)
+[https://ai4netmon.csd.auth.gr/api/rrc/rrc00](https://ai4netmon.csd.auth.gr/api/rrc/rrc00)
 
 Example output:
 ```yaml
@@ -335,7 +335,7 @@ Example output:
 It takes as input either (i) the name of an IMP or (ii) a list of ASNs and returns the distribution of All ASes and the distribution per feature, for the given IMP or ASN set.
 
 Example request:
-[https://ai4netmon.csd.auth.gr/api/distributions/RIPE%20Atlas](https://ai4netmon.csd.auth.gr/api/distributions/RIPE%20Atlas)
+[https://ai4netmon.csd.auth.gr/api/distributions/RIPE%20Atlas](https://ai4netmon.csd.auth.gr/api/distributions/Atlas)
 
 Options for `IMP` parameter are:
 - `RIPE Atlas`
