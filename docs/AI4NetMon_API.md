@@ -335,11 +335,18 @@ Example request:
 [https://ai4netmon.csd.auth.gr/api/distributions/Atlas](https://ai4netmon.csd.auth.gr/api/distributions/Atlas)
 
 Options for `IMP` parameter are:
-- `RIPE Atlas`
-- `RIPE RIS`
+- `Atlas`
+- `RIS`
 - `RouteViews`
-- `RIPE RIS + RouteViews` (combined peers of both IMPs)
+- `RIS&RouteViews` (combined peers of both IMPs)
 - `rrc00` (the peers of the RIPE RIS route collector with id 00)
 - ...
 - `rrc26`
 - `?asn={ASN1}&asn={ASN2}&...&asn={ASNn}` (for a custom list of ASNs)
+- `?probe={probe1}&probe={probe2}&...&probe={proben}` (for a custom list of probes)
+
+  
+### Bias cause of IMPs `/bias/cause/{IMP}` 
+Example request:
+[https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas](https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas)
+
