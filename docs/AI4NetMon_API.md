@@ -6,12 +6,9 @@ We also provide an open API, which provides the bias scores for different IMPs o
 - `/bias/probe`
 - `/bias/random/{nb}`
 
-- `/bias/cause/numerical`
-- `/bias/cause/numerical/asn`
-- `/bias/cause/numerical/probe`
-- `/bias/cause/categorical`
-- `/bias/cause/categorical/asn`
-- `/bias/cause/categorical/probe`
+- `/bias/cause/{imp}`
+- `/bias/cause/asn`
+- `/bias/cause/probe`
 
 - `/asn/{ASN}`
 - `/probe/{probe}`
