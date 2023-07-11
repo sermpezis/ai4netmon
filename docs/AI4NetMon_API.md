@@ -4,7 +4,7 @@ We also provide an open API, which provides the bias scores for different IMPs o
 - `/bias/{imp}`
 - `/bias/asn`
 - `/bias/probe`
-- `/bias/random/{nb}`
+- `/bias/random/{imp}/{nb}`
 
 - `/bias/cause/{imp}`
 - `/bias/cause/asn`
