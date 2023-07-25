@@ -365,8 +365,20 @@ Example output:
 ```
   
 ### Bias cause of IMPs `/bias/cause/{IMP}` 
+
 Example request:
 [https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas](https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas)
+
+Options for `IMP` parameter are:
+- `Atlas`
+- `RIS`
+- `RouteViews`
+- `RIS&RouteViews` (combined peers of both IMPs)
+- `rrc/rrc00` (the peers of the RIPE RIS route collector with id 00)
+- ...
+- `rrc/rrc26`
+- `asn/?asn={ASN1}&asn={ASN2}&...&asn={ASNn}` (for a custom list of ASNs)
+- `probe/?probe={probe1}&probe={probe2}&...&probe={proben}` (for a custom list of probes)
 
 Example output:
 ```yaml
