@@ -345,8 +345,17 @@ Options for `IMP` parameter are:
 - `?asn={ASN1}&asn={ASN2}&...&asn={ASNn}` (for a custom list of ASNs)
 - `?probe={probe1}&probe={probe2}&...&probe={proben}` (for a custom list of probes)
 
+Example output:
+```yaml
+
+{"feature":"AS_rank_source","xlabel":"RIR region","ylabel":"Fraction","bars":{"Atlas":{"RIPE":0.7034957897422812,"ARIN":0.11890788466445522,"APNIC":0.10334268946159735,"LACNIC":0.045930084205154376,"AFRINIC":0.028323551926511866}...
+```
   
 ### Bias cause of IMPs `/bias/cause/{IMP}` 
 Example request:
 [https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas](https://ai4netmon.csd.auth.gr/api/bias/cause/Atlas)
 
+Example output:
+```yaml
+{"Atlas":{"AS_rank_numberAsns":{"1.0-3.0":"-34.4331%","3.0-9.0":"13.7526%","9.0-26.0":"9.4607%","26.0-76.0":"5.6389%","76.0-222.0":"2.9668%","222.0-654.0":"1.7342%","654.0-1926.0":"0.4012%","1926.0-5671.0":"0.3124%","5671.0-16706.0":"0.0466%","16706.0-49213.0":"0.1197%"}
+```
