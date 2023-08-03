@@ -36,7 +36,8 @@ Options for `IMP` parameter are:
 - `rrc26`
 - `?asn={ASN1}&asn={ASN2}&...&asn={ASNn}` (for a custom list of ASNs)
 - `?probe={PROBE1}&probe={PROBE2}&...&probe={PROBEn}&v4=false&v6=true`
-- `/random/{imp}/{nb}`
+- `/random/{imp}/{nb}` (nb random samples from an IMP)
+- `/random/{nb}` (nb random samples from all ASNs)
 
 Example request:
 [https://ai4netmon.csd.auth.gr/api/bias/RIS](https://ai4netmon.csd.auth.gr/api/bias/RIS)
@@ -170,7 +171,8 @@ Example output:
 	}
 }
 ````
-
+Example request:
+[[https://ai4netmon.csd.auth.gr/api/bias/random/Atlas/50](https://ai4netmon.csd.auth.gr/api/bias/random/all/50)](https://ai4netmon.csd.auth.gr/api/bias/random/all/50)
   
 
 ### ASN attributes `/asn/{ASN}` 
