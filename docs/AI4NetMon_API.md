@@ -17,7 +17,11 @@ We also provide an open API, which provides the bias scores for different IMPs o
 - `/distributions/custom/asn`
 - `/distributions/custom/probe`
 
-- `/distributions/{imp}`
+- `/distributions/{imp}` 
+
+- `/percentiles/{asn}`
+
+- `/date`
 
 whose use and functionality is described below.
 
@@ -172,8 +176,39 @@ Example output:
 }
 ````
 Example request:
-[[https://ai4netmon.csd.auth.gr/api/bias/random/Atlas/50](https://ai4netmon.csd.auth.gr/api/bias/random/all/50)](https://ai4netmon.csd.auth.gr/api/bias/random/all/50)
-  
+[https://ai4netmon.csd.auth.gr/api/asn/3333](https://ai4netmon.csd.auth.gr/api/bias/random/all/50)
+
+Example output:
+```yaml
+{
+	"Custom set": {
+		"RIR region": 0.01509348633178086,
+		"Location (country)": 0.29177466530946805,
+		"Location (continent)": 0.01993299296045336,
+		"Customer cone (#ASNs)": 0.02168806866719683,
+		"Customer cone (#prefixes)": 0.027062629320131315,
+		"Customer cone (#addresses)": 0.028728262997223242,
+		"AS hegemony": 0.024584439008287863,
+		"Country influence (CTI origin)": 0.06338245787634415,
+		"Country influence (CTI top)": 0.8139694273862149,
+		"#neighbors (total)": 0.028407420121954807,
+		"#neighbors (peers)": 0.03361311288803994,
+		"#neighbors (customers)": 0.026744545289298642,
+		"#neighbors (providers)": 0.0197471503118225,
+		"#IXPs (PeeringDB)": 0.08787421132634257,
+		"#facilities (PeeringDB)": 0.09620396481983313,
+		"Peering policy (PeeringDB)": 0.05521495412864461,
+		"ASDB C1L1": 0.09226627181827635,
+		"ASDB C1L2": 0.24816826572328843,
+		"Network type (PeeringDB)": 0.16651741369051212,
+		"Traffic ratio (PeeringDB)": 0.1325306276644139,
+		"Traffic volume (PeeringDB)": 0.4086597203801863,
+		"Scope (PeeringDB)": 0.20485779157513123,
+		"Personal ASN": 0.004080242009761544
+	}
+}
+``` 
+
 
 ### ASN attributes `/asn/{ASN}` 
 It takes the AS number (integer, e.g., `3333`) as parameter and returns all its attributes (for a detailed list, refer to the [doc](./Bias_in_IMPs.md) descrining our dataset)
@@ -438,3 +473,12 @@ Example output:
     }
 ,...}
 ```
+
+### Percentiles of ASN distribution `percentiles/{ASN}`
+Takes as input an asn, and for each bias dimension it returns in which percentiles of All ASes' distribution, this asn belongs too. For categorical features, it returns the percentage of All ASes that have the same value, while for numerical values, it returns the percentage of All ASes that have smaller distributions than the particular ASN.  
+
+Example request:
+[https://ai4netmon.csd.auth.gr/api/percentiles/1000](https://ai4netmon.csd.auth.gr/api/percentiles/1000)
+
+
+
