@@ -141,11 +141,33 @@ Example request:
 Example output:
 ```yaml
 {
-"Atlas":
-    {"50":
-        {"RIR region":0.0960812725502687,"Location (country)":0.42670954396298405,"Location (continent)":0.09488375013120072,"Customer cone (#ASNs)":0.06326158344862856,"Customer cone (#prefixes)":0.09656960203956257,"Customer cone (#addresses)":0.27979872208309187,"AS hegemony":0.10438643627257208,"Country influence (CTI origin)":0.11585951044388224,"Country influence (CTI top)":0.4179960644984281,"#neighbors (total)":0.11877663790128326,"#neighbors (peers)":0.07656724568388812,"#neighbors (customers)":0.051589686551915204,"#neighbors (providers)":0.08007021886582988,"#IXP (PeeringDB)":0.055519699038940704,"#facilities (PeeringDB)":0.05438067706692451,"Peering policy (PeeringDB)":0.021132588970552275,"ASDB C1L1":0.1857909358424337,"ASDB C1L2":0.281695937531723,"Network type (PeeringDB)":0.0652678730856838,"Traffic ratio (PeeringDB)":0.0399300951324701,"Traffic volume (PeeringDB)":0.1435172194927757,"Scope (PeeringDB)":0.10980484065596188,"Personal ASN":0.00304337008890343
-        }
-    }
+	"Atlas": {
+		"50": {
+			"RIR region": 0.0960812725502687,
+			"Location (country)": 0.42670954396298405,
+			"Location (continent)": 0.09488375013120072,
+			"Customer cone (#ASNs)": 0.06326158344862856,
+			"Customer cone (#prefixes)": 0.09656960203956257,
+			"Customer cone (#addresses)": 0.27979872208309187,
+			"AS hegemony": 0.10438643627257208,
+			"Country influence (CTI origin)": 0.11585951044388224,
+			"Country influence (CTI top)": 0.4179960644984281,
+			"#neighbors (total)": 0.11877663790128326,
+			"#neighbors (peers)": 0.07656724568388812,
+			"#neighbors (customers)": 0.051589686551915204,
+			"#neighbors (providers)": 0.08007021886582988,
+			"#IXP (PeeringDB)": 0.055519699038940704,
+			"#facilities (PeeringDB)": 0.05438067706692451,
+			"Peering policy (PeeringDB)": 0.021132588970552275,
+			"ASDB C1L1": 0.1857909358424337,
+			"ASDB C1L2": 0.281695937531723,
+			"Network type (PeeringDB)": 0.0652678730856838,
+			"Traffic ratio (PeeringDB)": 0.0399300951324701,
+			"Traffic volume (PeeringDB)": 0.1435172194927757,
+			"Scope (PeeringDB)": 0.10980484065596188,
+			"Personal ASN": 0.00304337008890343
+		}
+	}
 }
 ````
 
