@@ -26,8 +26,8 @@ print()
 print('####### Example 2 - bias in RIPE monitors')
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../data/aggregate_data/asn_aggregate_data_20211201.csv'
-RIPE_RIS_FNAME = '../data/misc/RIPE_RIS_peers_ip2asn.json'
+AGGREGATE_DATA_FNAME = '../data/aggregate_data/asn_aggregate_data.csv'
+# RIPE_RIS_FNAME = '../data/misc/RIPE_RIS_peers_ip2asn.json'
 
 ## features
 CATEGORICAL_FEATURES =  ['AS_rank_source', 'AS_rank_iso', 'AS_rank_continent', 'is_personal_AS', 'peeringDB_info_ratio', 
@@ -65,7 +65,8 @@ bias_df = pd.DataFrame(index=FEATURES)
 network_sets = ['all', 'RIPE RIS', 'RIPE Atlas', 'sample500', 'sample1000']
 network_sets_dict = dict()
 network_sets_dict['all'] = df
-network_sets_dict['RIPE RIS'] = df.loc[ris_asns]
+# network_sets_dict['RIPE RIS'] = df.loc[ris_asns]
+network_sets_dict['RIPE RIS'] = df.loc[(df['is_ris_peer_v4']>0) | (df['is_ris_peer_v6']>0)]
 network_sets_dict['RIPE Atlas'] = df.loc[ (df['nb_atlas_probes_v4'] >0) | (df['nb_atlas_probes_v6'] >0) ]
 network_sets_dict['sample500'] = df.loc[random.sample(list(df.index), 500)]
 network_sets_dict['sample1000'] = df.loc[random.sample(list(df.index), 1000)]
