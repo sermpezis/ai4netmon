@@ -11,24 +11,24 @@ import urllib.request
 FILES_LOCATION = 'https://raw.githubusercontent.com/sermpezis/ai4netmon/main/data/misc/'
 
 PATH_AS_RANK = FILES_LOCATION + 'ASrank.csv'
-PATH_PERSONAL = FILES_LOCATION + 'bgptools_perso_20221128.txt'
-PATH_PEERINGDB = FILES_LOCATION + 'PeeringDB_20221128.json'
-AS_HEGEMONY_PATH = FILES_LOCATION + 'AS_hegemony_20221128.csv'
-ALL_ATLAS_PROBES = FILES_LOCATION + 'RIPE_Atlas_probes_20221128.json'
-ALL_RIS_PEERS = FILES_LOCATION + 'RIPE_RIS_collectors_20221128.json'
-ROUTEVIEWS_PEERS = FILES_LOCATION + 'RouteViews_20221128.txt'
-AS_RELATIONSHIPS = FILES_LOCATION + 'AS_relationships_20221128.txt'
-ASDB_PATH = FILES_LOCATION + 'ASDB_20221128.csv'
-ORIGIN_PATH = FILES_LOCATION + 'CTI_origin_20221128.csv'
-TOP_PATH = FILES_LOCATION + 'CTI_top_20221128.csv'
-BGPTOOLS_PATH = FILES_LOCATION + 'bgptools_20221128.csv'
-BGPTOOLS_v4_PATH = FILES_LOCATION + 'bgptools_20221128_v4.csv'
-BGPTOOLS_v6_PATH = FILES_LOCATION + 'bgptools_20221128_v6.csv'
+PATH_PERSONAL = FILES_LOCATION + 'bgptools_perso.txt'
+PATH_PEERINGDB = FILES_LOCATION + 'PeeringDB.json'
+AS_HEGEMONY_PATH = FILES_LOCATION + 'AS_hegemony.csv'
+ALL_ATLAS_PROBES = FILES_LOCATION + 'RIPE_Atlas_probes.json'
+ALL_RIS_PEERS = FILES_LOCATION + 'RIPE_RIS_collectors.json'
+ROUTEVIEWS_PEERS = FILES_LOCATION + 'RouteViews.txt'
+AS_RELATIONSHIPS = FILES_LOCATION + 'AS_relationships.txt'
+ASDB_PATH = FILES_LOCATION + 'ASDB.csv'
+ORIGIN_PATH = FILES_LOCATION + 'CTI_origin.csv'
+TOP_PATH = FILES_LOCATION + 'CTI_top.csv'
+BGPTOOLS_PATH = FILES_LOCATION + 'bgptools.csv'
+BGPTOOLS_v4_PATH = FILES_LOCATION + 'bgptools_v4.csv'
+BGPTOOLS_v6_PATH = FILES_LOCATION + 'bgptools_v6.csv'
 
 
 
 FILES_LOCATION_AGGREGATE = '../../data/aggregate_data/'
-AGGREGATE_DATA_FNAME = FILES_LOCATION_AGGREGATE + 'asn_aggregate_data_20221128.csv'
+AGGREGATE_DATA_FNAME = FILES_LOCATION_AGGREGATE + 'asn_aggregate_data.csv'
 
 
 ALL_DATASETS = ['AS_rank', 'personal', 'PeeringDB', 'AS_hegemony', 'Atlas_probes', 'RIPE_RIS', 'RouteViews', 'AS_relationships', 'top', 'origins', 'asdb_1', 'asdb_2', 'bgptools']
