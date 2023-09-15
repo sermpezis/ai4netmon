@@ -1,7 +1,7 @@
 import pandas as pd
 
 # load existing file
-AGGREGATE_DATA_FNAME = '../data/aggregate_data/asn_aggregate_data_20211201.csv'
+AGGREGATE_DATA_FNAME = '../data/aggregate_data/asn_aggregate_data.csv'
 
 df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
 print(df)
