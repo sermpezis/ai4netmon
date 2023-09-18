@@ -52,11 +52,11 @@ def get_feature_type(feature):
 df = pd.read_csv(AGGREGATE_DATA_FNAME, header=0, index_col=0)
 df['is_personal_AS'].fillna(0, inplace=True)
 
-with open(RIPE_RIS_FNAME, 'r') as f:
-	ris_dict = json.load(f)
-ris_asns = [i for i in ris_dict.values() if i in df.index]
-ris_asns_v4 = [i for k,i in ris_dict.items() if (':' not in k) and (i in df.index)]
-ris_asns_v6 = [i for k,i in ris_dict.items() if (':' in k) and (i in df.index)]
+# with open(RIPE_RIS_FNAME, 'r') as f:
+# 	ris_dict = json.load(f)
+# ris_asns = [i for i in ris_dict.values() if i in df.index]
+# ris_asns_v4 = [i for k,i in ris_dict.items() if (':' not in k) and (i in df.index)]
+# ris_asns_v6 = [i for k,i in ris_dict.items() if (':' in k) and (i in df.index)]
 
 
 ## calculate bias for all features
