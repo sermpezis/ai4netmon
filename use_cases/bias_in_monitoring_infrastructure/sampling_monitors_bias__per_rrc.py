@@ -23,7 +23,7 @@ for ip, rrc in ris_peer_ip2rrc.items():
 
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
+AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data.csv'
 BIAS_CSV_FNAME = './data/bias_values_per_rrc.csv'
 BIAS_CSV_FNAME_NO_STUBS = './data/bias_values_per_rrc__no_stubs.csv'
 OMIT_STUBS = False
