@@ -10,7 +10,7 @@ from collections import defaultdict
 
 
 ## datasets
-AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data_20211201.csv'
+AGGREGATE_DATA_FNAME = '../../data/aggregate_data/asn_aggregate_data.csv'
 FIG_SAVENAME_FORMAT = './figures/fig_radar_{}.png'
 BIAS_CSV_FNAME = './data/bias_values_ris_atlas_rv.csv'
 ASN2ASN_DIST_FNAME = '../../data/misc/asn2asn__only_peers_pfx.json'
