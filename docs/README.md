@@ -2,6 +2,7 @@
 
 In this folder you can find detailed docs about the project, and its results, tools and code.
 
+- [Clone repository and install ai4netmon library](./Installation.md): Guide of library installation.
 
 - [Bias in Internet Measurement Platforms](./Bias_in_IMPs.md): Documentation about the main result of the project: the quanitfication and analysis of the bias in Internet Measurement Platforms (IMPs), such as, RIPE Atlas, RIPE RIS, or RouteViews. It presents (i) a dataset and methods to quantify the bias, (ii) analysis results (data and visualizations), and (iii) guidelines and discussions for using and generalizing the methodology.
 
